@@ -1,0 +1,45 @@
+@model ManageMentSystem.ViewComponents.LowStockAlertViewModel
+
+@if (Model.Products.Any())
+{
+    <div class="alert alert-@Model.Settings.AlertColor alert-dismissible fade show" role="alert">
+        <i class="@Model.Settings.AlertIcon"></i>
+        <strong>تنبيه المخزون الناقص:</strong>
+        
+        @if (Model.Products.Count == 1)
+        {
+            var product = Model.Products.First();
+            <span>@string.Format(Model.Settings.AlertMessage, product.Name, product.Quantity)</span>
+        }
+        else
+        {
+            <span>يوجد @Model.Products.Count منتجات وصلت للحد الأدنى للمخزون</span>
+            <div class="mt-2">
+                <small>
+                    <strong>المنتجات:</strong>
+                    @foreach (var product in Model.Products.Take(3))
+                    {
+                        <span class="badge bg-@Model.Settings.AlertColor me-1">
+                            @product.Name (@product.Quantity)
+                        </span>
+                    }
+                    @if (Model.Products.Count > 3)
+                    {
+                        <span class="text-muted">و @(Model.Products.Count - 3) منتجات أخرى</span>
+                    }
+                </small>
+            </div>
+        }
+        
+        <div class="mt-2">
+            <a href="@Url.Action("Index", "Products")" class="btn btn-sm btn-outline-@Model.Settings.AlertColor">
+                <i class="fas fa-eye"></i> عرض المنتجات
+            </a>
+            <a href="@Url.Action("LowStock", "Reports")" class="btn btn-sm btn-outline-@Model.Settings.AlertColor">
+                <i class="fas fa-chart-bar"></i> تقرير المخزون
+            </a>
+        </div>
+        
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

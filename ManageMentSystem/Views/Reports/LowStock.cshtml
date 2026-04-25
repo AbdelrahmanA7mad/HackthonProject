@@ -1,0 +1,150 @@
+@model IEnumerable<ManageMentSystem.Models.Product>
+@{
+    ViewData["Title"] = "تقرير المخزون الناقص";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-exclamation-triangle text-amber-600"></i> تقرير المخزون الناقص
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">المنتجات التي وصلت للحد الأدنى أو نفدت</p>
+        </div>
+        <div class="flex gap-2">
+            <a href="@Url.Action("ExportLowStockReportExcel", new { categoryId = ViewBag.SelectedCategoryId })" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm md:text-base">
+                <i class="fas fa-file-excel"></i> تصدير Excel
+            </a>
+        </div>
+    </div>
+
+    <!-- Print Header -->
+    <div class="hidden print:block text-center mb-6">
+        <h1 class="text-2xl font-bold text-slate-800 mb-2">تقرير المخزون الناقص</h1>
+        <p class="text-slate-500">تاريخ الطباعة: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6 print:hidden">
+        <form method="get" id="filterForm" class="space-y-4">
+            <div class="flex flex-col md:flex-row gap-4 items-end">
+                <div class="flex-grow">
+                    <label for="categoryId" class="block text-sm font-bold text-slate-700 mb-2">فلتر حسب الفئة</label>
+                    <select name="categoryId" id="categoryId" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all bg-white cursor-pointer" onchange="this.form.submit()">
+                        <option value="">جميع الفئات</option>
+                        @if (ViewBag.Categories != null)
+                        {
+                            @foreach (var category in ViewBag.Categories as List<ManageMentSystem.Models.Category>)
+                            {
+                                <option value="@category.Id" selected="@(ViewBag.SelectedCategoryId?.ToString() == category.Id.ToString())">
+                                    @category.Name
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div>
+                     <a href="@Url.Action("LowStock")" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2">
+                        <i class="fas fa-times"></i> إلغاء الفلتر
+                    </a>
+                </div>
+            </div>
+            @if (ViewBag.SelectedCategoryId != null)
+            {
+                <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-3 flex items-center gap-2 text-indigo-700 text-sm font-bold mt-2">
+                    <i class="fas fa-info-circle"></i>
+                    يتم عرض المنتجات منخفضة المخزون في فئة: 
+                    <span class="underline">
+                        @{
+                            var msgCategories = ViewBag.Categories as List<ManageMentSystem.Models.Category>;
+                            var catName = msgCategories?.FirstOrDefault(c => c.Id.ToString() == ViewBag.SelectedCategoryId.ToString())?.Name ?? "غير محدد";
+                        }
+                        @catName
+                    </span>
+                </div>
+            }
+        </form>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 print:hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center justify-between">
+            <div>
+                <div class="text-sm font-bold text-slate-500 mb-1">المنتجات النافدة</div>
+                <div class="text-3xl font-bold text-red-600">@Model.Count(p => p.Quantity == 0)</div>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-600 text-xl">
+                <i class="fas fa-times-circle"></i>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center justify-between">
+            <div>
+                <div class="text-sm font-bold text-slate-500 mb-1">المنتجات منخفضة المخزون</div>
+                <div class="text-3xl font-bold text-amber-600">@Model.Count(p => p.Quantity > 0)</div>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden print:shadow-none print:border-0">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 print:hidden">
+            <h5 class="font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-table text-indigo-500"></i> قائمة المنتجات
+            </h5>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-right" id="lowStockTable">
+                <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100 print:bg-gray-100 print:text-black">
+                    <tr>
+                        <th class="px-6 py-4 print:px-2 print:py-2">الاسم</th>
+                        <th class="px-6 py-4 print:px-2 print:py-2">الفئة</th>
+                        <th class="px-6 py-4 print:px-2 print:py-2">سعر الشراء</th>
+                        <th class="px-6 py-4 print:px-2 print:py-2">سعر البيع</th>
+                        <th class="px-6 py-4 text-center print:px-2 print:py-2">الكمية</th>
+                        <th class="px-6 py-4 print:px-2 print:py-2">الوصف</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 print:border-t print:border-black">
+                    @foreach (var p in Model)
+                    {
+                        var rowClass = p.Quantity == 0 ? "bg-red-50/50 hover:bg-red-50" : "bg-amber-50/50 hover:bg-amber-50";
+                        var badgeClass = p.Quantity == 0 ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700";
+                        
+                        <tr class="transition-colors @rowClass print:bg-transparent">
+                            <td class="px-6 py-4 font-bold text-slate-700 print:px-2 print:py-2 print:border-b print:border-gray-200">@p.Name</td>
+                            <td class="px-6 py-4 print:px-2 print:py-2 print:border-b print:border-gray-200">
+                                @if (p.Category != null)
+                                {
+                                    <span class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs font-bold print:bg-transparent print:text-black print:p-0">@p.Category.Name</span>
+                                }
+                                else
+                                {
+                                    <span class="text-slate-400">غير محدد</span>
+                                }
+                            </td>
+                            <td class="px-6 py-4 font-mono text-slate-600 print:px-2 print:py-2 print:border-b print:border-gray-200">@p.PurchasePrice.ToString("C0")</td>
+                            <td class="px-6 py-4 font-mono text-slate-600 print:px-2 print:py-2 print:border-b print:border-gray-200">@p.SalePrice.ToString("C0")</td>
+                            <td class="px-6 py-4 text-center print:px-2 print:py-2 print:border-b print:border-gray-200">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold @badgeClass print:bg-transparent print:text-black print:border print:border-black">
+                                    @p.Quantity
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-slate-500 text-sm max-w-xs truncate print:px-2 print:py-2 print:whitespace-normal print:border-b print:border-gray-200">@p.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // No extra scripts needed, form submits on change
+    </script>
+}

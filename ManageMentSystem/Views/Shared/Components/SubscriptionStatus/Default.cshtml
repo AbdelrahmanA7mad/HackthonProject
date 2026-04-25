@@ -1,0 +1,22 @@
+@model ManageMentSystem.Models.Tenant
+
+@if (Model != null)
+{
+    if (!Model.IsSubscriptionActive)
+    {
+        @await Html.PartialAsync("_SubscriptionExpiredBanner", Model)
+    }
+    else
+    {
+        // Check for Warning Threshold (10 Days)
+        var endDate = Model.SubscriptionStatus == "Trial" ? Model.TrialEndDate : Model.SubscriptionEndDate;
+        if (endDate.HasValue)
+        {
+            var daysRemaining = (endDate.Value - DateTime.Now).TotalDays;
+            if (daysRemaining <= 3 && daysRemaining > 0)
+            {
+                 @await Html.PartialAsync("_SubscriptionWarningBanner", Model)
+            }
+        }
+    }
+}

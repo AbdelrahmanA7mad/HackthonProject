@@ -1,0 +1,284 @@
+@model ManageMentSystem.ViewModels.CustomerReportViewModel
+@{
+    ViewData["Title"] = "تقرير العملاء";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-users text-indigo-800"></i> تقرير العملاء الشامل
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">تحليل العملاء، الأكثر شراءً، وسجل المعاملات</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+            <a href="@Url.Action("ExportCustomerReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" 
+               class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
+                <i class="fas fa-file-excel"></i> تصدير Excel
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6 print:hidden">
+        <form method="get" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">من تاريخ</label>
+                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all" />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">إلى تاريخ</label>
+                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all" />
+                </div>
+                <div class="flex gap-3">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-indigo-500/20 flex items-center gap-2 flex-grow justify-center">
+                        <i class="fas fa-search"></i> تطبيق
+                    </button>
+                    <a href="@Url.Action("CustomerReport")" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 flex-grow justify-center">
+                        <i class="fas fa-times"></i> إلغاء
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Summary Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl mb-3">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">إجمالي العملاء</div>
+            <div class="text-2xl font-bold text-slate-800">@Model.TotalCustomers</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl mb-3">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">العملاء النشطين</div>
+            <div class="text-2xl font-bold text-emerald-600">@Model.ActiveCustomers</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-3">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">العملاء الجدد</div>
+            <div class="text-2xl font-bold text-amber-600">@Model.NewCustomers</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-xl mb-3">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">إجمالي الإيرادات</div>
+            <div class="text-2xl font-bold text-blue-600">@Model.TotalCustomerRevenue.ToString("C")</div>
+        </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Additional Details -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
+                <i class="fas fa-info-circle text-indigo-500"></i> تفاصيل إضافية
+            </h5>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">متوسط قيمة العميل</span>
+                    <span class="font-bold text-slate-800">@Model.AverageCustomerValue.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">إجمالي ديون العملاء</span>
+                    <span class="font-bold text-red-600">@Model.TotalCustomerDebts.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">نسبة العملاء النشطين</span>
+                    <span class="font-bold text-emerald-600">@(Model.TotalCustomers > 0 ? ((double)Model.ActiveCustomers / Model.TotalCustomers * 100).ToString("F1") : "0")%</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">نسبة العملاء الجدد</span>
+                    <span class="font-bold text-amber-600">@(Model.TotalCustomers > 0 ? ((double)Model.NewCustomers / Model.TotalCustomers * 100).ToString("F1") : "0")%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
+                <i class="fas fa-chart-bar text-indigo-500"></i> أفضل 5 عملاء حسب المشتريات
+            </h5>
+            <div class="relative h-64 w-full flex justify-center">
+                <canvas id="customerChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Customers Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden mb-6">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h5 class="font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-trophy text-amber-500"></i> أفضل 10 عملاء
+            </h5>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-right">
+                <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100">
+                    <tr>
+                        <th class="px-6 py-4">المرتبة</th>
+                        <th class="px-6 py-4">اسم العميل</th>
+                        <th class="px-6 py-4">عدد المبيعات</th>
+                        <th class="px-6 py-4">إجمالي المشتريات</th>
+                        <th class="px-6 py-4">الديون المستحقة</th>
+                        <th class="px-6 py-4">متوسط قيمة البيع</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @for (int i = 0; i < Model.TopCustomers.Count; i++)
+                    {
+                        var customer = Model.TopCustomers[i];
+                        var averageSale = customer.SalesCount > 0 ? customer.TotalSpent / customer.SalesCount : 0;
+                        <tr>
+                            <td class="px-6 py-4">
+                                @if (i == 0)
+                                {
+                                    <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mx-auto border border-amber-200 shadow-sm"><i class="fas fa-crown"></i></div>
+                                }
+                                else if (i == 1)
+                                {
+                                     <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 mx-auto border border-slate-300 shadow-sm"><span class="font-bold">2</span></div>
+                                }
+                                else if (i == 2)
+                                {
+                                     <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mx-auto border border-orange-200 shadow-sm"><span class="font-bold">3</span></div>
+                                }
+                                else
+                                {
+                                    <span class="font-mono text-slate-500 font-bold block text-center">@(i + 1)</span>
+                                }
+                            </td>
+                            <td class="px-6 py-4 font-bold text-slate-700">@customer.CustomerName</td>
+                            <td class="px-6 py-4 text-slate-600 text-center">@customer.SalesCount</td>
+                            <td class="px-6 py-4 font-bold text-emerald-600">@customer.TotalSpent.ToString("C")</td>
+                            <td class="px-6 py-4">
+                                @if (customer.OutstandingDebt > 0)
+                                {
+                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">@customer.OutstandingDebt.ToString("C")</span>
+                                }
+                                else
+                                {
+                                    <span class="text-emerald-600 font-bold text-xs"><i class="fas fa-check"></i> خالص</span>
+                                }
+                            </td>
+                            <td class="px-6 py-4 text-slate-600">@averageSale.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- All Customers Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h5 class="font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-table text-indigo-500"></i> تفاصيل جميع العملاء
+            </h5>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-right">
+                <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100">
+                    <tr>
+                        <th class="px-6 py-4">اسم العميل</th>
+                        <th class="px-6 py-4">رقم الهاتف</th>
+                        <th class="px-6 py-4">العنوان</th>
+                        <th class="px-6 py-4 text-center">عدد المبيعات</th>
+                        <th class="px-6 py-4">إجمالي المشتريات</th>
+                        <th class="px-6 py-4 text-center">الحالة</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach (var customer in Model.Customers)
+                    {
+                        var totalSpent = customer.Sales.Sum(s => s.TotalAmount);
+                        var isActive = customer.Sales.Any();
+                        
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="px-6 py-4 font-bold text-slate-700">@customer.FullName</td>
+                            <td class="px-6 py-4 font-mono text-slate-600">@customer.PhoneNumber</td>
+                            <td class="px-6 py-4 text-slate-600">@customer.Address</td>
+                            <td class="px-6 py-4 text-center text-slate-600">@customer.Sales.Count</td>
+                            <td class="px-6 py-4 font-medium text-slate-800">@totalSpent.ToString("C")</td>
+                            <td class="px-6 py-4 text-center">
+                                @if (isActive)
+                                {
+                                    <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold">نشط</span>
+                                }
+                                else
+                                {
+                                    <span class="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-xs font-bold">غير نشط</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/chartjs/chart.umd.js"></script>
+    <script>
+        const ctx = document.getElementById('customerChart').getContext('2d');
+        const topCustomersData = @Html.Raw(Json.Serialize(Model.TopCustomers.Take(5)));
+
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: topCustomersData.map(c => c.customerName),
+                datasets: [{
+                    label: 'إجمالي المشتريات',
+                    data: topCustomersData.map(c => c.totalSpent),
+                    backgroundColor: [
+                        '#4f46e5', // indigo-600
+                        '#059669', // emerald-600
+                        '#eab308', // yellow-500
+                        '#ef4444', // red-500
+                        '#8b5cf6'  // violet-500
+                    ],
+                    borderRadius: 6,
+                    borderWidth: 0,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleFont: { family: 'Cairo' },
+                        bodyFont: { family: 'Cairo' },
+                        padding: 10,
+                        cornerRadius: 8
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Cairo' } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' },
+                        ticks: { font: { family: 'Cairo' } }
+                    }
+                }
+            }
+        });
+    </script>
+}

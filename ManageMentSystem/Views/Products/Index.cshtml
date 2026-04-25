@@ -1,0 +1,613 @@
+@model ManageMentSystem.ViewModels.CategoryStatisticsViewModel
+@using ManageMentSystem.Helpers
+@using ManageMentSystem.Models
+@{
+    ViewData["Title"] = $"المنتجات - {Model.CategoryName}";
+}
+
+<div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-8" dir="rtl">
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-3">
+                <span class="p-2 bg-indigo-50 rounded-xl text-indigo-800">
+                    <i class="fas fa-layer-group"></i>
+                </span>
+                @Model.CategoryName
+            </h1>
+            <p class="text-slate-500 mt-1 mr-12 text-sm font-medium">إحصائيات تفصيلية وإدارة منتجات القسم</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-indigo-50 rounded-xl">
+                    <i class="fas fa-box text-xl text-indigo-800"></i>
+                </div>
+                <span class="bg-indigo-50 text-indigo-800 text-sm font-bold px-2.5 py-1 rounded-full">المخزون</span>
+            </div>
+            <div>
+                <h3 class="text-3xl font-bold text-slate-800 mb-1">@Model.TotalProducts</h3>
+                <p class="text-slate-500 text-sm font-medium">إجمالي عدد القطع</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-amber-50 rounded-xl">
+                    <i class="fas fa-coins text-xl text-amber-700"></i>
+                </div>
+                <span class="bg-amber-50 text-amber-700 text-sm font-bold px-2.5 py-1 rounded-full">رأس المال</span>
+            </div>
+            <div>
+                <h3 class="text-3xl font-bold text-slate-800 mb-1" title="@Model.TotalPurchaseValue.ToString("C0")">@Model.TotalPurchaseValue.ToString("C0")</h3>
+                <p class="text-slate-500 text-sm font-medium">تكلفة الشراء الكلية</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-emerald-50 rounded-xl">
+                    <i class="fas fa-shopping-cart text-xl text-emerald-700"></i>
+                </div>
+                <span class="bg-emerald-50 text-emerald-700 text-sm font-bold px-2.5 py-1 rounded-full">قيمة البيع</span>
+            </div>
+            <div>
+                <h3 class="text-3xl font-bold text-slate-800 mb-1" title="@Model.TotalSaleValue.ToString("C0")">@Model.TotalSaleValue.ToString("C0")</h3>
+                <p class="text-slate-500 text-sm font-medium">القيمة السوقية للمخزون</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="flex justify-between items-start mb-4">
+                <div class="p-3 bg-slate-100 rounded-xl">
+                    <i class="fas fa-wallet text-xl text-slate-600"></i>
+                </div>
+                <span class="bg-slate-100 text-slate-700 text-sm font-bold px-2.5 py-1 rounded-full">الربح المتوقع</span>
+            </div>
+            <div>
+                <h3 class="text-3xl font-bold text-slate-800 mb-1" title="@Model.PotentialProfit.ToString("C0")">@Model.PotentialProfit.ToString("C0")</h3>
+                <p class="text-slate-500 text-sm font-medium">صافي الربح التقديري</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        
+        <div class="p-5 border-b border-slate-100 flex flex-col lg:flex-row justify-between items-center gap-4 bg-slate-50/50">
+            <h5 class="font-bold text-slate-700 flex items-center gap-2 text-lg">
+                <i class="fas fa-list text-indigo-800"></i>
+                قائمة المنتجات المتاحة
+            </h5>
+            
+            <div class="flex flex-col md:flex-row gap-3 w-full lg:w-auto">
+                <form method="get" action="@Url.Action("ByCategory", "Products")" class="relative flex-grow md:w-80">
+                    <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="fas fa-search text-slate-400"></i>
+                        </div>
+                        <input type="text" 
+                               class="block w-full p-2.5 pr-10 text-sm text-slate-900 border border-slate-200 rounded-xl bg-white focus:ring-indigo-500 focus:border-indigo-500 outline-none shadow-sm transition-all" 
+                               name="q" 
+                               placeholder="ابحث بالاسم أو الباركود..." 
+                               value="@ViewBag.Query">
+                    </div>
+                </form>
+
+                <div class="flex gap-2">
+                   
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#addProductModal" class="flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-indigo-800 hover:bg-indigo-900 rounded-xl shadow-sm shadow-indigo-200 hover:-translate-y-0.5 transition-all duration-200 gap-2 whitespace-nowrap">
+                            <i class="fas fa-plus"></i>
+                            <span>إضافة منتج</span>
+                        </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            @if (Model.Products.Any())
+            {
+                <table class="w-full text-right" id="productsTable">
+                    <thead class="bg-slate-50 text-slate-700 text-sm uppercase font-bold">
+                        <tr>
+                            <th class="px-6 py-4 rounded-tr-lg">الاسم</th>
+                            <th class="px-6 py-4">الكمية</th>
+                                <th class="px-6 py-4">سعر الشراء</th>
+                            <th class="px-6 py-4">سعر البيع</th>
+                            <th class="px-6 py-4">الباركود</th>
+                            <th class="px-6 py-4">الوصف</th>
+                            <th class="px-6 py-4 rounded-tl-lg text-center">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-sm">
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr class="hover:bg-slate-50/80 transition-colors duration-150"
+                                data-id="@product.Id"
+                                data-name="@product.Name"
+                                data-price="@product.SalePrice"
+                                data-barcode="@product.Barcode">
+                                
+                                <td class="px-6 py-4 font-bold text-slate-700">@product.Name</td>
+
+
+                                <td class="px-6 py-4">
+                                    @if (product.Quantity <5)
+                                    {
+                                        <div class="flex items-center gap-1.5 text-red-700 bg-red-50 px-2.5 py-1 rounded-full w-fit border border-amber-100">
+
+                                            <span class="font-bold">@product.Quantity</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="flex items-center gap-1.5 text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-full w-fit border border-indigo-100">
+
+                                            <span class="font-bold">@product.Quantity</span>
+                                        </div>
+                                    }
+                                </td>
+
+                               
+                                    <td class="px-6 py-4 text-slate-700 font-bold ">@product.PurchasePrice.ToString("C0")</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2 max-w-[140px]">
+                                        <span class="text-slate-800 font-bold">@product.SalePrice.ToString("C0")</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if (!string.IsNullOrEmpty(product.Barcode))
+                                    {
+                                        <span class="badge bg-info" style="display:none !important;">@product.Barcode</span>
+
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-indigo-50 text-indigo-800 px-2 py-1 rounded border border-indigo-100 text-xs select-all">
+                                                @product.Barcode
+                                            </span>
+                                            <button type="button" class="text-indigo-800 hover:text-indigo-900 hover:bg-indigo-100 rounded-lg p-1.5 transition-colors"
+                                                    onclick="printBarcodeXP360B('@product.Barcode', '@Html.Raw(Html.Encode(product.Name).Replace("'", "\\'"))', @product.SalePrice)" 
+                                                    title="طباعة الباركود">
+                                                <i class="fas fa-print"></i>
+                                            </button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-slate-400 text-xs italic">-</span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 max-w-xs truncate" title="@product.Description">
+                                    @product.Description
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-1">
+                                        <a href="/Products/Details/@product.Id" class="p-2 text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors" title="عرض">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+                                       
+                                            <button type="button" class="p-2 text-indigo-800 hover:bg-indigo-50 rounded-lg transition-colors"
+                                                    onclick="editProduct(@product.Id)" title="تعديل">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            
+                                            <button type="button" class="p-2 text-amber-700 hover:bg-amber-50 rounded-lg transition-colors"
+                                                    onclick="editProductQuantity(@product.Id)" title="تعديل الكمية">
+                                                <i class="fas fa-hashtag"></i>
+                                            </button>
+
+                                            <button type="button" class="p-2 text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                                                    onclick="deleteProduct(@product.Id)" title="حذف">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="p-4 border-t border-slate-100 bg-slate-50/50 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-sm text-slate-500">
+                        عرض <span class="font-bold text-slate-800">@((ViewBag.CurrentPage - 1) * ViewBag.PageSize + 1)</span> إلى <span class="font-bold text-slate-800">@Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalItems)</span> من أصل <span class="font-bold text-slate-800">@ViewBag.TotalItems</span> منتج
+                    </p>
+
+                    @if (ViewBag.TotalPages > 1)
+                    {
+                        <nav aria-label="Pagination">
+                            <ul class="flex items-center gap-1">
+                                <li>
+                                    @if (ViewBag.HasPreviousPage)
+                                    {
+                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, q = ViewBag.Query })" 
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-indigo-50 hover:text-indigo-800 hover:border-indigo-200 transition-all">
+                                            <i class="fas fa-chevron-right text-xs"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed">
+                                            <i class="fas fa-chevron-right text-xs"></i>
+                                        </span>
+                                    }
+                                </li>
+
+                                @{
+                                    int startPage = Math.Max(1, ViewBag.CurrentPage - 2);
+                                    int endPage = Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2);
+                                }
+
+                                @if (startPage > 1)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = 1, pageSize = ViewBag.PageSize, q = ViewBag.Query })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-indigo-50 hover:text-indigo-800 text-sm font-medium">1</a>
+                                    </li>
+                                    @if (startPage > 2)
+                                    {
+                                        <li class="px-1 text-slate-400">...</li>
+                                    }
+                                }
+
+                                @for (int i = startPage; i <= endPage; i++)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = i, pageSize = ViewBag.PageSize, q = ViewBag.Query })" 
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-indigo-600 border-indigo-600 text-white shadow-sm shadow-indigo-200" : "border-slate-200 bg-white text-slate-600 hover:bg-indigo-50 hover:text-indigo-600")">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (endPage < ViewBag.TotalPages)
+                                {
+                                    @if (endPage < ViewBag.TotalPages - 1)
+                                    {
+                                        <li class="px-1 text-slate-400">...</li>
+                                    }
+                                    <li>
+                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = ViewBag.TotalPages, pageSize = ViewBag.PageSize, q = ViewBag.Query })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-indigo-50 hover:text-indigo-800 text-sm font-medium">@ViewBag.TotalPages</a>
+                                    </li>
+                                }
+
+                                <li>
+                                    @if (ViewBag.HasNextPage)
+                                    {
+                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, q = ViewBag.Query })" 
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-indigo-50 hover:text-indigo-800 hover:border-indigo-200 transition-all">
+                                            <i class="fas fa-chevron-left text-xs"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="flex items-center justify-center w-8 h-8 rounded-lg border border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed">
+                                            <i class="fas fa-chevron-left text-xs"></i>
+                                        </span>
+                                    }
+                                </li>
+                            </ul>
+                        </nav>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="flex flex-col items-center justify-center py-16 text-slate-400">
+                    <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-box-open text-4xl text-slate-300"></i>
+                    </div>
+                    <h5 class="text-lg font-bold text-slate-600">لا توجد منتجات في هذه الفئة</h5>
+                    <p class="text-sm">ابدأ بإضافة منتج جديد للمخزون</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
+            <div class="modal-header bg-slate-50 border-b border-slate-100 p-5">
+                <h5 class="modal-title font-bold text-slate-800 flex items-center gap-2" id="addProductModalLabel">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center text-sm">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    إضافة منتج جديد
+                </h5>
+                <button type="button" class="btn-close text-slate-400 hover:text-red-500 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addProductForm" asp-action="Create" method="post">
+                <input type="hidden" name="CategoryId" value="@Model.CategoryId" />
+                <div class="modal-body p-6 space-y-6 bg-white">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="Name" class="block mb-2 text-sm font-bold text-slate-700">اسم المنتج <span class="text-red-500">*</span></label>
+                            <input type="text" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="Name" name="Name" required placeholder="اسم المنتج">
+                        </div>
+                        <div>
+                            <label for="CategoryId" class="block mb-2 text-sm font-bold text-slate-700">الفئة <span class="text-red-500">*</span></label>
+                            <select class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="CategoryId" name="CategoryId" required>
+                                <option value="">اختر الفئة</option>
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@category.Id" selected="@(category.Id == Model.CategoryId)">
+                                        @category.Name
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="Quantity" class="block mb-2 text-sm font-bold text-slate-700">الكمية <span class="text-red-500">*</span></label>
+                            <input type="number" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="Quantity" name="Quantity" min="0" required>
+                        </div>
+                        <div>
+                                <label for="PurchasePrice" class="block mb-2 text-sm font-bold text-slate-700">سعر الشراء <span class="text-red-500">*</span></label>
+                                <input type="number" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="PurchasePrice" name="PurchasePrice" min="0" step="1" required>
+                            </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="SalePrice" class="block mb-2 text-sm font-bold text-slate-700">سعر البيع <span class="text-red-500">*</span></label>
+                            <input type="number" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="SalePrice" name="SalePrice" min="0" step="1" required>
+                        </div>
+                        <div>
+                            <label for="Barcode" class="block mb-2 text-sm font-bold text-slate-700">الباركود</label>
+                            <div class="flex gap-2">
+                                <input type="text" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="Barcode" name="Barcode" placeholder="أدخل الباركود أو اتركه للتوليد">
+                                <button type="button" class="px-3 py-2 text-slate-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-colors" id="generateBarcodeBtn" title="توليد باركود تلقائي">
+                                    <i class="fas fa-barcode"></i>
+                                </button>
+                            </div>
+                            <p class="mt-1 text-xs text-slate-400">الباركود يجب أن يكون فريد لكل منتج</p>
+                            
+                            <div id="addBarcodeAlert" class="mt-3 p-3 bg-amber-50 border border-amber-100 rounded-xl flex items-start gap-3" style="display: none;">
+                                <i class="fas fa-exclamation-triangle text-amber-500 mt-0.5"></i>
+                                <div class="flex-1">
+                                    <span id="addBarcodeAlertText" class="text-sm text-amber-800 block mb-1"></span>
+                                    <a href="#" id="addViewExistingProduct" class="text-xs font-bold text-amber-700 hover:underline">عرض المنتج الموجود</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="Description" class="block mb-2 text-sm font-bold text-slate-700">الوصف</label>
+                        <textarea class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="Description" name="Description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-slate-50 border-t border-slate-100 p-4 flex gap-2 justify-end">
+                    <button type="button" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-100 hover:text-slate-800 rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-indigo-800 hover:bg-indigo-900 rounded-xl shadow-md shadow-indigo-200 hover:-translate-y-0.5 transition-all">إضافة المنتج</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
+            <div class="modal-header bg-slate-50 border-b border-slate-100 p-5">
+                <h5 class="modal-title font-bold text-slate-800 flex items-center gap-2" id="editProductModalLabel">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center text-sm">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    تعديل بيانات المنتج
+                </h5>
+                <button type="button" class="btn-close text-slate-400 hover:text-red-500 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editProductForm" method="post">
+                <div class="modal-body p-6 space-y-6 bg-white">
+                    <input type="hidden" id="editProductId" name="Id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-slate-700">اسم المنتج <span class="text-red-500">*</span></label>
+                            <input type="text" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="editProductName" name="Name" required>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-slate-700">الفئة <span class="text-red-500">*</span></label>
+                            <select class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="editProductCategoryId" name="CategoryId" required>
+                                <option value="">اختر الفئة</option>
+                                @if (ViewBag.Categories != null)
+                                {
+                                    @foreach (var category in ViewBag.Categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-slate-700">الكمية <span class="text-red-500">*</span></label>
+                            <input type="number" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="editProductQuantity" name="Quantity" required>
+                        </div>
+                      
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-slate-700">سعر الشراء <span class="text-red-500">*</span></label>
+                                <input type="number" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="editProductPurchasePrice" name="PurchasePrice" step="0.01" required>
+                            </div>
+                  
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-slate-700">سعر البيع <span class="text-red-500">*</span></label>
+                            <input type="number" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="editProductSalePrice" name="SalePrice" step="0.01" required>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-slate-700">الباركود</label>
+                            <div class="flex gap-2">
+                                <input type="text" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="editProductBarcode" name="Barcode" placeholder="أدخل الباركود أو اتركه للتوليد">
+                                <button type="button" class="px-3 py-2 text-slate-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-colors" id="editGenerateBarcodeBtn" title="توليد باركود تلقائي">
+                                    <i class="fas fa-barcode"></i>
+                                </button>
+                            </div>
+                            <p class="mt-1 text-xs text-slate-400">الباركود يجب أن يكون فريد لكل منتج</p>
+
+                            <div id="editBarcodeAlert" class="mt-3 p-3 bg-amber-50 border border-amber-100 rounded-xl flex items-start gap-3" style="display: none;">
+                                <i class="fas fa-exclamation-triangle text-amber-500 mt-0.5"></i>
+                                <div class="flex-1">
+                                    <span id="editBarcodeAlertText" class="text-sm text-amber-800 block mb-1"></span>
+                                    <a href="#" id="editViewExistingProduct" class="text-xs font-bold text-amber-700 hover:underline">عرض المنتج الموجود</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-slate-700">الوصف</label>
+                        <textarea class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 bg-slate-50 focus:bg-white transition-all" id="editProductDescription" name="Description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-slate-50 border-t border-slate-100 p-4 flex gap-2 justify-end">
+                    <button type="button" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-indigo-800 hover:bg-indigo-900 rounded-xl shadow-md shadow-indigo-200 hover:-translate-y-0.5 transition-all">حفظ التغييرات</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
+            <div class="modal-header bg-red-50 border-b border-red-100 p-5">
+                <h5 class="modal-title font-bold text-red-700 flex items-center gap-2" id="deleteProductModalLabel">
+                    <i class="fas fa-exclamation-circle"></i>
+                    تأكيد حذف المنتج
+                </h5>
+                <button type="button" class="btn-close text-red-500 hover:text-red-700 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-6 bg-white text-center space-y-4">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                    <i class="fas fa-trash-alt text-2xl text-red-700"></i>
+                </div>
+                <p class="font-bold text-slate-800 text-lg">هل أنت متأكد من حذف هذا المنتج؟</p>
+            </div>
+            <div class="modal-footer bg-slate-50 border-t border-slate-100 p-4 flex gap-2 justify-center">
+                <button type="button" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                <form id="deleteProductForm" method="post" style="display: inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 hover:-translate-y-0.5 transition-all">نعم، احذف المنتج</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteSaleModal" tabindex="-1" aria-labelledby="deleteSaleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
+            <div class="modal-header bg-red-50 border-b border-red-100 p-5">
+                <h5 class="modal-title font-bold text-red-700 flex items-center gap-2" id="deleteSaleModalLabel">
+                    <i class="fas fa-exclamation-circle"></i>
+                    تأكيد حذف البيع
+                </h5>
+                <button type="button" class="btn-close text-red-500 hover:text-red-700 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-6 bg-white text-center space-y-4">
+                <p class="font-bold text-slate-800 text-lg">هل أنت متأكد من حذف عملية البيع هذه؟</p>
+            </div>
+            <div class="modal-footer bg-slate-50 border-t border-slate-100 p-4 flex gap-2 justify-center">
+                <button type="button" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                <form id="deleteSaleForm" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 hover:-translate-y-0.5 transition-all">حذف</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editQuantityModal" tabindex="-1" aria-labelledby="editQuantityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
+            <div class="modal-header bg-slate-50 border-b border-slate-100 p-5">
+                <h5 class="modal-title font-bold text-slate-800 flex items-center gap-2" id="editQuantityModalLabel">
+                    <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm">
+                        <i class="fas fa-boxes"></i>
+                    </span>
+                    تعديل المخزون
+                </h5>
+                <button type="button" class="btn-close text-slate-400 hover:text-red-500 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editQuantityForm" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body p-6 space-y-6 bg-white">
+                    <input type="hidden" id="editQuantityProductId" name="Id">
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-slate-500">اسم المنتج</label>
+                        <input type="text" class="block w-full p-2.5 text-sm text-slate-700 font-bold border border-slate-200 rounded-xl bg-slate-50" id="editQuantityProductName" readonly>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-slate-500">الكمية الحالية</label>
+                        <input type="number" class="block w-full p-2.5 text-sm text-slate-700 font-bold border border-slate-200 rounded-xl bg-slate-50" id="currentQuantity" readonly>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-slate-700">الكمية الجديدة <span class="text-red-500">*</span></label>
+                        <input type="number" class="block w-full p-2.5 text-sm text-slate-900 border border-slate-200 rounded-xl focus:ring-amber-500 focus:border-amber-500 bg-white transition-all" id="editQuantityNew" name="Quantity" min="0" required placeholder="أدخل الكمية الجديدة">
+                    </div>
+
+                    <input type="hidden" id="editQuantityName" name="Name">
+                    <input type="hidden" id="editQuantityCategoryId" name="CategoryId">
+                    <input type="hidden" id="editQuantityPurchasePrice" name="PurchasePrice">
+                    <input type="hidden" id="editQuantitySalePrice" name="SalePrice">
+                    <input type="hidden" id="editQuantityDescription" name="Description">
+                    <input type="hidden" id="editQuantityBarcode" name="Barcode">
+                </div>
+                <div class="modal-footer bg-slate-50 border-t border-slate-100 p-4 flex gap-2 justify-end">
+                    <button type="button" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-100 hover:text-slate-800 rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-amber-700 hover:bg-amber-800 rounded-xl shadow-xs shadow-amber-500 hover:-translate-y-0.5 transition-all">حفظ الكمية الجديدة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/price-printing.js"></script>
+    <script src="~/js/barcode.js"></script>
+    <script src="~/js/sweetalert-products.js"></script>
+    <script src="~/js/productjs/index.js"></script>
+    
+    <script>
+        // Set global variables for the page
+        window.currentCategoryId = @Model.CategoryId;
+        window.currentCategoryName = '@Model.CategoryName';
+    </script>
+    <script>
+        $(function () {
+            // استخدام SweetAlert أو التنبيهات المخصصة إذا كانت موجودة، مع fallback للتنبيهات العادية
+            var hasSuccess = @((TempData["SuccessMessage"] != null).ToString().ToLower());
+            var hasError = @((TempData["ErrorMessage"] != null).ToString().ToLower());
+            
+            if (hasSuccess) {
+                var msg = `@((TempData["SuccessMessage"]?.ToString() ?? "").Replace("`","\\`").Replace("\\", "\\\\").Replace("\r", "").Replace("\n", "\\n"))`;
+                if (msg && msg.length) {
+                    if(typeof showSuccessMessage === 'function') {
+                        showSuccessMessage('تم بنجاح', msg);
+                    } else if (typeof Swal !== 'undefined') {
+                         Swal.fire({ icon: 'success', title: 'تم بنجاح', text: msg });
+                    }
+                }
+            }
+            if (hasError) {
+                var emsg = `@((TempData["ErrorMessage"]?.ToString() ?? "").Replace("`","\\`").Replace("\\", "\\\\").Replace("\r", "").Replace("\n", "\\n"))`;
+                if (emsg && emsg.length) {
+                    if(typeof showErrorMessage === 'function') {
+                        showErrorMessage('خطأ', emsg);
+                    } else if (typeof Swal !== 'undefined') {
+                         Swal.fire({ icon: 'error', title: 'خطأ', text: emsg });
+                    }
+                }
+            }
+        });
+    </script>
+}

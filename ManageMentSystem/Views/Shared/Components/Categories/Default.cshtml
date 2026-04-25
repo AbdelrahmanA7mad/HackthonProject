@@ -1,0 +1,10 @@
+@model IEnumerable<ManageMentSystem.Models.Category>
+
+@foreach (var category in Model)
+{
+    <li>
+       <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Products" && ViewContext.RouteData.Values["Action"]?.ToString() == "ByCategory" && ViewContext.RouteData.Values["categoryId"]?.ToString() == category.Id.ToString() ? "active" : "") text-white" asp-controller="Products" asp-action="ByCategory" asp-route-categoryId="@category.Id">
+                            @category.Name
+                        </a>
+        </li>
+} 

@@ -1,0 +1,247 @@
+@model ManageMentSystem.ViewModels.CreateInstallmentPaymentViewModel
+@using ManageMentSystem.Models
+@inject ManageMentSystem.Services.UserServices.IUserService UserService
+@{
+    ViewData["Title"] = "إضافة دفعة جديدة";
+    var currencySymbol = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol;
+}
+
+@section Styles {
+
+    <style>
+        /* تنسيق Scrollbar ليتماشى مع باقي الصفحات */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+            }
+    </style>
+}
+
+<div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8" dir="rtl">
+
+    <div class="max-w-[1600px] mx-auto mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-hand-holding-usd text-indigo-800"></i>
+                إضافة دفعة جديدة
+            </h1>
+            <p class="text-slate-500 text-sm mt-1">تسجيل دفعة مالية للتقسيط المحدد.</p>
+        </div>
+        <a asp-action="Index" class="px-6 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-50 hover:text-indigo-800 transition-all shadow-sm flex items-center gap-2">
+            عودة للقائمة
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <div class="lg:col-span-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
+                    <div class="w-10 h-10 rounded-full bg-indigo-50 text-indigo-800 flex items-center justify-center">
+                        <i class="fas fa-file-invoice-dollar text-lg"></i>
+                    </div>
+                    <h2 class="font-bold text-lg text-slate-800">بيانات الدفعة</h2>
+                </div>
+
+                <div class="p-6">
+                    <form asp-action="Create" method="post" id="createPaymentForm">
+                        <input type="hidden" asp-for="InstallmentId" />
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label asp-for="Amount" class="block text-xs font-bold text-slate-500 mb-2">المبلغ المدفوع</label>
+                                <div class="relative">
+                                    <input asp-for="Amount" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-bold focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-300" placeholder="0.00" />
+                                    <span class="absolute left-4 top-3.5 text-slate-400 text-xs font-bold">@currencySymbol</span>
+                                </div>
+                                <span asp-validation-for="Amount" class="text-xs text-red-700 font-bold mt-1 block"></span>
+                            </div>
+
+                            <div>
+                                <label asp-for="PaymentDate" class="block text-xs font-bold text-slate-500 mb-2">تاريخ الدفع</label>
+                                <input asp-for="PaymentDate" type="date" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-700 font-medium focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all" />
+                                <span asp-validation-for="PaymentDate" class="text-xs text-red-700 font-bold mt-1 block"></span>
+                            </div>
+
+                            <div>
+                                <label asp-for="PaymentMethodId" class="block text-xs font-bold text-slate-500 mb-2">طريقة الدفع</label>
+                                <div class="relative">
+                                    <select asp-for="PaymentMethodId" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-700 font-medium focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all appearance-none cursor-pointer">
+                                        <option value="">-- اختر طريقة الدفع --</option>
+                                        @foreach (var pm in (IEnumerable<ManageMentSystem.Models.PaymentMethodOption>)(ViewBag.PaymentMethods ?? new List<ManageMentSystem.Models.PaymentMethodOption>()))
+                                        {
+                                            <option value="@pm.Id">@pm.Name</option>
+                                        }
+                                    </select>
+                                    <i class="fas fa-chevron-down absolute left-4 top-4 text-slate-400 pointer-events-none"></i>
+                                </div>
+                                <span asp-validation-for="PaymentMethodId" class="text-xs text-red-700 font-bold mt-1 block"></span>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label asp-for="Notes" class="block text-xs font-bold text-slate-500 mb-2">ملاحظات إضافية</label>
+                                <textarea asp-for="Notes" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:bg-white focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all resize-none placeholder:text-slate-400" placeholder="أدخل أي تفاصيل إضافية هنا..."></textarea>
+                                <span asp-validation-for="Notes" class="text-xs text-red-700 font-bold mt-1 block"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-6 border-t border-slate-100">
+                            <a asp-action="Index" class="px-6 py-3 rounded-xl bg-indigo-50 text-slate-800 hover:text-slate-600 font-bold border border-slate-200 hover:bg-indigo-100 hover:-translate-y-0.5 transition-all">إلغاء</a>
+
+                            
+                                <button type="submit" id="savePaymentBtn" class="px-8 py-3 bg-indigo-800 text-white rounded-xl font-bold hover:bg-indigo-900 shadow-lg shadow-indigo-200 hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                                    <i class="fas fa-save"></i>
+                                    <span>حفظ الدفعة</span>
+                                </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-4 space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden sticky top-6">
+                <div class="p-4 border-b border-slate-100 bg-slate-50/50">
+                    <h2 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fas fa-info-circle text-indigo-800"></i> ملخص التقسيط
+                    </h2>
+                </div>
+
+                <div class="p-5 space-y-4">
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-bold">العميل</p>
+                            <p class="font-bold text-slate-800 text-sm">@Model.CustomerName</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-bold">المنتج</p>
+                            <p class="font-bold text-slate-800 text-sm">@Model.ProductName</p>
+                        </div>
+                    </div>
+
+                    <hr class="border-slate-100" />
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-md">
+                            <span class="text-slate-500 font-bold">الدفعة الشهرية</span>
+                            <span class="font-bold text-indigo-800 bg-indigo-50 px-2 py-1 rounded-lg">@Model.MonthlyPayment.ToString("N0")</span>
+                        </div>
+
+                        <div class="flex justify-between items-center text-md">
+                            <span class="text-slate-500 font-bold">إجمالي المدفوع</span>
+                            <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg">@Model.TotalPaid.ToString("N0")</span>
+                        </div>
+
+                        <div class="flex justify-between items-center text-md">
+                            <span class="text-slate-500 font-bold">المبلغ المتبقي</span>
+                            <span class="font-bold text-red-700 bg-red-50 px-2 py-1 rounded-lg">@Model.RemainingAmount.ToString("N0")</span>
+                        </div>
+                    </div>
+
+                    <hr class="border-slate-100" />
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-slate-50 p-3 rounded-xl text-center border border-slate-100">
+                            <span class="block text-xs text-slate-400 font-bold mb-1">الأشهر المدفوعة</span>
+                            <span class="font-bold text-slate-700">@Model.PaidMonths <span class="text-xs text-slate-400 font-normal">من @Model.NumberOfMonths</span></span>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-center border border-slate-100">
+                            <span class="block text-xs text-slate-400 font-bold mb-1">الأشهر المتبقية</span>
+                            <span class="font-bold text-slate-700">@Model.RemainingMonths</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-indigo-800">الشهر التالي للدفع</span>
+                            <span class="text-xs font-bold bg-white text-indigo-800 px-2 py-1 rounded-full border border-indigo-100">#@Model.NextMonthToPay</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-indigo-800/70 font-bold">تاريخ الاستحقاق</span>
+                            <span class="font-bold text-indigo-800 dir-ltr">@Model.NextMonthDueDate.ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+            // تعيين القيمة الافتراضية للدفعة
+            var amountInput = document.getElementById('Amount');
+            var monthlyPayment = @Model.MonthlyPayment;
+
+            // إذا كان الحقل فارغاً أو يساوي صفر، نضع قيمة القسط الشهري كافتراضي
+            if (amountInput && monthlyPayment > 0) {
+                var currentValue = parseFloat(amountInput.value) || 0;
+                if (currentValue === 0) {
+                    amountInput.value = monthlyPayment;
+                }
+            }
+
+            // منع الإرسال المتكرر
+            var form = $('#createPaymentForm');
+            var saveBtn = $('#savePaymentBtn');
+            var isSubmitting = false;
+
+            form.on('submit', function(e) {
+                if (!$(this).valid()) return;
+
+                if (isSubmitting) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                isSubmitting = true;
+
+                // تغيير شكل الزر أثناء التحميل
+                var originalContent = saveBtn.html();
+                saveBtn.prop('disabled', true);
+                saveBtn.html('<i class="fas fa-circle-notch fa-spin"></i> جاري الحفظ...');
+                saveBtn.addClass('opacity-75 cursor-not-allowed');
+
+                // إعادة تفعيل الزر بعد 10 ثواني في حالة حدوث خطأ في الشبكة
+                setTimeout(function() {
+                    if (isSubmitting) {
+                        isSubmitting = false;
+                        saveBtn.prop('disabled', false);
+                        saveBtn.html(originalContent);
+                        saveBtn.removeClass('opacity-75 cursor-not-allowed');
+                    }
+                }, 10000);
+            });
+        });
+    </script>
+}

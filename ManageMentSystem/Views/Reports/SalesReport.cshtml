@@ -1,0 +1,259 @@
+@model ManageMentSystem.ViewModels.SalesReportViewModel
+@{
+    ViewData["Title"] = "تقرير المبيعات";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-chart-bar text-indigo-800"></i> تقرير المبيعات الشامل
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">تحليل مفصل للمبيعات والأرباح</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+            <a href="@Url.Action("ExportSalesReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate, customerId = Model.CustomerId, categoryId = Model.CategoryId })" 
+               class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-emerald-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <i class="fas fa-file-excel"></i> تصدير Excel
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6 print:hidden">
+        <form method="get" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">من تاريخ</label>
+                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all" />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">إلى تاريخ</label>
+                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all" />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">العميل</label>
+                    <select name="customerId" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all bg-white cursor-pointer">
+                        <option value="">جميع العملاء</option>
+                        @foreach (var customer in Model.Customers)
+                        {
+                            <option value="@customer.Id" selected="@(Model.CustomerId == customer.Id)">
+                                @customer.FullName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">الفئة</label>
+                    <select name="categoryId" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all bg-white cursor-pointer">
+                        <option value="">جميع الفئات</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.Id" selected="@(Model.CategoryId == category.Id)">
+                                @category.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3 pt-2">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-indigo-500/20 flex items-center gap-2">
+                    <i class="fas fa-search"></i> تطبيق الفلاتر
+                </button>
+                <a href="@Url.Action("SalesReport")" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2">
+                    <i class="fas fa-times"></i> إلغاء الفلاتر
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Summary Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-xl mb-3">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">إجمالي المبيعات</div>
+            <div class="text-2xl font-bold text-slate-800">@Model.TotalSales</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl mb-3">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">إجمالي الإيرادات</div>
+            <div class="text-2xl font-bold text-slate-800">@Model.TotalRevenue.ToString("C")</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl mb-3">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">صافي الربح</div>
+            <div class="text-2xl font-bold text-slate-800">@Model.GrossProfit.ToString("C")</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-3">
+                <i class="fas fa-percentage"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">هامش الربح</div>
+            <div class="text-2xl font-bold text-slate-800">@Model.ProfitMargin.ToString("F1")%</div>
+        </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Additional Details -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
+                <i class="fas fa-info-circle text-indigo-500"></i> تفاصيل إضافية
+            </h5>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">إجمالي الخصومات</span>
+                    <span class="font-bold text-slate-800">@Model.TotalDiscount.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">صافي الإيرادات</span>
+                    <span class="font-bold text-slate-800">@Model.NetRevenue.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">إجمالي التكلفة</span>
+                    <span class="font-bold text-slate-800">@Model.TotalCost.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">إجمالي العناصر</span>
+                    <span class="font-bold text-slate-800">@Model.TotalItems</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">متوسط قيمة البيع</span>
+                    <span class="font-bold text-slate-800">@Model.AverageSaleValue.ToString("C")</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+         <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
+                <i class="fas fa-chart-area text-indigo-500"></i> المبيعات اليومية
+            </h5>
+            <div class="relative h-64 w-full">
+                <canvas id="dailySalesChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h5 class="font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-table text-indigo-500"></i> تفاصيل المبيعات
+            </h5>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-right">
+                <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100">
+                    <tr>
+                        <th class="px-6 py-4">رقم البيع</th>
+                        <th class="px-6 py-4">التاريخ</th>
+                        <th class="px-6 py-4">العميل</th>
+                        <th class="px-6 py-4">إجمالي المبلغ</th>
+                        <th class="px-6 py-4">الخصم</th>
+                        <th class="px-6 py-4">صافي المبلغ</th>
+                        <th class="px-6 py-4 text-center">عدد العناصر</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach (var sale in Model.Sales)
+                    {
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="px-6 py-4 font-mono text-slate-700">#@sale.Id</td>
+                            <td class="px-6 py-4 text-slate-600">@sale.SaleDate.ToString("dd/MM/yyyy")</td>
+                            <td class="px-6 py-4 font-bold text-slate-700">@(sale.Customer?.FullName ?? "عميل غير مسجل")</td>
+                            <td class="px-6 py-4 font-medium text-slate-800">@sale.TotalAmount.ToString("C")</td>
+                            <td class="px-6 py-4 text-red-500">@sale.DiscountAmount.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-emerald-600">@sale.AmountAfterDiscount.ToString("C")</td>
+                            <td class="px-6 py-4 text-center text-slate-500">@sale.SaleItems.Count</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/chartjs/chart.umd.js"></script>
+    <script>
+        const ctx = document.getElementById('dailySalesChart').getContext('2d');
+        const dailySalesData = @Html.Raw(Json.Serialize(Model.DailySales));
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dailySalesData.map(d => new Date(d.date).toLocaleDateString('ar-EG')),
+                datasets: [{
+                    label: 'الإيرادات',
+                    data: dailySalesData.map(d => d.revenue),
+                    borderColor: '#059669', // emerald-600
+                    backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: '#059669',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#059669'
+                }, {
+                    label: 'الأرباح',
+                    data: dailySalesData.map(d => d.profit),
+                    borderColor: '#4f46e5', // indigo-600
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: '#4f46e5',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#4f46e5'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { family: 'Cairo' },
+                            usePointStyle: true,
+                            boxWidth: 8
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)', // slate-900
+                        titleFont: { family: 'Cairo' },
+                        bodyFont: { family: 'Cairo' },
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: true
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Cairo' } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' }, // slate-100
+                        ticks: { font: { family: 'Cairo' } }
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            }
+        });
+    </script>
+}

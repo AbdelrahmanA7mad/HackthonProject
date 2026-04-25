@@ -1,0 +1,515 @@
+@model ManageMentSystem.ViewModels.InstallmentDetailsViewModel
+@{
+    ViewData["Title"] = "تفاصيل التقسيط";
+    var installment = Model.Installment;
+    var products = installment.InstallmentItems?.Select(ii => ii.Product).ToList() ?? new List<Product>();
+    var currencySymbol = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol;
+}
+
+
+<div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8" dir="rtl">
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="max-w-[1600px] mx-auto mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-xl flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-check-circle text-lg"></i>
+                <span class="font-bold">@ViewBag.SuccessMessage</span>
+            </div>
+            <button type="button" onclick="this.parentElement.remove()" class="text-emerald-400 hover:text-emerald-700 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    }
+
+    <div class="max-w-[1600px] mx-auto mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-4">
+                تفاصيل عقد التقسيط
+                <span class="text-md font-bold text-indigo-800 bg-indigo-100 px-2 py-1 rounded-lg font-bold">#@Model.Installment.SequenceNumber</span>
+            </h1>
+            <p class="text-slate-600 text-sm mt-1 font-bold">عرض التفاصيل المالية وجدول الدفعات وحالة السداد.</p>
+        </div>
+        <a href="@Url.Action("Index")" class="px-6 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-indigo-100 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
+            عودة للقائمة
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="max-w-[1600px] mx-auto grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+        <div class="xl:col-span-8 space-y-6">
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
+                    <div class="w-10 h-10 rounded-full bg-indigo-50 text-indigo-800 flex items-center justify-center">
+                        <i class="fas fa-file-contract text-lg"></i>
+                    </div>
+                    <h2 class="font-bold text-lg text-slate-800">بيانات العقد والعميل</h2>
+                    <div class="mr-auto">
+                        @{
+                            var statusStyle = Model.Installment.Status switch
+                            {
+                                "نشط" => "bg-emerald-100 text-emerald-700 border-emerald-200",
+                                "مكتمل" => "bg-indigo-100 text-indigo-800 border-indigo-200",
+                                "متأخر" => "bg-red-100 text-red-700 border-red-200",
+                                _ => "bg-slate-100 text-slate-700 border-slate-200"
+                            };
+                        }
+                        <span class="px-3 py-1 rounded-full text-xs font-bold border @statusStyle">
+                            @Model.Installment.Status
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-2">العميل</label>
+                        <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-slate-50">
+                            <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-800">@Model.Installment.Customer?.FullName</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-2">المنتجات المباعة</label>
+                        <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 min-h-[66px] flex flex-wrap items-center gap-2">
+                            @if (products.Any())
+                            {
+                                foreach (var product in products)
+                                {
+                                    <span class="bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm">
+                                        @(product?.Name ?? "غير محدد")
+                                    </span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-slate-400 text-sm">لا توجد منتجات محددة</span>
+                            }
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Installment.GuarantorName) || !string.IsNullOrEmpty(Model.Installment.GuarantorPhone))
+                    {
+                        <div class="md:col-span-2 pt-4 border-t border-slate-100">
+                            <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <i class="fas fa-shield-alt text-slate-400"></i> بيانات الضامن
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl">
+                                    <span class="text-slate-400 text-xs font-bold">الاسم:</span>
+                                    <span class="text-slate-700 font-bold text-sm">@(Model.Installment.GuarantorName ?? "غير محدد")</span>
+                                </div>
+                                <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl">
+                                    <span class="text-slate-400 text-xs font-bold">الهاتف:</span>
+                                    <span class="text-slate-700 font-bold text-sm">@(Model.Installment.GuarantorPhone ?? "غير محدد")</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @if (Model.Items != null && Model.Items.Any())
+            {
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                            <i class="fas fa-box-open text-sm"></i>
+                        </div>
+                        <h2 class="font-bold text-lg text-slate-800">تفاصيل المنتجات والأسعار</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-sm">
+                            <thead class="bg-slate-50 text-slate-500 font-bold text-xs uppercase border-b border-slate-100">
+                                <tr>
+                                    <th class="px-5 py-3">#</th>
+                                    <th class="px-5 py-3">المنتج</th>
+                                    <th class="px-5 py-3 text-center">الكمية</th>
+                                    <th class="px-5 py-3">سعر الوحدة</th>
+                                    <th class="px-5 py-3">الإجمالي</th>
+                                    <th class="px-5 py-3">ملاحظات</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr class="hover:bg-slate-50/50 transition-colors">
+                                        <td class="px-5 py-4 font-bold text-slate-400">@(Model.Items.IndexOf(item) + 1)</td>
+                                        <td class="px-5 py-4 font-bold text-slate-700">
+                                            @if (item.ProductId.HasValue)
+                                            {
+                                                <a href="@Url.Action("Details", "Products", new { id = item.ProductId.Value })" class="hover:text-indigo-800 transition-colors">
+                                                    @(item.ProductName ?? "منتج غير محدد")
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span>منتج غير محدد</span>
+                                            }
+                                        </td>
+                                        <td class="px-5 py-4 text-center"><span class="bg-slate-100 px-2 py-1 rounded text-xs font-bold text-slate-600">@item.Quantity</span></td>
+                                        <td class="px-5 py-4 text-slate-600">@item.UnitPrice.ToString("N0")</td>
+                                        <td class="px-5 py-4 font-bold text-emerald-700">@item.TotalPrice.ToString("N0")</td>
+                                        <td class="px-5 py-4 text-slate-400 text-xs">@(item.Description ?? "-")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot class="bg-slate-50 border-t border-slate-100 font-bold text-slate-800">
+                                <tr>
+                                    <td colspan="4" class="px-5 py-3 text-left pl-8">المجموع الكلي للمنتجات:</td>
+                                    <td colspan="2" class="px-5 py-3 text-lg">@Model.Items.Sum(i => i.TotalPrice).ToString("N0") <small class="text-xs font-normal text-slate-500">ج.م</small></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            }
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-indigo-800"></i>
+                        جدول الدفعات الشهرية
+                    </h3>
+
+                    <div class="flex gap-2 text-xs font-bold">
+                        <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg flex items-center gap-1"><i class="fas fa-check"></i> @Model.MonthlyPayments.Count(m => m.IsPaid) مدفوع</span>
+                        <span class="px-2 py-1 bg-red-100 text-red-700 rounded-lg flex items-center gap-1"><i class="fas fa-exclamation"></i> @Model.MonthlyPayments.Count(m => m.Status == "متأخر") متأخر</span>
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-lg">الكل: @Model.MonthlyPayments.Count</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    @foreach (var monthPayment in Model.MonthlyPayments)
+                    {
+                        var cardStyle = monthPayment.Status switch
+                        {
+                            "مدفوع" => "border-emerald-500 bg-emerald-300/30",
+                            "متأخر" => "border-red-500 bg-red-300/30",
+                            _ => "border-slate-500 bg-indigo-300/30"
+                        };
+
+                        if (monthPayment.IsExtraMonth) cardStyle = "extra-month-card shadow-sm";
+
+                        <div class="relative rounded-xl border p-4 flex flex-col justify-between transition-all hover:shadow-md @cardStyle">
+
+                            <div class="flex justify-between items-start mb-3">
+                                @if (monthPayment.IsExtraMonth)
+                                {
+                                    <span class="bg-amber-100 text-amber-700 text-sm font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                                        <i class="fas fa-plus-circle"></i> شهر إضافي
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="bg-slate-50 text-slate-600 text-sm font-bold px-2 py-1 rounded-full">
+                                        الشهر @monthPayment.MonthNumber
+                                    </span>
+                                }
+
+                                @if (monthPayment.IsPaid)
+                                {
+                                    <div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs shadow-sm shadow-emerald-200">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                }
+                                else if (monthPayment.Status == "متأخر")
+                                {
+                                    <div class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs shadow-sm shadow-red-200 animate-pulse">
+                                        <i class="fas fa-exclamation"></i>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="text-center mb-2">
+                                <span class="block text-2xl font-bold text-slate-800 tracking-tight mb-2">
+                                    @monthPayment.Amount.ToString("N0")
+                                    <span class="text-xs text-slate-600 font-semibold">ج.م</span>
+                                </span>
+                                <span class="text-xs font-bold text-slate-500">تاريخ الاستحقاق</span>
+                                <div class="text-sm font-bold text-slate-700">@monthPayment.DueDate.ToString("dd/MM/yyyy")</div>
+                            </div>
+
+                            <div class="border-t border-slate-100/50 pt-3 mt-auto">
+                                @if (monthPayment.IsPaid)
+                                {
+                                    <div class="text-center">
+                                        <span class="text-sm font-bold text-emerald-700 block mb-1">تم الدفع بالكامل</span>
+                                        @if (monthPayment.PaymentDate.HasValue)
+                                        {
+                                            <span class="text-sm text-slate-600 bg-white px-2 py-0.5 rounded-full border border-slate-100">
+                                                @monthPayment.PaymentDate.Value.ToString("dd/MM/yyyy")
+                                            </span>
+                                        }
+                                    </div>
+                                }
+                                else if (monthPayment.PaidAmount.HasValue && monthPayment.PaidAmount > 0)
+                                {
+                                    <div class="flex justify-between items-center text-xs">
+                                        <span class="text-slate-600">المدفوع:</span>
+                                        <span class="font-bold text-emerald-700">@monthPayment.PaidAmount.Value.ToString("N0")</span>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="text-center text-sm text-slate-600 font-medium">
+                                        لم يتم الدفع
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="xl:col-span-4 space-y-6">
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden top-6">
+                <div class="p-4 border-b border-slate-100 bg-slate-50/50">
+                    <h2 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fas fa-calculator text-indigo-800"></i> الملخص المالي
+                    </h2>
+                </div>
+
+                <div class="p-5 space-y-6">
+                    <div class="flex justify-between items-end">
+                        <span class="text-md font-bold text-slate-600">الإجمالي (شامل الفائدة)</span>
+                        <span class="text-xl font-extrabold text-slate-700">@Model.Installment.TotalWithInterest.ToString("N0")</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 block mb-1">الأساسي</span>
+                            <span class="text-md font-bold text-slate-700">@Model.Installment.TotalAmount.ToString("N0")</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 block mb-1">الفائدة (@Model.Installment.InterestRate%)</span>
+                            <span class="text-md font-bold text-red-700">+@Model.Installment.InterestAmount.ToString("N0")</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 block mb-1">الدفعة المقدمة</span>
+                            <span class="text-md font-bold text-emerald-700">@Model.Installment.DownPayment.ToString("N0")</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 block mb-1">القسط الشهري</span>
+                            <span class="text-md font-bold text-indigo-800">@Model.Installment.MonthlyPayment.ToString("N0")</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
+                        <div class="flex justify-between text-sm">
+                            <span class="font-bold text-slate-600">المدفوع</span>
+                            <span class="font-bold text-emerald-700">@Model.Installment.TotalPaid.ToString("N0")</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="font-bold text-slate-600">المتبقي</span>
+                            <span class="font-bold text-red-700">@Model.Installment.RemainingAmount.ToString("N0")</span>
+                        </div>
+
+                        @{
+                            var percentage = Model.Installment.TotalWithInterest > 0
+                            ? (Model.Installment.TotalPaid / Model.Installment.TotalWithInterest) * 100
+                            : 0;
+                        }
+                        <div class="relative pt-1">
+                            <div class="flex mb-2 items-center justify-between">
+                                <div>
+                                    <span class="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-800 bg-indigo-100">
+                                        نسبة السداد
+                                    </span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-semibold inline-block text-indigo-800">
+                                        @percentage.ToString("0")%
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="overflow-hidden h-2 mb-4 text-sm flex rounded bg-indigo-100">
+                                <div style="width:@percentage%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-800 transition-all duration-500"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-md text-slate-600 space-y-2 pt-2 border-t border-slate-100">
+                        <div class="flex justify-between">
+                            <span>تاريخ البدء:</span>
+                            <span class="font-bold text-slate-600">@Model.Installment.StartDate.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>تاريخ الانتهاء المتوقع:</span>
+                            <span class="font-bold text-slate-700">
+                                @{
+                                    var totalMonths = Model.Installment.NumberOfMonths + (Model.Installment.HasExtraMonth ? 1 : 0);
+                                }
+                                @Model.Installment.StartDate.AddMonths(totalMonths).ToString("dd/MM/yyyy")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100">
+                    <h2 class="font-bold text-sm text-slate-800">إجراءات سريعة</h2>
+                </div>
+                <div class="p-4 space-y-3">
+                    @if (Model.Installment.Status != "مكتمل")
+                    {
+                        <a href="@Url.Action("Create", "InstallmentPayments", new { installmentId = Model.Installment.Id })"
+                           class="block w-full py-3 bg-emerald-700 text-white text-center rounded-xl font-bold hover:bg-emerald-800 shadow-lg shadow-emerald-200 hover:-translate-y-0.5 transition-all">
+                            <i class="fas fa-hand-holding-usd ml-2"></i> تسجيل دفعة جديدة
+                        </a>
+                    }
+
+                    <button type="button" onclick="deleteInstallment(@Model.Installment.Id)"
+                            class="block w-full py-3 bg-red-50 border border-red-200 text-red-700 text-center rounded-xl font-bold hover:bg-red-100 hover:-translate-y-0.5 transition-all">
+                        <i class="fas fa-trash-alt ml-2"></i> حذف التقسيط بالكامل
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteInstallmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-2xl shadow-2xl">
+            <div class="px-6 py-5 bg-white border-b border-slate-100 flex justify-between items-center rounded-t-2xl">
+                <h5 class="text-xl font-bold text-slate-800">تأكيد الحذف</h5>
+                <button type="button" class="text-slate-400 hover:text-red-700 transition-colors" data-bs-dismiss="modal">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <div class="w-16 h-16 bg-red-100 text-red-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-triangle text-3xl"></i>
+                </div>
+                <p class="text-center text-slate-600 font-medium mb-6">هل أنت متأكد من رغبتك في حذف هذا التقسيط نهائياً؟</p>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4">
+                    <div class="flex items-start gap-3">
+                        <input class="w-5 h-5 text-indigo-800 rounded focus:ring-indigo-700 border-gray-300 mt-1" type="checkbox" id="restoreInventoryCheckbox">
+                        <label class="text-sm" for="restoreInventoryCheckbox">
+                            <span class="block font-bold text-slate-800">إرجاع المنتجات للمخزون</span>
+                            <span class="block text-slate-500 text-xs mt-1">عند التحديد، سيتم إعادة الكميات المحجوزة للمخزون تلقائياً.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <p class="text-xs text-red-700 text-center font-bold">لا يمكن التراجع عن هذا الإجراء بعد التنفيذ.</p>
+            </div>
+
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-3 rounded-b-2xl">
+                <button type="button" class="px-5 py-2.5 rounded-xl bg-white text-slate-600 font-bold border border-slate-200 hover:bg-slate-50" data-bs-dismiss="modal">إلغاء</button>
+
+                <form id="deleteInstallmentForm" method="post" class="inline-block">
+                    <input type="hidden" id="restoreInventoryHidden" name="restoreInventory" value="false">
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-red-700 text-white font-bold hover:bg-red-700 shadow-lg shadow-red-200">تأكيد الحذف</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // دالة عرض المودال (تحافظ على استخدام Bootstrap JS الموجود مسبقاً في المشروع)
+        function deleteInstallment(id) {
+            $('#deleteInstallmentForm').attr('action', '@Url.Action("Delete", "Installments")/' + id);
+            $('#restoreInventoryCheckbox').prop('checked', false);
+            $('#restoreInventoryHidden').val('false');
+            $('#deleteInstallmentModal').modal('show');
+        }
+
+        // منطق التعامل مع Checkbox الحذف
+        $('#restoreInventoryCheckbox').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            $('#restoreInventoryHidden').val(isChecked.toString());
+        });
+
+        $('#deleteInstallmentForm').on('submit', function(e) {
+            e.preventDefault();
+            var isChecked = $('#restoreInventoryCheckbox').is(':checked');
+            $('#restoreInventoryHidden').val(isChecked.toString());
+
+            var formData = {
+                __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                restoreInventory: isChecked
+            };
+
+            const btn = $(this).find('button[type="submit"]');
+            const originalText = btn.text();
+            btn.prop('disabled', true).html('<i class="fas fa-circle-notch fa-spin ml-1"></i> جاري الحذف...');
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                success: function(result) {
+                    $('#deleteInstallmentModal').modal('hide');
+                    window.location.href = '@Url.Action("Index", "Installments")';
+                },
+                error: function(xhr, status, error) {
+                    alert('حدث خطأ أثناء حذف التقسيط: ' + error);
+                    btn.prop('disabled', false).text(originalText);
+                }
+            });
+        });
+
+        // دوال الشهر الإضافي (Ajax)
+        function addExtraMonth(installmentId) {
+            if (confirm('هل أنت متأكد من إضافة الشهر الإضافي؟')) {
+                $.ajax({
+                    url: '@Url.Action("AddExtraMonth", "Installments")/' + installmentId,
+                    type: 'POST',
+                    data: {
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            location.reload();
+                        } else {
+                            alert('فشل في إضافة الشهر الإضافي: ' + result.message);
+                        }
+                    },
+                    error: function() {
+                        alert('حدث خطأ أثناء الاتصال بالخادم');
+                    }
+                });
+            }
+        }
+
+        function removeExtraMonth(installmentId) {
+            if (confirm('هل أنت متأكد من إزالة الشهر الإضافي؟')) {
+                $.ajax({
+                    url: '@Url.Action("RemoveExtraMonth", "Installments")/' + installmentId,
+                    type: 'POST',
+                    data: {
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            location.reload();
+                        } else {
+                            alert('فشل في إزالة الشهر الإضافي: ' + result.message);
+                        }
+                    },
+                    error: function() {
+                        alert('حدث خطأ أثناء الاتصال بالخادم');
+                    }
+                });
+            }
+        }
+    </script>
+}

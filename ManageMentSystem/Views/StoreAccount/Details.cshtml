@@ -1,0 +1,95 @@
+@model ManageMentSystem.Models.StoreAccount
+@using ManageMentSystem.Helpers
+
+@{
+    ViewData["Title"] = "تفاصيل العملية المالية";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <div class="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-file-invoice-dollar text-indigo-800"></i> تفاصيل العملية المالية
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">عرض كافة تفاصيل العملية المسجلة</p>
+        </div>
+        <div class="flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-amber-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <i class="fas fa-edit"></i> تعديل
+            </a>
+            <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                العودة<i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Details Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Name -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">اسم العملية</label>
+                <p class="font-bold text-slate-800 text-lg">@Model.TransactionName</p>
+            </div>
+
+            <!-- Type -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">نوع العملية</label>
+                <div class="mt-1">
+                    <span class="px-3 py-1 rounded-full font-bold text-sm @(Model.TransactionType == TransactionType.Income ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-red-100 text-red-800 border border-red-200")">
+                        @Model.TransactionType.GetDisplayName()
+                    </span>
+                </div>
+            </div>
+
+            <!-- Amount -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">المبلغ</label>
+                <p class="font-bold text-xl @(Model.TransactionType == TransactionType.Income ? "text-emerald-700" : "text-red-700")">@Model.Amount.ToString("C")</p>
+            </div>
+
+            <!-- Date -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">التاريخ</label>
+                <p class="font-bold text-slate-800 text-lg">
+                    <i class="fas fa-calendar-alt text-slate-400 ml-2"></i>
+                    @Model.TransactionDate.ToString("yyyy-MM-dd")
+                </p>
+            </div>
+            
+            <!-- Time -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">الوقت</label>
+                <p class="font-bold text-slate-800 text-lg">
+                    <i class="fas fa-clock text-slate-400 ml-2"></i>
+                    @Model.TransactionDate.ToString("HH:mm:ss")
+                </p>
+            </div>
+
+            <!-- Category -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">الفئة</label>
+                <p class="font-bold text-slate-800">
+                    <i class="fas fa-tag text-slate-400 ml-2"></i>
+                    @(Model.Category ?? "غير محدد")
+                </p>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">طريقة الدفع</label>
+                <p class="font-bold text-indigo-800">
+                    <i class="fas fa-credit-card ml-2 text-indigo-400"></i>
+                    @Model.PaymentMethod?.Name
+                </p>
+            </div>
+
+            <!-- Description -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 md:col-span-2">
+                <label class="block text-xs font-bold text-slate-500 mb-1">الوصف</label>
+                <p class="font-bold text-slate-800 leading-relaxed">@(Model.Description ?? "-")</p>
+            </div>
+        </div>
+    </div>
+</div>

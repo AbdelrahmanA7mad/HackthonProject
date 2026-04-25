@@ -1,0 +1,202 @@
+@model ManageMentSystem.ViewModels.FinancialReportViewModel
+@{
+    ViewData["Title"] = "التقرير المالي";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-chart-pie text-indigo-800"></i> التقرير المالي الشامل
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">تحليل الإيرادات والمصروفات والمركز المالي</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+            <a href="@Url.Action("ExportFinancialReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" 
+               class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-emerald-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <i class="fas fa-file-excel"></i> تصدير Excel
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6 print:hidden">
+        <form method="get" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">من تاريخ</label>
+                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all" />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">إلى تاريخ</label>
+                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all" />
+                </div>
+                <div class="flex gap-3">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-indigo-500/20 flex items-center gap-2 flex-grow justify-center">
+                        <i class="fas fa-search"></i> تطبيق
+                    </button>
+                    <a href="@Url.Action("FinancialReport")" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 flex-grow justify-center">
+                        <i class="fas fa-times"></i> إلغاء
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Summary Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl mb-3">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">إجمالي الإيرادات</div>
+            <div class="text-2xl font-bold text-emerald-600">@Model.TotalIncome.ToString("C")</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-600 text-xl mb-3">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">إجمالي المصروفات</div>
+            <div class="text-2xl font-bold text-red-600">@Model.TotalExpenses.ToString("C")</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full @(Model.NetProfit >= 0 ? "bg-indigo-50 text-indigo-600" : "bg-red-50 text-red-600") flex items-center justify-center text-xl mb-3">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">صافي الربح</div>
+            <div class="text-2xl font-bold @(Model.NetProfit >= 0 ? "text-indigo-600" : "text-red-600")">@Model.NetProfit.ToString("C")</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-xl mb-3">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <div class="text-sm font-bold text-slate-500 mb-1">الرصيد النقدي</div>
+            <div class="text-2xl font-bold @(Model.CashBalance >= 0 ? "text-blue-600" : "text-red-600")">@Model.CashBalance.ToString("C")</div>
+        </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Additional Details -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
+                <i class="fas fa-info-circle text-indigo-500"></i> ملخص المركز المالي
+            </h5>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">إجمالي الأصول</span>
+                    <span class="font-bold text-emerald-600">@Model.TotalAssets.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">إجمالي الخصوم</span>
+                    <span class="font-bold text-red-600">@Model.TotalLiabilities.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">رأس المال العامل</span>
+                    <span class="font-bold @(Model.WorkingCapital >= 0 ? "text-emerald-600" : "text-red-600")">@Model.WorkingCapital.ToString("C")</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-slate-600 font-medium">عدد المعاملات</span>
+                    <span class="font-bold text-slate-800">@Model.TotalTransactions</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
+                <i class="fas fa-chart-pie text-indigo-500"></i> توزيع الإيرادات والمصروفات
+            </h5>
+            <div class="relative h-64 w-full flex justify-center">
+                <canvas id="financialChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h5 class="font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-list text-indigo-500"></i> سجل المعاملات المالية
+            </h5>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-right">
+                <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100">
+                    <tr>
+                        <th class="px-6 py-4">التاريخ</th>
+                        <th class="px-6 py-4">الوصف</th>
+                        <th class="px-6 py-4">نوع العملية</th>
+                        <th class="px-6 py-4">المبلغ</th>
+                        <th class="px-6 py-4">طريقة الدفع</th>
+                        <th class="px-6 py-4">الرصيد</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach (var transaction in Model.Transactions)
+                    {
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="px-6 py-4 text-slate-600">@transaction.TransactionDate.ToString("dd/MM/yyyy")</td>
+                            <td class="px-6 py-4 font-medium text-slate-800">@transaction.Description</td>
+                            <td class="px-6 py-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold @(transaction.TransactionType == ManageMentSystem.Models.TransactionType.Income ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700")">
+                                    @(transaction.TransactionType == ManageMentSystem.Models.TransactionType.Income ? "إيراد" : "مصروف")
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 font-bold @(transaction.TransactionType == ManageMentSystem.Models.TransactionType.Income ? "text-emerald-600" : "text-red-600")">
+                                @transaction.Amount.ToString("C")
+                            </td>
+                            <td class="px-6 py-4 text-slate-600">@(transaction.PaymentMethod is string ? transaction.PaymentMethod : transaction.PaymentMethod?.ToString())</td>
+                            <td class="px-6 py-4 font-mono text-slate-600">@transaction.Capital.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/chartjs/chart.umd.js"></script>
+    <script>
+        const ctx = document.getElementById('financialChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['الإيرادات', 'المصروفات'],
+                datasets: [{
+                    data: [@Model.TotalIncome, @Model.TotalExpenses],
+                    backgroundColor: [
+                        '#10b981', // emerald-500
+                        '#ef4444'  // red-500
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { family: 'Cairo', size: 12 },
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    },
+                     tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleFont: { family: 'Cairo' },
+                        bodyFont: { family: 'Cairo' },
+                        padding: 10,
+                        cornerRadius: 8
+                    }
+                },
+                cutout: '70%',
+            }
+        });
+    </script>
+}

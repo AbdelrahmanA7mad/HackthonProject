@@ -1,0 +1,311 @@
+@using ManageMentSystem.Helpers
+@model IEnumerable<ManageMentSystem.Models.StoreAccount>
+@{
+    ViewData["Title"] = "تفاصيل الأقساط";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-credit-card text-indigo-800"></i> تفاصيل الأقساط
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">عرض وتحليلات الأقساط والدفعات</p>
+        </div>
+        <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+            العودة لحساب المحل<i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-8">
+        <div class="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
+            <i class="fas fa-filter text-indigo-800"></i>
+            <h6 class="font-bold text-slate-700">فلترة تفاصيل الأقساط</h6>
+        </div>
+        <form method="get" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+            <div class="md:col-span-3">
+                <label class="block text-sm font-bold text-slate-600 mb-2">من تاريخ</label>
+                <input type="date" name="fromDate" value="@(string.IsNullOrEmpty(Context.Request.Query["fromDate"]) ? (ViewBag.FromDate != null ? ((DateTime)ViewBag.FromDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["fromDate"] )" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none text-sm font-bold transition-all text-slate-700" />
+            </div>
+            <div class="md:col-span-3">
+                <label class="block text-sm font-bold text-slate-600 mb-2">إلى تاريخ</label>
+                <input type="date" name="toDate" value="@(string.IsNullOrEmpty(Context.Request.Query["toDate"]) ? (ViewBag.ToDate != null ? ((DateTime)ViewBag.ToDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["toDate"] )" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none text-sm font-bold transition-all text-slate-700" />
+            </div>
+            <div class="md:col-span-6">
+                <label class="block text-sm font-bold text-slate-600 mb-2">فترة سريعة</label>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('today')">اليوم</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('week')">الأسبوع</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('month')">الشهر</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('quarter')">الربع</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('year')">السنة</button>
+                    <button type="button" class="flex-1 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="clearDateRange()">الكل</button>
+                </div>
+            </div>
+            <div class="md:col-span-12 flex gap-2 mt-2">
+                <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-indigo-500/30 hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fas fa-search"></i> فلترة
+                </button>
+                <a asp-action="InstallmentDetails" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-times"></i> إلغاء
+                </a>
+            </div>
+            <input type="hidden" name="page" value="1" />
+        </form>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Down Payments -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-800 text-xl shadow-sm">
+                <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-slate-500 mb-1">إجمالي الدفعات المقدمة</p>
+                <h3 class="text-2xl font-bold text-indigo-800">@ViewBag.TotalDownPayments?.ToString("C")</h3>
+            </div>
+        </div>
+
+        <!-- Installment Payments -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-700 text-xl shadow-sm">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-slate-500 mb-1">إجمالي دفعات الأقساط</p>
+                <h3 class="text-2xl font-bold text-emerald-700">@ViewBag.TotalInstallmentPayments?.ToString("C")</h3>
+            </div>
+        </div>
+
+        <!-- Total Installments -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-700 text-xl shadow-sm">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-slate-500 mb-1">إجمالي الأقساط</p>
+                <h3 class="text-2xl font-bold text-sky-700">@ViewBag.TotalInstallments?.ToString("C")</h3>
+            </div>
+        </div>
+
+        <!-- Total Profit -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-700 text-xl shadow-sm">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-slate-500 mb-1">إجمالي الربح من الأقساط</p>
+                <h3 class="text-2xl font-bold text-amber-700">@ViewBag.TotalProfit?.ToString("C")</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden">
+        <div class="bg-slate-50/50 px-6 py-4 border-b border-slate-200">
+            <h6 class="font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-list text-indigo-800"></i> تفاصيل الأقساط
+            </h6>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="overflow-x-auto">
+                <table class="w-full text-right">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 text-sm uppercase font-bold text-center">
+                        <tr>
+                            <th class="px-6 py-4">التاريخ</th>
+                            <th class="px-6 py-4">اسم العملية</th>
+                            <th class="px-6 py-4">النوع</th>
+                            <th class="px-6 py-4">المبلغ</th>
+                            <th class="px-6 py-4">نوع الدفع</th>
+                            <th class="px-6 py-4">الربح</th>
+                            <th class="px-6 py-4">الوصف</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-slate-700 text-sm text-center">
+                        @foreach (var item in Model)
+                        {
+                            var isDownPayment = item.ReferenceNumber?.StartsWith("INST-DOWN") == true;
+                            var paymentType = isDownPayment ? "دفعة مقدمة" : "دفع قسط";
+                            
+                            var profit = 0m;
+                            var profitClass = "";
+                            
+                            if (!string.IsNullOrEmpty(item.Notes) && item.Notes.Contains("الربح:"))
+                            {
+                                var profitText = item.Notes.Split("الربح:")[1].Split("(")[0].Trim();
+                                if (decimal.TryParse(profitText.Replace("$", "").Replace(",", ""), out var parsedProfit))
+                                {
+                                    profit = parsedProfit;
+                                    profitClass = profit >= 0 ? "text-emerald-700" : "text-red-700";
+                                }
+                            }
+                            
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="px-6 py-4 font-bold">@item.TransactionDate.ToString("yyyy-MM-dd")</td>
+                                <td class="px-6 py-4 font-bold text-slate-800">@item.TransactionName</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2.5 py-1 rounded-full font-bold text-xs @(item.TransactionType == TransactionType.Income ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-red-100 text-red-800 border border-red-200")">
+                                        @item.TransactionType.GetDisplayName()
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 font-bold @(item.TransactionType == TransactionType.Income ? "text-emerald-700" : "text-red-700")">
+                                    @item.Amount.ToString("C")
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2.5 py-1 rounded-full font-bold text-xs @(isDownPayment ? "bg-indigo-100 text-indigo-800 border border-indigo-200" : "bg-emerald-100 text-emerald-800 border border-emerald-200")">
+                                        @paymentType
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 font-bold @profitClass">
+                                    @if (profit > 0)
+                                    {
+                                        <span>+@profit.ToString("C")</span>
+                                    }
+                                    else if (profit < 0)
+                                    {
+                                        <span>@profit.ToString("C")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-slate-400">-</span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 text-slate-500">@item.Description</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <div class="bg-slate-50 border-t border-slate-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="text-sm font-bold text-slate-500">
+                        عرض @(((ViewBag.CurrentPage - 1) * ViewBag.PageSize) + 1) إلى @Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalItems) من @ViewBag.TotalItems نتيجة
+                    </div>
+                    <div class="flex gap-1.5" dir="ltr">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <a href="@Url.Action("InstallmentDetails", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all">
+                                <i class="fas fa-chevron-left text-xs"></i>
+                            </a>
+                        }
+
+                        @{
+                            var startPage = Math.Max(1, ViewBag.CurrentPage - 2);
+                            var endPage = Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2);
+                        }
+
+                        @if (startPage > 1)
+                        {
+                            <a href="@Url.Action("InstallmentDetails", new { page = 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 transition-all text-xs font-bold">1</a>
+                            @if (startPage > 2)
+                            {
+                                <span class="w-8 h-8 flex items-center justify-center text-slate-400">...</span>
+                            }
+                        }
+
+                        @for (int i = startPage; i <= endPage; i++)
+                        {
+                            if (i == ViewBag.CurrentPage)
+                            {
+                                <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-800 text-white border border-indigo-800 text-xs font-bold shadow-sm shadow-indigo-200">@i</span>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("InstallmentDetails", new { page = i, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
+                                   class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all text-xs font-bold">@i</a>
+                            }
+                        }
+
+                        @if (endPage < ViewBag.TotalPages)
+                        {
+                            @if (endPage < ViewBag.TotalPages - 1)
+                            {
+                                <span class="w-8 h-8 flex items-center justify-center text-slate-400">...</span>
+                            }
+                            <a href="@Url.Action("InstallmentDetails", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 transition-all text-xs font-bold">@ViewBag.TotalPages</a>
+                        }
+
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <a href="@Url.Action("InstallmentDetails", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all">
+                                <i class="fas fa-chevron-right text-xs"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <div class="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                    <i class="fas fa-credit-card text-3xl text-slate-300"></i>
+                </div>
+                <h5 class="text-lg font-bold text-slate-800">لا توجد عمليات أقساط</h5>
+                <p class="text-slate-500 mt-1">لم يتم العثور على أي أقساط في الفترة المح ددة</p>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function setDateRange(range) {
+        const today = new Date();
+        let fromDate, toDate;
+        
+        switch(range) {
+            case 'today':
+                fromDate = toDate = today.toISOString().split('T')[0];
+                break;
+            case 'week':
+                const weekStart = new Date(today);
+                weekStart.setDate(today.getDate() - today.getDay());
+                fromDate = weekStart.toISOString().split('T')[0];
+                toDate = today.toISOString().split('T')[0];
+                break;
+            case 'month':
+                fromDate = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
+                toDate = today.toISOString().split('T')[0];
+                break;
+            case 'quarter':
+                const quarter = Math.floor(today.getMonth() / 3);
+                fromDate = new Date(today.getFullYear(), quarter * 3, 1).toISOString().split('T')[0];
+                toDate = today.toISOString().split('T')[0];
+                break;
+            case 'year':
+                fromDate = new Date(today.getFullYear(), 0, 1).toISOString().split('T')[0];
+                toDate = today.toISOString().split('T')[0];
+                break;
+        }
+        
+        document.querySelector('input[name="fromDate"]').value = fromDate;
+        document.querySelector('input[name="toDate"]').value = toDate;
+    }
+    
+    function clearDateRange() {
+        document.querySelector('input[name="fromDate"]').value = '';
+        document.querySelector('input[name="toDate"]').value = '';
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function() {
+                const pageInput = form.querySelector('input[name="page"]');
+                if (pageInput) {
+                    pageInput.value = '1';
+                }
+            });
+        }
+    });
+</script>

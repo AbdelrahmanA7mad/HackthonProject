@@ -1,0 +1,304 @@
+﻿@model ManageMentSystem.Models.Invoice
+@{
+    ViewData["Title"] = "إعدادات الفاتورة";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-receipt text-indigo-800"></i> إعدادات الفاتورة
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">تخصيص بيانات وتصميم الفاتورة</p>
+        </div>
+        <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+            العودة للإعدادات<i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm relative" role="alert">
+            <i class="fas fa-check-circle text-xl"></i>
+            <span class="font-bold">@TempData["SuccessMessage"]</span>
+            <button type="button" class="absolute left-4 top-3 text-emerald-400 hover:text-emerald-600 transition-colors" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm relative" role="alert">
+            <i class="fas fa-exclamation-circle text-xl"></i>
+            <span class="font-bold">@TempData["ErrorMessage"]</span>
+            <button type="button" class="absolute left-4 top-3 text-red-400 hover:text-red-600 transition-colors" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    }
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8 max-w-6xl mx-auto">
+        <form asp-action="Edit" method="post" id="invoiceSettingsForm" class="space-y-8">
+            @Html.AntiForgeryToken()
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Company Info -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3 border-b border-indigo-50 pb-4">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-800 text-lg">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 text-lg">معلومات الشركة</h5>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label asp-for="CompanyName" class="block text-sm font-bold text-slate-700 mb-2"></label>
+                            <input asp-for="CompanyName" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300" required />
+                            <span asp-validation-for="CompanyName" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="CompanySubtitle" class="block text-sm font-bold text-slate-700 mb-2"></label>
+                            <input asp-for="CompanySubtitle" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300" />
+                            <span asp-validation-for="CompanySubtitle" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="Address" class="block text-sm font-bold text-slate-700 mb-2"></label>
+                            <textarea asp-for="Address" rows="3" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all placeholder:text-slate-300 resize-none"></textarea>
+                            <span asp-validation-for="Address" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="Website" class="block text-sm font-bold text-slate-700 mb-2"></label>
+                            <input asp-for="Website" type="url" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300 ltr:text-left" />
+                            <span asp-validation-for="Website" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="Email" class="block text-sm font-bold text-slate-700 mb-2"></label>
+                            <input asp-for="Email" type="email" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300 ltr:text-left" />
+                            <span asp-validation-for="Email" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="FooterMessage" class="block text-sm font-bold text-slate-700 mb-2"></label>
+                            <textarea asp-for="FooterMessage" rows="2" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all placeholder:text-slate-300 resize-none"></textarea>
+                            <span asp-validation-for="FooterMessage" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phone Numbers & Preview -->
+                <div class="space-y-8">
+                    <!-- Phone Numbers -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 border-b border-indigo-50 pb-4">
+                            <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-800 text-lg">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <h5 class="font-bold text-slate-800 text-lg">أرقام التواصل</h5>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-xl p-6 border border-slate-100">
+                            <div id="phoneNumbersContainer" class="space-y-3">
+                                @if (Model?.PhoneNumbers != null && Model.PhoneNumbers.Any())
+                                {
+                                    @for (int i = 0; i < Model.PhoneNumbers.Count; i++)
+                                    {
+                                        <div class="phone-number-group relative">
+                                            <input asp-for="PhoneNumbers[i]" class="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all" placeholder="رقم الهاتف" />
+                                            <button type="button" class="absolute left-2 top-2 bottom-2 w-10 flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all remove-phone-btn">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="phone-number-group relative">
+                                        <input name="PhoneNumbers[0]" class="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all" placeholder="رقم الهاتف" />
+                                        <button type="button" class="absolute left-2 top-2 bottom-2 w-10 flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all remove-phone-btn">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                            
+                            <button type="button" id="addPhoneBtn" class="mt-4 w-full py-3 border-2 border-dashed border-slate-300 text-slate-500 hover:border-indigo-500 hover:text-indigo-600 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-plus"></i> إضافة رقم هاتف جديد
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Preview -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 border-b border-emerald-50 pb-4">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-700 text-lg">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h5 class="font-bold text-slate-800 text-lg">معاينة الفاتورة</h5>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-8 max-w-sm mx-auto invoice-preview">
+                            <div class="text-center mb-6">
+                                <h5 class="text-xl font-bold text-slate-900 mb-1" id="previewCompanyName">@Model.CompanyName</h5>
+                                <p class="text-smm font-medium text-slate-500" id="previewCompanySubtitle">@Model.CompanySubtitle</p>
+                            </div>
+                            
+                            <div class="h-px bg-slate-100 my-4"></div>
+                            
+                            <div class="text-center space-y-4">
+                                <div id="previewPhones" class="text-sm">
+                                    @if (Model.PhoneNumbers != null && Model.PhoneNumbers.Any())
+                                    {
+                                        <p class="font-bold text-slate-700 mb-2">أرقام التواصل</p>
+                                        @foreach (var phone in Model.PhoneNumbers)
+                                        {
+                                            <p class="text-slate-600 mb-1" dir="ltr">@phone</p>
+                                        }
+                                    }
+                                </div>
+                                
+                                <div id="previewAddress">
+                                    @if (!string.IsNullOrEmpty(Model.Address))
+                                    {
+                                        <div class="h-px bg-slate-100 my-4"></div>
+                                        <p class="text-xs text-slate-500"><span class="font-bold text-slate-700">العنوان:</span> @Model.Address</p>
+                                    }
+                                </div>
+
+                                <div id="previewFooter">
+                                    @if (!string.IsNullOrEmpty(Model.FooterMessage))
+                                    {
+                                        <div class="h-px bg-slate-100 my-4"></div>
+                                        <p class="text-xs font-medium text-slate-400">@Model.FooterMessage</p>
+                                    }
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 pt-4 border-t border-dashed border-slate-200 text-center">
+                                <p class="text-xs text-slate-400 font-mono">CODE: 147852369</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-center gap-4">
+                <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 text-white px-12 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-indigo-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fas fa-save"></i> حفظ التغييرات
+                </button>
+                <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-8 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-times"></i> إلغاء
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var phoneIndex = @(Model.PhoneNumbers?.Count ?? 1);
+
+            // Add new phone number
+            $('#addPhoneBtn').click(function() {
+                var newPhoneGroup = `
+                    <div class="phone-number-group relative hidden">
+                        <input name="PhoneNumbers[${phoneIndex}]" class="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all" placeholder="رقم الهاتف" />
+                        <button type="button" class="absolute left-2 top-2 bottom-2 w-10 flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all remove-phone-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+                var $newElement = $(newPhoneGroup).appendTo('#phoneNumbersContainer');
+                $newElement.removeClass('hidden').hide().slideDown(200);
+                phoneIndex++;
+                updatePreview();
+            });
+
+            // Remove phone number
+            $(document).on('click', '.remove-phone-btn', function() {
+                if ($('.phone-number-group').length > 1) {
+                    var $group = $(this).closest('.phone-number-group');
+                    $group.slideUp(200, function() {
+                        $(this).remove();
+                        reindexPhoneNumbers();
+                        updatePreview();
+                    });
+                } else {
+                    showWarning('تنبيه', 'يجب أن يكون هناك رقم هاتف واحد على الأقل');
+                }
+            });
+
+            // Reindex phone numbers
+            function reindexPhoneNumbers() {
+                $('#phoneNumbersContainer .phone-number-group').each(function(index) {
+                    $(this).find('input').attr('name', 'PhoneNumbers[' + index + ']');
+                });
+                phoneIndex = $('#phoneNumbersContainer .phone-number-group').length;
+            }
+
+            // Update Live Preview
+            function updatePreview() {
+                // Company Name
+                var companyName = $('input[name="CompanyName"]').val() || 'اسم الشركة';
+                $('#previewCompanyName').text(companyName);
+
+                // Subtitle
+                var subtitle = $('input[name="CompanySubtitle"]').val();
+                if (subtitle) {
+                    $('#previewCompanySubtitle').text(subtitle).show();
+                } else {
+                    $('#previewCompanySubtitle').hide();
+                }
+
+                // Phone Numbers
+                var phones = [];
+                $('input[name^="PhoneNumbers"]').each(function() {
+                    var phone = $(this).val().trim();
+                    if (phone) {
+                        phones.push(phone);
+                    }
+                });
+
+                var phonesHtml = '';
+                if (phones.length > 0) {
+                    phonesHtml = '<p class="font-bold text-slate-700 mb-2">أرقام التواصل</p>';
+                    phones.forEach(function(phone) {
+                        phonesHtml += '<p class="text-slate-600 mb-1" dir="ltr">' + phone + '</p>';
+                    });
+                }
+                $('#previewPhones').html(phonesHtml);
+
+                // Address
+                var address = $('textarea[name="Address"]').val();
+                if (address) {
+                    $('#previewAddress').html('<div class="h-px bg-slate-100 my-4"></div><p class="text-xs text-slate-500"><span class="font-bold text-slate-700">العنوان:</span> ' + address + '</p>');
+                } else {
+                    $('#previewAddress').html('');
+                }
+
+                // Footer
+                var footerMessage = $('textarea[name="FooterMessage"]').val();
+                if (footerMessage) {
+                    $('#previewFooter').html('<div class="h-px bg-slate-100 my-4"></div><p class="text-xs font-medium text-slate-400">' + footerMessage + '</p>');
+                } else {
+                    $('#previewFooter').html('');
+                }
+            }
+
+            // Bind Events
+            $('input[name="CompanyName"], input[name="CompanySubtitle"], textarea[name="Address"], textarea[name="FooterMessage"]').on('input', updatePreview);
+            $(document).on('input', 'input[name^="PhoneNumbers"]', updatePreview);
+
+            // Initial Update
+            updatePreview();
+        });
+    </script>
+}

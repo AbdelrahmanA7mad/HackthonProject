@@ -1,0 +1,122 @@
+@model ManageMentSystem.ViewModels.StoreAccountViewModel
+
+@{
+    ViewData["Title"] = "إضافة عملية مالية جديدة";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <i class="fas fa-plus-circle text-indigo-800"></i> إضافة عملية مالية جديدة
+        </h1>
+        <p class="text-slate-500 mt-1 font-medium">تسجيل عملية إيداع أو سحب جديدة</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8 max-w-4xl mx-auto">
+        <form asp-action="Create" method="post" class="space-y-6">
+            <div asp-validation-summary="ModelOnly" class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl flex items-center gap-2" role="alert">
+                <i class="fas fa-exclamation-circle text-xl"></i>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Transaction Name -->
+                <div>
+                    <label asp-for="TransactionName" class="block text-sm font-bold text-slate-700 mb-1.5"></label>
+                    <div class="relative">
+                        <input asp-for="TransactionName" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300" placeholder="اسم العملية" />
+                        <i class="fas fa-heading absolute left-4 top-4 text-slate-400"></i>
+                    </div>
+                    <span asp-validation-for="TransactionName" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                </div>
+
+                <!-- Transaction Type -->
+                <div>
+                    <label asp-for="TransactionType" class="block text-sm font-bold text-slate-700 mb-1.5"></label>
+                    <div class="relative">
+                        <select asp-for="TransactionType" asp-items="ViewBag.TransactionTypes" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all bg-white appearance-none">
+                            <option value="">اختر نوع العملية</option>
+                        </select>
+                        <i class="fas fa-exchange-alt absolute left-4 top-4 text-slate-400"></i>
+                        <i class="fas fa-chevron-down absolute right-4 top-4 text-slate-400 pointer-events-none"></i>
+                    </div>
+                    <span asp-validation-for="TransactionType" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                </div>
+
+                <!-- Amount -->
+                <div>
+                    <label asp-for="Amount" class="block text-sm font-bold text-slate-700 mb-1.5"></label>
+                    <div class="relative">
+                        <input asp-for="Amount" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300" type="number" step="0.01" min="0.01" />
+                        <i class="fas fa-coins absolute left-4 top-4 text-slate-400"></i>
+                    </div>
+                    <span asp-validation-for="Amount" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                </div>
+
+                <!-- Date -->
+                <div>
+                    <label asp-for="TransactionDate" class="block text-sm font-bold text-slate-700 mb-1.5"></label>
+                    <div class="relative">
+                        <input asp-for="TransactionDate" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all text-right" type="date" />
+                        <i class="fas fa-calendar absolute left-4 top-4 text-slate-400"></i>
+                    </div>
+                    <span asp-validation-for="TransactionDate" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label asp-for="Category" class="block text-sm font-bold text-slate-700 mb-1.5"></label>
+                    <div class="relative">
+                        <input asp-for="Category" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300" placeholder="مثال: المبيعات، الصيانة، الإيجار" />
+                        <i class="fas fa-tags absolute left-4 top-4 text-slate-400"></i>
+                    </div>
+                    <span asp-validation-for="Category" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                </div>
+
+                <!-- Payment Method -->
+                <div>
+                    <label asp-for="PaymentMethodId" class="block text-sm font-bold text-slate-700 mb-1.5"></label>
+                    <div class="relative">
+                        <select asp-for="PaymentMethodId" asp-items="ViewBag.PaymentMethods" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all bg-white appearance-none">
+                            <option value="">اختر طريقة الدفع</option>
+                        </select>
+                        <i class="fas fa-credit-card absolute left-4 top-4 text-slate-400"></i>
+                        <i class="fas fa-chevron-down absolute right-4 top-4 text-slate-400 pointer-events-none"></i>
+                    </div>
+                    <span asp-validation-for="PaymentMethodId" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="md:col-span-2">
+                    <label asp-for="Description" class="block text-sm font-bold text-slate-700 mb-1.5"></label>
+                    <textarea asp-for="Description" rows="3" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all placeholder:text-slate-300 resize-none" placeholder="وصف العملية"></textarea>
+                    <span asp-validation-for="Description" class="text-sm font-bold text-red-500 mt-1 block"></span>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 flex items-center gap-4 mt-4">
+                <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-indigo-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fas fa-save"></i> حفظ العملية
+                </button>
+                <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-arrow-right"></i> العودة للقائمة
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to today if empty
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = new Date().toISOString().split('T')[0];
+            }
+        });
+    </script>
+}

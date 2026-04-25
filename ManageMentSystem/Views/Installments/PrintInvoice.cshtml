@@ -1,0 +1,314 @@
+@model ManageMentSystem.ViewModels.InstallmentDetailsViewModel
+@{
+    Layout = null;
+    var installment = Model.Installment;
+    var customer = installment.Customer;
+    var products = installment.InstallmentItems?.Select(ii => ii.Product).ToList() ?? new List<Product>();
+    var companySettings = Model.CompanySettings;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>فاتورة تقسيط - @installment.SequenceNumber</title>
+    <style>
+        body {
+            font-family: 'Noto Naskh Arabic', Tahoma, Arial, sans-serif;
+            background: #fff;
+            color: #111;
+            margin: 0;
+            padding: 0;
+        }
+        .invoice-container {
+            max-width: 700px;
+            margin: 30px auto;
+            border: 2px solid #222;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #eee;
+            padding: 36px 28px 24px 28px;
+            background: #fff;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+            border-bottom: 2px dashed #222;
+            padding-bottom: 12px;
+        }
+        .header h2 {
+            margin: 0 0 4px 0;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            color: #111;
+        }
+        .header .owner {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 6px;
+        }
+        .header .invoice-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 0;
+            letter-spacing: 1px;
+        }
+        .info-table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        .info-table td {
+            padding: 5px 0;
+            font-size: 1.07rem;
+        }
+        .info-table .label {
+            color: #555;
+            width: 120px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .info-table tr:not(:last-child) td {
+            border-bottom: 1px dotted #bbb;
+        }
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .payments-table th, .payments-table td {
+            border: 1px solid #222;
+            padding: 9px 6px;
+            text-align: center;
+        }
+        .payments-table th {
+            background: #f5f5f5;
+            color: #111;
+            font-size: 1.08rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .payments-table td {
+            font-size: 1.07rem;
+        }
+        .paid-row {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+        .pending-row {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .overdue-row {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+        .summary-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+        .summary-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #111;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dotted #adb5bd;
+            font-size: 1.05rem;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #111;
+        }
+        .footer {
+            text-align: center;
+            color: #555;
+            font-size: 1.05rem;
+            margin-top: 22px;
+            border-top: 1px dashed #bbb;
+            padding-top: 10px;
+            letter-spacing: 1px;
+        }
+        .sign {
+            margin-top: 40px;
+            text-align: left;
+            color: #888;
+            font-size: 0.98rem;
+        }
+        .sign .label {
+            color: #555;
+            font-weight: bold;
+        }
+        @@media print {
+            body { background: #fff !important; }
+            .invoice-container { box-shadow: none; border: none; margin: 0; }
+            .header { border-bottom: 2px dashed #222 !important; }
+            .footer { border-top: 1px dashed #bbb !important; }
+        }
+    </style>
+    <script>
+        window.onload = function() { window.print(); };
+    </script>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <h2>@(companySettings?.CompanyName ?? "-")</h2>
+            @if (!string.IsNullOrEmpty(companySettings?.CompanySubtitle))
+            {
+                <div class="owner">@companySettings.CompanySubtitle</div>
+            }
+            <div class="invoice-title">فاتورة تقسيط</div>
+        </div>
+        
+        <table class="info-table">
+            <tr>
+                <td class="label">رقم التقسيط:</td>
+                <td>@installment.Id</td>
+                <td class="label">التاريخ:</td>
+                <td>@installment.StartDate.ToString("dd/MM/yyyy")</td>
+            </tr>
+            <tr>
+                <td class="label">اسم العميل:</td>
+                <td>@customer.FullName</td>
+                <td class="label">رقم الهاتف:</td>
+                <td>@customer.PhoneNumber</td>
+            </tr>
+            <tr>
+                <td class="label">المنتج:</td>
+                                 <td>
+                     @if (products.Any())
+                     {
+                         @string.Join("   ,   ", products.Select(p => p?.Name ?? "غير محدد"))
+                     }
+                     else
+                     {
+                         <span>لا توجد منتجات</span>
+                     }
+                 </td>
+                <td class="label">الحالة:</td>
+                <td>@installment.Status</td>
+            </tr>
+            @if (!string.IsNullOrEmpty(installment.GuarantorName))
+            {
+                <tr>
+                    <td class="label">اسم الضامن:</td>
+                    <td>@installment.GuarantorName</td>
+                    <td class="label">هاتف الضامن:</td>
+                    <td>@installment.GuarantorPhone</td>
+                </tr>
+            }
+        </table>
+
+        <div class="summary-section">
+            <div class="summary-title">ملخص التقسيط</div>
+            <div class="summary-item">
+                <span>المبلغ الإجمالي:</span>
+                <span>@installment.TotalAmount.ToString("C")</span>
+            </div>
+            <div class="summary-item">
+                <span>الدفعة المقدمة:</span>
+                <span>@installment.DownPayment.ToString("C")</span>
+            </div>
+            @* <div class="summary-item">
+                <span>معدل الفائدة:</span>
+                <span>@installment.InterestRate%</span>
+            </div> *@
+            @* <div class="summary-item">
+                <span>مبلغ الفائدة:</span>
+                <span>@installment.InterestAmount.ToString("C")</span>
+            </div> *@
+            <div class="summary-item">
+                <span>المبلغ الكلي مع الفائدة:</span>
+                @* <span>@installment.TotalWithInterest.ToString("C")</span> *@
+                <span>@((installment.TotalPaid + installment.RemainingAmount).ToString("C"))</span>
+            </div>
+            <div class="summary-item">
+                <span>المبلغ المدفوع:</span>
+                <span>@installment.TotalPaid.ToString("C")</span>
+            </div>
+            <div class="summary-item">
+                <span>المبلغ المتبقي:</span>
+                <span>@installment.RemainingAmount.ToString("C")</span>
+            </div>
+        </div>
+
+        <table class="payments-table">
+            <thead>
+                <tr>
+                    <th>رقم الدفعة</th>
+                    <th>تاريخ الاستحقاق</th>
+                    <th>المبلغ المطلوب</th>
+                    <th>المبلغ المدفوع</th>
+                    <th>تاريخ الدفع</th>
+                    <th>الحالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.MonthlyPayments != null && Model.MonthlyPayments.Any())
+                {
+                    @for (int i = 0; i < Model.MonthlyPayments.Count; i++)
+                    {
+                        var payment = Model.MonthlyPayments[i];
+                        var rowClass = payment.IsPaid ? "paid-row" : (payment.DueDate < DateTime.Now ? "overdue-row" : "pending-row");
+                        <tr class="@rowClass">
+                            <td>@(i + 1)</td>
+                            <td>@payment.DueDate.ToString("dd/MM/yyyy")</td>
+                            <td>@payment.Amount.ToString("C")</td>
+                            <td>@(payment.IsPaid ? payment.Amount.ToString("C") : "0")</td>
+                            <td>@(payment.IsPaid ? payment.DueDate.ToString("dd/MM/yyyy") : "-")</td>
+                            <td>@(payment.IsPaid ? "مدفوع" : (payment.DueDate < DateTime.Now ? "متأخر" : "قادم"))</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        @if (companySettings?.PhoneNumbers != null && companySettings.PhoneNumbers.Any())
+        {
+            <div class="footer">
+                <span>ارقام التواصل</span>
+                <hr />
+                @foreach (var phone in companySettings.PhoneNumbers)
+                {
+                    <h3>رقم @phone</h3>
+                }
+            </div>
+        }
+
+        <div class="footer">
+            @if (!string.IsNullOrEmpty(companySettings?.FooterMessage))
+            {
+                <span>@companySettings.FooterMessage</span>
+                <hr />
+            }
+            @if (!string.IsNullOrEmpty(companySettings?.Address))
+            {
+                <span>العنوان : @companySettings.Address</span>
+                <hr />
+            }
+            @if (!string.IsNullOrEmpty(companySettings?.Website))
+            {
+                <span>الموقع الإلكتروني : @companySettings.Website</span>
+                <hr />
+            }
+            @if (!string.IsNullOrEmpty(companySettings?.Email))
+            {
+                <span>البريد الإلكتروني : @companySettings.Email</span>
+                <hr />
+            }
+        </div>
+    </div>
+</body>
+</html> 

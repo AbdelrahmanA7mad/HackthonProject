@@ -1,0 +1,635 @@
+@model IEnumerable<ManageMentSystem.Models.Customer>
+@using ManageMentSystem.Helpers
+@{
+    ViewData["Title"] = "إرسال رسائل جماعية";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6">
+
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                <div class="p-2 bg-emerald-100 rounded-xl text-emerald-700 shadow-sm">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                </div>
+                إرسال رسائل جماعية للعملاء
+            </h1>
+            <p class="text-sm text-gray-500 font-bold mt-2 mr-1">حملات تسويقية وتنبيهات عبر واتساب</p>
+        </div>
+        <a href="@Url.Action("Index", "Customers")" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-indigo-800 px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
+            العودة للعملاء<i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex items-center justify-between hover:shadow-md transition-shadow">
+            <div>
+                <p class="text-md font-bold text-gray-700 mb-1">إجمالي العملاء</p>
+                <h2 class="text-3xl font-bold text-indigo-800">@ViewBag.TotalCustomers</h2>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex items-center justify-between hover:shadow-md transition-shadow">
+            <div>
+                <p class="text-md font-bold text-gray-700 mb-1">عملاء لديهم واتساب</p>
+                <h2 class="text-3xl font-bold text-emerald-700">@ViewBag.CustomersWithPhone</h2>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex items-center justify-between hover:shadow-md transition-shadow">
+            <div>
+                <p class="text-md font-bold text-gray-700 mb-1">الصفحة الحالية</p>
+                <h2 class="text-3xl font-bold text-amber-700">@ViewBag.CurrentPage <span class="text-lg text-gray-500 font-medium">من @ViewBag.TotalPages</span></h2>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl">
+                <i class="fas fa-file-alt"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden mb-8">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center gap-2">
+            <i class="fas fa-edit text-indigo-600"></i>
+            <h6 class="font-bold text-gray-800">إعداد الرسالة</h6>
+        </div>
+
+        <div class="p-6">
+            <form id="bulkMessageForm" enctype="multipart/form-data">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 space-y-6">
+                        <div>
+                            <label for="message" class="block text-md font-bold text-gray-700 mb-2">نص الرسالة</label>
+                            <textarea id="message" name="message" rows="6"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all resize-y font-medium text-gray-700 placeholder-gray-400"
+                                      placeholder="اكتب رسالتك هنا... استخدم {اسم_العميل} لإدراج اسم العميل تلقائياً" required></textarea>
+                            <p class="text-sm text-indigo-600 font-bold mt-2 flex items-center gap-1">
+                                <i class="fas fa-magic"></i> نصيحة: استخدم <span class="bg-indigo-50 px-1 rounded border border-indigo-100 select-all cursor-pointer">{اسم_العميل}</span> لتخصيص الرسالة.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label for="file" class="block text-md font-bold text-gray-700 mb-2">
+                                <i class="fas fa-paperclip text-gray-400 ml-1"></i> إرفاق ملف (اختياري)
+                            </label>
+                            <input type="file" id="file" name="file"
+                                   class="block w-full text-sm text-slate-500
+                                          file:ml-4 file:py-2.5 file:px-4
+                                          file:rounded-lg file:border-0
+                                          file:text-sm file:font-bold
+                                          file:bg-indigo-50 file:text-indigo-700
+                                          hover:file:bg-indigo-100 cursor-pointer
+                                          border border-gray-300 rounded-lg"
+                                   accept=".pdf,.jpg,.jpeg,.png,.gif,.webp,.doc,.docx,.xls,.xlsx">
+                            <p class="text-sm text-gray-500 mt-2 font-bold">الأنواع المسموحة: الصور (JPG, PNG)، المستندات (PDF, Word, Excel). الحد الأقصى 16MB.</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-6">
+                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                            <label class="block text-sm font-bold text-gray-700 mb-3">نماذج جاهزة</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button type="button" onclick="setMessageTemplate('promotion')" class="py-2 px-3  border border-indigo-200 text-indigo-800 hover:text-indigo-900 hover:border-indigo-200 hover:bg-indigo-50 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2">
+                                    <i class="fas fa-tag"></i>  ترويج
+                                </button>
+                                <button type="button" onclick="setMessageTemplate('greeting')" class="py-2 px-3  border border-emerald-200 text-emerald-700 hover:text-emerald-800 hover:border-emerald-200 hover:bg-emerald-50 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2">
+                                    <i class="fas fa-hand-sparkles"></i> تحية
+                                </button>
+                                <button type="button" onclick="setMessageTemplate('reminder')" class="py-2 px-3  border border-amber-200 text-amber-700 hover:text-amber-600 hover:border-amber-200 hover:bg-amber-50 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2">
+                                    <i class="fas fa-bell"></i> تذكير
+                                </button>
+                                <button type="button" onclick="setMessageTemplate('custom')" class="py-2 px-3    border border-cyan-200 text-cyan-700 hover:text-cyan-800 hover:border-cyan-500 hover:bg-cyan-50 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2">
+                                    <i class="fas fa-pen"></i> مخصصة
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                            <label class="block text-sm font-bold text-gray-700 mb-3">إحصائيات الرسالة</label>
+
+                            <div class="flex gap-3">
+                                <div class="flex-1 flex justify-between items-center bg-white p-3 rounded-lg border border-gray-200">
+                                    <span class="text-sm text-gray-600 font-bold">عدد الأحرف</span>
+                                    <span id="charCount" class="text-indigo-600 font-bold">0</span>
+                                </div>
+
+                                <div class="flex-1 flex justify-between items-center bg-white p-3 rounded-lg border border-gray-200">
+                                    <span class="text-sm text-gray-600 font-bold">عدد الكلمات</span>
+                                    <span id="wordCount" class="text-indigo-600 font-bold">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-100">
+                    <div class="flex flex-col items-center gap-4">
+                        <button type="submit" id="sendButton" class="w-full md:w-auto min-w-[300px] bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-700 hover:to-emerald-800 text-white text-lg font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-emerald-200 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp text-2xl"></i>
+                            <span>إرسال الرسائل للصفحة الحالية</span>
+                            <span class="spinner-border spinner-border-sm hidden ml-2" role="status"></span>
+                        </button>
+
+                        @if (ViewBag.TotalPages > 1)
+                        {
+                            <div class="flex gap-2">
+                                @if (ViewBag.CurrentPage > 1)
+                                {
+                                    <a href="@Url.Action("SendBulkWhatsapp", "Customers", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })"
+                                       class="px-4 py-2 bg-white border border-gray-300 text-gray-600 rounded-lg font-bold hover:bg-gray-50 transition-colors flex items-center gap-2">
+                                        <i class="fas fa-chevron-right text-xs"></i> الصفحة السابقة
+                                    </a>
+                                }
+
+                                @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                                {
+                                    <a href="@Url.Action("SendBulkWhatsapp", "Customers", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })"
+                                       class="px-4 py-2 bg-white border border-gray-300 text-gray-600 rounded-lg font-bold hover:bg-gray-50 transition-colors flex items-center gap-2">
+                                        الصفحة التالية <i class="fas fa-chevron-left text-xs"></i>
+                                    </a>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h6 class="font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-list text-indigo-600"></i> قائمة العملاء
+            </h6>
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <div class="relative flex-grow sm:w-80">
+                    <input type="text" id="searchInput"
+                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none text-sm font-bold"
+                           placeholder="ابحث بالاسم، الهاتف، العنوان...">
+                    <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+                    <button type="button" onclick="clearSearch()" class="absolute right-12 top-2.5 text-gray-400 hover:text-red-500 hidden" id="clearSearchBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="button" onclick="selectVisibleCustomers()" class="px-3 py-2 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 rounded-lg text-xs font-bold transition-colors" title="تحديد المرئيين">
+                        <i class="fas fa-eye"></i> تحديد المرئيين
+                    </button>
+                    <button type="button" onclick="selectCustomersWithPhoneFromVisible()" class="px-3 py-2 bg-white border border-emerald-500 text-emerald-700 hover:bg-emerald-50 rounded-lg text-xs font-bold transition-colors" title="هواتف المرئيين">
+                        <i class="fas fa-phone"></i> تحديد المرئيين مع الهاتف
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="overflow-x-auto">
+                <table class="w-full text-right" id="customersTable">
+                    <thead>
+                        <tr class="bg-indigo-50/50 text-indigo-800 border-b border-indigo-100 text-center">
+                            <th class="px-6 py-4 w-16">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="selectAll" class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
+                                </div>
+                            </th>
+                            <th class="px-6 py-4 font-bold text-sm">الاسم الكامل</th>
+                            <th class="px-6 py-4 font-bold text-sm">رقم الهاتف</th>
+                            <th class="px-6 py-4 font-bold text-sm">العنوان</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 text-center">
+                        @foreach (var customer in Model)
+                        {
+                            <tr class="hover:bg-gray-50 transition-colors group">
+                                <td class="px-6 py-4">
+                                    <input type="checkbox" name="selectedCustomers" value="@customer.Id"
+                                           class="customer-checkbox w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
+                                           data-phone="@customer.PhoneNumber">
+                                </td>
+                                <td class="px-6 py-4 font-bold text-gray-800">
+                                    @customer.FullName
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if (!string.IsNullOrEmpty(customer.PhoneNumber))
+                                    {
+                                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold border border-emerald-100 dir-ltr">
+                                            @customer.PhoneNumber <i class="fas fa-check text-[10px]"></i>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-red-50 text-red-700 rounded-full text-xs font-bold border border-red-100">
+                                            <i class="fas fa-times text-[10px]"></i> بدون هاتف
+                                        </span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 text-gray-600 text-sm font-medium">
+                                    @(customer.Address ?? "-")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (ViewBag.TotalPages > 1)
+            {
+                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="text-sm font-bold text-gray-500">
+                        عرض @(((ViewBag.CurrentPage - 1) * ViewBag.PageSize) + 1) إلى @Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalCount) من @ViewBag.TotalCount عميل
+                    </div>
+
+                    <div class="flex gap-1">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <a href="@Url.Action("SendBulkWhatsapp", "Customers", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })"
+                               class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all">
+                                <i class="fas fa-chevron-right text-xs"></i>
+                            </a>
+                        }
+
+                        @{
+                            var startPage = Math.Max(1, ViewBag.CurrentPage - 2);
+                            var endPage = Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2);
+                        }
+
+                        @for (int i = startPage; i <= endPage; i++)
+                        {
+                            <a href="@Url.Action("SendBulkWhatsapp", "Customers", new { page = i, pageSize = ViewBag.PageSize })"
+                               class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-indigo-800 text-white border-indigo-800" : "bg-white border-gray-300 text-gray-600 hover:bg-indigo-50 hover:text-indigo-800")">
+                                @i
+                            </a>
+                        }
+
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <a href="@Url.Action("SendBulkWhatsapp", "Customers", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })"
+                               class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all">
+                                <i class="fas fa-chevron-left text-xs"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <div class="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users-slash text-3xl text-gray-300"></i>
+                </div>
+                <h5 class="text-lg font-bold text-gray-800">لا يوجد عملاء للعرض</h5>
+                <p class="text-gray-500 mt-1">ابدأ بإضافة عملاء جدد</p>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="progressModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden bg-white">
+            <div class="p-8 text-center">
+                <div class="mb-6 relative">
+                    <div class="absolute inset-0 bg-emerald-100 rounded-full animate-ping opacity-75"></div>
+                    <div class="relative w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-700">
+                        <i class="fab fa-whatsapp text-4xl"></i>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-bold text-gray-800 mb-2">جاري إرسال الرسائل...</h4>
+                <p class="text-sm text-gray-500 mb-6 font-medium">يرجى عدم إغلاق هذه النافذة حتى اكتمال العملية</p>
+
+                <div class="w-full bg-gray-100 rounded-full h-3 mb-4 overflow-hidden">
+                    <div id="progressBar" class="bg-emerald-500 h-3 rounded-full transition-all duration-300 ease-out shadow-[0_0_10px_rgba(16,185,129,0.5)]" style="width: 0%"></div>
+                </div>
+
+                <p id="progressText" class="text-sm font-bold text-indigo-800 mb-0">0 من 0 رسالة</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="resultsModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden bg-white">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h5 class="font-bold text-gray-800 flex items-center gap-2">
+                    <i class="fas fa-chart-bar text-indigo-600"></i> نتائج الحملة
+                </h5>
+                <button type="button" class="text-gray-400 hover:text-red-500 transition-colors" data-bs-dismiss="modal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100 text-center">
+                        <h4 id="successCount" class="text-2xl font-bold text-emerald-700 mb-1">0</h4>
+                        <p class="text-sm text-emerald-700 font-bold">رسائل ناجحة</p>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4 border border-red-100 text-center">
+                        <h4 id="failCount" class="text-2xl font-bold text-red-600 mb-1">0</h4>
+                        <p class="text-sm text-red-800 font-bold">رسائل فاشلة</p>
+                    </div>
+                    <div class="bg-ingido-50 rounded-xl p-4 border border-ingido-100 text-center">
+                        <h4 id="totalCount" class="text-2xl font-bold text-ingido-800 mb-1">0</h4>
+                        <p class="text-sm text-ingido-800 font-bold">إجمالي المحاولات</p>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <table class="w-full text-right" id="resultsTable">
+                        <thead class="bg-gray-50 text-gray-700 text-xs uppercase font-bold">
+                            <tr>
+                                <th class="px-4 py-3">العميل</th>
+                                <th class="px-4 py-3">رقم الهاتف</th>
+                                <th class="px-4 py-3">الحالة</th>
+                                <th class="px-4 py-3">تفاصيل</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody" class="divide-y divide-gray-100 text-sm font-medium text-gray-600">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end">
+                <button type="button" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-bold transition-colors" data-bs-dismiss="modal">إغلاق</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/sweetalert-customers.js"></script>
+    <script>
+        // تعريف متغيرات العدادات
+        let successCount = 0;
+        let failCount = 0;
+
+        // قوالب الرسائل
+        let messageTemplates = {
+            promotion: "مرحباً {اسم_العميل} 👋\n\n🎉 لدينا عرض خاص لك!\n\n✨ خصم 20% على جميع المنتجات\n📅 العرض ساري حتى نهاية الشهر\n\n🚀 لا تفوت الفرصة!\n\nشكراً لثقتك بنا 🙏",
+            greeting: "مرحباً {اسم_العميل} 👋\n\nأتمنى أن تكون بخير وعافية 🙏\n\nنشكرك على ثقتك بنا ونتمنى أن نراك قريباً 🛍️\n\nمع تحيات فريق العمل 🌟",
+            reminder: "مرحباً {اسم_العميل} 👋\n\n⏰ تذكير: لديك منتجات في قائمة المفضلة\n\n🛒 لا تنسى مراجعة عربة التسوق الخاصة بك\n\nشكراً لثقتك بنا 🙏",
+            custom: "مرحباً {اسم_العميل} 👋\n\nنشكرك على ثقتك بنا 🙏\n\nنتمنى أن نراك قريباً 🛍️\n\nمع تحيات فريق العمل 🌟"
+        };
+
+        // تحديث عداد الأحرف
+        document.getElementById('message').addEventListener('input', function() {
+            const text = this.value;
+            const charCount = text.length;
+            const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+
+            document.getElementById('charCount').textContent = charCount;
+            document.getElementById('wordCount').textContent = wordCount;
+        });
+
+        // تحديد الكل
+        function selectAllCustomers() {
+            document.getElementById('selectAll').checked = true;
+            document.querySelectorAll('.customer-checkbox').forEach(cb => cb.checked = true);
+            updateSelectedCount();
+        }
+
+        // إلغاء تحديد الكل
+        function deselectAllCustomers() {
+            document.getElementById('selectAll').checked = false;
+            document.querySelectorAll('.customer-checkbox').forEach(cb => cb.checked = false);
+            updateSelectedCount();
+        }
+
+        // Checkbox Master
+        document.getElementById('selectAll').addEventListener('change', function() {
+            document.querySelectorAll('.customer-checkbox').forEach(cb => cb.checked = this.checked);
+            updateSelectedCount();
+        });
+
+        // Individual Checkbox Event
+        document.querySelectorAll('.customer-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedCount);
+        });
+
+        // تحديث زر الإرسال
+        function updateSelectedCount() {
+            const selected = document.querySelectorAll('.customer-checkbox:checked').length;
+            const total = document.querySelectorAll('.customer-checkbox').length;
+            const btn = document.getElementById('sendButton');
+
+            btn.innerHTML = `
+                <i class="fab fa-whatsapp text-2xl"></i>
+                <span>إرسال الرسائل (${selected}/${total})</span>
+                <span class="spinner-border spinner-border-sm hidden ml-2" role="status"></span>
+            `;
+
+            // تعطيل الزر إذا لم يتم تحديد أحد
+            if(selected === 0) {
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // تنفيذ التحديث الأولي عند تحميل الصفحة
+        updateSelectedCount();
+
+        // منطق الإرسال (AJAX)
+        document.getElementById('bulkMessageForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const message = document.getElementById('message').value.trim();
+            const selectedCheckboxes = document.querySelectorAll('.customer-checkbox:checked');
+
+            if (!message) {
+                Swal.fire('تنبيه', 'يرجى كتابة نص الرسالة', 'warning');
+                return;
+            }
+
+            if (selectedCheckboxes.length === 0) {
+                Swal.fire('تنبيه', 'يرجى اختيار عميل واحد على الأقل', 'warning');
+                return;
+            }
+
+            const customersWithPhone = Array.from(selectedCheckboxes).filter(cb => cb.dataset.phone && cb.dataset.phone.trim() !== '');
+            if (customersWithPhone.length === 0) {
+                Swal.fire('تنبيه', 'العملاء المحددين لا يملكون أرقام هواتف مسجلة', 'error');
+                return;
+            }
+
+            // تأكيد الإرسال
+            const confirmResult = await Swal.fire({
+                title: 'تأكيد الإرسال',
+                text: `سيتم الإرسال لـ ${customersWithPhone.length} عميل. هل أنت متأكد؟`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10b981',
+                confirmButtonText: 'نعم، ابدأ الإرسال',
+                cancelButtonText: 'إلغاء'
+            });
+
+            if (!confirmResult.isConfirmed) return;
+
+            // تجهيز البيانات
+            const formData = new FormData();
+            formData.append('message', message);
+            formData.append('selectedCustomers', customersWithPhone.map(cb => cb.value).join(','));
+
+            const fileInput = document.getElementById('file');
+            if (fileInput.files[0]) {
+                formData.append('file', fileInput.files[0]);
+            }
+
+            // بدء واجهة التقدم
+            const progressModal = new bootstrap.Modal(document.getElementById('progressModal'));
+            progressModal.show();
+
+            // محاكاة التقدم (لأنه طلب واحد)
+            updateProgressBar(10, 100);
+            const simInterval = setInterval(() => {
+                const currentWidth = parseFloat(document.getElementById('progressBar').style.width);
+                if(currentWidth < 90) updateProgressBar(currentWidth + 5, 100);
+            }, 500);
+
+            try {
+                // إرسال الطلب
+                const response = await fetch('@Url.Action("SendBulkWhatsapp", "Customers")', {
+                    method: 'POST',
+                    headers: { 'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value },
+                    body: formData
+                });
+
+                const result = await response.json();
+                clearInterval(simInterval);
+                updateProgressBar(100, 100);
+
+                setTimeout(() => {
+                    progressModal.hide();
+                    showResults(result);
+                }, 1000);
+
+            } catch (error) {
+                clearInterval(simInterval);
+                progressModal.hide();
+                Swal.fire('خطأ', 'حدث خطأ غير متوقع أثناء الإرسال', 'error');
+            }
+        });
+
+        // تحديث شريط التقدم (Tailwind Style)
+        function updateProgressBar(current, total) {
+            const percentage = Math.min(100, Math.round((current / total) * 100));
+            const bar = document.getElementById('progressBar');
+            const text = document.getElementById('progressText');
+
+            bar.style.width = percentage + '%';
+
+            // تغيير الألوان حسب الحالة (Tailwind classes replacement logic)
+            bar.className = `h-3 rounded-full transition-all duration-300 ease-out shadow-[0_0_10px_rgba(16,185,129,0.5)] ${
+                percentage < 30 ? 'bg-amber-700' :
+                percentage < 70 ? 'bg-ingido-800' : 'bg-emerald-700'
+            }`;
+
+            if(total === 100) { // Simulation mode text
+                 text.textContent = `جاري المعالجة... ${percentage}%`;
+            } else {
+                 text.textContent = `${current} من ${total} رسالة`;
+            }
+        }
+
+        // عرض النتائج في المودال
+        function showResults(result) {
+            document.getElementById('successCount').textContent = result.successCount || 0;
+            document.getElementById('failCount').textContent = result.failCount || 0;
+            document.getElementById('totalCount').textContent = (result.successCount + result.failCount) || 0;
+
+            const tbody = document.getElementById('resultsTableBody');
+            tbody.innerHTML = '';
+
+            if(result.results && result.results.length > 0) {
+                result.results.forEach(item => {
+                    const isSuccess = item.status === 'success';
+                    const badgeClass = isSuccess ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-800';
+                    const icon = isSuccess ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>';
+
+                    const row = `
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3 text-gray-800 font-bold">${item.customerName}</td>
+                            <td class="px-4 py-3 dir-ltr text-right">${item.phone}</td>
+                            <td class="px-4 py-3">
+                                <span class="px-2 py-1 rounded-full text-xs font-bold ${badgeClass} inline-flex items-center gap-1">
+                                    ${icon} ${isSuccess ? 'نجح' : 'فشل'}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-xs text-gray-500 truncate max-w-[200px]">${item.message}</td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+            } else {
+                 // Fallback if detailed results aren't passed
+                 tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-gray-500">تم الانتهاء من العملية (راجع العدادات أعلاه)</td></tr>';
+            }
+
+            new bootstrap.Modal(document.getElementById('resultsModal')).show();
+        }
+
+        // Search Functionality
+        function searchCustomers() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#customersTable tbody tr');
+
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(term) ? '' : 'none';
+            });
+
+            // Show/Hide clear button
+            document.getElementById('clearSearchBtn').style.display = term ? 'block' : 'none';
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            searchCustomers();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', searchCustomers);
+
+        // Template Setter
+        function setMessageTemplate(type) {
+            document.getElementById('message').value = messageTemplates[type] || '';
+            document.getElementById('message').dispatchEvent(new Event('input')); // Trigger char counter
+        }
+
+        // Select Visible Helpers
+        function selectVisibleCustomers() {
+             const rows = document.querySelectorAll('#customersTable tbody tr');
+             rows.forEach(row => {
+                 if(row.style.display !== 'none') {
+                     row.querySelector('.customer-checkbox').checked = true;
+                 }
+             });
+             updateSelectedCount();
+        }
+
+        function selectCustomersWithPhoneFromVisible() {
+             const rows = document.querySelectorAll('#customersTable tbody tr');
+             rows.forEach(row => {
+                 if(row.style.display !== 'none') {
+                     const cb = row.querySelector('.customer-checkbox');
+                     if(cb.dataset.phone && cb.dataset.phone.trim() !== '') {
+                         cb.checked = true;
+                     }
+                 }
+             });
+             updateSelectedCount();
+        }
+    </script>
+}

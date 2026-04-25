@@ -1,0 +1,236 @@
+@model ManageMentSystem.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "تسجيل حساب جديد";
+    Layout = "_Layout";
+}
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8" dir="rtl">
+    <div class="max-w-2xl w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl border border-slate-100 animate__animated animate__fadeIn">
+        <div>
+            <div class="mx-auto h-20 w-20 bg-indigo-50 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-user-plus text-4xl text-indigo-800"></i>
+            </div>
+            <h2 class="mt-2 text-center text-3xl font-extrabold text-slate-900">
+                إنشاء حساب جديد
+            </h2>
+            <p class="mt-2 text-center text-sm text-slate-600">
+                ابدأ رحلتك معنا بإعداد حسابك الشخصي
+            </p>
+        </div>
+
+        <form class="mt-8 space-y-6" action="@Url.Action("Register", "Auth")" method="post">
+            @Html.AntiForgeryToken()
+
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+            {
+                <div class="bg-red-50 border-r-4 border-red-500 p-4 rounded-lg">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                        <div class="mr-3">
+                            <h3 class="text-sm font-bold text-red-800">تنبيه</h3>
+                            <div class="mt-2 text-sm text-red-700">
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <p>@error.ErrorMessage</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Full Name -->
+                <div>
+                    <label asp-for="FullName" class="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل</label>
+                    <input asp-for="FullName" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all" placeholder="الاسم الكامل" />
+                    <span asp-validation-for="FullName" class="text-red-500 text-xs mt-1 font-bold"></span>
+                </div>
+
+                <!-- Username -->
+                <div>
+                    <label asp-for="Username" class="block text-sm font-bold text-slate-700 mb-1">اسم المستخدم</label>
+                    <input asp-for="Username" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all" placeholder="اسم المستخدم" />
+                    <span asp-validation-for="Username" class="text-red-500 text-xs mt-1 font-bold"></span>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label asp-for="Email" class="block text-sm font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
+                    <input asp-for="Email" type="email" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all" placeholder="name@example.com" />
+                    <span asp-validation-for="Email" class="text-red-500 text-xs mt-1 font-bold"></span>
+                </div>
+
+                <!-- Phone Number -->
+                <div>
+                    <label asp-for="PhoneNumber" class="block text-sm font-bold text-slate-700 mb-1">رقم الهاتف</label>
+                    <input asp-for="PhoneNumber" type="tel" id="phoneNumber" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all" placeholder="01xxxxxxxxx" />
+                    <span asp-validation-for="PhoneNumber" class="text-red-500 text-xs mt-1 font-bold"></span>
+                </div>
+
+                <!-- Store Name -->
+                <div>
+                    <label asp-for="StoreName" class="block text-sm font-bold text-slate-700 mb-1">اسم المتجر/الشركة <span class="text-slate-400 font-normal text-xs">(اختياري)</span></label>
+                    <input asp-for="StoreName" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all" placeholder="اسم المتجر" />
+                    <span asp-validation-for="StoreName" class="text-red-500 text-xs mt-1 font-bold"></span>
+                </div>
+
+                <!-- Currency Code -->
+                <div>
+                    <label asp-for="CurrencyCode" class="block text-sm font-bold text-slate-700 mb-1">العملة الافتراضية</label>
+                    <div class="relative">
+                        <select asp-for="CurrencyCode" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all bg-white">
+                            <option value="">اختر العملة</option>
+                            <option value="EGP">جنيه مصري (EGP)</option>
+                            <option value="SAR">ريال سعودي (SAR)</option>
+                        </select>
+                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                    <span asp-validation-for="CurrencyCode" class="text-red-500 text-xs mt-1 font-bold"></span>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label asp-for="Password" class="block text-sm font-bold text-slate-700 mb-1">كلمة المرور</label>
+                    <input asp-for="Password" type="password" id="password" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all" placeholder="••••••••" />
+                    <span asp-validation-for="Password" class="text-red-500 text-xs mt-1 font-bold"></span>
+                    <div id="strengthMessage" class="h-1 mt-1 rounded-full bg-gray-200 overflow-hidden transition-all duration-300 opacity-0">
+                         <div id="strengthBar" class="h-full bg-red-500 w-0 transition-all duration-300"></div>
+                    </div>
+                    <p id="strengthText" class="text-[10px] mt-0.5 text-right hidden"></p>
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <label asp-for="ConfirmPassword" class="block text-sm font-bold text-slate-700 mb-1">تأكيد كلمة المرور</label>
+                    <div class="relative">
+                        <input asp-for="ConfirmPassword" type="password" id="confirmPassword" class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm transition-all" placeholder="••••••••" />
+                        <div id="matchIndicator" class="absolute inset-y-0 left-0 pl-3 flex items-center hidden transition-all">
+                             <i class="fas fa-check-circle text-green-500 text-lg"></i>
+                        </div>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-red-500 text-xs mt-1 font-bold"></span>
+                    <p id="matchText" class="text-[10px] text-red-500 mt-1 font-bold hidden">كلمات المرور غير متطابقة</p>
+                </div>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" id="btn-submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-indigo-800 hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 transition-all shadow-sm shadow-indigo-600/30">
+                    إنشاء الحساب
+                </button>
+            </div>
+
+            <div class="text-center">
+                <p class="text-sm text-slate-600">
+                    لديك حساب بالفعل؟
+                    <a asp-action="Login" asp-controller="Auth" class="font-bold text-indigo-600 hover:text-indigo-800 transition-colors">
+                        تسجيل الدخول
+                    </a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+            const password = $('#password');
+            const confirmPassword = $('#confirmPassword');
+            const strengthBar = $('#strengthBar');
+            const strengthMessage = $('#strengthMessage');
+            const strengthText = $('#strengthText');
+            const matchIndicator = $('#matchIndicator');
+            const matchText = $('#matchText');
+            const phoneNumber = $('#phoneNumber');
+
+            // Password Strength
+            password.on('input', function() {
+                const val = $(this).val();
+                if(val.length > 0) {
+                     strengthMessage.removeClass('opacity-0');
+                     strengthText.removeClass('hidden');
+                } else {
+                     strengthMessage.addClass('opacity-0');
+                     strengthText.addClass('hidden');
+                     return;
+                }
+
+                let strength = 0;
+                if (val.length >= 6) strength++;
+                if (val.match(/[A-z]/)) strength++;
+                if (val.match(/[0-9]/)) strength++;
+                if (val.match(/[^a-zA-Z0-9]/)) strength++;
+
+                let width = '0%';
+                let color = 'bg-red-500';
+                let text = 'ضعيفة';
+
+                switch(strength) {
+                    case 1: width = '25%'; color = 'bg-red-500'; text = 'ضعيفة جداً'; break;
+                    case 2: width = '50%'; color = 'bg-yellow-500'; text = 'متوسطة'; break;
+                    case 3: width = '75%'; color = 'bg-blue-500'; text = 'جيدة'; break;
+                    case 4: width = '100%'; color = 'bg-green-500'; text = 'قوية'; break;
+                }
+
+                strengthBar.width(width).removeClass('bg-red-500 bg-yellow-500 bg-blue-500 bg-green-500').addClass(color);
+                strengthText.text(text).removeClass('text-red-500 text-yellow-600 text-blue-600 text-green-600');
+                if(strength === 1) strengthText.addClass('text-red-500');
+                else if(strength === 2) strengthText.addClass('text-yellow-600');
+                else if(strength === 3) strengthText.addClass('text-blue-600');
+                else if(strength === 4) strengthText.addClass('text-green-600');
+                
+                checkMatch();
+            });
+
+            // Confirm Password Match
+            confirmPassword.on('input', checkMatch);
+
+            function checkMatch() {
+                const p = password.val();
+                const cp = confirmPassword.val();
+
+                if (cp.length > 0) {
+                    if (p === cp) {
+                         matchIndicator.removeClass('hidden');
+                         matchText.addClass('hidden');
+                         confirmPassword.removeClass('border-red-500 focus:border-red-500 focus:ring-red-500').addClass('border-green-500 focus:border-green-500 focus:ring-green-500');
+                    } else {
+                         matchIndicator.addClass('hidden');
+                         matchText.removeClass('hidden');
+                         confirmPassword.removeClass('border-green-500 focus:border-green-500 focus:ring-green-500').addClass('border-red-500 focus:border-red-500 focus:ring-red-500');
+                    }
+                } else {
+                    matchIndicator.addClass('hidden');
+                    matchText.addClass('hidden');
+                    confirmPassword.removeClass('border-green-500 focus:border-green-500 focus:ring-green-500 border-red-500 focus:border-red-500 focus:ring-red-500');
+                }
+            }
+
+            // Simple Phone Logic (Allow only numbers)
+            phoneNumber.on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+
+            // Form Submit Loading
+            $('form').on('submit', function() {
+                if ($(this).valid()) {
+                    const btn = $('#btn-submit');
+                    const originalText = btn.text();
+                    btn.prop('disabled', true);
+                    btn.html('<i class="fas fa-spinner fa-spin ml-2"></i> جاري التسجيل...');
+                    
+                    setTimeout(() => {
+                        btn.prop('disabled', false);
+                        btn.text(originalText);
+                    }, 10000);
+                }
+            });
+        });
+    </script>
+}

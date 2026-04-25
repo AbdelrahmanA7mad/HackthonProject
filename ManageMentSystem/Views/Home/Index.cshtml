@@ -1,0 +1,190 @@
+﻿@model ManageMentSystem.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "لوحة التحكم";
+}
+
+<div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-8" dir="rtl">
+
+    <section>
+        <div class="flex items-center gap-2 mb-4">
+            <i class="fas fa-calendar-alt text-indigo-800 text-lg"></i>
+            <h3 class="text-lg font-bold text-slate-700"> تفاصيل نشاط الشهر</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-300">
+                <div class="flex items-start justify-between">
+                    <div class="flex flex-col gap-2">
+                        <p class="text-slate-600 text-lg font-bold">عدد فواتير الشهر</p>
+
+                        <h3 class="text-2xl font-bold text-slate-800">@Model.MonthlySalesCount</h3>
+
+                        <p class="text-sm font-bold text-slate-500 mt-1">فاتورة تم إصدارها هذا الشهر</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-indigo-50">
+                        <i class="fas fa-file-invoice  text-indigo-800 text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex items-center text-sm">
+                    <span class="font-medium @(Model.IsSalesCountTrendUp ? "text-green-600" : "text-red-500") flex items-center gap-1">
+                        @(Model.IsSalesCountTrendUp ? "+" : "-")@Model.SalesCountTrend%
+                    </span>
+                    <span class="text-slate-500 mr-2 text-xs font-bold">مقارنة بالشهر الماضي</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-300">
+                <div class="flex items-start justify-between">
+                    <div class="flex flex-col gap-2">
+                        <p class="text-slate-600 text-lg font-bold">إيرادات الشهر</p>
+                        <h3 class="text-2xl font-bold text-slate-800">@Model.MonthlyRevenue.ToString("C")</h3>
+                        <p class="text-sm font-bold text-slate-500 mt-1">إجمالي الدخل المالي للشهر</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-emerald-50">
+                        <i class="fas fa-dollar-sign text-emerald-800 text-xl"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm">
+                    <span class="font-medium @(Model.IsRevenueTrendUp ? "text-green-600" : "text-red-500") flex items-center gap-1">
+                        @(Model.IsRevenueTrendUp ? "+" : "-")@Model.RevenueTrend%
+                    </span>
+                    <span class="text-slate-500 mr-2 text-xs font-bold">مقارنة بالشهر الماضي</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-300">
+                <div class="flex items-start justify-between">
+                    <div class="flex flex-col gap-2">
+                        <p class="text-slate-600 text-lg font-bold">مصاريف الشهر</p>
+                        <h3 class="text-2xl font-bold text-slate-800">@Model.MonthlyExpenses.ToString("C")</h3>
+                        <p class="text-sm font-bold text-slate-500 mt-1">رواتب وتشغيل (شهر حالي)</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-red-50">
+                        <i class="fas fa-level-down-alt text-red-700 text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex items-center text-sm">
+                    <span class="font-medium @(Model.IsExpensesTrendUp ? "text-red-500" : "text-green-600") flex items-center gap-1">
+                        @(Model.IsExpensesTrendUp ? "+" : "-")@Model.ExpensesTrend%
+                    </span>
+                    <span class="text-slate-500 mr-2 text-xs font-bold">مقارنة بالشهر الماضي</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100">
+        <div class="flex items-center gap-2 mb-6">
+            <i class="fas fa-wallet text-indigo-800 text-lg"></i>
+            <h3 class="text-lg font-bold text-slate-700">إحصائيات عامة للنظام</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="relative overflow-hidden bg-gradient-to-br from-indigo-700 to-indigo-900 rounded-2xl p-6 text-white shadow-lg shadow-indigo-200">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i class="fas fa-dollar-sign text-9xl transform rotate-12 -mr-8 -mt-8"></i>
+                </div>
+                <div class="relative z-10">
+                    <p class="text-indigo-100 font-bold mb-1">الرصيد الكلي الحالي</p>
+                    <h2 class="text-4xl font-bold mb-4" dir="ltr"> <span class="text-2xl"></span> @Model.CashBalance.ToString("C") </h2>
+                    <div class="flex items-center gap-2 bg-white/10 w-fit px-3 py-1 rounded-full backdrop-blur-sm">
+                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                        <span class="text-xs font-medium">تم التحديث للتو</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col justify-between hover:border-indigo-200 transition-colors">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-600 font-bold mb-1">إجمالي العملاء</p>
+                        <h2 class="text-3xl font-bold text-slate-800">@Model.TotalCustomers <span class="text-lg text-slate-500 font-normal">عميل</span></h2>
+                    </div>
+                    <div class="p-3 bg-indigo-100 rounded-xl">
+                        <i class="fas fa-users text-indigo-800 text-xl"></i>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200 flex justify-between items-center text-sm">
+                    <span class="text-slate-500 font-bold text-sm">نشط هذا الشهر</span>
+                    <span class="font-bold text-slate-800">@Model.ActiveCustomersCount عميل</span>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col justify-between hover:border-indigo-200 transition-colors">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-600 font-bold mb-1">حالة المخزون</p>
+                        <h2 class="text-3xl font-bold text-slate-800">@Model.TotalProducts <span class="text-lg text-slate-500 font-normal">قطعة</span></h2>
+                    </div>
+                    <div class="p-3 bg-amber-100 rounded-xl">
+                        <i class="fas fa-box text-amber-700 text-xl"></i>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200 flex justify-between items-center text-sm">
+                    <span class="text-slate-500 font-bold text-sm">القيمة التقديرية</span>
+                    <span class="font-bold text-slate-800">@Model.StockTotalValue.ToString("C")</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+            <h3 class="font-bold text-slate-800">أحدث العمليات</h3>
+            <a asp-controller="Sales" asp-action="Index" class="text-indigo-800 text-sm font-bold hover:underline">عرض الكل</a>
+        </div>
+
+        @if (Model.RecentSales.Any())
+        {
+            <div class="overflow-x-auto">
+                <table class="w-full text-right">
+                    <thead class="bg-slate-50 text-slate-500 text-sm">
+                        <tr>
+                            <th class="px-6 py-4 font-medium">رقم الطلب</th>
+                            <th class="px-6 py-4 font-medium">العميل</th>
+                            <th class="px-6 py-4 font-medium">التاريخ</th>
+                            <th class="px-6 py-4 font-medium">المبلغ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @foreach (var sale in Model.RecentSales)
+                        {
+                            <tr class="hover:bg-slate-50 transition-colors text-sm">
+                                <td class="px-6 py-4 font-bold text-slate-700">#@sale.Id</td>
+                                <td class="px-6 py-4 text-slate-600">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center">
+                                            <i class="fas fa-user text-xs text-slate-500"></i>
+                                        </div>
+                                        @sale.Customer?.FullName
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500" dir="ltr">@sale.SaleDate.ToString("yyyy-MM-dd")</td>
+                                <td class="px-6 py-4 font-bold text-slate-800">@sale.TotalAmount.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-inbox text-slate-400 text-2xl"></i>
+                </div>
+                <p class="text-slate-500 font-medium">لا توجد مبيعات حديثة</p>
+            </div>
+        }
+    </section>
+
+</div>
+
+@* Setup Wizard Partial *@
+<partial name="_SetupWizard" />
+
+

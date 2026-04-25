@@ -1,0 +1,290 @@
+@model ManageMentSystem.ViewModels.SaleInvoiceViewModel
+@{
+    Layout = null;
+    var sale = Model.Sale;
+    var customer = sale.Customer;
+    var companySettings = Model.CompanySettings;
+    // استخدم الثقافة الحالية التي تم ضبطها حسب تفضيل المستخدم
+}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>فاتورة بيع - @sale.Id</title>
+    <style>
+        body {
+            font-family: 'Noto Naskh Arabic', Tahoma, Arial, sans-serif;
+            font-size: 11pt;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        .receipt-container {
+            width: 70mm;      /* قلل العرض شوية علشان مايتقصش */
+            max-width: 72mm;
+            margin: 0 auto;   /* يتوسّط */
+            padding: 0;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 4mm;
+        }
+
+        .company-name {
+            font-size: 14pt;
+            font-weight: bold;
+        }
+
+        .company-subtitle {
+            font-size: 11pt;
+            margin-top: 2mm;
+        }
+
+        .invoice-title {
+            font-size: 13pt;
+            margin-top: 3mm;
+            border-top: 1px dashed black;
+            border-bottom: 1px dashed black;
+            display: inline-block;
+            padding: 2mm 5mm;
+        }
+
+        /* ===== Info Section ===== */
+        .info-section {
+            margin: 4mm 0;
+            font-size: 11pt;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5mm;
+        }
+
+        /* ===== Products Table ===== */
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 3mm 0;
+            font-size: 11pt;
+        }
+
+        .products-table th, .products-table td {
+            border-bottom: 1px dashed black;
+            padding: 2mm 1mm;
+            text-align: center;
+        }
+
+        .products-table th {
+            font-weight: bold;
+        }
+
+        /* ===== Totals Section ===== */
+        .totals-section {
+            margin-top: 4mm;
+            font-size: 12pt;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2mm;
+        }
+
+        .final-total {
+            font-weight: bold;
+            border-top: 1px dashed black;
+            padding-top: 2mm;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            margin-top: 6mm;
+            text-align: center;
+            font-size: 10pt;
+        }
+
+        .footer-message {
+            margin: 3mm 0;
+            font-style: italic;
+        }
+
+        .developer-info {
+            margin-top: 4mm;
+            font-size: 9pt;
+            border-top: 1px dashed black;
+            padding-top: 2mm;
+        }
+
+        /* ===== Print Settings ===== */
+       @@media print {
+            @@page {
+                size: 80mm auto;   /* العرض 80mm */
+                margin: 0;         /* بدون هوامش */
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .receipt-container {
+                width: 72mm;      /* متأكّد مايتقصش */
+                margin: 0 auto;
+                page-break-inside: avoid;
+            }
+       }
+    </style>
+    <script>
+        window.onload = function () {
+            if (window.print) {
+                setTimeout(function () {
+                    window.print();
+                }, 500);
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="receipt-container">
+        @* Header *@
+        <div class="header">
+            <div class="company-name">@((companySettings?.CompanyName) ?? "-")</div>
+            @if (!string.IsNullOrEmpty(companySettings?.CompanySubtitle))
+            {
+                <div class="company-subtitle">@companySettings?.CompanySubtitle</div>
+            }
+            <div class="invoice-title">فاتورة بيع</div>
+        </div>
+        
+        @* Invoice Info *@
+        <div class="info-section">
+            <div class="info-row">
+                <span class="info-label">رقم الفاتورة:</span>
+                <span class="info-value">@sale.Id</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">التاريخ:</span>
+                <span class="info-value">@sale.SaleDate.ToString("dd/MM/yyyy")</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الوقت:</span>
+                <span class="info-value">@sale.SaleDate.ToString("HH:mm:ss")</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">نوع الدفع:</span>
+                <span class="info-value">@sale.PaymentType</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">العميل:</span>
+                <span class="info-value">@customer?.FullName</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">الهاتف:</span>
+                <span class="info-value">@customer?.PhoneNumber</span>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(customer?.Address))
+            {
+                <div class="info-row">
+                    <span class="info-label">العنوان:</span>
+                    <span class="info-value">@customer.Address</span>
+                </div>
+            }
+        </div>
+        
+        @* Products Table *@
+        <table class="products-table">
+            <thead>
+                <tr>
+                    <th>المنتج</th>
+                    <th>الكمية</th>
+                    <th>السعر</th>
+                    <th>الإجمالي</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in sale.SaleItems)
+                {
+                    <tr>
+                        <td class="product-name">@item.Product?.Name</td>
+                        <td class="quantity">@item.Quantity</td>
+                        <td class="unit-price">@item.UnitPrice.ToString("C")</td>
+                        <td class="total-price">@((item.Quantity * item.UnitPrice).ToString("C"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+        @* Totals *@
+        <div class="totals-section">
+            @if (sale.DiscountAmount > 0)
+            {
+                <div class="total-row">
+                    <span class="total-label">المجموع الكلي:</span>
+                    <span class="total-value">@((sale.TotalAmount + sale.DiscountAmount).ToString("C"))</span>
+                </div>
+                <div class="total-row">
+                    <span class="total-label">الخصم (@sale.DiscountPercentage%):</span>
+                    <span class="total-value">-@sale.DiscountAmount.ToString("C")</span>
+                </div>
+                <div class="total-row final-total">
+                    <span class="total-label">المجموع بعد الخصم:</span>
+                    <span class="total-value">@sale.TotalAmount.ToString("C")</span>
+                </div>
+            }
+            else
+            {
+                <div class="total-row final-total">
+                    <span class="total-label">المجموع الكلي:</span>
+                    <span class="total-value">@sale.TotalAmount.ToString("C")</span>
+                </div>
+            }
+            <div class="total-row">
+                <span class="total-label">المدفوع:</span>
+                <span class="total-value">@sale.PaidAmount.ToString("C")</span>
+            </div>
+            <div class="total-row">
+                <span class="total-label">المتبقي:</span>
+                <span class="total-value">@((sale.TotalAmount - sale.PaidAmount).ToString("C"))</span>
+            </div>
+        </div>
+        
+        @* Footer *@
+        <div class="footer">
+            @if (companySettings?.PhoneNumbers != null && companySettings.PhoneNumbers.Any())
+            {
+                <div class="contact-info">
+                    <div style="font-weight: bold; margin-bottom: 2mm;">أرقام التواصل:</div>
+                    @foreach (var phone in companySettings.PhoneNumbers)
+                    {
+                        <div class="phone-number">@phone</div>
+                    }
+                </div>
+            }
+            
+            @if (!string.IsNullOrEmpty(companySettings?.FooterMessage))
+            {
+                <div class="footer-message">@companySettings?.FooterMessage</div>
+            }
+            
+            @if (!string.IsNullOrEmpty(companySettings?.Address))
+            {
+                <div class="address">العنوان: @companySettings?.Address</div>
+            }
+            
+            @if (!string.IsNullOrEmpty(companySettings?.Website))
+            {
+                <div class="website">الموقع: @companySettings?.Website</div>
+            }
+            
+            @if (!string.IsNullOrEmpty(companySettings?.Email))
+            {
+                <div class="email">البريد: @companySettings?.Email</div>
+            }
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,434 @@
+@model ManageMentSystem.ViewModels.CustomerStatementViewModel
+@{
+    ViewData["Title"] = "كشف حساب العميل";
+}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 font-sans" dir="rtl">
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -mr-10 -mt-10 opacity-50 z-0"></div>
+
+        <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+
+            <div class="flex items-center gap-5">
+                <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center border-4 border-white shadow-sm shrink-0 text-indigo-800">
+                    <i class="fas fa-user-tie text-2xl"></i>
+                </div>
+
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">@ViewBag.CustomerName</h1>
+                    <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500">
+                        <span class="flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-lg border border-gray-100">
+                            <i class="fas fa-phone text-emerald-700"></i>
+                            <span dir="ltr" class="font-mono font-bold text-gray-700">@ViewBag.CustomerPhone</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                <button onclick="toggleModal('paymentModal')"
+                        class="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 bg-indigo-800 hover:bg-indigo-900 text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-indigo-200 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+                    <i class="fas fa-hand-holding-dollar"></i>
+                    <span>سداد دفعة</span>
+                </button>
+
+                <button id="sendWhatsappStatementBtn"
+                        class="inline-flex items-center justify-center gap-2 bg-bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 px-5 py-3 rounded-xl font-medium transition-colors cursor-pointer hover:-translate-y-0.5">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    <span class="hidden sm:inline">إرسال كشف</span>
+                </button>
+
+                <a href="@Url.Action("FullAccount", "Customers", new { id = Model.CustomerId })"
+                   class="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:text-gray-600  hover:bg-gray-100 px-5 py-3 rounded-xl font-medium transition-colors hover:-translate-y-0.5"
+                   title="كل العمليات">
+                    <i class="fas fa-list-ul"></i>
+                    <span class="hidden sm:inline">التفاصيل</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Customers")"
+                   class="inline-flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-600 px-5 py-3 rounded-xl font-medium transition-colors hover:-translate-y-0.5">
+                    <span class="hidden sm:inline">رجوع</span>
+                    <i class="fas fa-arrow-left"></i>
+                    
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between group hover:border-indigo-200 transition-all">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 mb-1">إجمالي المبيعات</p>
+                <h3 class="text-2xl font-bold text-gray-800">@Model.TotalSalesAmount.ToString("C0")</h3>
+            </div>
+            <div class="w-14 h-14 bg-indigo-50 text-indigo-800 rounded-2xl flex items-center justify-center text-xl m-1">
+                <i class="fas fa-chart-line"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between group hover:border-rose-200 transition-all">
+            <div>
+                <p class="text-sm font-bold text-gray-500 mb-1">إجمالي المرتجعات</p>
+                <h3 class="text-2xl font-bold text-gray-800">@Model.TotalReturnsAmount.ToString("C0")</h3>
+            </div>
+            <div class="w-14 h-14 bg-red-50 text-red-700 rounded-2xl flex items-center justify-center text-xl m-1">
+                <i class="fas fa-undo"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between group hover:border-violet-200 transition-all">
+            <div>
+                <p class="text-sm font-bold text-gray-500 mb-1">صافي المبيعات</p>
+                <h3 class="text-2xl font-bold text-gray-800">@Model.NetSalesAmount.ToString("C0")</h3>
+            </div>
+            <div class="w-14 h-14 bg-emerald-50 text-emerald-800 rounded-2xl flex items-center justify-center text-xl m-1">
+                <i class="fas fa-calculator"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-amber-200 shadow-sm flex items-center justify-between group hover:shadow-md transition-all">
+            <div>
+                <p class="text-sm font-bold text-gray-500 mb-1">إجمالي المستحق (الآجل)</p>
+                <h3 class="text-2xl font-bold text-gray-800">@Model.Balance.ToString("C0")</h3>
+            </div>
+            <div class="w-14 h-14 bg-amber-50 text-amber-700 rounded-2xl flex items-center justify-center text-xl m-1 ">
+                <i class="fas fa-coins"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between group hover:border-gray-300 transition-all col-span-1 md:col-span-1">
+            <div>
+                <p class="text-sm font-bold text-gray-500 mb-1">عدد الفواتير</p>
+                <h3 class="text-2xl font-bold text-gray-800">@Model.Sales.Count</h3>
+            </div>
+            <div class="w-14 h-14 bg-gray-50 text-gray-600 rounded-2xl flex items-center justify-center text-xl m-1">
+                <i class="fas fa-file-alt"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+            <h5 class="font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-list-alt text-indigo-800"></i>
+                فواتير العميل
+            </h5>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right">
+                <thead class="bg-gray-50 text-gray-500 text-sm uppercase font-bold text-center">
+                    <tr>
+                        <th class="px-6 py-3">رقم الفاتورة</th>
+                        <th class="px-6 py-3">التاريخ</th>
+                        <th class="px-6 py-3">الإجمالي</th>
+                        <th class="px-6 py-3">المدفوع</th>
+                        <th class="px-6 py-3">المتبقي</th>
+                        <th class="px-6 py-3">النوع</th>
+                        <th class="px-6 py-3">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 text-center">
+                    @foreach (var s in Model.Sales)
+                    {
+                        var remaining = s.RemainingAmount;
+                        <tr class="hover:bg-gray-50/50 transition-colors group">
+                            <td class="px-6 py-4 font-bold text-center"> <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-indigo-100 text-indigo-800"> #@s.Id</span> </td>
+                            <td class="px-6 py-4 font-bold text-gray-800">@s.SaleDate.ToString("yyyy-MM-dd")</td>
+                            <td class="px-6 py-4 font-bold text-gray-800">@s.TotalAmount.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-emerald-700">@s.PaidAmount.ToString("C")</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-bold @(remaining > 0 ? "bg-red-100 text-red-700" : "bg-gray-100 text-gray-700")">
+                                    @remaining.ToString("C")
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm font-bold text-amber-500">@s.PaymentType</td>
+                            <td class="px-6 py-4">
+                                <a href="@Url.Action("Details", "Sales", new { id = s.Id })"
+                                   class="text-emerald-700 hover:text-emerald-800  hover:bg-emerald-100 px-3 py-1.5 rounded-lg text-sm transition-colors font-medium">
+                                    <i class="fas fa-eye ml-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm mt-4">
+            <div class="text-sm text-gray-500 font-medium">
+               @(((Model.CurrentPage - 1) * Model.PageSize) + 1) إلى @Math.Min(Model.CurrentPage * Model.PageSize, Model.TotalItems) من @Model.TotalItems فاتورة
+            </div>
+            <div class="flex gap-1" dir="ltr">
+                @if (Model.CurrentPage > 1)
+                {
+                    <a href="@Url.Action("Statement", "Customers", new { id = Model.CustomerId, page = Model.CurrentPage - 1, pageSize = Model.PageSize, fromDate = Model.FromDate, toDate = Model.ToDate })"
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                }
+
+                @for (int i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.TotalPages, Model.CurrentPage + 2); i++)
+                {
+                    <a href="@Url.Action("Statement", "Customers", new { id = Model.CustomerId, page = i, pageSize = Model.PageSize, fromDate = Model.FromDate, toDate = Model.ToDate })"
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border @(i == Model.CurrentPage ? "bg-indigo-800 text-white border-indigo-800" : "border-gray-200 text-gray-600 hover:bg-gray-50") transition-colors font-bold text-sm">
+                        @i
+                    </a>
+                }
+
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <a href="@Url.Action("Statement", "Customers", new { id = Model.CustomerId, page = Model.CurrentPage + 1, pageSize = Model.PageSize, fromDate = Model.FromDate, toDate = Model.ToDate })"
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+    <div id="paymentModal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity opacity-0 pointer-events-none" id="modalBackdrop"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg scale-95 opacity-0 pointer-events-none" id="modalPanel">
+
+                    <div class="bg-indigo-800 px-4 py-4 sm:px-6 flex justify-between items-center">
+                        <h3 class="text-lg font-bold leading-6 text-white flex items-center">
+                            <i class="fas fa-hand-holding-dollar ml-2"></i>
+                            سداد دفعة جديدة
+                        </h3>
+                        <button type="button" onclick="closeModal()" class="text-white/80 hover:text-white transition-colors">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+
+                    <form id="customerPaymentForm">
+                        <div class="px-6 py-6 space-y-5">
+                            <input type="hidden" name="CustomerId" value="@Model.CustomerId" />
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">المبلغ المدفوع <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-12">
+                                        <span class="text-gray-400 font-bold">$</span>
+                                    </div>
+                                    <input type="number" step="1" min="0" name="Amount" required
+                                           class="block w-full rounded-xl border-gray-300 pr-8 p-3 focus:border-indigo-800 focus:ring-indigo-800 font-bold text-gray-800 bg-gray-50 placeholder-gray-300 transition-all"
+                                           placeholder="0.00">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                    خصم إضافي <span class="text-xs font-normal text-gray-400">(اختياري)</span>
+                                </label>
+                                <input type="number" step="0.01" min="0" name="DiscountAmount"
+                                       class="block w-full rounded-xl border-gray-300 p-3 focus:border-indigo-800 focus:ring-indigo-800 bg-gray-50 transition-all"
+                                       placeholder="أدخل مبلغ الخصم">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">طريقة الدفع</label>
+                                    <select name="PaymentMethodId" class="block w-full rounded-xl border-gray-300 p-3 focus:border-indigo-800 focus:ring-indigo-800 bg-gray-50">
+                                        @foreach (var pm in (IEnumerable<ManageMentSystem.Models.PaymentMethodOption>)(ViewBag.PaymentMethods ?? new List<ManageMentSystem.Models.PaymentMethodOption>()))
+                                        {
+                                            <option value="@pm.Id">@pm.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">التاريخ</label>
+                                    <input type="date" name="PaymentDate" value="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                           class="block w-full rounded-xl border-gray-300 p-3 focus:border-indigo-800 focus:ring-indigo-800 bg-gray-50 text-center">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">ملاحظات</label>
+                                <textarea name="Notes" rows="2" class="block w-full rounded-xl border-gray-300 p-3 focus:border-indigo-800 focus:ring-indigo-800 bg-gray-50" placeholder="أضف أي تفاصيل هنا..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse gap-3">
+                            <button type="submit" id="submitPaymentBtn" class="flex-1 bg-indigo-800 text-white px-4 py-3 rounded-xl font-bold hover:bg-indigo-900 focus:ring-4 focus:ring-indigo-200 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer ">
+                                <i class="fas fa-check"></i>
+                                <span>تأكيد العملية</span>
+                            </button>
+                            <button type="button" onclick="closeModal()" class="flex-1  text-gray-700 hover:text-red-700 px-4 py-3 rounded-xl font-bold border border-gray-300 hover:bg-red-100 hover:-translate-y-0.5 transition-all cursor-pointer">
+                                إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/sweetalert-customers.js"></script>
+    <script>
+        // --- Modal Logic (Vanilla JS for Tailwind) ---
+        const modal = document.getElementById('paymentModal');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const modalPanel = document.getElementById('modalPanel');
+
+        window.toggleModal = function() {
+            modal.classList.remove('hidden');
+            // Slight delay to allow display:block to render before opacity transition
+            setTimeout(() => {
+                modalBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+                modalPanel.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                modalPanel.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        window.closeModal = function() {
+            modalBackdrop.classList.add('opacity-0', 'pointer-events-none');
+            modalPanel.classList.remove('scale-100', 'opacity-100');
+            modalPanel.classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Matches CSS transition duration
+        }
+
+        // --- AJAX Logic ---
+        $(document).ready(function() {
+
+            // 1. Payment Form Submission
+            $('#customerPaymentForm').on('submit', function(e) {
+                e.preventDefault();
+
+                const form = $(this);
+                const btn = $('#submitPaymentBtn');
+                const originalBtnContent = btn.html();
+                const amountVal = parseFloat(form.find('input[name="Amount"]').val() || '0');
+
+                // Validation
+                if (!amountVal || amountVal <= 0) {
+                    Swal.fire({
+                        title: 'تنبيه',
+                        text: 'يرجى إدخال مبلغ صحيح أكبر من صفر',
+                        icon: 'warning',
+                        confirmButtonText: 'حسناً',
+                        confirmButtonColor: '#4f46e5'
+                    });
+                    return;
+                }
+
+                // Confirmation
+                Swal.fire({
+                    title: 'تأكيد السداد',
+                    html: `هل أنت متأكد من تسجيل دفعة بقيمة <b style="color:#4f46e5; font-size:1.2em">${amountVal.toFixed(2)}</b> ؟`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#4f46e5',
+                    cancelButtonColor: '#ef4444',
+                    confirmButtonText: 'نعم، اعتمد العملية',
+                    cancelButtonText: 'تراجع',
+                    focusConfirm: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        // Loading State
+                        btn.prop('disabled', true).html('<i class="fas fa-circle-notch fa-spin ml-2"></i> جاري المعالجة...');
+
+                        $.ajax({
+                            url: '@Url.Action("AddPayment", "Customers")',
+                            type: 'POST',
+                            data: form.serialize(),
+                            success: function(res) {
+                                if(res.success) {
+                                    closeModal();
+                                    Swal.fire({
+                                        title: 'تمت العملية بنجاح!',
+                                        text: 'تم تسجيل الدفعة وتحديث الرصيد',
+                                        icon: 'success',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشلت العملية',
+                                        text: res.message || 'حدث خطأ غير معروف أثناء الحفظ',
+                                        icon: 'error',
+                                        confirmButtonText: 'حاول مرة أخرى'
+                                    });
+                                    btn.prop('disabled', false).html(originalBtnContent);
+                                }
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    title: 'خطأ اتصال',
+                                    text: 'تعذر الاتصال بالسيرفر، يرجى التحقق من الانترنت',
+                                    icon: 'error',
+                                    confirmButtonText: 'حسناً'
+                                });
+                                btn.prop('disabled', false).html(originalBtnContent);
+                            }
+                        });
+                    }
+                });
+            });
+
+            // 2. Whatsapp Button Logic
+            $('#sendWhatsappStatementBtn').on('click', function() {
+                const btn = $(this);
+                const originalContent = btn.html();
+
+                // Loading State
+                btn.prop('disabled', true)
+                   .removeClass('bg-white text-emerald-600')
+                   .addClass('bg-gray-100 text-gray-500 cursor-not-allowed')
+                   .html('<i class="fas fa-spinner fa-spin ml-2"></i> جاري التحضير والإرسال...');
+
+                $.ajax({
+                    url: '@Url.Action("SendWhatsappStatement", "Customers", new { id = Model.CustomerId })',
+                    type: 'GET',
+                    success: function(res) {
+                        if(res.success) {
+                            Swal.fire({
+                                title: 'تم الإرسال',
+                                text: res.message || 'تم إرسال كشف الحساب بنجاح',
+                                icon: 'success',
+                                confirmButtonColor: '#10b981'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'تنبيه',
+                                text: res.message || 'لم يتم الإرسال',
+                                icon: 'info',
+                                confirmButtonColor: '#3b82f6'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            title: 'خطأ',
+                            text: 'حدث خطأ أثناء محاولة الإرسال',
+                            icon: 'error'
+                        });
+                    },
+                    complete: function() {
+                        btn.prop('disabled', false)
+                           .removeClass('bg-gray-100 text-gray-500 cursor-not-allowed')
+                           .addClass('bg-white text-emerald-600')
+                           .html(originalContent);
+                    }
+                });
+            });
+        });
+    </script>
+}

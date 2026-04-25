@@ -1,0 +1,346 @@
+@model ManageMentSystem.ViewModels.GeneralDebtIndexViewModel
+@using ManageMentSystem.Helpers
+@using ManageMentSystem.Models
+@inject ManageMentSystem.Services.UserServices.IUserService UserService
+@{
+    ViewData["Title"] = "إدارة الديون";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6">
+    @Html.AntiForgeryToken()
+
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                <div class="p-2 bg-indigo-100 rounded-xl text-indigo-800 shadow-sm">
+                    <i class="fas fa-scale-balanced text-xl"></i>
+                </div>
+                إدارة الديون
+            </h1>
+            <p class="text-sm text-gray-500 font-bold mt-2 mr-1">متابعة المستحقات والالتزامات المالية</p>
+        </div>
+
+     
+            <a href="@Url.Action("Create")" class="bg-indigo-800 hover:bg-indigo-900 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm hover:shadow-indigo-500 hover:-translate-y-0.5 flex items-center gap-2">
+                <i class="fas fa-plus"></i> إضافة دين جديد
+            </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-emerald-100 p-5 hover:shadow-md transition-all relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-2 h-full bg-emerald-700"></div>
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-md font-bold text-gray-600 mb-1">ديون مستحقة لي</p>
+                    <h3 class="text-3xl font-bold text-emerald-700">@Model.TotalReceivables.ToString("C")</h3>
+                </div>
+                <div class="p-3 bg-emerald-50 rounded-xl text-emerald-700 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-arrow-down text-xl"></i>
+                </div>
+            </div>
+            <div class="text-sm font-bold text-emerald-700 flex items-center gap-1">
+                <i class="fas fa-check-circle"></i> أموال واردة
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-red-100 p-5 hover:shadow-md transition-all relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-2 h-full bg-red-700"></div>
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-md font-bold text-gray-600 mb-1">ديون مستحقة عليّ</p>
+                    <h3 class="text-3xl font-bold text-red-700">@Model.TotalPayables.ToString("C")</h3>
+                </div>
+                <div class="p-3 bg-red-50 rounded-xl text-red-700 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-arrow-up text-xl"></i>
+                </div>
+            </div>
+            <div class="text-sm font-bold text-red-700 flex items-center gap-1">
+                <i class="fas fa-exclamation-circle"></i> التزامات للدفع
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-indigo-100 p-5 hover:shadow-md transition-all relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-2 h-full bg-indigo-800"></div>
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-md font-bold text-gray-600 mb-1">المركز المالي الصافي</p>
+                    <h3 class="text-3xl font-bold text-indigo-800">@Model.NetPosition.ToString("C")</h3>
+                </div>
+                <div class="p-3 bg-indigo-50 rounded-xl text-indigo-800 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-scale-balanced text-xl"></i>
+                </div>
+            </div>
+            <div class="text-sm font-bold text-indigo-800 flex items-center gap-1">
+                <i class="fas fa-chart-line"></i> الفرق بين الدائن والمدين
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
+        <div class="relative">
+            <i class="fas fa-search absolute right-4 top-3.5 text-gray-400"></i>
+            <input type="text" id="searchInput"
+                   class="w-full pr-10 pl-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all font-bold text-gray-700 placeholder-gray-400"
+                   placeholder="ابحث بعنوان الدين، اسم الطرف، أو المبلغ...">
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+            <h6 class="font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-list text-indigo-600"></i> سجل الديون
+            </h6>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right" id="debtsTable">
+                <thead>
+                    <tr class="bg-indigo-50/50 text-gray-900 border-b border-indigo-100 text-sm-center uppercase">
+                        <th class="px-3 py-4 font-bold">الطرف</th>
+                        <th class="px-3 py-4 font-bold">العنوان</th>
+                        <th class="px-3 py-4 font-bold">النوع</th>
+                        <th class="px-3 py-4 font-bold">الإجمالي</th>
+                        <th class="px-3 py-4 font-bold">المدفوع</th>
+                        <th class="px-3 py-4 font-bold">المتبقي</th>
+                        <th class="px-3 py-4 font-bold">التاريخ</th>
+                        <th class="px-3 py-4 font-bold">الاستحقاق</th>
+                        <th class="px-3 py-4 font-bold">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 text-sm-center font-bold">
+                    @foreach (var d in Model.Debts)
+                    {
+                        var remaining = d.Amount - d.PaidAmount;
+                        var isComplete = remaining <= 0;
+                        var rowClass = isComplete ? "bg-gray-50/50 text-gray-400" : "hover:bg-gray-50 text-gray-700";
+
+                        <tr class="transition-colors @rowClass group">
+                            <td class="px-3 py-4 font-bold">@(string.IsNullOrWhiteSpace(d.PartyName) ? "-" : d.PartyName)</td>
+                            <td class="px-3 py-4">@d.Title</td>
+                            <td class="px-3 py-4">
+                                @if (d.DebtType == GeneralDebtType.OwedToMe)
+                                {
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                        <i class="fas fa-arrow-down"></i> ليا
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-100 text-red-700 border border-red-200">
+                                        <i class="fas fa-arrow-up"></i> عليا
+                                    </span>
+                                }
+                            </td>
+                            <td class="px-3 py-4 font-bold">@d.Amount.ToString("C")</td>
+                                          
+                            <td class="px-3 py-4 font-bold text-emerald-700">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200"> @d.PaidAmount.ToString("C")</span>
+                                
+                                </td>
+                            <td class="px-3 py-4 font-bold @(isComplete ? "text-gray-400 " : "text-red-700")">
+                                @if (isComplete)
+                                {
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-2000">
+                                        <i class="fas fa-check-circle"></i> مكتمل
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-100 text-red-700 border border-red-200">@d.Remaining.ToString("C")</span>  
+                                }
+                            </td>
+                            <td class="px-3 py-4 text-sm font-bold">@d.CreatedAt.ToString("dd/MM/yyyy")</td>
+                            <td class="px-3 py-4 text-sm text-red-700 font-bold">@(d.DueDate?.ToString("dd/MM/yyyy") ?? "-")</td>
+
+                            <td class="px-3 py-4">
+                                <div class="flex items-center justify-center gap-2">
+                                    @if (!isComplete)
+                                    {
+                                        <form asp-action="AddPayment" method="post" class="flex gap-1 items-center bg-gray-50 p-1 rounded-lg border border-gray-200 shadow-sm opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200" onsubmit="return confirmAddPayment(this);">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@d.Id" />
+
+                                            <input type="number" step="0.01" min="0" name="amount" placeholder="مبلغ" required
+                                                   class="w-20 px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-indigo-500 outline-none" />
+
+                                            <select name="paymentMethodId" class="w-24 px-1 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-indigo-500 outline-none bg-white">
+                                                <option value="">الدفع</option>
+                                                @foreach (var pm in (IEnumerable<ManageMentSystem.Models.PaymentMethodOption>)(ViewBag.PaymentMethods ?? new List<ManageMentSystem.Models.PaymentMethodOption>()))
+                                                {
+                                                    <option value="@pm.Id">@pm.Name</option>
+                                                }
+                                            </select>
+
+                                            <button type="submit" class="w-6 h-6 flex items-center justify-center bg-emerald-700 hover:bg-emerald-800 text-white rounded shadow-sm transition-colors" title="إضافة دفعة">
+                                                <i class="fas fa-check text-[10px]"></i>
+                                            </button>
+                                        </form>
+                                    }
+
+                                    <div class="flex gap-2">
+                                            <a href="@Url.Action("Edit", new { id = d.Id })" class="w-8 h-8 flex items-center justify-center rounded-lg  text-indigo-800 hover:text-indigo-800  hover:bg-blue-100 transition-colors" title="تعديل">
+                                                <i class="fas fa-edit text-xs "></i>
+                                            </a>
+
+                                       
+                                            <button onclick="confirmDeleteDebt(@d.Id, '@d.Title', '@(d.PartyName ?? "")', '@d.Amount.ToString("F2")', '@d.DebtType')"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg text-red-700 hover:text-red-700 hover:bg-red-100 transition-colors" title="حذف">
+                                                <i class="fas fa-trash text-xs"></i>
+                                            </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPages > 1)
+        {
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="text-sm font-bold text-gray-500">
+                    صفحة @Model.CurrentPage من @Model.TotalPages
+                </div>
+
+                <div class="flex gap-1">
+                    <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1, pageSize = Model.PageSize })"
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all @(Model.CurrentPage == 1 ? "opacity-50 pointer-events-none" : "")">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </a>
+
+                    @for (var p = 1; p <= Model.TotalPages; p++)
+                    {
+                        <a href="@Url.Action("Index", new { page = p, pageSize = Model.PageSize })"
+                           class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(p == Model.CurrentPage ? "bg-indigo-800 text-white border-indigo-800 shadow-sm" : "bg-white border-gray-300 text-gray-600 hover:bg-indigo-50 hover:text-indigo-800")">
+                            @p
+                        </a>
+                    }
+
+                    <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1, pageSize = Model.PageSize })"
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all @(Model.CurrentPage == Model.TotalPages ? "opacity-50 pointer-events-none" : "")">
+                        <i class="fas fa-chevron-left text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/js/sweetalert-debts.js"></script>
+    <script>
+        $(document).ready(function () {
+            // البحث الفوري في الجدول
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#debtsTable tbody tr").filter(function () {
+                    // البحث في أول عمودين (العنوان والطرف)
+                    $(this).toggle($(this).children('td').slice(0, 2).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        // دالة تأكيد الحذف
+        function confirmDeleteDebt(debtId, title, partyName, amount, debtType) {
+            // استخدام SweetAlert المخصص للديون (المفترض وجوده في sweetalert-debts.js)
+            // إذا لم يكن موجوداً، نستخدم النسخة القياسية
+            if (typeof showDebtDeleteConfirmation === 'function') {
+                showDebtDeleteConfirmation(debtId, title, partyName, amount, debtType).then((result) => {
+                    if (result.isConfirmed) processDelete(debtId);
+                });
+            } else {
+                Swal.fire({
+                    title: 'تأكيد الحذف',
+                    text: `هل أنت متأكد من حذف هذا الدين؟`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'نعم، حذف',
+                    cancelButtonText: 'إلغاء'
+                }).then((result) => {
+                    if (result.isConfirmed) processDelete(debtId);
+                });
+            }
+        }
+
+        function processDelete(debtId) {
+            // Show loading
+            Swal.fire({
+                title: 'جاري الحذف...',
+                didOpen: () => Swal.showLoading()
+            });
+
+            $.ajax({
+                url: '@Url.Action("Delete")',
+                type: 'POST',
+                data: {
+                    id: debtId,
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم الحذف',
+                        text: 'تم حذف الدين بنجاح',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => location.reload());
+                },
+                error: function() {
+                    Swal.fire('خطأ', 'حدث خطأ أثناء الحذف', 'error');
+                }
+            });
+        }
+
+        // دالة تأكيد إضافة الدفعة
+        function confirmAddPayment(form) {
+            const amount = form.querySelector('input[name="amount"]').value;
+            const paymentMethodId = form.querySelector('select[name="paymentMethodId"]').value;
+
+            if (!amount || parseFloat(amount) <= 0) {
+                Swal.fire('تنبيه', 'يرجى إدخال مبلغ صحيح أكبر من صفر', 'warning');
+                return false;
+            }
+
+            if (!paymentMethodId) {
+                Swal.fire('تنبيه', 'يرجى اختيار طريقة الدفع', 'warning');
+                return false;
+            }
+
+            // إظهار رسالة تحميل صغيرة بدل التأكيد الكامل لتسريع العمل، أو يمكنك استخدام confirm عادي
+            // هنا سنعتمد الإرسال المباشر مع مؤشر تحميل لتسريع عملية السداد المتكرر
+            // ولكن إذا أردت تأكيد، يمكنك إضافته هنا.
+
+            // إضافة مؤشر تحميل للزر
+            const btn = form.querySelector('button[type="submit"]');
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+            $.ajax({
+                url: '@Url.Action("AddPayment")',
+                type: 'POST',
+                data: $(form).serialize(),
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم السداد',
+                        text: `تم إضافة دفعة بقيمة ${amount}`,
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => location.reload());
+                },
+                error: function() {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                    Swal.fire('خطأ', 'حدث خطأ أثناء إضافة الدفعة', 'error');
+                }
+            });
+
+            return false; // منع الإرسال التقليدي
+        }
+    </script>
+}

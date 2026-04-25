@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&#x62A;&#x633;&#x62C;&#x64A;&#x644; &#x627;&#x644;&#x62F;&#x62E;&#x648;&#x644; - نظام إدارة المبيعات</title>
+
+    <script src="/lib/tailwindcss/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    
+    <!-- Local Cairo Font -->
+    <link rel="stylesheet" href="/css/cairo-font.css" />
+
+        <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+        <link href="/lib/fontawesome/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/lib/sweetalert2/sweetalert2.min.css" />
+        <link rel="stylesheet" href="/lib/animate.css/animate.min.css" />
+        <link href="/lib/datatables-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+        <link href="/lib/datatables-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet">
+
+    
+</head>
+<body>
+    <div b-qdfrbuwdwj id="pageLoader" class="page-loading-bar" aria-hidden="true"></div>
+
+    
+
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8" dir="rtl">
+    <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl border border-slate-100 animate__animated animate__fadeIn">
+        <div>
+            <div class="mx-auto h-20 w-20 bg-indigo-50 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-user-circle text-4xl text-indigo-800"></i>
+            </div>
+            <h2 class="mt-2 text-center text-3xl font-extrabold text-slate-900">
+                تسجيل الدخول
+            </h2>
+            <p class="mt-2 text-center text-sm text-slate-600">
+                مرحباً بك مجدداً! الرجاء إدخال بيانات الدخول
+            </p>
+        </div>
+        
+        <form class="mt-8 space-y-6" action="/Auth/Login" method="post">
+            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8DhIWvwcRL1Grhz8LHZP1_kcW-fdRUeb6IC2JzeuJ3PQPDw31UkWTtmF6fU55mgAOYUghfsEKkqUPZFwrdnY2yPMj1LFQT3-YLKjOpg0kadBcdFsafS7EiTJgATy1bBQmnDYdjRnSGwP3uLex3eHlIA" />
+            
+
+            <div class="rounded-md shadow-sm space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1" for="Email">البريد الإلكتروني / اسم المستخدم</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-slate-400 text-lg"></i>
+                        </div>
+                        <input class="appearance-none rounded-xl relative block w-full px-4 py-3 pr-10 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 focus:z-10 sm:text-sm font-medium transition-all" placeholder="name@example.com" type="text" data-val="true" data-val-required="&#x647;&#x630;&#x627; &#x627;&#x644;&#x62D;&#x642;&#x644; &#x645;&#x637;&#x644;&#x648;&#x628;" id="Email" name="Email" value="" />
+                    </div>
+                    <span class="text-red-500 text-xs mt-1 font-bold field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1" for="Password">كلمة المرور</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-slate-400 text-lg"></i>
+                        </div>
+                        <input type="password" id="passwordInput" class="appearance-none rounded-xl relative block w-full px-4 py-3 pr-10 pl-10 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:border-indigo-800 focus:z-10 sm:text-sm font-medium transition-all" placeholder="••••••••" data-val="true" data-val-required="&#x647;&#x630;&#x627; &#x627;&#x644;&#x62D;&#x642;&#x644; &#x645;&#x637;&#x644;&#x648;&#x628;" name="Password" />
+                        <button type="button" id="togglePassword" class="absolute inset-y-0 left-0 pl-3 flex items-center cursor-pointer text-slate-400 hover:text-indigo-800 transition-colors focus:outline-none z-20">
+                             <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="text-red-500 text-xs mt-1 font-bold field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input class="h-4 w-4 text-indigo-800 focus:ring-indigo-800 border-gray-300 rounded cursor-pointer" type="checkbox" data-val="true" data-val-required="The &#x62A;&#x630;&#x643;&#x631;&#x646;&#x64A; field is required." id="RememberMe" name="RememberMe" value="true" />
+                    <label class="mr-2 block text-sm text-slate-700 font-bold cursor-pointer" for="RememberMe">
+                        تذكرني
+                    </label>
+                </div>
+
+            </div>
+
+            <div>
+                <button type="submit" id="btn-submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-indigo-800 hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 transition-all shadow-sm shadow-indigo-500/30">
+                    تسجيل الدخول
+                </button>
+            </div>
+            
+            <div class="text-center mt-6">
+                <p class="text-sm text-slate-600">
+                    ليس لديك حساب؟ 
+                    <a class="font-bold text-indigo-600 hover:text-indigo-800 transition-colors" href="/Auth/Register">
+                        إنشاء حساب جديد
+                    </a>
+                </p>
+            </div>
+        <input name="RememberMe" type="hidden" value="false" /></form>
+    </div>
+</div>
+
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/datatables/jquery.dataTables.min.js"></script>
+    <script src="/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/lib/jszip/jszip.min.js"></script>
+    <script src="/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="/lib/pdfmake/vfs_fonts.js"></script>
+    <script src="/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/lib/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/js/swal-config.js?v=ME05bvi7RyYzu4bGXJ8Sz23-XrMbwiFTXxqRuqx6MAA"></script>
+    <script src="/js/site.js?v=snpEctyHNKMX5w53ngJZCtCpsxn6iofwemq5M7wbdSA"></script>
+
+    <script src="/js/barcode.js?v=1R4n63QvvH5iVT0IiVWxEeGuUDFwyKdLFCnSKq1kFUk"></script>
+    <script src="/js/page-loader.js?v=ffFEuKHQT9Sm9mDN8DbP-TK7zW0ntEtNdi5jAjz2hxA"></script>
+    <script src="/js/sidebar.js?v=xzJesXmaOWb6zOMS-P-_KS2kFGIcxQJyTc0cANbYuAQ"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function() {
+
+            // ===================================================
+            // 1. Mobile Sidebar Toggle (Hamburger Button Fix)
+            // ===================================================
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+
+            function toggleSidebar() {
+                // تبديل كلاسات Tailwind لإظهار/إخفاء الشريط الجانبي
+                sidebar.classList.toggle('translate-x-full');
+                sidebar.classList.toggle('translate-x-0');
+
+                // تبديل كلاسات Overlay (الخلفية المعتمة)
+                overlay.classList.toggle('hidden');
+                overlay.classList.toggle('opacity-0');
+                overlay.classList.toggle('opacity-100');
+            }
+
+            if (mobileBtn && sidebar && overlay) {
+                mobileBtn.addEventListener('click', toggleSidebar);
+                overlay.addEventListener('click', toggleSidebar);
+            }
+
+
+            // ===================================================
+            // 2. Settings Dropdown Toggle (Click/Accordion Fix)
+            // ===================================================
+            $('#settingsDropdownToggle').on('click', function(e) {
+                e.preventDefault();
+
+                const subMenu = $('#settingsSubMenu');
+                const icon = $('#settingsIcon');
+
+                // التحقق مما إذا كانت القائمة مفتوحة
+                if (subMenu.hasClass('is-open')) {
+                    // إغلاق القائمة
+                    subMenu.removeClass('is-open');
+                    subMenu.css('max-height', '0');
+                    icon.removeClass('rotate-90');
+                } else {
+                    // فتح القائمة
+                    subMenu.addClass('is-open');
+                    // حساب ارتفاع المحتوى لتمكين انتقال سلس
+                    const contentHeight = subMenu.prop('scrollHeight');
+                    subMenu.css('max-height', contentHeight + 'px');
+                    icon.addClass('rotate-90');
+                }
+            });
+            // للحفاظ على القائمة مفتوحة إذا كان أحد عناصرها نشطاً عند تحميل الصفحة
+            if ($('#settingsSubMenu a.font-semibold').length > 0) {
+                 const subMenu = $('#settingsSubMenu');
+                 subMenu.addClass('is-open').css('max-height', subMenu.prop('scrollHeight') + 'px');
+                 $('#settingsIcon').addClass('rotate-90');
+            }
+        });
+
+        window.APP_CURRENCY_SYMBOL = '&#x62C;.&#x645;.&#x200F;';
+        // تحديث الـ navbar عند حذف فئة
+    </script>
+
+    
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            const passwordInput = document.getElementById('passwordInput');
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        $('form').on('submit', function() {
+            if ($(this).valid()) {
+                const btn = $('#btn-submit');
+                const originalText = btn.text();
+                btn.prop('disabled', true);
+                btn.html('<i class="fas fa-spinner fa-spin ml-2"></i> جاري الدخول...');
+                
+                // Safety timeout in case of network error or server not engaging
+                setTimeout(() => {
+                    btn.prop('disabled', false);
+                    btn.text(originalText);
+                }, 10000);
+            }
+        });
+    </script>
+
+
+    <!-- About Us Modal -->
+    <div b-qdfrbuwdwj id="aboutModal" class="fixed inset-0 z-[9999] hidden" aria-labelledby="about-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div b-qdfrbuwdwj class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-sm" onclick="toggleAboutModal()"></div>
+
+        <div b-qdfrbuwdwj class="fixed inset-0 z-10 overflow-y-auto">
+            <div b-qdfrbuwdwj class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                
+                <div b-qdfrbuwdwj class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-indigo-100">
+                    
+                    <!-- Decorative Header -->
+                    <div b-qdfrbuwdwj class="bg-gradient-to-r from-indigo-800 to-indigo-900 h-24 relative overflow-hidden flex items-center justify-center">
+                         <div b-qdfrbuwdwj class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #fff 0px, #fff 1px, transparent 1px, transparent 10px);"></div>
+                         <img src="/images/translogo.webp" alt="Qota" class="h-16 relative z-10 drop-shadow-xs filter" />
+                    </div>
+
+                    <div b-qdfrbuwdwj class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div b-qdfrbuwdwj class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-center">
+                            <h3 b-qdfrbuwdwj class="text-xl font-bold leading-6 text-indigo-900 mb-2" id="about-title">نظام كوتة لإدارة المبيعات</h3>
+                            <div b-qdfrbuwdwj class="mt-2">
+                                <p b-qdfrbuwdwj class="text-sm font-bold text-gray-700 mb-4 bg-indigo-50 py-1 px-3 rounded-full inline-block font-mono">الإصدار 1.0.0</p>
+                                <p b-qdfrbuwdwj class="text-sm text-gray-600 leading-relaxed">
+                                    نظام متكامل صُمم خصيصاً لتسهيل إدارة مبيعاتك، مخزونك، وعملائك. نهدف لتمكين أصحاب الأعمال من النمو والتحكم الكامل بمشاريعهم.
+                                </p>
+                            </div>
+
+                            <!-- Social Links -->
+                            <div b-qdfrbuwdwj class="mt-8 flex justify-center gap-6">
+                                <a b-qdfrbuwdwj href="https://www.facebook.com/profile.php?id=61586835293416" target="_blank" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-indigo-800 transition-colors">
+                                    <div b-qdfrbuwdwj class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
+                                        <i b-qdfrbuwdwj class="fab fa-facebook-f text-lg"></i>
+                                    </div>
+                                </a>
+                                <a b-qdfrbuwdwj href="https://www.youtube.com/@qotaSystem" target="_blank" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-red-600 transition-colors">
+                                    <div b-qdfrbuwdwj class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition-colors">
+                                        <i b-qdfrbuwdwj class="fab fa-youtube text-lg"></i>
+                                    </div>
+                                </a>
+                                <a b-qdfrbuwdwj href="#" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-pink-600 transition-colors">
+                                    <div b-qdfrbuwdwj class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center group-hover:bg-pink-100 transition-colors">
+                                        <i b-qdfrbuwdwj class="fab fa-instagram text-lg"></i>
+                                    </div>
+                                </a>
+                                <a b-qdfrbuwdwj href="#" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-black transition-colors">
+                                    <div b-qdfrbuwdwj class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                                        <svg b-qdfrbuwdwj class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path b-qdfrbuwdwj d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div b-qdfrbuwdwj class="bg-gray-100 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 justify-center">
+                        <button b-qdfrbuwdwj type="button" class="mt-3 inline-flex w-full justify-center rounded-lg bg-gray-50 hover:bg-red-100 border border-gray-400 px-8 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-500 hover:bg-gray-50 sm:mt-0 sm:w-auto transition-colors" onclick="toggleAboutModal()">إغلاق</button>
+                    </div>
+                    
+                    <div b-qdfrbuwdwj class="text-center pb-4 text-xs text-gray-500">
+                        &copy; 2026 Qota System. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAboutModal() {
+            const modal = document.getElementById('aboutModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                // Optional: Enable fade-in animation logic here if needed
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+@model ManageMentSystem.Models.Tenant
+@{
+    // Calculate expiry date for JS
+    var expiryDate = Model.IsSubscriptionActive && Model.SubscriptionStatus == "Trial" 
+        ? Model.TrialEndDate 
+        : Model.SubscriptionEndDate;
+
+    // Use ISO string for reliable parsing in JS
+    var expiryIso = expiryDate?.ToString("yyyy-MM-ddTHH:mm:ss");
+}
+
+@if (expiryDate.HasValue && expiryDate.Value > DateTime.Now)
+{
+    <div id="subscriptionWarningBanner" class="fixed top-0 inset-x-0 z-[9000] hidden transform transition-transform duration-500 -translate-y-full shadow-lg shadow-red-900/10" dir="rtl">
+        <div class="bg-gradient-to-r from-red-700 to-red-800 text-white px-4 py-3">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-8">
+                
+                <!-- Warning Message -->
+                <div class="flex items-center gap-3 text-center sm:text-right">
+                    <div class="bg-white p-2 rounded-lg backdrop-blur-sm ">
+                        <i class="fas fa-exclamation-triangle text-amber-700 animate-pulse text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm sm:text-base">
+                            تنبيه: اشتراكك ينتهي قريباً
+                        </p>
+                        <p class="text-red-200 text-xs sm:text-sm">
+                            يرجى التجديد لضمان استمرار الخدمة دون توقف
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer -->
+                <div class="flex items-center gap-2 font-mono" dir="ltr">
+                    <!-- Days -->
+                    <div class="flex flex-col items-center">
+                        <span id="warnDays" class="bg-black/20 rounded px-2 py-1 font-bold text-lg min-w-[40px] text-center backdrop-blur-sm">00</span>
+                        <span class="text-xs text-red-200 uppercase mt-0.5">Days</span>
+                    </div>
+                    <span class="text-red-300 font-bold mb-4">:</span>
+                    <!-- Hours -->
+                    <div class="flex flex-col items-center">
+                        <span id="warnHours" class="bg-black/20 rounded px-2 py-1 font-bold text-lg min-w-[40px] text-center backdrop-blur-sm">00</span>
+                        <span class="text-xs text-red-200 uppercase mt-0.5">Hrs</span>
+                    </div>
+                    <span class="text-red-300 font-bold mb-4">:</span>
+                    <!-- Minutes -->
+                    <div class="flex flex-col items-center">
+                        <span id="warnMins" class="bg-black/20 rounded px-2 py-1 font-bold text-lg min-w-[40px] text-center backdrop-blur-sm">00</span>
+                        <span class="text-xs text-red-200 uppercase mt-0.5">Min</span>
+                    </div>
+                    <span class="text-red-300 font-bold mb-4">:</span>
+                    <!-- Seconds -->
+                    <div class="flex flex-col items-center">
+                        <span id="warnSecs" class="bg-black/20 rounded px-2 py-1 font-bold text-lg min-w-[40px] text-center backdrop-blur-sm text-amber-300">00</span>
+                        <span class="text-xs text-red-200 uppercase mt-0.5">Sec</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3 w-full sm:w-auto justify-center">
+                    <a href="https://wa.me/201129452725?text=تجديد%20الاشتراك%20(تنبيه%20قرب%20الانتهاء)" 
+                       target="_blank"
+                       class="bg-red-50 text-emerald-700 hover:text-emerald-700 hover:bg-red-100 font-bold py-2 px-4 rounded-lg text-sm transition-all shadow-sm flex items-center gap-2 whitespace-nowrap">
+                        <i class="fab fa-whatsapp"></i>
+                        تجديد الآن
+                    </a>
+                    
+                    <button onclick="snoozeWarning()" class="text-red-100 hover:text-white hover:bg-white/10 rounded-lg p-2 transition-colors" title="إخفاء لمدة 30 دقيقة">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const banner = document.getElementById('subscriptionWarningBanner');
+            const expiryStr = '@expiryIso';
+            
+            // Show Banner Immediately on Load (No localStorage check)
+            if (banner) {
+                banner.classList.remove('hidden');
+                setTimeout(() => {
+                    banner.classList.remove('-translate-y-full');
+                }, 100);
+            }
+
+            // Start Timer
+            if (expiryStr) {
+                const countDownDate = new Date(expiryStr).getTime();
+
+                const x = setInterval(function() {
+                    const now = new Date().getTime();
+                    const distance = countDownDate - now;
+
+                    if (distance < 0) {
+                        clearInterval(x);
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    updateElement('warnDays', days);
+                    updateElement('warnHours', hours);
+                    updateElement('warnMins', minutes);
+                    updateElement('warnSecs', seconds);
+
+                }, 1000);
+            }
+        });
+
+        function updateElement(id, value) {
+            const el = document.getElementById(id);
+            if(el) el.innerText = value < 10 ? "0" + value : value;
+        }
+
+        // Snooze Variables
+        let snoozeTimeout;
+
+        function snoozeWarning() {
+            const banner = document.getElementById('subscriptionWarningBanner');
+            
+            // 1. Hide Visuals
+            banner.classList.add('-translate-y-full');
+            setTimeout(() => {
+                banner.classList.add('hidden');
+            }, 500);
+
+            // 2. Set Timer to Re-Show in 30 Minutes (if user stays on page)
+            // 30 mins * 60 sec * 1000 ms
+            snoozeTimeout = setTimeout(() => {
+                banner.classList.remove('hidden');
+                setTimeout(() => {
+                    banner.classList.remove('-translate-y-full');
+                }, 100);
+            }, 30 * 60 * 1000);
+        }
+    </script>
+}

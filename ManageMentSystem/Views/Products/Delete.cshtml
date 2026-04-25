@@ -1,0 +1,135 @@
+@model ManageMentSystem.Models.Product
+@{
+    ViewData["Title"] = "حذف المنتج";
+}
+
+<div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-6" dir="rtl">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="p-3 bg-red-100 rounded-xl">
+                <i class="fas fa-trash-alt text-red-700 text-xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-800">حذف المنتج</h1>
+        </div>
+        <a asp-action="Index" class="flex items-center gap-2 px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition-colors">
+            <i class="fas fa-arrow-right"></i>
+            العودة للقائمة
+        </a>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-sm border border-red-100 overflow-hidden">
+            <div class="p-6 border-b border-red-50 bg-red-50/30">
+                <h3 class="font-bold text-red-800 flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    تأكيد حذف المنتج
+                </h3>
+            </div>
+
+            <div class="p-6 space-y-8">
+                <div class="bg-amber-50 border-r-4 border-amber-400 p-4 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-exclamation-circle text-amber-600 text-lg"></i>
+                        <div>
+                            <h6 class="font-bold text-amber-800 text-lg">تحذير!</h6>
+                            <p class="text-amber-700 font-medium">هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <label class="block text-sm font-bold text-slate-500 mb-1">اسم المنتج:</label>
+                        <p class="text-lg text-slate-800 font-bold">@Model.Name</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <label class="block text-sm font-bold text-slate-500 mb-1">سعر البيع:</label>
+                        <p class="text-lg text-emerald-600 font-bold">@Model.SalePrice.ToString("C")</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <label class="block text-sm font-bold text-slate-500 mb-1">الكمية المتوفرة:</label>
+                        <div class="mt-1">
+                            @if (Model.Quantity <= 5)
+                            {
+                                <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-bold border border-amber-200">
+                                    @Model.Quantity (كمية منخفضة)
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-bold border border-emerald-200">
+                                    @Model.Quantity
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <label class="block text-sm font-bold text-slate-500 mb-1">الوصف:</label>
+                        <p class="text-slate-700 leading-relaxed font-medium">@Model.Description</p>
+                    </div>
+                }
+
+                <div class="bg-indigo-50 rounded-2xl p-6 border border-indigo-100">
+                    <div class="flex items-center gap-2 mb-4 text-indigo-800">
+                        <i class="fas fa-info-circle text-lg"></i>
+                        <h6 class="font-bold text-lg">تأثير الحذف:</h6>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2 text-indigo-900 font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-2 flex-shrink-0"></span>
+                            سيتم حذف المنتج من قائمة المنتجات المتوفرة نهائياً.
+                        </li>
+                        <li class="flex items-start gap-2 text-indigo-900 font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-2 flex-shrink-0"></span>
+                            قيمة المخزون المفقودة: <strong class="text-red-700 mx-1">@((Model.SalePrice * Model.Quantity).ToString("C"))</strong>
+                        </li>
+                        <li class="flex items-start gap-2 text-indigo-900 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-600 mt-2 flex-shrink-0"></span>
+                            مهم: ستبقى جميع العمليات المرتبطة (مبيعات، أقساط، ديون مؤجلة) محفوظة في السجلات والتقارير.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-end items-center gap-3 pt-4 border-t border-slate-100">
+                    <a asp-action="Index" class="w-full sm:w-auto px-8 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition-all text-center">
+                        <i class="fas fa-times ml-1"></i>
+                        إلغاء الإجراء
+                    </a>
+                    <form asp-action="Delete" method="post" id="deleteConfirmForm" class="w-full sm:w-auto">
+                        <input type="hidden" asp-for="Id" />
+                        <button type="submit" id="deleteConfirmBtn" class="w-full sm:w-auto px-8 py-3 bg-red-700 hover:bg-red-800 text-white font-bold rounded-xl shadow-lg shadow-red-100 transition-all text-center">
+                            <i class="fas fa-trash ml-1"></i>
+                            تأكيد الحذف النهائي
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/sweetalert-products.js"></script>
+    <script>
+        $(function(){
+            $('#deleteConfirmForm').on('submit', function(e){
+                e.preventDefault();
+                var form = this;
+                showDeleteConfirmation(
+                    'تأكيد الحذف',
+                    'هل أنت متأكد تماماً من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء.',
+                    function(){
+                        showLoading('جاري الحذف...', 'يرجى الانتظار');
+                        form.submit();
+                    }
+                );
+            });
+        });
+    </script>
+}

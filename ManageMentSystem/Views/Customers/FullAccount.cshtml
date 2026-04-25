@@ -1,0 +1,293 @@
+@model ManageMentSystem.ViewModels.CustomerFullAccountViewModel
+@{
+    ViewData["Title"] = "حساب العميل بالكامل";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6">
+
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-file-invoice-dollar text-indigo-800"></i>
+                حساب العميل بالكامل
+            </h1>
+            <div class="flex items-center gap-3 mt-2 text-md font-bold text-gray-500 mt-2">
+                <span class="flex items-center gap-1 bg-gray-200 text-gray-800 px-3 py-1 rounded-lg">
+                    <i class="fas fa-user text-indigo-800"></i> @Model.CustomerName
+                </span>
+                <span class="flex items-center gap-1 bg-gray-200 text-gray-800 px-3 py-1 rounded-lg">
+                    <i class="fas fa-phone text-emerald-700 "></i> @(Model.CustomerPhone ?? "-")
+                </span>
+            </div>
+        </div>
+
+        <a href="@Url.Action("Statement", "Customers", new { id = Model.CustomerId })" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-indigo-800 px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
+            رجوع للكشف المختصر<i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+            <h6 class="font-bold text-gray-800 flex items-center gap-2">
+                <i class="fas fa-list text-indigo-800"></i> سجل العمليات التفصيلي
+            </h6>
+            <div class="text-xs font-bold text-gray-500">
+                إجمالي العمليات: @Model.TotalItems
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right">
+                <thead>
+                    <tr class="bg-indigo-50/50 text-gray-800 border-b border-indigo-100 text-sm text-center">
+                        <th class="px-6 py-4 font-bold">التاريخ</th>
+                        <th class="px-6 py-4 font-bold">النوع</th>
+                        <th class="px-6 py-4 font-bold">المبلغ</th>
+                        <th class="px-6 py-4 font-bold">طريقة الدفع</th>
+                        <th class="px-6 py-4 font-bold">تراكمي فواتير</th>
+                        <th class="px-6 py-4 font-bold">تراكمي مدفوع</th>
+                        <th class="px-6 py-4 font-bold">الرصيد التراكمي</th>
+                        <th class="px-6 py-4 font-bold">التفاصيل</th>
+                        <th class="px-6 py-4 font-bold text-center">إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 text-center font-bold">
+                    @foreach (var e in Model.Entries)
+                    {
+                        // تحديد لون الصف بناءً على نوع العملية
+                        var rowClass = "";
+                        var typeBadgeClass = "";
+                        var typeIcon = "";
+
+                        if (e.Type == "مرتجع")
+                        {
+                            rowClass = "bg-amber-50/30 hover:bg-red-50";
+                            typeBadgeClass = "bg-red-100 text-red-800 border-red-200";
+                            typeIcon = "fa-undo";
+                        }
+                        else if (e.Type == "دفعة")
+                        {
+                            rowClass = "bg-emerald-50/30 hover:bg-emerald-50";
+                            typeBadgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
+                            typeIcon = "fa-hand-holding-usd";
+                        }
+                        else // فاتورة
+                        {
+                            rowClass = "hover:bg-gray-50";
+                            typeBadgeClass = "bg-indigo-100 text-indigo-800 border-indigo-200";
+                            typeIcon = "fa-file-invoice";
+                        }
+
+                        <tr class="transition-colors @rowClass group">
+                            <td class="px-6 py-4 text-sm font-bold text-gray-700 font-mono">
+                                @e.Date.ToString("yyyy-MM-dd")
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-sm font-bold border @typeBadgeClass">
+                                    <i class="fas @typeIcon"></i> @e.Type
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm font-bold text-gray-800">
+                                @e.Amount.ToString("C")
+                            </td>
+                            <td class="px-6 py-4">
+                                @if (!string.IsNullOrEmpty(e.PaymentMethodName))
+                                {
+                                    <span class="inline-block px-2 py-1 bg-gray-100 text-gray-600 rounded text-sm font-bold border border-gray-200">
+                                        @e.PaymentMethodName
+                                    </span>
+                                }
+                                else if (!string.IsNullOrEmpty(e.SalePaymentTypeName))
+                                {
+                                    <span class="inline-block px-2 py-1 bg-indigo-50 text-indigo-800 rounded text-sm font-bold border border-indigo-100">
+                                        @e.SalePaymentTypeName
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-gray-400">-</span>
+                                }
+                            </td>
+                            <td class="px-6 py-4 text-sm font-bold text-indigo-800">
+                                @e.RunningSales.ToString("C")
+                            </td>
+                            <td class="px-6 py-4 text-sm font-bold text-emerald-600">
+                                @e.RunningPaid.ToString("C")
+                            </td>
+                            <td class="px-6 py-4 text-sm font-bold @(e.RunningBalance > 0 ? "text-red-700" : "text-emerald-700")">
+                                @e.RunningBalance.ToString("C")
+                            </td>
+                            <td class="px-6 py-4">
+                                @if (e.SaleId.HasValue)
+                                {
+                                    <a href="@Url.Action("Details", "Sales", new { id = e.SaleId.Value })" class="text-indigo-800 hover:text-indigo-900 font-bold text-sm underline decoration-indigo-200 hover:decoration-indigo-900 transition-all">
+                                        عرض الفاتورة <i class="fas fa-external-link-alt ml-1"></i>
+                                    </a>
+                                }
+                                else if (e.PaymentId.HasValue)
+                                {
+                                    <div class="flex flex-col gap-1">
+                                        @if (!string.IsNullOrEmpty(e.Notes))
+                                        {
+                                            <span class="text-sm text-gray-500 font-medium">@e.Notes</span>
+                                        }
+
+                                        @if (e.Allocations != null && e.Allocations.Any())
+                                        {
+                                            <div class="text-[10px] text-gray-400 font-bold mt-1">
+                                                موزعة على:
+                                                <div class="flex flex-wrap gap-1 mt-0.5">
+                                                    @foreach (var a in e.Allocations)
+                                                    {
+                                                        <span class="bg-gray-50 px-1 rounded border border-gray-200">
+                                                            #@a.SaleId: @a.Amount.ToString("C0")
+                                                        </span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else if (e.ReturnId.HasValue)
+                                {
+                                    <a href="@Url.Action("Details", "Returns", new { id = e.ReturnId.Value })" class="text-amber-600 hover:text-amber-800 font-bold text-sm underline decoration-amber-200 hover:decoration-amber-800 transition-all">
+                                        عرض المرتجع <i class="fas fa-external-link-alt ml-1"></i>
+                                    </a>
+                                }
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <div class="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
+                                    @if (e.SaleId.HasValue)
+                                    {
+                                        <button type="button" onclick="deleteSaleEntry(@e.SaleId.Value)" class="w-8 h-8 inline-flex items-center justify-center rounded-lg  text-red-700 hover:bg-red-100 transition-colors" title="حذف الفاتورة">
+                                            <i class="fas fa-trash-alt text-sm"></i>
+                                        </button>
+                                    }
+                                    else if (e.PaymentId.HasValue)
+                                    {
+                                        <button type="button" onclick="deletePaymentEntry(@e.PaymentId.Value)" class="w-8 h-8 inline-flex items-center justify-center rounded-lg text-red-700 hover:bg-red-100 transition-colors" title="حذف الدفعة">
+                                            <i class="fas fa-trash-alt text-sm"></i>
+                                        </button>
+                                    }
+                                    else if (e.ReturnId.HasValue)
+                                    {
+                                        <button type="button" onclick="deleteReturnEntry(@e.ReturnId.Value)" class="w-8 h-8 inline-flex items-center justify-center rounded-lg text-red-700 hover:bg-red-100 transition-colors" title="حذف المرتجع">
+                                            <i class="fas fa-trash-alt text-sm"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPages > 1)
+        {
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="text-sm font-bold text-gray-500">
+                    عرض @(((Model.CurrentPage - 1) * Model.PageSize) + 1) إلى @Math.Min(Model.CurrentPage * Model.PageSize, Model.TotalItems) من @Model.TotalItems عملية
+                </div>
+
+                <div class="flex gap-1">
+                    @if (Model.CurrentPage > 1)
+                    {
+                        <a href="@Url.Action("FullAccount", "Customers", new { id = Model.CustomerId, page = Model.CurrentPage - 1, pageSize = Model.PageSize })"
+                           class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all">
+                            <i class="fas fa-chevron-right text-xs"></i>
+                        </a>
+                    }
+
+                    @for (int i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.TotalPages, Model.CurrentPage + 2); i++)
+                    {
+                        <a href="@Url.Action("FullAccount", "Customers", new { id = Model.CustomerId, page = i, pageSize = Model.PageSize })"
+                           class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == Model.CurrentPage ? "bg-indigo-800 text-white border-indigo-800 shadow-sm" : "bg-white border-gray-300 text-gray-600 hover:bg-indigo-50 hover:text-indigo-900")">
+                            @i
+                        </a>
+                    }
+
+                    @if (Model.CurrentPage < Model.TotalPages)
+                    {
+                        <a href="@Url.Action("FullAccount", "Customers", new { id = Model.CustomerId, page = Model.CurrentPage + 1, pageSize = Model.PageSize })"
+                           class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <script src="~/js/sweetalert-customers.js"></script>
+    <script>
+        async function postWithToken(url, data) {
+            const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+            const headers = { 'X-Requested-With': 'XMLHttpRequest' };
+            let body;
+
+            // استخدام FormData لإرسال التوكن والبيانات بشكل صحيح
+            const formData = new FormData();
+            if (tokenInput) {
+                formData.append('__RequestVerificationToken', tokenInput.value);
+            }
+
+            for (const k in data) {
+                formData.append(k, data[k]);
+            }
+
+            // عند استخدام FormData، لا نحدد Content-Type يدوياً
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: formData
+            });
+
+            try { return await res.json(); } catch { return { success: res.ok }; }
+        }
+
+        function deleteEntry(type, id, url) {
+            Swal.fire({
+                title: 'تأكيد الحذف',
+                text: `هل أنت متأكد من حذف هذا ${type}؟`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'نعم، احذف',
+                cancelButtonText: 'إلغاء'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const res = await postWithToken(url, { id });
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'تم الحذف',
+                            text: 'تم حذف العملية بنجاح',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire('خطأ', res.message || 'فشل الحذف', 'error');
+                    }
+                }
+            });
+        }
+
+        function deleteSaleEntry(id) {
+            deleteEntry('الفاتورة', id, '@Url.Action("Delete", "Sales")');
+        }
+
+        function deletePaymentEntry(id) {
+            deleteEntry('الدفعة', id, '@Url.Action("DeletePayment", "Customers")');
+        }
+
+        function deleteReturnEntry(id) {
+            deleteEntry('المرتجع', id, '@Url.Action("Delete", "Returns")');
+        }
+    </script>
+}

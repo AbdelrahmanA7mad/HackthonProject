@@ -1,0 +1,286 @@
+@using ManageMentSystem.Helpers
+@model IEnumerable<ManageMentSystem.Models.CustomerPayment>
+@{
+    ViewData["Title"] = "الربح المحقق من دفعات العملاء";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-chart-line text-emerald-700"></i> الربح المحقق من دفعات العملاء
+            </h1>
+            <p class="text-slate-500 mt-1 font-medium">تحليل الأرباح المحققة من التحصيلات</p>
+        </div>
+        <div>
+            <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                العودة لحساب المحل<i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-8">
+        <div class="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
+            <i class="fas fa-filter text-indigo-800"></i>
+            <h6 class="font-bold text-slate-700">فلترة دفعات العملاء والربح المحقق</h6>
+        </div>
+        <form method="get" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+            <div class="md:col-span-3">
+                <label class="block text-sm font-bold text-slate-600 mb-2">من تاريخ</label>
+                <input type="date" name="fromDate" value="@(string.IsNullOrEmpty(Context.Request.Query["fromDate"]) ? (ViewBag.FromDate != null ? ((DateTime)ViewBag.FromDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["fromDate"] )" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none text-sm font-bold transition-all text-slate-700" />
+            </div>
+            <div class="md:col-span-3">
+                <label class="block text-sm font-bold text-slate-600 mb-2">إلى تاريخ</label>
+                <input type="date" name="toDate" value="@(string.IsNullOrEmpty(Context.Request.Query["toDate"]) ? (ViewBag.ToDate != null ? ((DateTime)ViewBag.ToDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["toDate"] )" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none text-sm font-bold transition-all text-slate-700" />
+            </div>
+            <div class="md:col-span-6">
+                <label class="block text-sm font-bold text-slate-600 mb-2">فترة سريعة</label>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('today')">اليوم</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('week')">الأسبوع</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('month')">الشهر</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('quarter')">الربع</button>
+                    <button type="button" class="flex-1 bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('year')">السنة</button>
+                    <button type="button" class="flex-1 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="clearDateRange()">الكل</button>
+                </div>
+            </div>
+            <div class="md:col-span-12 flex gap-2 mt-2">
+                <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-indigo-500/30 hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fas fa-search"></i> فلترة
+                </button>
+                <a asp-action="RealizedProfit" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-times"></i> إلغاء
+                </a>
+            </div>
+            <input type="hidden" name="page" value="1" />
+        </form>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Paid Amount -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-700 text-xl shadow-sm">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-slate-500 mb-1">إجمالي المبالغ المدفوعة</p>
+                <h3 class="text-2xl font-bold text-emerald-700">@ViewBag.TotalPaidAmount?.ToString("C")</h3>
+            </div>
+        </div>
+
+        <!-- Realized Profit -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-800 text-xl shadow-sm">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-slate-500 mb-1">إجمالي الربح المحقق</p>
+                <h3 class="text-2xl font-bold text-indigo-800">@ViewBag.TotalRealizedProfit?.ToString("C")</h3>
+            </div>
+        </div>
+
+        <!-- Profit Percentage -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-700 text-xl shadow-sm">
+                <i class="fas fa-percentage"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-slate-500 mb-1">نسبة الربح المحقق</p>
+                <h3 class="text-2xl font-bold text-sky-700">@ViewBag.ProfitPercentage?.ToString("F1")%</h3>
+                <p class="text-xs text-slate-400 mt-1">من إجمالي المبالغ المدفوعة</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Table -->
+    <div class="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden">
+        <div class="bg-slate-50/50 px-6 py-4 border-b border-slate-200">
+            <h6 class="font-bold text-slate-800 flex items-center gap-2">
+                <i class="fas fa-list text-indigo-800"></i> تفاصيل دفعات العملاء
+            </h6>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="overflow-x-auto">
+                <table class="w-full text-right">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 text-sm uppercase font-bold text-center">
+                        <tr>
+                            <th class="px-6 py-4">تاريخ الدفعة</th>
+                            <th class="px-6 py-4">العميل</th>
+                            <th class="px-6 py-4">المبلغ المدفوع</th>
+                            <th class="px-6 py-4">الربح المحقق</th>
+                            <th class="px-6 py-4">نسبة الربح</th>
+                            <th class="px-6 py-4">الفواتير المدفوعة</th>
+                            <th class="px-6 py-4">الملاحظات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-slate-700 text-sm text-center">
+                        @foreach (var item in Model)
+                        {
+                            var realizedProfit = 0m;
+                            var profitMargin = 0m;
+                            var profitClass = "";
+                            
+                            if (!string.IsNullOrEmpty(item.Notes) && item.Notes.Contains("الربح المحقق:"))
+                            {
+                                var profitText = item.Notes.Split("الربح المحقق:")[1].Trim();
+                                if (profitText.Contains("("))
+                                {
+                                    var profitMarginText = profitText.Split("(")[1].Replace("نسبة الربح:", "").Replace("%)", "").Trim();
+                                    if (decimal.TryParse(profitMarginText, out var parsedMargin))
+                                    {
+                                        profitMargin = parsedMargin;
+                                    }
+                                    profitText = profitText.Split("(")[0].Trim();
+                                }
+                                profitText = profitText.Replace("$", "").Replace(",", "").Replace("ج.م", "").Replace("ل.ل", "").Replace("غير محدد", "").Trim();
+                                if (decimal.TryParse(profitText, out var parsedProfit))
+                                {
+                                    realizedProfit = parsedProfit;
+                                    profitClass = realizedProfit >= 0 ? "text-emerald-700" : "text-red-700";
+                                }
+                            }
+                            
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="px-6 py-4 font-bold">@item.PaymentDate.ToString("yyyy-MM-dd")</td>
+                                <td class="px-6 py-4 font-bold text-slate-800">
+                                    @(item.Customer?.FullName ?? "غير محدد")
+                                </td>
+                                <td class="px-6 py-4 font-bold text-emerald-700">@item.Amount.ToString("C")</td>
+                                <td class="px-6 py-4 font-bold @profitClass">
+                                    @if (realizedProfit != 0)
+                                    {
+                                        <span>@realizedProfit.ToString("C")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-slate-400">-</span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 font-bold text-sky-700">
+                                    @if (profitMargin != 0)
+                                    {
+                                        <span>@(profitMargin.ToString("F1") + "%")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-slate-400">-</span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 text-xs font-bold">
+                                    @if (item.Allocations.Any())
+                                    {
+                                        @foreach (var allocation in item.Allocations)
+                                        {
+                                            <div class="text-indigo-600 mb-1">
+                                                <i class="fas fa-receipt"></i> فاتورة: @allocation.SaleId - @allocation.Amount.ToString("C")
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-slate-400">لا توجد فواتير</span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 max-w-xs truncate">
+                                    @(item.Notes ?? "-")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <div class="bg-slate-50 border-t border-slate-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="text-sm font-bold text-slate-500">
+                        عرض @(((ViewBag.CurrentPage - 1) * ViewBag.PageSize) + 1) إلى @Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalItems) من @ViewBag.TotalItems نتيجة
+                    </div>
+                    <div class="flex gap-1.5" dir="ltr">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <a href="@Url.Action("RealizedProfit", new { page = ViewBag.CurrentPage - 1, fromDate = ViewBag.FromDate?.ToString("yyyy-MM-dd"), toDate = ViewBag.ToDate?.ToString("yyyy-MM-dd") })" 
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all">
+                                <i class="fas fa-chevron-left text-xs"></i>
+                            </a>
+                        }
+
+                        @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
+                        {
+                            if (i == ViewBag.CurrentPage)
+                            {
+                                <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-800 text-white border border-indigo-800 text-xs font-bold shadow-sm shadow-indigo-200">@i</span>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("RealizedProfit", new { page = i, fromDate = ViewBag.FromDate?.ToString("yyyy-MM-dd"), toDate = ViewBag.ToDate?.ToString("yyyy-MM-dd") })" 
+                                   class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all text-xs font-bold">@i</a>
+                            }
+                        }
+
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <a href="@Url.Action("RealizedProfit", new { page = ViewBag.CurrentPage + 1, fromDate = ViewBag.FromDate?.ToString("yyyy-MM-dd"), toDate = ViewBag.ToDate?.ToString("yyyy-MM-dd") })" 
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-500 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all">
+                                <i class="fas fa-chevron-right text-xs"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <div class="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                    <i class="fas fa-inbox text-3xl text-slate-300"></i>
+                </div>
+                <h5 class="text-lg font-bold text-slate-800">لا توجد بيانات</h5>
+                <p class="text-slate-500 mt-1">لم يتم العثور على دفعات عملاء في الفترة المحددة</p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function setDateRange(range) {
+            const today = new Date();
+            let fromDate = new Date();
+            let toDate = new Date();
+
+            switch (range) {
+                case 'today':
+                    fromDate = today;
+                    toDate = today;
+                    break;
+                case 'week':
+                    fromDate.setDate(today.getDate() - 7);
+                    break;
+                case 'month':
+                    fromDate.setMonth(today.getMonth() - 1);
+                    break;
+                case 'quarter':
+                    fromDate.setMonth(today.getMonth() - 3);
+                    break;
+                case 'year':
+                    fromDate.setFullYear(today.getFullYear() - 1);
+                    break;
+            }
+
+            document.querySelector('input[name="fromDate"]').value = fromDate.toISOString().split('T')[0];
+            document.querySelector('input[name="toDate"]').value = toDate.toISOString().split('T')[0];
+        }
+
+        function clearDateRange() {
+            document.querySelector('input[name="fromDate"]').value = '';
+            document.querySelector('input[name="toDate"]').value = '';
+        }
+    </script>
+}

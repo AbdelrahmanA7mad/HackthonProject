@@ -1,0 +1,19 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "اشتراك منتهي";
+}
+@model ManageMentSystem.Models.Tenant
+
+<div class="container mt-5 text-center">
+    @await Html.PartialAsync("_SubscriptionExpiredBanner", Model)
+</div>
+
+<script>
+    // Ensure the overlay is visible and blocks interaction
+    document.addEventListener("DOMContentLoaded", function() {
+        const overlay = document.querySelector('.subscription-expired-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+        }
+    });
+</script>

@@ -1,0 +1,100 @@
+@model ManageMentSystem.Models.StoreAccount
+@using ManageMentSystem.Helpers
+
+@{
+    ViewData["Title"] = "حذف العملية المالية";
+}
+
+<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <i class="fas fa-trash-alt text-red-700"></i> حذف العملية المالية
+        </h1>
+        <p class="text-slate-500 mt-1 font-medium">هل أنت متأكد من رغبتك في حذف هذه العملية؟</p>
+    </div>
+
+    <!-- Alert -->
+    <div class="max-w-4xl mx-auto mb-6 bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-xl flex items-center gap-4 shadow-sm relative">
+        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 flex-shrink-0">
+            <i class="fas fa-exclamation-triangle text-lg"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-lg mb-1">تحذير هام!</h4>
+            <p class="text-sm font-bold opacity-80">هذا الإجراء لا يمكن التراجع عنه. سيتم حذف سجل العملية المالية بشكل نهائي.</p>
+        </div>
+    </div>
+
+    <!-- Details Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Name -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">اسم العملية</label>
+                <p class="font-bold text-slate-800 text-lg">@Model.TransactionName</p>
+            </div>
+
+            <!-- Type -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">نوع العملية</label>
+                <div class="mt-1">
+                    <span class="px-3 py-1 rounded-full font-bold text-sm @(Model.TransactionType == TransactionType.Income ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-red-100 text-red-800 border border-red-200")">
+                        @Model.TransactionType.GetDisplayName()
+                    </span>
+                </div>
+            </div>
+
+            <!-- Amount -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">المبلغ</label>
+                <p class="font-bold text-xl @(Model.TransactionType == TransactionType.Income ? "text-emerald-700" : "text-red-700")">@Model.Amount.ToString("C")</p>
+            </div>
+
+            <!-- Date -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">التاريخ</label>
+                <p class="font-bold text-slate-800 text-lg">
+                    <i class="fas fa-calendar-alt text-slate-400 ml-2"></i>
+                    @Model.TransactionDate.ToString("yyyy-MM-dd")
+                </p>
+            </div>
+
+            <!-- Category -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">الفئة</label>
+                <p class="font-bold text-slate-800">@(Model.Category ?? "غير محدد")</p>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 mb-1">طريقة الدفع</label>
+                <p class="font-bold text-indigo-800">
+                    <i class="fas fa-credit-card ml-2 text-indigo-400"></i>
+                    @Model.PaymentMethod?.Name
+                </p>
+            </div>
+
+            <!-- Description -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 md:col-span-2">
+                <label class="block text-xs font-bold text-slate-500 mb-1">الوصف</label>
+                <p class="font-bold text-slate-800 leading-relaxed">@(Model.Description ?? "-")</p>
+            </div>
+            
+             <!-- Capital -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 md:col-span-2">
+                <label class="block text-xs font-bold text-slate-500 mb-1">رأس المال</label>
+                <p class="font-bold text-amber-700 text-lg">@Model.Capital.ToString("C")</p>
+            </div>
+        </div>
+
+        <form asp-action="Delete" method="post" class="mt-8 pt-6 border-t border-slate-100 flex items-center gap-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="bg-red-700 hover:bg-red-800 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-red-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <i class="fas fa-trash-alt"></i> تأكيد الحذف
+            </button>
+            <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                <i class="fas fa-times"></i> إلغاء
+            </a>
+        </form>
+    </div>
+</div>

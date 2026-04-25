@@ -1,0 +1,90 @@
+@model ManageMentSystem.ViewModels.ComprehensiveReportViewModel
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4">
+        <h4 class="font-bold text-slate-800 mb-4 text-center">إجمالي الإيرادات الشهرية (للسنة الحالية)</h4>
+        <div class="relative h-64 w-full flex justify-center">
+            <canvas id="monthlyRevenueChart"></canvas>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4">
+        <h4 class="font-bold text-slate-800 mb-4 text-center">عدد المعاملات الشهرية (للسنة الحالية)</h4>
+         <div class="relative h-64 w-full flex justify-center">
+            <canvas id="monthlyTransactionsChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/chartjs/chart.umd.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Keep fonts consistent
+        Chart.defaults.font.family = 'Cairo';
+
+        // Monthly Revenue Chart
+        var revenueCtx = document.getElementById('monthlyRevenueChart').getContext('2d');
+        var monthlyRevenueChart = new Chart(revenueCtx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.MonthlyRevenue.Select(m => m.Month))),
+                datasets: [{
+                    label: 'إيرادات المبيعات',
+                    data: @Html.Raw(Json.Serialize(Model.MonthlyRevenue.Select(m => m.Revenue))),
+                    backgroundColor: 'rgba(79, 70, 229, 0.7)', // Indigo-600
+                    borderRadius: 4,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                         grid: { color: '#f1f5f9' },
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Monthly Transactions Chart
+        var transactionsCtx = document.getElementById('monthlyTransactionsChart').getContext('2d');
+        var monthlyTransactionsChart = new Chart(transactionsCtx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.MonthlySales.Select(m => m.Month))),
+                datasets: [{
+                    label: 'عدد المبيعات',
+                    data: @Html.Raw(Json.Serialize(Model.MonthlySales.Select(m => m.SalesCount))),
+                    backgroundColor: 'rgba(5, 150, 105, 0.1)', // Emerald
+                    borderColor: '#059669', // Emerald-600
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' },
+                    },
+                    x: {
+                         grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    });
+</script>

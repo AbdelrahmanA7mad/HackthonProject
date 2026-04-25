@@ -1,0 +1,313 @@
+@{
+    ViewData["Title"] = "مساعد قطة الذكي";
+    Layout = "_Layout";
+}
+
+<div class="min-h-[calc(100vh-5rem)] bg-gray-50 p-4 md:p-8 flex flex-col items-center">
+    
+    <!-- Main Container -->
+    <div class="w-full max-w-5xl flex flex-col md:flex-row gap-6">
+
+        <!-- Sidebar / Suggestions -->
+        <div class="w-full md:w-64 flex-shrink-0 flex flex-col gap-4">
+            <!-- Info Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-indigo-100 p-5 hidden md:block">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-800">
+                        <i class="fas fa-robot text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-indigo-900">مساعد كوتة</h2>
+                        <div class="flex items-center gap-1.5 text-xs text-green-600 font-medium">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            متصل الآن
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 leading-relaxed mt-3">
+                    مساعدك الذكي معتمد على Gemini ليقدم لك تحليلات لحظية لمتجرك ومبيعاتك.
+                </p>
+            </div>
+
+            <!-- Suggestions -->
+            <div class="bg-white rounded-xl shadow-sm border border-indigo-100 p-4">
+                <h3 class="text-sm font-bold text-indigo-900 mb-4 px-1 border-b border-indigo-50 pb-2">
+                    <i class="fas fa-lightbulb text-amber-500 ml-1"></i> اقتراحات سريعة
+                </h3>
+                
+                <div class="flex flex-col gap-2">
+                    <button onclick="sendSuggestion('كام إجمالي المبيعات النهارده؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-gray-50 hover:bg-indigo-50 hover:text-indigo-800 transition-colors border border-transparent hover:border-indigo-100 flex items-center gap-2 group">
+                        <i class="fas fa-money-bill-wave text-gray-400 group-hover:text-indigo-500 w-4 text-center"></i>
+                        مبيعات اليوم
+                    </button>
+                    <button onclick="sendSuggestion('أكتر 5 منتجات مبيعاً الشهر ده؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-gray-50 hover:bg-indigo-50 hover:text-indigo-800 transition-colors border border-transparent hover:border-indigo-100 flex items-center gap-2 group">
+                        <i class="fas fa-trophy text-gray-400 group-hover:text-indigo-500 w-4 text-center"></i>
+                        أفضل المنتجات
+                    </button>
+                    <button onclick="sendSuggestion('كام الربح الصافي؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-gray-50 hover:bg-indigo-50 hover:text-indigo-800 transition-colors border border-transparent hover:border-indigo-100 flex items-center gap-2 group">
+                        <i class="fas fa-chart-line text-gray-400 group-hover:text-indigo-500 w-4 text-center"></i>
+                        الربح الصافي
+                    </button>
+                    <button onclick="sendSuggestion('أيه المنتجات اللي خلصت تقريباً؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-gray-50 hover:bg-indigo-50 hover:text-indigo-800 transition-colors border border-transparent hover:border-indigo-100 flex items-center gap-2 group">
+                        <i class="fas fa-box-open text-gray-400 group-hover:text-indigo-500 w-4 text-center"></i>
+                        مخزون منخفض
+                    </button>
+                    <button onclick="sendSuggestion('إيه رصيد الخزينة والديون المتبقية؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-gray-50 hover:bg-indigo-50 hover:text-indigo-800 transition-colors border border-transparent hover:border-indigo-100 flex items-center gap-2 group">
+                        <i class="fas fa-wallet text-gray-400 group-hover:text-indigo-500 w-4 text-center"></i>
+                        رصيد الخزينة
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="flex-1 bg-white rounded-xl shadow-sm border border-indigo-100 flex flex-col overflow-hidden h-[600px] md:h-[700px]">
+            
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-indigo-800 to-indigo-900 px-6 py-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                        <i class="fas fa-robot text-xl text-indigo-100"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-lg leading-tight">اسأل مساعد كوتة</h2>
+                        <p class="text-xs text-indigo-200">مساعدك للإدارة والتحليل</p>
+                    </div>
+                </div>
+                <button onclick="clearHistory()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-red-500/80 text-sm transition-colors border border-white/20 hover:border-red-500 flex items-center gap-2">
+                    <i class="fas fa-trash-alt"></i>
+                    <span class="hidden sm:inline">مسح المحادثة</span>
+                </button>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 bg-gray-50/50">
+                <!-- Welcome Message -->
+                <div id="welcome-msg" class="h-full flex flex-col items-center justify-center text-center opacity-70">
+                    <div class="w-20 h-20 bg-indigo-50 text-indigo-800 rounded-full flex items-center justify-center mb-4 shadow-sm border border-indigo-100">
+                        <i class="fas fa-sparkles text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">مرحباً بك في الذكاء الاصطناعي</h3>
+                    <p class="text-sm text-gray-500 max-w-sm">
+                        أنا هنا لمساعدتك في الحصول على إجابات دقيقة من بيانات متجرك، اسألني ما تريد!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 bg-white border-t border-indigo-50">
+                <div class="relative flex items-end gap-3 max-w-4xl mx-auto">
+                    <div class="flex-1 relative">
+                        <textarea 
+                            id="user-input" 
+                            rows="1" 
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl pr-4 pl-12 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none max-h-32 text-gray-700 shadow-sm"
+                            placeholder="اكتب سؤالك هنا... (مثلاً: أرباحي الشهر ده كام؟)"
+                            onkeydown="handleKey(event)"
+                            oninput="autoResize(this)"
+                        ></textarea>
+                        
+                        <div class="absolute left-3 bottom-3 text-gray-400 pointer-events-none hidden md:block">
+                            <span class="text-[10px] bg-white px-2 py-0.5 rounded border border-gray-200">Enter</span>
+                        </div>
+                    </div>
+                    
+                    <button id="send-btn" onclick="sendMessage()" class="w-12 h-12 rounded-xl bg-indigo-800 hover:bg-indigo-900 text-white flex items-center justify-center transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 flex-shrink-0">
+                        <i class="fas fa-paper-plane text-lg transform -translate-x-0.5"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Formatting for Markdown output inside bubbles */
+    .ai-bubble-bot strong { color: #3730a3; font-weight: 700; }
+    .ai-bubble-bot ul { list-style-type: disc; margin-right: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem; }
+    .ai-bubble-bot li { margin-bottom: 0.25rem; }
+    
+    /* Scrollbar styling */
+    #messages::-webkit-scrollbar { width: 6px; }
+    #messages::-webkit-scrollbar-track { background: transparent; }
+    #messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    #messages::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+</style>
+
+<script>
+    const messagesEl = document.getElementById('messages');
+    const inputEl    = document.getElementById('user-input');
+    const sendBtn    = document.getElementById('send-btn');
+    const welcomeEl  = document.getElementById('welcome-msg');
+    let isStreaming  = false;
+
+    function handleKey(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    }
+
+    function autoResize(el) {
+        el.style.height = 'auto';
+        el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+    }
+
+    function sendSuggestion(text) {
+        inputEl.value = text;
+        sendMessage();
+    }
+
+    function formatText(text) {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\\n/g, '\n')
+            .replace(/\n/g, '<br>');
+    }
+
+    function createMessageBubble(role, htmlContent, id = null) {
+        const msgWrapper = document.createElement('div');
+        msgWrapper.className = `flex gap-3 items-end animate-[fadeIn_0.3s_ease-out] w-full ${role === 'user' ? 'flex-row-reverse' : ''}`;
+        if (id) msgWrapper.id = id;
+
+        // Avatar
+        const avatar = document.createElement('div');
+        avatar.className = `w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm shadow-sm ${
+            role === 'user' 
+            ? 'bg-indigo-100 text-indigo-800 border border-indigo-200' 
+            : 'bg-gradient-to-br from-indigo-800 to-indigo-600 text-white'
+        }`;
+        avatar.innerHTML = role === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+
+        // Bubble Content
+        const bubble = document.createElement('div');
+        
+        if (role === 'user') {
+            bubble.className = 'max-w-[85%] bg-indigo-800 text-white px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm text-sm leading-relaxed';
+            bubble.innerHTML = htmlContent;
+        } else {
+            bubble.className = 'ai-bubble-bot max-w-[85%] bg-white border border-gray-100 text-gray-800 px-5 py-4 rounded-2xl rounded-br-sm shadow-sm text-sm leading-relaxed';
+            bubble.innerHTML = htmlContent;
+        }
+
+        msgWrapper.appendChild(avatar);
+        msgWrapper.appendChild(bubble);
+        return { wrapper: msgWrapper, bubble };
+    }
+
+    function addThinking() {
+        if (welcomeEl && welcomeEl.parentNode === messagesEl) {
+            messagesEl.removeChild(welcomeEl);
+        }
+
+        const thinkingHtml = `
+            <div class="flex items-center gap-1.5 h-4">
+                <div class="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                <div class="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                <div class="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+            </div>
+        `;
+        
+        const { wrapper, bubble } = createMessageBubble('bot', thinkingHtml, 'thinking-msg');
+        messagesEl.appendChild(wrapper);
+        scrollToBottom();
+        return bubble;
+    }
+
+    function removeThinking() {
+        const el = document.getElementById('thinking-msg');
+        if (el) el.remove();
+    }
+
+    function scrollToBottom() {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const text = inputEl.value.trim();
+        if (!text || isStreaming) return;
+
+        isStreaming = true;
+        sendBtn.disabled = true;
+        inputEl.disabled = true;
+
+        if (welcomeEl && welcomeEl.parentNode === messagesEl) {
+            messagesEl.removeChild(welcomeEl);
+        }
+
+        // Add user message
+        const { wrapper: userMsg } = createMessageBubble('user', formatText(text));
+        messagesEl.appendChild(userMsg);
+        
+        inputEl.value = '';
+        inputEl.style.height = 'auto';
+
+        // Add thinking bubble which we will update
+        const bubble = addThinking();
+
+        try {
+            const response = await fetch('/Ai/Stream', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+
+            if (!response.ok) throw new Error('فشل الاتصال بالخادم.');
+
+            const reader  = response.body.getReader();
+            const decoder = new TextDecoder();
+            let fullText  = '';
+            let firstChunk = true;
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const rawChunk = decoder.decode(value);
+                const lines = rawChunk.split('\n');
+
+                for (const line of lines) {
+                    if (!line.startsWith('data: ')) continue;
+                    const data = line.slice(6);
+
+                    if (data === '[DONE]') break;
+                    
+                    if (data.startsWith('[ERROR]')) {
+                        bubble.innerHTML = `<div class="flex items-center gap-2 text-red-600"><i class="fas fa-exclamation-circle"></i> <span>${data.slice(7)}</span></div>`;
+                        break;
+                    }
+
+                    if (firstChunk && data.includes('⚙️')) {
+                        bubble.innerHTML = `<div class="flex items-center gap-2 text-indigo-500 font-medium animate-pulse"><i class="fas fa-database"></i> <span>جاري استخراج البيانات...</span></div>`;
+                        firstChunk = false;
+                        continue;
+                    }
+
+                    firstChunk = false;
+                    const chunk = data.replace(/\\n/g, '\n');
+                    fullText += chunk;
+                    bubble.innerHTML = formatText(fullText);
+                    scrollToBottom();
+                }
+            }
+
+        } catch (err) {
+            bubble.innerHTML = `<div class="flex items-center gap-2 text-red-600"><i class="fas fa-exclamation-triangle"></i> <span>حدث خطأ: ${err.message}</span></div>`;
+        } finally {
+            isStreaming = false;
+            sendBtn.disabled = false;
+            inputEl.disabled = false;
+            inputEl.focus();
+        }
+    }
+
+    async function clearHistory() {
+        await fetch('/Ai/Clear', { method: 'POST' });
+        messagesEl.innerHTML = '';
+        messagesEl.appendChild(welcomeEl);
+        inputEl.value = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => inputEl.focus());
+</script>

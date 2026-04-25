@@ -1,4 +1,3 @@
-﻿ 
 using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
 using ManageMentSystem.Data;
@@ -16,19 +15,19 @@ using System.Security.Claims;
 namespace ManageMentSystem.Controllers
 {
     [Authorize]
-        public class StoreAccountController : Controller
+    public class StoreAccountController : Controller
     {
         private readonly IStoreAccountService _storeAccountService;
         private readonly IUserService _userService;
         private readonly AppDbContext _context;
 
-
-        public StoreAccountController(IStoreAccountService storeAccountService, AppDbContext context , IUserService userService)
+        public StoreAccountController(IStoreAccountService storeAccountService, AppDbContext context, IUserService userService)
         {
             _storeAccountService = storeAccountService;
             _context = context;
             _userService = userService;
         }
+
         private async Task<SelectList> GetPaymentMethodsSelectListAsync()
         {
             var tenantId = await _userService.GetCurrentTenantIdAsync();
@@ -40,17 +39,14 @@ namespace ManageMentSystem.Controllers
                 .ToListAsync(), "Value", "Text");
         }
 
-
-        // GET: StoreAccount
         public async Task<IActionResult> Index(StoreAccountFilterViewModel? filter = null, int page = 1, int pageSize = 20)
         {
-            // ØªØ¹ÙŠÙŠÙ† Ø§Ù„ØªÙˆØ§Ø±ÙŠØ® Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ© Ø¥Ø°Ø§ Ù„Ù… ÙŠØªÙ… ØªØ­Ø¯ÙŠØ¯Ù‡Ø§
             if (filter == null)
             {
                 filter = new StoreAccountFilterViewModel
                 {
                     FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                    ToDate = DateTime.Today.AddDays(1).AddTicks(-1) // Ø¢Ø®Ø± Ø«Ø§Ù†ÙŠØ© ÙÙŠ Ø§Ù„ÙŠÙˆÙ…
+                    ToDate = DateTime.Today.AddDays(1).AddTicks(-1)
                 };
             }
             else
@@ -61,23 +57,19 @@ namespace ManageMentSystem.Controllers
                 if (!filter.ToDate.HasValue)
                     filter.ToDate = DateTime.Today.AddDays(1).AddTicks(-1);
                 else
-                    // ØªØ¹Ø¯ÙŠÙ„ ToDate Ù„Ùˆ ÙƒØ§Ù† Ø§Ù„ØªØ§Ø±ÙŠØ® Ø¨Ø¯ÙˆÙ† ÙˆÙ‚Øª
                     filter.ToDate = filter.ToDate.Value.Date.AddDays(1).AddTicks(-1);
             }
 
-            // ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù‚ÙˆØ§Ø¦Ù…
             ViewBag.TransactionTypes = new SelectList(Enum.GetValues(typeof(ManageMentSystem.Models.TransactionType))
                 .Cast<ManageMentSystem.Models.TransactionType>()
                 .Select(t => new { Value = t, Text = t.GetDisplayName() }), "Value", "Text");
 
             ViewBag.PaymentMethods = await GetPaymentMethodsSelectListAsync();
 
-            // Ø¬Ù„Ø¨ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù…ÙÙ„ØªØ±Ø©
             var allTransactions = filter != null
                 ? await _storeAccountService.GetFilteredTransactionsAsync(filter)
                 : await _storeAccountService.GetAllTransactionsAsync();
 
-            // ØªØ·Ø¨ÙŠÙ‚ ØªØ±Ù‚ÙŠÙ… Ø§Ù„ØµÙØ­Ø§Øª
             var totalItems = allTransactions.Count();
             var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
             var pagedTransactions = allTransactions
@@ -85,7 +77,6 @@ namespace ManageMentSystem.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            // Ø¬Ù„Ø¨ Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù…Ù„Ø®Øµ
             var (totalIncome, totalExpenses, totalCapital, cashBalance) = await _storeAccountService.GetSummaryDataAsync();
             var (gdReceivables, gdPayables, gdNet) = await _storeAccountService.GetGeneralDebtsSummaryAsync();
             ViewBag.TotalIncome = totalIncome;
@@ -106,8 +97,7 @@ namespace ManageMentSystem.Controllers
             return View(pagedTransactions);
         }
 
-        // GET: StoreAccount/Create
-                public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create()
         {
             ViewBag.TransactionTypes = new SelectList(Enum.GetValues(typeof(ManageMentSystem.Models.TransactionType))
                 .Cast<ManageMentSystem.Models.TransactionType>()
@@ -118,22 +108,21 @@ namespace ManageMentSystem.Controllers
             return View(new StoreAccountViewModel());
         }
 
-        // POST: StoreAccount/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-                public async Task<IActionResult> Create(StoreAccountViewModel model)
+        public async Task<IActionResult> Create(StoreAccountViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     await _storeAccountService.CreateTransactionAsync(model);
-                    TempData["Success"] = "ØªÙ… Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¹Ù…Ù„ÙŠØ© Ø¨Ù†Ø¬Ø§Ø­";
+                    TempData["Success"] = "تم إضافة العملية بنجاح";
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", $"Ø­Ø¯Ø« Ø®Ø·Ø£: {ex.Message}");
+                    ModelState.AddModelError("", $"حدث خطأ: {ex.Message}");
                 }
             }
 
@@ -149,9 +138,7 @@ namespace ManageMentSystem.Controllers
             return View(model);
         }
 
-        // GET: StoreAccount/Edit/5
-
-                public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var transaction = await _storeAccountService.GetTransactionByIdAsync(id);
             if (transaction == null)
@@ -186,10 +173,9 @@ namespace ManageMentSystem.Controllers
             return View(model);
         }
 
-        // POST: StoreAccount/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-                public async Task<IActionResult> Edit(int id, StoreAccountViewModel model)
+        public async Task<IActionResult> Edit(int id, StoreAccountViewModel model)
         {
             if (id != model.Id)
             {
@@ -201,12 +187,12 @@ namespace ManageMentSystem.Controllers
                 try
                 {
                     await _storeAccountService.UpdateTransactionAsync(id, model);
-                    TempData["Success"] = "ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¹Ù…Ù„ÙŠØ© Ø¨Ù†Ø¬Ø§Ø­";
+                    TempData["Success"] = "تم تحديث العملية بنجاح";
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", $"Ø­Ø¯Ø« Ø®Ø·Ø£: {ex.Message}");
+                    ModelState.AddModelError("", $"حدث خطأ: {ex.Message}");
                 }
             }
 
@@ -222,8 +208,7 @@ namespace ManageMentSystem.Controllers
             return View(model);
         }
 
-        // GET: StoreAccount/Details/5
-                public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var transaction = await _storeAccountService.GetTransactionByIdAsync(id);
             if (transaction == null)
@@ -234,9 +219,7 @@ namespace ManageMentSystem.Controllers
             return View(transaction);
         }
 
-        // GET: StoreAccount/Delete/5
-
-                public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var transaction = await _storeAccountService.GetTransactionByIdAsync(id);
             if (transaction == null)
@@ -247,27 +230,25 @@ namespace ManageMentSystem.Controllers
             return View(transaction);
         }
 
-        // POST: StoreAccount/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-                public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
                 await _storeAccountService.DeleteTransactionAsync(id);
-                TempData["Success"] = "ØªÙ… Ø­Ø°Ù Ø§Ù„Ø¹Ù…Ù„ÙŠØ© Ø¨Ù†Ø¬Ø§Ø­";
+                TempData["Success"] = "تم حذف العملية بنجاح";
             }
             catch (Exception ex)
             {
-                TempData["Error"] = $"Ø­Ø¯Ø« Ø®Ø·Ø£: {ex.Message}";
+                TempData["Error"] = $"حدث خطأ: {ex.Message}";
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: StoreAccount/GetBalance
         [HttpGet]
-                public async Task<IActionResult> GetBalance()
+        public async Task<IActionResult> GetBalance()
         {
             try
             {
@@ -280,9 +261,8 @@ namespace ManageMentSystem.Controllers
             }
         }
 
-        // GET: StoreAccount/GetBalanceByMethod
         [HttpGet]
-                public async Task<IActionResult> GetBalanceByMethod(int? paymentMethodId)
+        public async Task<IActionResult> GetBalanceByMethod(int? paymentMethodId)
         {
             try
             {
@@ -294,28 +274,25 @@ namespace ManageMentSystem.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
-        // GET: StoreAccount/RealizedProfit
-                public async Task<IActionResult> RealizedProfit(DateTime? fromDate = null, DateTime? toDate = null, int page = 1, int pageSize = 20)
+
+        public async Task<IActionResult> RealizedProfit(DateTime? fromDate = null, DateTime? toDate = null, int page = 1, int pageSize = 20)
         {
             if (!fromDate.HasValue)
                 fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             if (!toDate.HasValue)
                 toDate = DateTime.Today.AddDays(1).AddTicks(-1);
 
-            // ØªØ£ÙƒØ¯ Ù…Ù† Ø£Ù† toDate ØªØ´Ù…Ù„ Ø§Ù„ÙŠÙˆÙ… ÙƒØ§Ù…Ù„
             if (toDate.HasValue && toDate.Value.TimeOfDay == TimeSpan.Zero)
             {
                 toDate = toDate.Value.Date.AddDays(1).AddTicks(-1);
             }
 
-            // Ø¬Ù„Ø¨ Ø¯ÙØ¹Ø§Øª Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡ Ø§Ù„Ø®Ø§ØµØ© Ø¨Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù… Ø§Ù„Ø­Ø§Ù„ÙŠ ÙÙ‚Ø·
             var tenantId = await _userService.GetCurrentTenantIdAsync();
             if (string.IsNullOrEmpty(tenantId)) tenantId = string.Empty;
             var customerPaymentsQuery = _context.CustomerPayments
                 .Where(cp => cp.Customer.TenantId == tenantId)
                 .AsQueryable();
 
-            // ÙÙ„ØªØ±Ø© Ø§Ù„ØªÙˆØ§Ø±ÙŠØ®
             if (fromDate.HasValue)
             {
                 var fromDateStart = fromDate.Value.Date;
@@ -329,7 +306,6 @@ namespace ManageMentSystem.Controllers
                 customerPaymentsQuery = customerPaymentsQuery.Where(cp => cp.PaymentDate <= toDateEnd);
             }
 
-            // Ø¥Ø¶Ø§ÙØ© Include Ø¨Ø¹Ø¯ Ø§Ù„ÙÙ„ØªØ±Ø©
             var customerPayments = await customerPaymentsQuery
                 .Include(cp => cp.Customer)
                 .Include(cp => cp.Allocations)
@@ -338,18 +314,14 @@ namespace ManageMentSystem.Controllers
                 .ThenInclude(si => si.Product)
                 .OrderByDescending(cp => cp.PaymentDate)
                 .ToListAsync();
-            var totalPaidAmount = customerPayments.Sum(cp => cp.Amount);
 
+            var totalPaidAmount = customerPayments.Sum(cp => cp.Amount);
             var totalRealizedProfit = 0m;
 
-            // Ø­Ø³Ø§Ø¨ Ø§Ù„Ø±Ø¨Ø­ Ø§Ù„Ù…Ø­Ù‚Ù‚ Ù„ÙƒÙ„ Ø¯ÙØ¹Ø© Ø¹Ù…ÙŠÙ„
             foreach (var customerPayment in customerPayments)
             {
                 var realizedProfitFromPayment = 0m;
                 var totalAllocatedAmount = 0m;
-
-                // Ø­Ø³Ø§Ø¨ Ø§Ù„Ø±Ø¨Ø­ Ù…Ù† ÙƒÙ„ ØªØ®ØµÙŠØµ (allocation) ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„Ø¯ÙØ¹Ø©
-                // ØªØ­Ø¯ÙŠØ¯ Ø¥Ø´Ø§Ø±Ø© Ø§Ù„Ø¯ÙØ¹Ø© (Ù…ÙˆØ¬Ø¨ Ù„Ù„Ø¯ÙØ¹Ø©ØŒ Ø³Ø§Ù„Ø¨ Ù„Ù„Ù…Ø±ØªØ¬Ø¹ ÙƒØ¯ÙØ¹Ø© Ø³Ø§Ù„Ø¨Ø©)
                 var paymentSign = customerPayment.Amount < 0 ? -1m : 1m;
 
                 foreach (var allocation in customerPayment.Allocations)
@@ -357,16 +329,13 @@ namespace ManageMentSystem.Controllers
                     var sale = allocation.Sale;
                     if (sale != null && sale.SaleItems.Any())
                     {
-                        // Ø­Ø³Ø§Ø¨ Ø¥Ø¬Ù…Ø§Ù„ÙŠ ØªÙƒÙ„ÙØ© Ø§Ù„Ø¨Ø¶Ø§Ø¦Ø¹ Ø§Ù„Ù…Ø¨Ø§Ø¹Ø© ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„ÙØ§ØªÙˆØ±Ø©
                         var totalCostOfGoods = sale.SaleItems
                             .Where(si => si.Product != null)
                             .Sum(si => si.Product.PurchasePrice * si.Quantity);
 
-                        // ØµØ§ÙÙŠ Ù‚ÙŠÙ…Ø© Ø§Ù„Ø¨ÙŠØ¹ Ø¨Ø¹Ø¯ Ø®ØµÙ… Ø§Ù„Ù…Ø±ØªØ¬Ø¹Ø§Øª (TotalAmount Ù…Ø®Ø²Ù† Ø¨Ø¹Ø¯ Ø§Ù„Ø®ØµÙ…)
                         var grossAmountAfterDiscount = sale.TotalAmount;
                         var netSaleAmount = Math.Max(0, grossAmountAfterDiscount - sale.ReturnedAmount);
 
-                        // Ø¶Ø¨Ø· ØªÙƒÙ„ÙØ© Ø§Ù„Ø¨Ø¶Ø§Ø¦Ø¹ Ø¨Ù…Ø§ ÙŠØªÙ†Ø§Ø³Ø¨ Ù…Ø¹ Ù†Ø³Ø¨Ø© Ø§Ù„Ù…Ø±ØªØ¬Ø¹ (ØªÙ‚Ø±ÙŠØ¨ Ù…Ø¹Ù‚ÙˆÙ„ ÙÙŠ Ø­Ø§Ù„ Ø¹Ø¯Ù… ØªÙˆÙØ± ØªÙØ§ØµÙŠÙ„ Ø¹Ù†Ø§ØµØ± Ø§Ù„Ù…Ø±ØªØ¬Ø¹)
                         decimal adjustedCostOfGoods = totalCostOfGoods;
                         if (grossAmountAfterDiscount > 0 && netSaleAmount < grossAmountAfterDiscount)
                         {
@@ -374,10 +343,7 @@ namespace ManageMentSystem.Controllers
                             adjustedCostOfGoods = totalCostOfGoods * keptRatio;
                         }
 
-                        // Ø­Ø³Ø§Ø¨ Ù†Ø³Ø¨Ø© Ø§Ù„Ø±Ø¨Ø­ Ù…Ù† ØµØ§ÙÙŠ Ø§Ù„ÙØ§ØªÙˆØ±Ø© Ø¨Ø¹Ø¯ Ø§Ù„Ù…Ø±ØªØ¬Ø¹
                         var profitMargin = netSaleAmount > 0 ? (netSaleAmount - adjustedCostOfGoods) / netSaleAmount : 0;
-
-                        // Ø­Ø³Ø§Ø¨ Ø§Ù„Ø±Ø¨Ø­ Ø§Ù„Ù…Ø­Ù‚Ù‚ Ù…Ù† Ù‡Ø°Ø§ Ø§Ù„ØªØ®ØµÙŠØµ (Ø£Ø®Ø° Ø¥Ø´Ø§Ø±Ø© Ø§Ù„Ø¯ÙØ¹Ø© ÙÙŠ Ø§Ù„Ø§Ø¹ØªØ¨Ø§Ø±)
                         var profitFromAllocation = allocation.Amount * profitMargin * paymentSign;
                         realizedProfitFromPayment += profitFromAllocation;
                         totalAllocatedAmount += allocation.Amount;
@@ -386,13 +352,11 @@ namespace ManageMentSystem.Controllers
 
                 totalRealizedProfit += realizedProfitFromPayment;
 
-                // Ø¥Ø¶Ø§ÙØ© Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø±Ø¨Ø­ ÙÙŠ Ø§Ù„Ù…Ù„Ø§Ø­Ø¸Ø§Øª
                 var profitMarginPercentage = totalAllocatedAmount > 0 ? (realizedProfitFromPayment / totalAllocatedAmount) * 100 : 0;
-                customerPayment.Notes = $"Ø§Ù„Ø±Ø¨Ø­ Ø§Ù„Ù…Ø­Ù‚Ù‚: {realizedProfitFromPayment:C} (Ù†Ø³Ø¨Ø© Ø§Ù„Ø±Ø¨Ø­: {profitMarginPercentage:F1}%)";
+                customerPayment.Notes = $"الربح المحقق: {realizedProfitFromPayment:C} (نسبة الربح: {profitMarginPercentage:F1}%)";
             }
 
             var netRealizedProfit = totalRealizedProfit;
-
             var totalItems = customerPayments.Count;
             var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
             var pagedTransactions = customerPayments
@@ -414,17 +378,12 @@ namespace ManageMentSystem.Controllers
             return View(pagedTransactions);
         }
 
-        // GET: StoreAccount/TempMoneyDetails
-
-        // GET: StoreAccount/Export
-                public async Task<IActionResult> Export(StoreAccountFilterViewModel filter)
+        public async Task<IActionResult> Export(StoreAccountFilterViewModel filter)
         {
             var transactions = await _storeAccountService.GetFilteredTransactionsAsync(filter);
-            
-            // Here you can implement CSV or Excel export
-            // For now, we'll return a JSON response
-            return Json(new { 
-                success = true, 
+
+            return Json(new {
+                success = true,
                 data = transactions.Select(t => new {
                     t.Id,
                     t.TransactionName,
@@ -439,31 +398,26 @@ namespace ManageMentSystem.Controllers
             });
         }
 
-
         public async Task<IActionResult> InstallmentDetails(DateTime? fromDate = null, DateTime? toDate = null, int page = 1, int pageSize = 20)
         {
-            // 1. Ø§Ù„ØªØ­Ù‚Ù‚ Ù…Ù† Ù‡ÙˆÙŠØ© Ø§Ù„Ù…Ø³ØªØ£Ø¬Ø±
             var tenantId = await _userService.GetCurrentTenantIdAsync();
             if (string.IsNullOrEmpty(tenantId)) return NotFound();
 
-            // 2. Ø¶Ø¨Ø· ØªÙˆØ§Ø±ÙŠØ® Ø§Ù„Ø¨Ø­Ø« Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ©
             if (!fromDate.HasValue)
                 fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             if (!toDate.HasValue)
                 toDate = DateTime.Today.AddDays(1).AddTicks(-1);
 
-            // 3. ØªØ¬Ù‡ÙŠØ² Ø§Ù„Ø§Ø³ØªØ¹Ù„Ø§Ù…Ø§Øª Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ©
             var downPaymentsQuery = _context.StoreAccounts
-                .Where(sa => sa.Category == "Ø§Ù„Ø£Ù‚Ø³Ø§Ø·" &&
+                .Where(sa => sa.Category == "الأقساط" &&
                              sa.ReferenceNumber.StartsWith("INST-DOWN") &&
                              sa.TenantId == tenantId);
 
             var installmentPaymentsQuery = _context.StoreAccounts
-                .Where(sa => sa.Category == "Ø§Ù„Ø£Ù‚Ø³Ø§Ø·" &&
+                .Where(sa => sa.Category == "الأقساط" &&
                              sa.ReferenceNumber.StartsWith("INST-PAYMENT") &&
                              sa.TenantId == tenantId);
 
-            // ÙÙ„ØªØ±Ø© Ø§Ù„ØªØ§Ø±ÙŠØ®
             downPaymentsQuery = downPaymentsQuery.Where(sa => sa.TransactionDate >= fromDate.Value && sa.TransactionDate <= toDate.Value);
             installmentPaymentsQuery = installmentPaymentsQuery.Where(sa => sa.TransactionDate >= fromDate.Value && sa.TransactionDate <= toDate.Value);
 
@@ -472,7 +426,6 @@ namespace ManageMentSystem.Controllers
 
             var allInstallmentTransactions = new List<(StoreAccount Transaction, decimal Profit)>();
 
-            // 4. Ù…Ø¹Ø§Ù„Ø¬Ø© Ù…Ù‚Ø¯Ù…Ø§Øª Ø§Ù„Ø£Ù‚Ø³Ø§Ø· (Down Payments)
             var installmentIds = downPayments
                 .Select(dp => dp.ReferenceNumber.Replace("INST-DOWN-", "").Trim())
                 .Where(id => int.TryParse(id, out _))
@@ -498,13 +451,10 @@ namespace ManageMentSystem.Controllers
                             var totalPurchasePrice = installment.InstallmentItems.Sum(ii => (ii.Product?.PurchasePrice ?? 0) * ii.Quantity);
                             var totalAmountWithInterest = installment.TotalWithInterest + installment.ExtraMonthAmount;
                             var installmentTotalProfit = totalAmountWithInterest - totalPurchasePrice;
-
-                            // Ø§Ø³ØªØ®Ø¯Ø§Ù… Ù…Ø¹Ø§Ù…Ù„ Ø§Ù„Ø±Ø¨Ø­ Ù„Ø¶Ø±Ø¨ Ø§Ù„Ù‚ÙŠÙ…Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©
                             var profitRatio = totalAmountWithInterest > 0 ? installmentTotalProfit / totalAmountWithInterest : 0;
                             var profit = downPayment.Amount * profitRatio;
 
-                            // ØªØ­Ø³ÙŠÙ† ÙƒØªØ§Ø¨Ø© Ø§Ù„Ù…Ù„Ø§Ø­Ø¸Ø§Øª: Ø§Ø³ØªØ®Ø¯Ø§Ù… N2 Ø¨Ø¯Ù„Ø§Ù‹ Ù…Ù† C Ù„ØªØ¬Ù†Ø¨ Ù…Ø´Ø§ÙƒÙ„ Ø§Ù„Ø±Ù…ÙˆØ² Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©
-                            downPayment.Notes = $"Ø§Ù„Ø±Ø¨Ø­: {profit:N2} (Ù…Ù† Ø£ØµÙ„ {downPayment.Amount:N2}) - Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø¹Ù‚Ø¯: {totalAmountWithInterest:N2}";
+                            downPayment.Notes = $"الربح: {profit:N2} (من أصل {downPayment.Amount:N2}) - إجمالي العقد: {totalAmountWithInterest:N2}";
                             allInstallmentTransactions.Add((downPayment, profit));
                         }
                         else { allInstallmentTransactions.Add((downPayment, 0m)); }
@@ -512,7 +462,6 @@ namespace ManageMentSystem.Controllers
                 }
             }
 
-            // 5. Ù…Ø¹Ø§Ù„Ø¬Ø© Ø¯ÙØ¹Ø§Øª Ø§Ù„Ø£Ù‚Ø³Ø§Ø· (Installment Payments)
             var paymentIds = installmentPayments
                 .Select(ip => ip.ReferenceNumber.Replace("INST-PAYMENT-", "").Trim())
                 .Where(id => int.TryParse(id, out _))
@@ -542,7 +491,7 @@ namespace ManageMentSystem.Controllers
                             var profitRatio = totalAmountWithInterest > 0 ? paymentTotalProfit / totalAmountWithInterest : 0;
                             var profit = payment.Amount * profitRatio;
 
-                            payment.Notes = $"Ø§Ù„Ø±Ø¨Ø­: {profit:N2} (Ù…Ù† Ù‚Ø³Ø· {payment.Amount:N2}) - Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø¹Ù‚Ø¯: {totalAmountWithInterest:N2}";
+                            payment.Notes = $"الربح: {profit:N2} (من قيمة قسط {payment.Amount:N2}) - إجمالي العقد: {totalAmountWithInterest:N2}";
                             allInstallmentTransactions.Add((payment, profit));
                         }
                         else { allInstallmentTransactions.Add((payment, 0m)); }
@@ -550,7 +499,6 @@ namespace ManageMentSystem.Controllers
                 }
             }
 
-            // 6. Ø§Ù„ØªØ±ØªÙŠØ¨ ÙˆØ§Ù„ØªØ±Ù‚ÙŠÙ… (Pagination)
             var sortedTransactions = allInstallmentTransactions
                 .OrderByDescending(t => t.Transaction.TransactionDate)
                 .ToList();
@@ -560,14 +508,10 @@ namespace ManageMentSystem.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            // 7. Ø¥Ø±Ø³Ø§Ù„ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ù„Ù„Ù€ View
             ViewBag.TotalDownPayments = downPayments.Sum(sa => sa.Amount);
             ViewBag.TotalInstallmentPayments = installmentPayments.Sum(sa => sa.Amount);
             ViewBag.TotalInstallments = (decimal)ViewBag.TotalDownPayments + (decimal)ViewBag.TotalInstallmentPayments;
-
-            // Ø­Ø³Ø§Ø¨ Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø±Ø¨Ø­ Ù„ÙƒÙ„ Ø§Ù„Ø¹Ù…Ù„ÙŠØ§Øª Ø§Ù„Ù…Ø¹Ø±ÙˆØ¶Ø© (Ø£Ùˆ ÙƒÙ„ Ø§Ù„Ø¹Ù…Ù„ÙŠØ§Øª Ø­Ø³Ø¨ Ø­Ø§Ø¬ØªÙƒ)
             ViewBag.TotalProfit = sortedTransactions.Sum(t => t.Profit);
-
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)sortedTransactions.Count / pageSize);
             ViewBag.PageSize = pageSize;
@@ -578,9 +522,7 @@ namespace ManageMentSystem.Controllers
             return View(pagedTransactions.Select(t => t.Transaction).ToList());
         }
 
-
-        // GET: StoreAccount/PaymentMethodBalances
-                public async Task<IActionResult> PaymentMethodBalances(DateTime? fromDate = null, DateTime? toDate = null)
+        public async Task<IActionResult> PaymentMethodBalances(DateTime? fromDate = null, DateTime? toDate = null)
         {
             var tenantId = await _userService.GetCurrentTenantIdAsync();
             if (string.IsNullOrEmpty(tenantId)) return NotFound();
@@ -607,7 +549,7 @@ namespace ManageMentSystem.Controllers
                 .Select(g => new
                 {
                     PaymentMethodId = g.Key.PaymentMethodId,
-                    Name = g.Max(x => x.PaymentMethod != null ? x.PaymentMethod.Name : "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"),
+                    Name = g.Max(x => x.PaymentMethod != null ? x.PaymentMethod.Name : "غير محدد"),
                     Income = g.Where(x => x.TransactionType == ManageMentSystem.Models.TransactionType.Income).Sum(x => x.Amount),
                     Expenses = g.Where(x => x.TransactionType == ManageMentSystem.Models.TransactionType.Expense).Sum(x => x.Amount),
                     Count = g.Count()
@@ -630,15 +572,13 @@ namespace ManageMentSystem.Controllers
             return View(model);
         }
 
-        // GET: StoreAccount/PaymentMethodDetails/5
-                public async Task<IActionResult> PaymentMethodDetails(int? id, DateTime? fromDate = null, DateTime? toDate = null, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> PaymentMethodDetails(int? id, DateTime? fromDate = null, DateTime? toDate = null, int page = 1, int pageSize = 20)
         {
             if (!id.HasValue) return NotFound();
 
             var tenantId = await _userService.GetCurrentTenantIdAsync();
             if (string.IsNullOrEmpty(tenantId)) return NotFound();
 
-            // Ø§ÙØªØ±Ø§Ø¶ÙŠ: Ø§Ù„Ø´Ù‡Ø± Ø§Ù„Ø­Ø§Ù„ÙŠ
             if (!fromDate.HasValue && !toDate.HasValue)
             {
                 fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -675,7 +615,7 @@ namespace ManageMentSystem.Controllers
             var methodName = await _context.PaymentMethodOptions
                 .Where(pm => pm.Id == id.Value && pm.TenantId == tenantId)
                 .Select(pm => pm.Name)
-                .FirstOrDefaultAsync() ?? "ØºÙŠØ± Ù…Ø­Ø¯Ø¯";
+                .FirstOrDefaultAsync() ?? "غير محدد";
 
             ViewBag.PaymentMethodId = id.Value;
             ViewBag.PaymentMethodName = methodName;
@@ -688,11 +628,5 @@ namespace ManageMentSystem.Controllers
 
             return View(items);
         }
-
-
-
-
-
-
     }
-} 
+}

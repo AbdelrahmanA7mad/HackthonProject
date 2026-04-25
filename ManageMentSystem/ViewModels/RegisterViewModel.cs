@@ -36,7 +36,7 @@ namespace ManageMentSystem.ViewModels
 
 		[Required(ErrorMessage = "العملة مطلوبة")]
 		[Display(Name = "العملة المفضلة")]
-		public string CurrencyCode { get; set; } = "EGP"; // EGP, SAR
+		public string CurrencyCode { get; set; } = "EGP"; // EGP, SAR, USD, EUR, etc.
 
 		[Required(ErrorMessage = "اسم المتجر/الشركة مطلوب")]
 		[Display(Name = "اسم المتجر/الشركة")]

@@ -15,7 +15,7 @@
             <p class="text-gray-500 mt-1 font-medium">ملخص المستحقات المالية وأرصدة العملاء</p>
         </div>
         <div>
-            <a href="@Url.Action("ExportReceivablesReportExcel")" class="bg-emerald-600 hover:bg-accentGreen text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm md:text-base">
+            <a href="@Url.Action("ExportReceivablesReportExcel")" class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm md:text-base">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -66,7 +66,7 @@
                         <tr class="hover:bg-gray-50/80 transition-colors">
                             <td class="px-6 py-4 font-bold text-gray-600">@e.CustomerName</td>
                             <td class="px-6 py-4 text-center font-medium text-gray-500">@e.TotalSales.ToString("C", egp)</td>
-                            <td class="px-6 py-4 text-center font-bold text-emerald-600">@e.TotalPaid.ToString("C", egp)</td>
+                            <td class="px-6 py-4 text-center font-bold text-[#0f1419]">@e.TotalPaid.ToString("C", egp)</td>
                             <td class="px-6 py-4 text-center">
                                 <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">@e.Balance.ToString("C", egp)</span>
                             </td>
@@ -82,7 +82,7 @@
                     <tr>
                         <td class="px-6 py-4 text-[#0f1419]">الإجمالي</td>
                         <td class="px-6 py-4 text-center text-[#0f1419]">@Model.Entries.Sum(x => x.TotalSales).ToString("C", egp)</td>
-                        <td class="px-6 py-4 text-center text-emerald-600">@Model.Entries.Sum(x => x.TotalPaid).ToString("C", egp)</td>
+                        <td class="px-6 py-4 text-center text-[#0f1419]">@Model.Entries.Sum(x => x.TotalPaid).ToString("C", egp)</td>
                         <td class="px-6 py-4 text-center text-[#0f1419] text-lg">@Model.TotalReceivables.ToString("C", egp)</td>
                         <td></td>
                     </tr>

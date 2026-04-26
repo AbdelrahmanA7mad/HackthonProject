@@ -157,7 +157,7 @@
 
                         <li class="my-0.5 mx-2">
                              <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Ai" ? activeLinkClasses : "")" asp-controller="Ai" asp-action="Index">
-                               <i class="fas fa-robot ml-2 text-indigo-300"></i>
+                               <i data-lucide="bot" class="ml-2 w-6 h-6 inline-block"></i>
                                 المساعد الذكي
                              </a>
                         </li>
@@ -201,15 +201,7 @@
 
                 <main class="p-4 w-full max-w-full overflow-x-auto">
                     @RenderBody()
-            <!-- AI Floating Assistant -->
-    <div class="fixed bottom-6 left-6 z-[60] print:hidden">
-        <button onclick="showAIAnalysis()" class="w-14 h-14 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 group ai-glow">
-            <i data-lucide="sparkles" class="w-7 h-7 group-hover:rotate-12 transition-transform"></i>
-            <span class="absolute right-full mr-3 bg-black text-white text-xs font-bold py-2 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl border border-white/10/50">
-                Zenith AI Insights
-            </span>
-        </button>
-    </div>
+
                 </main>
             </div>
         </div>
@@ -396,44 +388,7 @@
             }
         }
 
-        function showAIAnalysis() {
-            Swal.fire({
-                title: '<div class="flex items-center gap-2 justify-center"><i data-lucide="brain-circuit" class="text-[#0f1419]"></i> Zenith AI Intelligence</div>',
-                html: `
-                    <div class="text-right space-y-4 font-sans" dir="rtl">
-                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200">
-                            <h4 class="font-bold text-[#0f1419] mb-2 flex items-center gap-2">
-                                <i data-lucide="trending-up" class="w-4 h-4"></i> ملخص الأداء المالي
-                            </h4>
-                            <p class="text-sm text-gray-700 leading-relaxed">
-                                بناءً على بيانات المبيعات الأخيرة، نلاحظ نمواً مستقراً بنسبة 12%. أتوقع زيادة في الطلب على فئة "الإلكترونيات" خلال الأسبوع القادم بنسبة 20%.
-                            </p>
-                        </div>
-                        <div class="p-4 bg-amber-50 rounded-2xl border border-amber-100">
-                            <h4 class="font-bold text-amber-900 mb-2 flex items-center gap-2">
-                                <i data-lucide="alert-triangle" class="w-4 h-4"></i> تنبيهات المخزون
-                            </h4>
-                            <p class="text-sm text-gray-700 leading-relaxed">
-                                هناك 3 منتجات وصلت للحد الأدنى. أنصح بإعادة طلب "طابعة إتش بي" لتجنب نفاذ المخزون.
-                            </p>
-                        </div>
-                        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
-                            <h4 class="font-bold text-emerald-900 mb-2 flex items-center gap-2">
-                                <i data-lucide="lightbulb" class="w-4 h-4"></i> نصيحة Zenith
-                            </h4>
-                            <p class="text-sm text-gray-700 leading-relaxed">
-                                تفعيل خاصية رسائل الواتساب الجماعية للعملاء المميزين قد يزيد من مبيعاتك بنسبة 15% خلال عطلة نهاية الأسبوع.
-                            </p>
-                        </div>
-                    </div>
-                `,
-                confirmButtonText: 'حسناً، شكراً',
-                confirmButtonColor: '#0f1419',
-                didOpen: () => {
-                    lucide.createIcons();
-                }
-            });
-        }
+
 
         // تسجيل Service Worker للـ PWA
         if ('serviceWorker' in navigator) {

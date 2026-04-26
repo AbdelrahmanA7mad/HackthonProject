@@ -14,7 +14,7 @@
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="@Url.Action("ExportProfitLossReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" 
-               class="bg-emerald-600 hover:bg-accentGreen text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
+               class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -47,11 +47,11 @@
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
                 <i data-lucide="arrow-up"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">إجمالي الإيرادات</div>
-            <div class="text-2xl font-bold text-emerald-600">@Model.TotalRevenue.ToString("C")</div>
+            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalRevenue.ToString("C")</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-600 text-xl mb-3">
@@ -87,14 +87,14 @@
             <div class="space-y-3">
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إيرادات المبيعات</span>
-                    <span class="font-bold text-emerald-600">@Model.SalesRevenue.ToString("C")</span>
+                    <span class="font-bold text-[#0f1419]">@Model.SalesRevenue.ToString("C")</span>
                 </div>
                 <!-- Assuming OtherIncome exists, adding based on original file context, though not explicitly in VM snippets it was there before -->
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إيرادات أخرى</span>
-                    <span class="font-bold text-emerald-600">@Model.OtherIncome.ToString("C")</span>
+                    <span class="font-bold text-[#0f1419]">@Model.OtherIncome.ToString("C")</span>
                 </div>
-                <div class="flex justify-between items-center py-3 bg-emerald-50 px-4 rounded-lg mt-2">
+                <div class="flex justify-between items-center py-3 bg-gray-50 px-4 rounded-lg mt-2">
                     <span class="text-emerald-800 font-bold">إجمالي الإيرادات</span>
                     <span class="text-emerald-800 font-bold text-lg">@Model.TotalRevenue.ToString("C")</span>
                 </div>
@@ -136,7 +136,7 @@
                     <tbody class="divide-y divide-gray-100">
                         <tr class="bg-gray-50/50">
                             <td class="px-6 py-4 font-bold text-[#0f1419] w-1/2">إجمالي الإيرادات</td>
-                            <td class="px-6 py-4 font-bold text-emerald-600 text-lg">@Model.TotalRevenue.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-[#0f1419] text-lg">@Model.TotalRevenue.ToString("C")</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 text-gray-500 w-1/2">(-) تكلفة البضائع المباعة</td>
@@ -144,7 +144,7 @@
                         </tr>
                         <tr class="bg-amber-50/50 border-t border-b border-amber-100">
                             <td class="px-6 py-4 font-bold text-[#0f1419] w-1/2">(=) إجمالي الربح</td>
-                            <td class="px-6 py-4 font-bold @(Model.GrossProfit >= 0 ? "text-emerald-600" : "text-red-600") text-lg">@Model.GrossProfit.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold @(Model.GrossProfit >= 0 ? "text-[#0f1419]" : "text-red-600") text-lg">@Model.GrossProfit.ToString("C")</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 text-gray-500 w-1/2">(-) المصروفات التشغيلية</td>
@@ -156,7 +156,7 @@
                         </tr>
                         <tr class="bg-gray-50">
                             <td class="px-6 py-4 font-bold text-gray-500 w-1/2">هامش الربح</td>
-                            <td class="px-6 py-4 font-bold @(Model.ProfitMargin >= 0 ? "text-emerald-600" : "text-red-600")">@Model.ProfitMargin.ToString("F1")%</td>
+                            <td class="px-6 py-4 font-bold @(Model.ProfitMargin >= 0 ? "text-[#0f1419]" : "text-red-600")">@Model.ProfitMargin.ToString("F1")%</td>
                         </tr>
                     </tbody>
                 </table>

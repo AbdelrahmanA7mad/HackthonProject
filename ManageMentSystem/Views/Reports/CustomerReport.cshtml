@@ -14,7 +14,7 @@
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="@Url.Action("ExportCustomerReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" 
-               class="bg-emerald-600 hover:bg-accentGreen text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
+               class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -54,11 +54,11 @@
             <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalCustomers</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
                 <i data-lucide="user-check"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">العملاء النشطين</div>
-            <div class="text-2xl font-bold text-emerald-600">@Model.ActiveCustomers</div>
+            <div class="text-2xl font-bold text-[#0f1419]">@Model.ActiveCustomers</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-3">
@@ -94,7 +94,7 @@
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">نسبة العملاء النشطين</span>
-                    <span class="font-bold text-emerald-600">@(Model.TotalCustomers > 0 ? ((double)Model.ActiveCustomers / Model.TotalCustomers * 100).ToString("F1") : "0")%</span>
+                    <span class="font-bold text-[#0f1419]">@(Model.TotalCustomers > 0 ? ((double)Model.ActiveCustomers / Model.TotalCustomers * 100).ToString("F1") : "0")%</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">نسبة العملاء الجدد</span>
@@ -159,7 +159,7 @@
                             </td>
                             <td class="px-6 py-4 font-bold text-gray-600">@customer.CustomerName</td>
                             <td class="px-6 py-4 text-gray-500 text-center">@customer.SalesCount</td>
-                            <td class="px-6 py-4 font-bold text-emerald-600">@customer.TotalSpent.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-[#0f1419]">@customer.TotalSpent.ToString("C")</td>
                             <td class="px-6 py-4">
                                 @if (customer.OutstandingDebt > 0)
                                 {
@@ -167,7 +167,7 @@
                                 }
                                 else
                                 {
-                                    <span class="text-emerald-600 font-bold text-xs"><i data-lucide="check" class="w-3 h-3 inline-block"></i> خالص</span>
+                                    <span class="text-[#0f1419] font-bold text-xs"><i data-lucide="check" class="w-3 h-3 inline-block"></i> خالص</span>
                                 }
                             </td>
                             <td class="px-6 py-4 text-gray-500">@averageSale.ToString("C")</td>

@@ -87,6 +87,25 @@ namespace ManageMentSystem.Controllers
             }
         }
 
+        // GET /Ai/GetHistory → استرجاع السجل الحالي
+        [HttpGet]
+        public IActionResult GetHistory()
+        {
+            var history = GetOrCreateHistory();
+            // تصفية السجل لبعث النصوص فقط (المستخدم والموديل) وتجاهل الـ function calls/responses للتبسيط في العرض
+            var simpleHistory = history
+                .Where(c => c.Role == "user" || c.Role == "model")
+                .Select(c => new
+                {
+                    role = c.Role,
+                    text = string.Join("\n", c.Parts.Select(p => p.Text))
+                })
+                .Where(c => !string.IsNullOrEmpty(c.text))
+                .ToList();
+
+            return Ok(simpleHistory);
+        }
+
         // POST /Ai/Clear → مسح سجل المحادثة
         [HttpPost]
         public IActionResult Clear()

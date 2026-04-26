@@ -123,6 +123,34 @@
     const aiOverlay    = document.getElementById('aiChatOverlay');
     let isAiStreaming  = false;
 
+    // Load History on Page Load
+    document.addEventListener('DOMContentLoaded', loadAiHistory);
+
+    async function loadAiHistory() {
+        try {
+            const response = await fetch('/Ai/GetHistory');
+            if (!response.ok) return;
+            const history = await response.json();
+            
+            if (history.length > 0) {
+                if (aiWelcomeEl && aiWelcomeEl.parentNode === aiMessagesEl) {
+                    aiMessagesEl.removeChild(aiWelcomeEl);
+                    aiMessagesEl.classList.remove('relative');
+                }
+                
+                history.forEach(msg => {
+                    const { wrapper } = createAiBubble(msg.role === 'user' ? 'user' : 'bot', formatAiText(msg.text));
+                    aiMessagesEl.appendChild(wrapper);
+                });
+                
+                lucide.createIcons();
+                scrollAiToBottom();
+            }
+        } catch (err) {
+            console.error('Error loading AI history:', err);
+        }
+    }
+
     function toggleAiChat() {
         if (aiPanel.classList.contains('-translate-x-full')) {
             // Open

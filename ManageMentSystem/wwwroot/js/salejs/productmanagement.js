@@ -91,12 +91,13 @@ function addProductRow(product) {
             <td>
                 <button type="button" class="btn btn-sm btn-outline-danger" 
                         onclick="removeProduct(${product.productId})">
-                    <i class="fas fa-trash"></i>
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </td>
         </tr>
     `;
     $('#selectedProductsTable tbody').append(row);
+    lucide.createIcons();
 }
 
 // Update product row
@@ -227,14 +228,14 @@ function addEditProductRow(product) {
             <td class="px-4 py-2 text-gray-800 font-medium whitespace-nowrap">${product.productName}</td>
             <td class="px-4 py-2 whitespace-nowrap">${barcodeDisplay}</td>
             <td class="px-4 py-2 whitespace-nowrap">
-                <input type="number" class="w-20 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
+                <input type="number" class="w-20 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary text-sm" 
                        value="${product.quantity}" min="1" 
                        onchange="updateEditProductQuantity(${product.productId}, this.value)">
             </td>
-            <td class="px-4 py-2 whitespace-nowrap"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-bold">${product.purchasePrice.toFixed(2)}</span></td>
+            <td class="px-4 py-2 whitespace-nowrap"><span class="bg-gray-50 text-primary px-2 py-1 rounded-full text-xs font-bold">${product.purchasePrice.toFixed(2)}</span></td>
             <td class="px-4 py-2 whitespace-nowrap"><span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">${product.price.toFixed(2)}</span></td>
             <td class="px-4 py-2 whitespace-nowrap">
-                <input type="number" class="w-24 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
+                <input type="number" class="w-24 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary text-sm" 
                        value="${product.customSalePrice.toFixed(2)}" step="0.01" min="0"
                        onchange="updateEditCustomSalePrice(${product.productId}, this.value)">
             </td>
@@ -243,12 +244,13 @@ function addEditProductRow(product) {
             <td class="px-4 py-2 whitespace-nowrap">
                 <button type="button" class="w-8 h-8 flex items-center justify-center rounded-lg text-red-600 hover:bg-red-50 transition-colors" 
                         onclick="removeEditProduct(${product.productId})">
-                    <i class="fas fa-trash text-xs"></i>
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </td>
         </tr>
     `;
     $('#editSelectedProductsTable tbody').append(row);
+    lucide.createIcons();
 }
 
 
@@ -323,14 +325,14 @@ function displayEditSelectedProducts() {
                 <td class="px-4 py-2 text-gray-800 font-medium whitespace-nowrap">${product.productName}</td>
                 <td class="px-4 py-2 whitespace-nowrap">${barcodeDisplay}</td>
                 <td class="px-4 py-2 whitespace-nowrap">
-                    <input type="number" class="w-20 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
+                    <input type="number" class="w-20 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary text-sm" 
                            value="${product.quantity}" min="1" 
                            onchange="updateEditProductQuantity(${product.productId}, this.value)">
                 </td>
-                <td class="px-4 py-2 whitespace-nowrap"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-bold">${product.purchasePrice.toFixed(2)}</span></td>
+                <td class="px-4 py-2 whitespace-nowrap"><span class="bg-gray-50 text-primary px-2 py-1 rounded-full text-xs font-bold">${product.purchasePrice.toFixed(2)}</span></td>
                 <td class="px-4 py-2 whitespace-nowrap"><span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">${product.unitPrice.toFixed(2)}</span></td>
                 <td class="px-4 py-2 whitespace-nowrap">
-                    <input type="number" class="w-24 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-sm" 
+                    <input type="number" class="w-24 px-2 py-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary text-sm" 
                            value="${product.customSalePrice.toFixed(2)}" step="0.01" min="0"
                        onchange="updateEditCustomSalePrice(${product.productId}, this.value)">
                 </td>
@@ -339,13 +341,14 @@ function displayEditSelectedProducts() {
                 <td class="px-4 py-2 whitespace-nowrap">
                     <button type="button" class="w-8 h-8 flex items-center justify-center rounded-lg text-red-600 hover:bg-red-50 transition-colors" 
                             onclick="removeEditProduct(${product.productId})">
-                        <i class="fas fa-trash text-xs"></i>
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                 </td>
             </tr>
         `;
         tbody.append(row);
     });
+    lucide.createIcons();
 }
 
 

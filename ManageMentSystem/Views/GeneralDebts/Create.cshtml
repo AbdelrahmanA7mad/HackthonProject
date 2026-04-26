@@ -7,8 +7,8 @@
 
     <div class="w-full max-w-4xl">
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-100 text-indigo-600 mb-4 shadow-sm">
-                <i class="fas fa-file-contract text-2xl"></i>
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 text-[#0f1419] mb-4 shadow-sm">
+                <i data-lucide="file-text" class="w-6 h-6"></i>
             </div>
             <h1 class="text-2xl font-bold text-gray-800">إضافة دين عام</h1>
             <p class="text-gray-500 text-sm mt-1 font-medium">تسجيل دين جديد (مستحق لك أو عليك)</p>
@@ -17,7 +17,7 @@
         <form asp-action="Create" method="post">
             @Html.AntiForgeryToken()
 
-            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
 
                 <div class="p-8">
                     @if (!ViewData.ModelState.IsValid)
@@ -28,23 +28,23 @@
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
                         <div class="md:col-span-6">
-                            <label asp-for="Title" class="block text-md font-bold text-gray-700 mb-2">اسم الدين <span class="text-red-500">*</span></label>
+                            <label asp-for="Title" class="block text-md font-bold text-gray-700 mb-2">اسم الدين <span class="text-accentRed">*</span></label>
                             <div class="relative">
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-indigo-800">
-                                    <i class="fas fa-tag"></i>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#0f1419]">
+                                    <i data-lucide="tag" class="w-4 h-4"></i>
                                 </div>
-                                <input asp-for="Title" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-800 focus:ring-2 focus:ring-indigo-800 outline-none transition-all font-medium text-gray-700 placeholder-gray-400" placeholder="مثال: سلفة، بضاعة آجلة..." />
+                                <input asp-for="Title" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-[#0f1419] focus:ring-2 focus:ring-[#0f1419] outline-none transition-all font-medium text-gray-700 placeholder-gray-400" placeholder="مثال: سلفة، بضاعة آجلة..." />
                             </div>
-                            <span asp-validation-for="Title" class="text-red-500 text-xs mt-1 block font-bold"></span>
+                            <span asp-validation-for="Title" class="text-accentRed text-xs mt-1 block font-bold"></span>
                         </div>
 
                         <div class="md:col-span-6">
                             <label asp-for="PartyName" class="block text-md font-bold text-gray-700 mb-2">اسم صاحب الدين (الطرف الآخر)</label>
                             <div class="relative">
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-indigo-800">
-                                    <i class="fas fa-user"></i>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#0f1419]">
+                                    <i data-lucide="user" class="w-4 h-4"></i>
                                 </div>
-                                <input asp-for="PartyName" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-800 focus:ring-2 focus:ring-indigo-800 outline-none transition-all font-medium text-gray-700 placeholder-gray-400" placeholder="اسم الشخص أو الجهة" />
+                                <input asp-for="PartyName" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-[#0f1419] focus:ring-2 focus:ring-[#0f1419] outline-none transition-all font-medium text-gray-700 placeholder-gray-400" placeholder="اسم الشخص أو الجهة" />
                             </div>
                         </div>
 
@@ -52,28 +52,28 @@
                             <label asp-for="DebtType" class="block text-md font-bold text-gray-700 mb-2">نوع الدين</label>
                             <div class="relative">
                                 <select asp-for="DebtType" asp-items="Html.GetEnumSelectList<ManageMentSystem.Models.GeneralDebtType>()"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-800 focus:ring-2 focus:ring-indigo-800 outline-none transition-all font-medium text-gray-700 bg-white appearance-none"></select>
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0f1419] focus:ring-2 focus:ring-[#0f1419] outline-none transition-all font-medium text-gray-700 bg-white appearance-none"></select>
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
-                                    <i class="fas fa-chevron-down text-xs"></i>
+                                    <i data-lucide="chevron-down" class="w-3 h-3"></i>
                                 </div>
                             </div>
                         </div>
 
                         <div class="md:col-span-4">
-                            <label asp-for="Amount" class="block text-md font-bold text-gray-700 mb-2">المبلغ <span class="text-red-500">*</span></label>
+                            <label asp-for="Amount" class="block text-md font-bold text-gray-700 mb-2">المبلغ <span class="text-accentRed">*</span></label>
                             <div class="relative">
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-indigo-800">
-                                    <i class="fas fa-coins"></i>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#0f1419]">
+                                    <i data-lucide="coins" class="w-4 h-4"></i>
                                 </div>
-                                <input asp-for="Amount" type="number" step="1" min="0" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-800 focus:ring-2 focus:ring-indigo-800 outline-none transition-all font-bold text-gray-700 placeholder-gray-400" placeholder="0.00" />
+                                <input asp-for="Amount" type="number" step="1" min="0" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-[#0f1419] focus:ring-2 focus:ring-[#0f1419] outline-none transition-all font-bold text-gray-700 placeholder-gray-400" placeholder="0.00" />
                             </div>
-                            <span asp-validation-for="Amount" class="text-red-500 text-xs mt-1 block font-bold"></span>
+                            <span asp-validation-for="Amount" class="text-accentRed text-xs mt-1 block font-bold"></span>
                         </div>
 
                         <div class="md:col-span-4">
                             <label class="block text-md font-bold text-gray-700 mb-2">طريقة الدفع (اختياري)</label>
                             <div class="relative">
-                                <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-800 focus:ring-2 focus:ring-indigo-800 outline-none transition-all font-medium text-gray-700 bg-white appearance-none" asp-for="PaymentMethodId">
+                                <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0f1419] focus:ring-2 focus:ring-[#0f1419] outline-none transition-all font-medium text-gray-700 bg-white appearance-none" asp-for="PaymentMethodId">
                                     <option value="">-- اختر طريقة الدفع --</option>
                                     @foreach (var pm in (IEnumerable<ManageMentSystem.Models.PaymentMethodOption>)(ViewBag.PaymentMethods ?? new List<ManageMentSystem.Models.PaymentMethodOption>()))
                                     {
@@ -81,7 +81,7 @@
                                     }
                                 </select>
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
-                                    <i class="fas fa-chevron-down text-xs"></i>
+                                    <i data-lucide="chevron-down" class="w-3 h-3"></i>
                                 </div>
                             </div>
                         </div>
@@ -89,23 +89,23 @@
                         <div class="md:col-span-6">
                             <label asp-for="DueDate" class="block text-md font-bold text-gray-700 mb-2">تاريخ الاستحقاق</label>
                             <div class="relative">
-                                <input asp-for="DueDate" type="date" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-800 focus:ring-2 focus:ring-indigo-800 outline-none transition-all font-medium text-gray-600" />
+                                <input asp-for="DueDate" type="date" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0f1419] focus:ring-2 focus:ring-[#0f1419] outline-none transition-all font-medium text-gray-600" />
                             </div>
                         </div>
 
                         <div class="md:col-span-12">
                             <label asp-for="Description" class="block text-sm font-bold text-gray-700 mb-2">ملاحظات / وصف</label>
-                            <textarea asp-for="Description" rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-800 focus:ring-2 focus:ring-indigo-800 outline-none transition-all font-medium text-gray-700 placeholder-gray-400 resize-none" placeholder="أي تفاصيل إضافية حول الدين..."></textarea>
+                            <textarea asp-for="Description" rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0f1419] focus:ring-2 focus:ring-[#0f1419] outline-none transition-all font-medium text-gray-700 placeholder-gray-400 resize-none" placeholder="أي تفاصيل إضافية حول الدين..."></textarea>
                         </div>
 
                     </div>
                 </div>
 
-                <div class="bg-gray-50 px-8 py-5 border-t border-gray-100 flex items-center gap-4">
-                    <button type="submit" class="px-8 py-2.5 rounded-xl bg-indigo-800 text-white font-bold hover:bg-indigo-900 shadow-sm hover:shadow-indigo-500 hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                        <i class="fas fa-save"></i> حفظ البيانات
+                <div class="bg-gray-50 px-8 py-5 border-t border-gray-200 flex items-center gap-4">
+                    <button type="submit" class="px-8 py-2.5 rounded-xl bg-[#0f1419] text-white font-bold hover:bg-primaryHover shadow-sm  hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                        <i data-lucide="save" class="w-4 h-4"></i> حفظ البيانات
                     </button>
-                    <a asp-action="Index" class="px-6 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-bold hover:text-red-700 hover:bg-red-100 hover:border-gray-400 hover:-translate-y-0.5 transition-alll shadow-sm">
+                    <a asp-action="Index" class="px-6 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-bold hover:text-accentRed hover:bg-red-100 hover:border-gray-400 hover:-translate-y-0.5 transition-alll shadow-sm">
                         إلغاء
                     </a>
 

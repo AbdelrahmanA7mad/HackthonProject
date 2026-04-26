@@ -19,7 +19,8 @@ function initializeDeletePage() {
     // Add visual feedback
     $('.btn-danger').on('click', function() {
         $(this).prop('disabled', true);
-        $(this).html('<i class="fas fa-spinner fa-spin me-2"></i>جاري الحذف...');
+        $(this).html('<i data-lucide="loader-2" class="animate-spin me-2 inline-block w-4 h-4"></i>جاري الحذف...');
+        lucide.createIcons();
     });
 }
 

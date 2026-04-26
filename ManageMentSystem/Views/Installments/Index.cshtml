@@ -14,19 +14,19 @@
     
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">إدارة التقسيط</h1>
-            <p class="text-sm text-slate-500 mt-1 font-medium">سجل جميع عمليات التقسيط الحالية والمنتهية</p>
+            <h1 class="text-2xl font-bold text-[#0f1419] tracking-tight">إدارة التقسيط</h1>
+            <p class="text-sm text-gray-500 mt-1 font-medium">سجل جميع عمليات التقسيط الحالية والمنتهية</p>
         </div>
         <div class="flex gap-3">
              
                 <button type="button" onclick="sendBulkOverdueAlerts()" id="bulkAlertBtn"
-                        class="px-4 py-2.5 bg-red-50 text-red-700 text-sm font-bold rounded-xl hover:bg-red-100 transition-colors flex items-center gap-2 border border-red-100 hover:-translate-y-0.5 transition-all">
-                    <i class="fas fa-bell"></i>
+                        class="px-4 py-2.5 bg-red-50 text-accentRed text-sm font-bold rounded-xl hover:bg-red-100 transition-colors flex items-center gap-2 border border-red-100 hover:-translate-y-0.5 transition-all">
+                    <i data-lucide="bell"></i>
                     تنبيه المتأخرين
                 </button>
            
-                <a href="@Url.Action("Create")" class="px-4 py-2.5 bg-indigo-800 text-indigo-50 text-sm font-bold rounded-xl hover:bg-indigo-900 hover:text-indigo-50 transition-all shadow-lg shadow-indigo-200 flex items-center gap-2 decoration-none hover:-translate-y-0.5 transition-all">
-                    <i class="fas fa-plus text-indigo-50 "></i>
+                <a href="@Url.Action("Create")" class="px-4 py-2.5 bg-[#0f1419] text-white text-sm font-bold rounded-xl hover:bg-primaryHover hover:text-white transition-all shadow-lg  flex items-center gap-2 decoration-none hover:-translate-y-0.5 transition-all">
+                    <i data-lucide="plus" class="text-white "></i>
                     <span>تقسيط جديد</span>
                 </a>
         </div>
@@ -35,68 +35,68 @@
     @if (ViewBag.summary != null)
     {
         <div class="flex justify-between items-center cursor-pointer mb-2" onclick="toggleSummary()">
-             <h3 class="text-lg font-bold text-slate-800">نظرة عامة</h3>
-             <div class="flex items-center gap-1 text-slate-500 text-xs font-bold hover:text-indigo-800">
+             <h3 class="text-lg font-bold text-[#0f1419]">نظرة عامة</h3>
+             <div class="flex items-center gap-1 text-gray-500 text-xs font-bold hover:text-[#0f1419]">
                  <span id="summaryToggleText ">إخفاء</span>
-                 <i id="summaryToggleIcon" class="fas fa-chevron-up"></i>
+                 <i id="summaryToggleIcon" data-lucide="chevron-up"></i>
              </div>
         </div>
 
         <div id="summaryContent" class="summary-animate">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-all">
                     <div class="flex justify-between items-start">
-                        <div><p class="text-slate-600 text-md font-bold mb-1">المبالغ الأساسية</p><h3 class="text-2xl font-bold text-slate-800">@summary.TotalBaseAmount.ToString("N0")</h3></div>
-                        <div class="p-3 rounded-xl bg-indigo-50 text-indigo-800"><i class="fas fa-wallet text-xl"></i></div>
+                        <div><p class="text-gray-500 text-md font-bold mb-1">المبالغ الأساسية</p><h3 class="text-2xl font-bold text-[#0f1419]">@summary.TotalBaseAmount.ToString("N0")</h3></div>
+                        <div class="p-3 rounded-xl bg-gray-50 text-[#0f1419]"><i data-lucide="wallet" class="text-xl"></i></div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-all">
                     <div class="flex justify-between items-start">
-                        <div><p class="text-slate-600 text-md font-bold mb-1">المتوقع تحصيله</p><h3 class="text-2xl font-bold text-slate-800">@((summary.TotalAmountWithInterest - summary.TotalDownPayments).ToString("N0"))</h3><span class="text-xs text-emerald-500 font-bold bg-emerald-50 px-2 py-0.5 rounded-full mt-2 inline-block">+@summary.TotalInterest.ToString("N0") فوائد</span></div>
-                        <div class="p-3 rounded-xl bg-amber-50 text-amber-700"><i class="fas fa-chart-line text-xl"></i></div>
+                        <div><p class="text-gray-500 text-md font-bold mb-1">المتوقع تحصيله</p><h3 class="text-2xl font-bold text-[#0f1419]">@((summary.TotalAmountWithInterest - summary.TotalDownPayments).ToString("N0"))</h3><span class="text-xs text-emerald-500 font-bold bg-emerald-50 px-2 py-0.5 rounded-full mt-2 inline-block">+@summary.TotalInterest.ToString("N0") فوائد</span></div>
+                        <div class="p-3 rounded-xl bg-amber-50 text-amber-700"><i data-lucide="trending-up" class="text-xl"></i></div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-all">
                     <div class="flex justify-between items-start">
-                        <div><p class="text-slate-600 text-md font-bold mb-1">تم تحصيله</p><h3 class="text-2xl font-bold text-slate-800">@summary.TotalAmountPaid.ToString("N0")</h3><div class="w-24 bg-slate-100 rounded-full h-1.5 mt-2 overflow-hidden"><div class="bg-indigo-500 h-1.5 rounded-full" style="width: @summary.PaymentPercentage%"></div></div></div>
-                        <div class="p-3 rounded-xl bg-emerald-50 text-emerald-800"><i class="fas fa-check-circle text-xl"></i></div>
+                        <div><p class="text-gray-500 text-md font-bold mb-1">تم تحصيله</p><h3 class="text-2xl font-bold text-[#0f1419]">@summary.TotalAmountPaid.ToString("N0")</h3><div class="w-24 bg-gray-100 rounded-full h-1.5 mt-2 overflow-hidden"><div class="bg-gray-500 h-1.5 rounded-full" style="width: @summary.PaymentPercentage%"></div></div></div>
+                        <div class="p-3 rounded-xl bg-emerald-50 text-emerald-800"><i data-lucide="check-circle" class="text-xl"></i></div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-all">
                     <div class="flex justify-between items-start">
-                        <div><p class="text-slate-600 text-md font-bold mb-1">المتبقي</p><h3 class="text-2xl font-bold text-slate-800">@summary.TotalMonthlyPaymentsRemaining.ToString("N0")</h3></div>
-                        <div class="p-3 rounded-xl bg-red-50 text-red-700"><i class="fas fa-clock text-xl"></i></div>
+                        <div><p class="text-gray-500 text-md font-bold mb-1">المتبقي</p><h3 class="text-2xl font-bold text-[#0f1419]">@summary.TotalMonthlyPaymentsRemaining.ToString("N0")</h3></div>
+                        <div class="p-3 rounded-xl bg-red-50 text-accentRed"><i data-lucide="clock" class="text-xl"></i></div>
                     </div>
                 </div>
             </div>
             
             <div id="statusCountersArea" class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5s gap-4 mb-8">
-                <div class="p-4 bg-white rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center"><span class="text-slate-500 text-md font-bold mb-2">الإجمالي</span><span class="text-xxl font-bold text-indigo-800">@summary.TotalInstallments</span></div>
-                <div class="p-4 bg-white rounded-xl border border-emerald-100 shadow-sm flex flex-col items-center justify-center bg-emerald-50/10"><span class="text-slate-500 text-md font-bold mb-2">نشط</span><span class="text-xxl font-bold text-emerald-700">@summary.ActiveInstallments</span></div>
-                <div class="p-4 bg-white rounded-xl border border-blue-100 shadow-sm flex flex-col items-center justify-center bg-indigo-50/10"><span class="text-slate-500 text-md font-bold mb-2">مكتمل</span><span class="text-xxl font-bold text-indigo-800">@summary.CompletedInstallments</span></div>
-                <div class="p-4 bg-white rounded-xl border border-red-100 shadow-sm flex flex-col items-center justify-center bg-red-50/10"><span class="text-slate-500 text-md font-bold mb-2">متأخر</span><span class="text-xxl font-bold text-red-700">@summary.OverdueInstallments</span></div>
-                <div class="p-4 bg-white rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center"><span class="text-slate-500 text-md font-bold mb-2">العملاء</span><span class="text-xxl font-bold text-amber-700">@summary.TotalCustomers</span></div>
+                <div class="p-4 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center"><span class="text-gray-500 text-md font-bold mb-2">الإجمالي</span><span class="text-xxl font-bold text-[#0f1419]">@summary.TotalInstallments</span></div>
+                <div class="p-4 bg-white rounded-xl border border-emerald-100 shadow-sm flex flex-col items-center justify-center bg-emerald-50/10"><span class="text-gray-500 text-md font-bold mb-2">نشط</span><span class="text-xxl font-bold text-accentGreen">@summary.ActiveInstallments</span></div>
+                <div class="p-4 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center bg-gray-50/10"><span class="text-gray-500 text-md font-bold mb-2">مكتمل</span><span class="text-xxl font-bold text-[#0f1419]">@summary.CompletedInstallments</span></div>
+                <div class="p-4 bg-white rounded-xl border border-red-100 shadow-sm flex flex-col items-center justify-center bg-red-50/10"><span class="text-gray-500 text-md font-bold mb-2">متأخر</span><span class="text-xxl font-bold text-accentRed">@summary.OverdueInstallments</span></div>
+                <div class="p-4 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center"><span class="text-gray-500 text-md font-bold mb-2">العملاء</span><span class="text-xxl font-bold text-amber-700">@summary.TotalCustomers</span></div>
             </div>
         </div>
     }
 
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         
-        <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-white">
+        <div class="p-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 bg-white">
             <div>
-               <h3 class="text-lg font-bold text-slate-800">قائمة الأقساط</h3>
-               <p class="text-sm text-slate-500 mt-1">النتائج: <span class="font-bold text-indigo-800">@Model.TotalCount</span></p>
+               <h3 class="text-lg font-bold text-[#0f1419]">قائمة الأقساط</h3>
+               <p class="text-sm text-gray-500 mt-1">النتائج: <span class="font-bold text-[#0f1419]">@Model.TotalCount</span></p>
             </div>
             
             <form method="get" action="@Url.Action("Index")" class="flex gap-2 w-full md:w-auto">
                 <div class="relative group flex-1 md:w-64">
-                    <i class="fas fa-search absolute right-3 top-3 text-slate-400 group-focus-within:text-indigo-800 transition-colors"></i>
+                    <i data-lucide="search" class="absolute right-3 top-3 text-gray-500 group-focus-within:text-[#0f1419] transition-colors w-4 h-4"></i>
                     <input type="text" name="searchTerm" 
-                           class="w-full bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-800 block py-2.5 pr-10 pl-2 font-medium placeholder:text-slate-400 outline-none transition-all" 
+                           class="w-full bg-gray-50 border border-gray-200 text-gray-600 text-sm rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] block py-2.5 pr-10 pl-2 font-medium placeholder:text-gray-500 outline-none transition-all" 
                            placeholder="بحث..." value="@ViewBag.SearchTerm">
                 </div>
                 <div class="relative w-40">
-                    <select name="sortBy" onchange="this.form.submit()" class="w-full bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 block py-2.5 px-3 font-bold cursor-pointer outline-none appearance-none">
+                    <select name="sortBy" onchange="this.form.submit()" class="w-full bg-gray-50 border border-gray-200 text-gray-600 text-sm rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] block py-2.5 px-3 font-bold cursor-pointer outline-none appearance-none">
                         <option value="SequenceNumber" selected="@(ViewBag.SortBy == "SequenceNumber")">رقم التقسيط</option>
                         <option value="CustomerName" selected="@(ViewBag.SortBy == "CustomerName")">العميل</option>
                         <option value="TotalAmount" selected="@(ViewBag.SortBy == "TotalAmount")">المبلغ</option>
@@ -104,21 +104,21 @@
                     </select>
                 </div>
                 <div class="w-24">
-                    <select name="sortOrder" onchange="this.form.submit()" class="w-full bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 block py-2.5 px-3 font-bold cursor-pointer outline-none appearance-none">
+                    <select name="sortOrder" onchange="this.form.submit()" class="w-full bg-gray-50 border border-gray-200 text-gray-600 text-sm rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] block py-2.5 px-3 font-bold cursor-pointer outline-none appearance-none">
                         <option value="desc" selected="@(ViewBag.SortOrder == "desc")">تنازلي</option>
                         <option value="asc" selected="@(ViewBag.SortOrder == "asc")">تصاعدي</option>
                     </select>
                 </div>
                 <input type="hidden" name="page" value="1" />
-                <button type="submit" class="px-4 py-2.5 bg-indigo-800 text-white text-sm font-bold rounded-xl hover:bg-indigo-900 transition-colors">
-                    <i class="fas fa-search"></i>
+                <button type="submit" class="px-4 py-2.5 bg-[#0f1419] text-white text-sm font-bold rounded-xl hover:bg-primaryHover transition-colors">
+                    <i data-lucide="search"></i>
                 </button>
             </form>
         </div>
 
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-right" id="installmentsTable">
-                <thead class="bg-slate-50/80 border-b border-slate-100">
+                <thead class="bg-gray-50/80 border-b border-gray-200">
                     <tr>
                         <th class="px-3 py-4 text-sm font-bold text-black-900 uppercase tracking-wider">#</th>
                         <th class="px-3 py-4 text-sm font-bold text-black-900 uppercase tracking-wider">العميل</th>
@@ -132,7 +132,7 @@
                         <th class="px-3 py-4 text-center text-sm font-bold text-black-900 uppercase tracking-wider">إجراءات</th>
                     </tr>
                 </thead>
-           <tbody class="divide-y divide-slate-100" id="installmentsTableBody">
+           <tbody class="divide-y divide-gray-100" id="installmentsTableBody">
             @if (Model.Installments.Any())
             {
                 @foreach (var item in Model.Installments)
@@ -142,28 +142,28 @@
                         "مكتمل" => "bg-blue-200",   // أخضر واضح (مدفوع)
                         "متأخر" => "bg-red-200",     // أحمر واضح (متأخر)
                         "نشط"   => "bg-white",       // أبيض (نشط)
-                        _       => "bg-slate-50"
+                        _       => "bg-gray-50"
                     };
                     // 2. تحديد ألوان الملصق (Badge) الصغير داخل الحالة
                     var statusClasses = item.Status switch {
                         "نشط" => "bg-emerald-100 text-emerald-800 border border-emerald-200",
                         "متأخر" => "bg-red-100 text-red-800 border border-red-200",
-                        "مكتمل" => "bg-indigo-100 text-indigo-800 border border-indigo-200",
-                        _ => "bg-slate-100 text-slate-800 border border-slate-200"
+                        "مكتمل" => "bg-gray-100 text-[#0f1419] border border-gray-200",
+                        _ => "bg-gray-100 text-[#0f1419] border border-gray-200"
                     };
 
                     <tr class="@rowBackground transition-colors group">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="text-xs font-bold text-slate-500">@item.SequenceNumber</span>
+                            <span class="text-xs font-bold text-gray-500">@item.SequenceNumber</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <a href="@Url.Action("Statement", "Customers", new { id = item.CustomerId })" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-900 font-bold text-xs shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-[#0f1419] font-bold text-xs shadow-sm">
                                     @item.Customer?.FullName?.Substring(0, Math.Min(1, item.Customer?.FullName?.Length ?? 0))
                                 </div>
                                 <div>
-                                    <p class="font-bold text-sm text-slate-700">@item.Customer?.FullName</p>
-                                    <p class="text-[10px] text-slate-400">@item.StartDate.ToString("yyyy-MM-dd")</p>
+                                    <p class="font-bold text-sm text-gray-600">@item.Customer?.FullName</p>
+                                    <p class="text-[10px] text-gray-500">@item.StartDate.ToString("yyyy-MM-dd")</p>
                                 </div>
                             </a>
                         </td>
@@ -173,12 +173,12 @@
                         </td>
                         <td class="px-3 py-4 whitespace-nowrap text-md font-bold ">@item.MonthlyPayment.ToString("N0")</td>
                         <td class="px-3 py-4 whitespace-nowrap text-center font-bold ">
-                            <span class="bg-slate-100 px-2 py-1 rounded text-md font-bold">@item.NumberOfMonths</span>
+                            <span class="bg-gray-100 px-2 py-1 rounded text-md font-bold">@item.NumberOfMonths</span>
                         </td>
                         <td class="px-3 py-4 whitespace-nowrap text-center font-bold text-md">@item.InterestRate%</td>
                         <td class="px-3 py-4 whitespace-nowrap">
                             <span class="text-md font-bold ">@item.TotalWithInterest.ToString("N0")</span>
-                            <span class="text-[10px] text-red-700 bg-red-50 px-1 rounded ml-1">+@item.InterestAmount.ToString("N0")</span>
+                            <span class="text-[10px] text-accentRed bg-red-50 px-1 rounded ml-1">+@item.InterestAmount.ToString("N0")</span>
                         </td>
                         <td class="px-3 py-4 whitespace-nowrap text-center">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold @statusClasses">
@@ -187,23 +187,20 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             <div class="flex items-center justify-center gap-1 opacity-100 sm:opacity-60 group-hover:opacity-100 transition-opacity">
-                                <a href="@Url.Action("Details", new { id = item.Id })" class="p-1.5 hover:bg-slate-100 text-slate-400 hover:text-slate-700 rounded-lg transition-colors" title="عرض"><i class="fas fa-eye w-4 h-4"></i></a>
+                                <a href="@Url.Action("Details", new { id = item.Id })" class="p-1.5 hover:bg-gray-50 text-gray-500 hover:text-gray-600 rounded-lg transition-colors" title="عرض"><i data-lucide="eye" class="w-4 h-4"></i></a>
                         
-                                    <a href="@Url.Action("Create", "InstallmentPayments", new { installmentId = item.Id })" class="p-1.5 hover:bg-emerald-50 text-slate-400 hover:text-emerald-700 rounded-lg transition-colors" title="إضافة دفعة"><i class="fas fa-hand-holding-usd w-4 h-4"></i></a>
+                                    <a href="@Url.Action("Create", "InstallmentPayments", new { installmentId = item.Id })" class="p-1.5 hover:bg-emerald-50 text-gray-500 hover:text-accentGreen rounded-lg transition-colors" title="إضافة دفعة"><i data-lucide="hand-coins" class="w-4 h-4"></i></a>
 
-                                    <a href="@Url.Action("PrintInvoice", "Installments", new { id = item.Id })" target="_blank" class="p-1.5 hover:bg-indigo-50 text-slate-400 hover:text-indigo-800 rounded-lg transition-colors" title="طباعة"><i class="fas fa-print w-4 h-4"></i></a>
+                                    <a href="@Url.Action("PrintInvoice", "Installments", new { id = item.Id })" target="_blank" class="p-1.5 hover:bg-gray-50 text-gray-500 hover:text-[#0f1419] rounded-lg transition-colors" title="طباعة"><i data-lucide="printer" class="w-4 h-4"></i></a>
 
-                                    <a href="#" onclick="sendInvoiceWhatsapp(@item.Id, this); return false;" class="p-1.5 hover:bg-green-50 text-slate-400 hover:text-green-600 rounded-lg transition-colors relative" title="واتساب">
-                                        <i class="fab fa-whatsapp w-4 h-4"></i>
-                                        <svg class="loading-spinner animate-spin h-2.5 w-2.5 text-current hidden absolute top-1 right-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
+                                    <a href="#" onclick="sendInvoiceWhatsapp(@item.Id, this); return false;" class="p-1.5 hover:bg-green-50 text-gray-500 hover:text-green-600 rounded-lg transition-colors relative" title="واتساب">
+                                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                        <i data-lucide="loader-2" class="animate-spin w-4 h-4 text-green-600 hidden absolute top-1.5 right-1.5"></i>
                                     </a>
                         
-                                    <button type="button" onclick="openEditModal(@item.Id)" class="p-1.5 hover:bg-indigo-50 text-slate-400 hover:text-indigo-800 rounded-lg transition-colors" title="تعديل عدد الشهور"><i class="fas fa-edit w-4 h-4"></i></button>
+                                    <button type="button" onclick="openEditModal(@item.Id)" class="p-1.5 hover:bg-gray-50 text-gray-500 hover:text-[#0f1419] rounded-lg transition-colors" title="تعديل عدد الشهور"><i data-lucide="edit" class="w-4 h-4"></i></button>
 
-                                    <button type="button" onclick="deleteInstallment(@item.Id)" class="p-1.5 hover:bg-red-50 text-slate-400 hover:text-red-700 rounded-lg transition-colors" title="حذف"><i class="fas fa-trash-alt w-4 h-4"></i></button>
+                                    <button type="button" onclick="deleteInstallment(@item.Id)" class="p-1.5 hover:bg-red-50 text-gray-500 hover:text-accentRed rounded-lg transition-colors" title="حذف"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -213,10 +210,10 @@
             {
                 <tr>
                     <td colspan="10" class="text-center py-16">
-                        <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
-                            <i class="fas fa-folder-open text-4xl"></i>
+                        <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-500">
+                            <i data-lucide="folder-open" class="text-4xl"></i>
                         </div>
-                        <h5 class="text-lg font-bold text-slate-700">لا توجد بيانات</h5>
+                        <h5 class="text-lg font-bold text-gray-600">لا توجد بيانات</h5>
                     </td>
                 </tr>
             }
@@ -224,25 +221,25 @@
             </table>
         </div>
       
-        <div class="p-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 bg-white" id="pagination">
+        <div class="p-4 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500 bg-white" id="pagination">
              @if (Model.TotalPages > 1)
              {
                 <span>صفحة @Model.CurrentPage من @Model.TotalPages</span>
                 <div class="flex gap-1">
                     @if (Model.HasPreviousPage) {
-                        <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1, searchTerm = ViewBag.SearchTerm, sortBy = ViewBag.SortBy, sortOrder = ViewBag.SortOrder })" class="px-3 py-1 rounded bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold border border-slate-200">السابق</a>
+                        <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1, searchTerm = ViewBag.SearchTerm, sortBy = ViewBag.SortBy, sortOrder = ViewBag.SortOrder })" class="px-3 py-1 rounded bg-gray-50 hover:bg-gray-50 text-gray-500 font-bold border border-gray-200">السابق</a>
                     } else {
-                        <span class="px-3 py-1 rounded bg-slate-50 opacity-50 text-slate-400 font-bold border border-slate-100 cursor-not-allowed">السابق</span>
+                        <span class="px-3 py-1 rounded bg-gray-50 opacity-50 text-gray-500 font-bold border border-gray-200 cursor-not-allowed">السابق</span>
                     }
 
                     @for (int i = Model.StartPage; i <= Model.EndPage; i++) {
-                        <a href="@Url.Action("Index", new { page = i, searchTerm = ViewBag.SearchTerm, sortBy = ViewBag.SortBy, sortOrder = ViewBag.SortOrder })" class="px-3 py-1 rounded font-bold border @(i == Model.CurrentPage ? "bg-indigo-800 text-white border-indigo-800" : "bg-slate-50 hover:bg-slate-100 text-slate-600 border-slate-200")">@i</a>
+                        <a href="@Url.Action("Index", new { page = i, searchTerm = ViewBag.SearchTerm, sortBy = ViewBag.SortBy, sortOrder = ViewBag.SortOrder })" class="px-3 py-1 rounded font-bold border @(i == Model.CurrentPage ? "bg-[#0f1419] text-white border-gray-200" : "bg-gray-50 hover:bg-gray-50 text-gray-500 border-gray-200")">@i</a>
                     }
 
                     @if (Model.HasNextPage) {
-                        <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1, searchTerm = ViewBag.SearchTerm, sortBy = ViewBag.SortBy, sortOrder = ViewBag.SortOrder })" class="px-3 py-1 rounded bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold border border-slate-200">التالي</a>
+                        <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1, searchTerm = ViewBag.SearchTerm, sortBy = ViewBag.SortBy, sortOrder = ViewBag.SortOrder })" class="px-3 py-1 rounded bg-gray-50 hover:bg-gray-50 text-gray-500 font-bold border border-gray-200">التالي</a>
                     } else {
-                        <span class="px-3 py-1 rounded bg-slate-50 opacity-50 text-slate-400 font-bold border border-slate-100 cursor-not-allowed">التالي</span>
+                        <span class="px-3 py-1 rounded bg-gray-50 opacity-50 text-gray-500 font-bold border border-gray-200 cursor-not-allowed">التالي</span>
                     }
                 </div>
              }
@@ -340,7 +337,8 @@
 
                 if (!data.success || !data.list || data.list.length === 0) {
                      progressStatus.innerText = 'لا توجد بيانات';
-                     progressLog.innerHTML += `<div class="text-red-600 mb-1 flex items-center"><i class="fas fa-exclamation-circle ml-1"></i> ${data.message || 'لا توجد أقساط متأخرة صالحة للإرسال'}</div>`;
+                     progressLog.innerHTML += `<div class="text-red-600 mb-1 flex items-center"><i data-lucide="alert-circle" class="ml-1 w-4 h-4"></i> ${data.message || 'لا توجد أقساط متأخرة صالحة للإرسال'}</div>`;
+                     lucide.createIcons();
                      btnCloseProgress.classList.remove('hidden');
                      return;
                 }
@@ -367,14 +365,17 @@
 
                         if (sendData.success) {
                             successCount++;
-                            progressLog.innerHTML += `<div class="text-emerald-600 text-xs mb-1 flex items-center"><i class="fas fa-check-circle ml-1"></i> تم الإرسال للعميل: ${item.customerName}</div>`;
+                            progressLog.innerHTML += `<div class="text-emerald-600 text-xs mb-1 flex items-center"><i data-lucide="check-circle" class="ml-1 w-3 h-3"></i> تم الإرسال للعميل: ${item.customerName}</div>`;
+                            lucide.createIcons();
                         } else {
                             failCount++;
-                            progressLog.innerHTML += `<div class="text-red-600 text-xs mb-1 flex items-center"><i class="fas fa-exclamation-circle ml-1"></i> فشل: ${item.customerName} - ${sendData.message}</div>`;
+                            progressLog.innerHTML += `<div class="text-red-600 text-xs mb-1 flex items-center"><i data-lucide="alert-circle" class="ml-1 w-3 h-3"></i> فشل: ${item.customerName} - ${sendData.message}</div>`;
+                            lucide.createIcons();
                         }
                     } catch (err) {
                         failCount++;
-                        progressLog.innerHTML += `<div class="text-red-600 text-xs mb-1 flex items-center"><i class="fas fa-wifi ml-1"></i> خطأ اتصال: ${item.customerName}</div>`;
+                        progressLog.innerHTML += `<div class="text-red-600 text-xs mb-1 flex items-center"><i data-lucide="wifi" class="ml-1 w-3 h-3"></i> خطأ اتصال: ${item.customerName}</div>`;
+                        lucide.createIcons();
                     }
 
                     // تحديث شريط التقدم
@@ -392,7 +393,8 @@
                 // 5. الانتهاء
                 progressStatus.innerText = 'اكتملت العملية!';
                 progressStatus.classList.add('text-emerald-600', 'font-bold');
-                progressLog.innerHTML += `<div class="mt-4 pt-2 border-t border-slate-100 font-bold flex items-center gap-2"><i class="fas fa-flag-checkered text-indigo-600"></i> النتيجة النهائية: نجاح (${successCount}) - فشل (${failCount})</div>`;
+                progressLog.innerHTML += `<div class="mt-4 pt-2 border-t border-gray-200 font-bold flex items-center gap-2"><i data-lucide="flag" class="text-[#0f1419] w-4 h-4"></i> النتيجة النهائية: نجاح (${successCount}) - فشل (${failCount})</div>`;
+                lucide.createIcons();
                 
                 // إظهار زر الإغلاق
                 btnCloseProgress.classList.remove('hidden');
@@ -408,7 +410,8 @@
 
             } catch (error) {
                 progressStatus.innerText = 'حدث خطأ غير متوقع';
-                progressLog.innerHTML += `<div class="text-red-600 font-bold mb-1 flex items-center"><i class="fas fa-exclamation-triangle ml-1"></i> ${error.message}</div>`;
+                progressLog.innerHTML += `<div class="text-red-600 font-bold mb-1 flex items-center"><i data-lucide="alert-triangle" class="ml-1 w-4 h-4"></i> ${error.message}</div>`;
+                lucide.createIcons();
                 btnCloseProgress.classList.remove('hidden');
             }
         }
@@ -441,35 +444,35 @@
     
     <!-- Progress Modal -->
     <div id="progressModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[100] hidden flex items-center justify-center">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden border border-slate-100">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden border border-gray-200">
             <!-- Header -->
-            <div class="bg-indigo-900 px-6 py-4 flex justify-between items-center">
+            <div class="bg-black px-6 py-4 flex justify-between items-center">
                 <h3 class="text-white font-bold text-lg flex items-center gap-2">
-                    <i class="fab fa-whatsapp"></i>
+                    <i data-lucide="message-circle"></i>
                     إرسال التنبيهات
                 </h3>
-                <span id="progressText" class="text-indigo-100 font-mono text-sm">0%</span>
+                <span id="progressText" class="text-[#0f1419] font-mono text-sm">0%</span>
             </div>
 
             <!-- Body -->
             <div class="p-6">
                 <!-- Status Text -->
-                <p id="progressStatus" class="text-slate-700 font-bold mb-4 text-center">جاري التحضير...</p>
+                <p id="progressStatus" class="text-gray-600 font-bold mb-4 text-center">جاري التحضير...</p>
                 
                 <!-- Progress Bar -->
-                <div class="w-full bg-slate-100 rounded-full h-4 mb-6 overflow-hidden shadow-inner">
-                    <div id="progressBar" class="bg-gradient-to-r from-emerald-500 to-emerald-400 h-4 rounded-full transition-all duration-300" style="width: 0%"></div>
+                <div class="w-full bg-gray-100 rounded-full h-4 mb-6 overflow-hidden shadow-inner">
+                    <div id="progressBar" class=" from-emerald-500 to-emerald-400 h-4 rounded-full transition-all duration-300" style="width: 0%"></div>
                 </div>
 
                 <!-- Log Area -->
-                <div class="bg-slate-50 rounded-xl border border-slate-200 p-3 h-48 overflow-y-auto custom-scrollbar text-sm font-mono" id="progressLog">
+                <div class="bg-gray-50 rounded-xl border border-gray-200 p-3 h-48 overflow-y-auto custom-scrollbar text-sm font-mono" id="progressLog">
                     <!-- Logs will appear here -->
                 </div>
 
                 <!-- Footer -->
                 <div class="mt-6 flex justify-center">
                     <button id="btnCloseProgress" onclick="document.getElementById('progressModal').classList.add('hidden'); window.location.reload();" 
-                            class="hidden px-6 py-2 bg-slate-800 text-white rounded-xl hover:bg-slate-900 transition-colors font-bold shadow-lg shadow-slate-200">
+                            class="hidden px-6 py-2 bg-gray-100 text-white rounded-xl hover:bg-gray-50 transition-colors font-bold shadow-lg shadow-slate-200">
                         إغلاق وتحديث
                     </button>
                 </div>
@@ -481,8 +484,8 @@
     <div id="editMonthsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center">
         <div class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 mb-4">
-                    <i class="fas fa-calendar-alt text-indigo-600 text-xl"></i>
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 mb-4">
+                    <i data-lucide="calendar" class="text-[#0f1419] text-xl"></i>
                 </div>
                 <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">تعديل مدة التقسيط</h3>
                 <p class="text-sm text-gray-500 mb-4">يمكنك تعديل عدد الشهور فقط، وسيتم إعادة جدولة القسط تلقائياً.</p>
@@ -499,7 +502,7 @@
                     </div>
 
                     <div class="flex justify-center gap-2 mt-4">
-                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button type="submit" class="px-4 py-2 bg-[#0f1419] text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-[#0f1419] focus:outline-none focus:ring-2 focus:ring-[#0f1419]">
                             حفظ التغييرات
                         </button>
                         <button type="button" onclick="document.getElementById('editMonthsModal').classList.add('hidden')" class="px-4 py-2 bg-gray-100 text-gray-700 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">

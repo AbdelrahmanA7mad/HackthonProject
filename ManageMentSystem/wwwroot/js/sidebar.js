@@ -28,7 +28,8 @@
         function openSidebar() {
             sidebar.addClass('active');
             overlay.addClass('active');
-            menuBtn.html('<i class="fas fa-times"></i>');
+            menuBtn.html('<i data-lucide="x"></i>');
+            lucide.createIcons();
             // Prevent body scroll when sidebar is open
             $('body').css('overflow', 'hidden');
         }
@@ -37,7 +38,8 @@
         function closeSidebar() {
             sidebar.removeClass('active');
             overlay.removeClass('active');
-            menuBtn.html('<i class="fas fa-bars"></i>');
+            menuBtn.html('<i data-lucide="menu"></i>');
+            lucide.createIcons();
             // Restore body scroll
             $('body').css('overflow', '');
         }

@@ -115,12 +115,12 @@ function showDebtDeleteConfirmation(debtId, title, partyName, amount, debtType) 
                 <p class="mb-2"><strong>المبلغ:</strong> ${amount} جنيه</p>
                 <p class="mb-4"><strong>النوع:</strong> 
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${debtTypeClass}">
-                        <i class="fas fa-${debtTypeIcon} me-1"></i>${debtTypeText}
+                        <i data-lucide="${debtTypeIcon}" class="me-1 w-3 h-3"></i>${debtTypeText}
                     </span>
                 </p>
                 <div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl mb-2 text-sm">
                     <div class="flex items-center gap-2 mb-1 font-bold">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                         تحذير:
                     </div>
                     سيتم حذف الدين بالكامل مع جميع المدفوعات المرتبطة به.
@@ -133,6 +133,9 @@ function showDebtDeleteConfirmation(debtId, title, partyName, amount, debtType) 
         confirmButtonText: 'نعم، احذف الدين',
         cancelButtonText: 'إلغاء',
         reverseButtons: true,
+        didOpen: () => {
+            lucide.createIcons();
+        },
         customClass: {
             popup: 'rounded-2xl shadow-2xl border border-slate-100',
             title: 'text-xl font-bold text-slate-800',
@@ -208,7 +211,7 @@ function showDebtCreatedSuccess(title, partyName, amount, debtType) {
                 <p class="mb-2"><strong>المبلغ:</strong> ${amount} جنيه</p>
                 <p><strong>النوع:</strong> 
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${debtTypeClass}">
-                        <i class="fas fa-${debtTypeIcon} me-1"></i>${debtTypeText}
+                        <i data-lucide="${debtTypeIcon}" class="me-1 w-3 h-3"></i>${debtTypeText}
                     </span>
                 </p>
             </div>
@@ -216,6 +219,9 @@ function showDebtCreatedSuccess(title, partyName, amount, debtType) {
         confirmButtonText: 'حسناً',
         timer: 4000,
         timerProgressBar: true,
+        didOpen: () => {
+            lucide.createIcons();
+        },
         customClass: {
             popup: 'rounded-2xl shadow-2xl border border-slate-100',
             title: 'text-xl font-bold text-slate-800',
@@ -241,7 +247,7 @@ function showDebtUpdatedSuccess(title, partyName, amount, debtType) {
                 <p class="mb-2"><strong>المبلغ:</strong> ${amount} جنيه</p>
                 <p><strong>النوع:</strong> 
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${debtTypeClass}">
-                        <i class="fas fa-${debtTypeIcon} me-1"></i>${debtTypeText}
+                        <i data-lucide="${debtTypeIcon}" class="me-1 w-3 h-3"></i>${debtTypeText}
                     </span>
                 </p>
             </div>
@@ -249,6 +255,9 @@ function showDebtUpdatedSuccess(title, partyName, amount, debtType) {
         confirmButtonText: 'حسناً',
         timer: 4000,
         timerProgressBar: true,
+        didOpen: () => {
+            lucide.createIcons();
+        },
         customClass: {
             popup: 'rounded-2xl shadow-2xl border border-slate-100',
             title: 'text-xl font-bold text-slate-800',
@@ -294,7 +303,7 @@ function showDebtCompletionNotification(title, partyName, totalAmount) {
                 <p class="mb-2"><strong>الطرف:</strong> ${partyName || 'غير محدد'}</p>
                 <p class="mb-2"><strong>إجمالي المبلغ:</strong> ${totalAmount} جنيه</p>
                 <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3 rounded-lg mt-3 text-sm">
-                    <i class="fas fa-check-circle me-2"></i>
+                    <i data-lucide="check-circle" class="me-2 w-4 h-4 inline-block"></i>
                     <strong>تهانينا!</strong> تم سداد الدين بالكامل.
                 </div>
             </div>
@@ -302,6 +311,9 @@ function showDebtCompletionNotification(title, partyName, totalAmount) {
         confirmButtonText: 'حسناً',
         timer: 5000,
         timerProgressBar: true,
+        didOpen: () => {
+            lucide.createIcons();
+        },
         customClass: {
             popup: 'rounded-2xl shadow-2xl border border-slate-100',
             title: 'text-xl font-bold text-slate-800',
@@ -323,12 +335,15 @@ function showDebtOverdueWarning(title, partyName, dueDate, daysOverdue) {
                 <p class="mb-2"><strong>تاريخ الاستحقاق:</strong> ${dueDate}</p>
                 <p class="mb-2"><strong>عدد الأيام المتأخرة:</strong> <span class="text-red-600 font-bold">${daysOverdue} يوم</span></p>
                 <div class="bg-amber-50 border border-amber-200 text-amber-800 p-3 rounded-lg mt-3 text-sm">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <i data-lucide="alert-triangle" class="me-2 w-4 h-4 inline-block"></i>
                     <strong>تنبيه:</strong> هذا الدين متأخر عن موعد استحقاقه.
                 </div>
             </div>
         `,
         confirmButtonText: 'حسناً',
+        didOpen: () => {
+            lucide.createIcons();
+        },
         customClass: {
             popup: 'rounded-2xl shadow-2xl border border-slate-100',
             title: 'text-xl font-bold text-slate-800',

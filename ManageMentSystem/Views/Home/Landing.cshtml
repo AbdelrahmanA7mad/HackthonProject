@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = null;
 }
 <!doctype html>
@@ -6,17 +6,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>كوتة - نظام إدارة المبيعات والأقساط الذكي</title>
+    <title>Zenith ERP - نظام إدارة المبيعات والأقساط الذكي</title>
     <meta name="description" content="نظام شامل لإدارة المبيعات والأقساط والمخزون مع تكامل WhatsApp وتقارير تفصيلية" />
     
     <!-- Tailwind & Fonts -->
     <script src="~/lib/tailwindcss/tailwind.js"></script>
+    <script src="~/js/tailwind-theme.js"></script>
     <link href="~/css/cairo-font.css" rel="stylesheet">
-    <link href="~/lib/fontawesome/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
 
     <style>
-        body { font-family: 'Cairo', sans-serif; }
+        body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #0f1419; }
         html { scroll-behavior: smooth; }
     </style>
 </head>
@@ -24,72 +25,72 @@
 <body class="bg-gray-50 pt-20">
     <!-- Custom Navbar -->
     <!-- Custom Navbar -->
-    <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-xl border-b border-indigo-50 shadow-sm transition-all duration-300">
+    <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             <!-- Brand -->
             <a href="/" class="flex items-center group">
-                <img src="~/images/logo.webp" alt="Qota Logo" class="w-28 h-12 object-contain group-hover:scale-105 transition-transform duration-300" />
+                <img src="~/images/logo.webp" alt="Zenith ERP Logo" class="w-28 h-12 object-contain group-hover:scale-105 transition-transform duration-300" />
             </a>
 
             <!-- Navigation Links -->
             <div class="hidden md:flex items-center gap-10 px-8 py-3">
-                <a href="#" class="text-md font-bold text-gray-600 hover:text-indigo-800 transition-colors duration-300 relative group">
+                <a href="#" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
                     <span>الرئيسية</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-indigo-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
+                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-[#0f1419] scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
                 </a>
-                <a href="#why-qota" class="text-md font-bold text-gray-600 hover:text-indigo-800 transition-colors duration-300 relative group">
-                    <span>لماذا كوتة</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-indigo-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
+                <a href="#why-zenith" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
+                    <span>لماذا Zenith ERP</span>
+                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-[#0f1419] scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
                 </a>
-                <a href="#how-it-works" class="text-md font-bold text-gray-600 hover:text-indigo-800 transition-colors duration-300 relative group">
+                <a href="#how-it-works" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
                     <span>طريقة العمل</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-indigo-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
+                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-[#0f1419] scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
                 </a>
-                <a href="#detailed-features" class="text-md font-bold text-gray-600 hover:text-indigo-800 transition-colors duration-300 relative group">
+                <a href="#detailed-features" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
                     <span>المزايا</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-indigo-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
+                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-[#0f1419] scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
                 </a>
 
-                <a href="#testimonials" class="text-md font-bold text-gray-600 hover:text-indigo-800 transition-colors duration-300 relative group">
+                <a href="#testimonials" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
                     <span>قصص نجاح</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-indigo-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
+                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-[#0f1419] scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
                 </a>
             </div>
 
             <!-- Action Buttons -->
             <div class="flex items-center gap-4">
                 <a asp-controller="Auth" asp-action="Login" 
-                   class="hidden md:inline-flex border border-gray-400 text-sm font-bold text-gray-600  hover:text-gray-600 px-5 py-2.5 hover:bg-indigo-50 rounded-xl transition-all duration-300">
+                   class="hidden md:inline-flex border border-gray-400 text-sm font-bold text-gray-600  hover:text-gray-600 px-5 py-2.5 hover:bg-gray-50 rounded-xl transition-all duration-300">
                     تسجيل الدخول
                 </a>
                 <a asp-controller="Auth" asp-action="Register" 
-                   class="inline-flex items-center justify-center px-8 py-3 bg-indigo-800 hover:bg-indigo-900 text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-xs shadow-indigo-500 hover:-translate-y-0.5 hover:shadow-indigo-600">
+                   class="inline-flex items-center justify-center px-8 py-3 bg-[#0f1419] hover:bg-[#1a1f24] text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-xs shadow-gray-200 hover:-translate-y-0.5 hover:shadow-gray-200">
                     <span>ابدأ الآن مجانا</span>
-                    <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                    <i data-lucide="arrow-left" class="mr-2 group-hover:-translate-x-1 transition-transform w-4 h-4"></i>
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class=" bg-[linear-gradient(180deg,rgba(238,242,255,0.2),rgba(238,242,255,0.5)_25%,rgba(238,242,255,0.95)_50%,rgba(238,242,255,0.75)_85%,rgba(238,242,255,0.1))] hero-section relative pt-32 pb-20 overflow-hidden bg-white" id="homeBanner">
+    <section class=" bg-white hero-section relative pt-32 pb-20 overflow-hidden bg-white" id="homeBanner">
         <div class="hero-container max-w-7xl mx-auto px-6 text-center">
             
             <div class="hero-content relative z-10">
                 <div class="hero-text mb-12">
-                    <h1 class="hero-title text-5xl md:text-7xl font-black text-slate-900 leading-tight tracking-tight">
+                    <h1 class="hero-title text-5xl md:text-7xl font-black text-[#0f1419] leading-tight tracking-tight">
                         <div class="mb-8">نظام يضم كل ما تحتاجه</div>
                         <div>
                             لإدارة
-                            <span id="typingText" class="text-indigo-800 relative inline-block min-w-[150px] text-left">مبيعاتك</span><span class="cursor animate-pulse text-indigo-800">|</span>
+                            <span id="typingText" class="text-gray-600 relative inline-block min-w-[150px] text-left">مبيعاتك</span><span class="cursor animate-pulse text-gray-600">|</span>
                         </div>
                     </h1>
                 </div>
                 
                 <div class="hero-buttons flex justify-center mb-16">
-                    <a asp-controller="Auth" asp-action="Register" class="hero-btn-primary inline-flex items-center justify-center px-10 py-5 bg-indigo-800 hover:bg-indigo-900 text-white text-xl font-bold rounded-xl transition-all duration-300 shadow-xs hover:shadow-indigo-600 hover:-translate-y-1 transform group">
+                    <a asp-controller="Auth" asp-action="Register" class="hero-btn-primary inline-flex items-center justify-center px-10 py-5 bg-[#0f1419] hover:bg-[#1a1f24] text-white text-xl font-bold rounded-xl transition-all duration-300 shadow-xs hover:shadow-gray-200 hover:-translate-y-1 transform group">
                         احصل على تجربة مجانية
-                        <i class="fas fa-arrow-left mr-2"></i>
+                        <i data-lucide="arrow-left" class="mr-2 w-5 h-5"></i>
                     </a>
                 </div>
             </div>
@@ -143,15 +144,15 @@
     </section>
 
     <!-- Features Grid Section (Clean List Style) -->
-    <section id="why-qota" class="py-24 bg-white relative overflow-hidden">
+    <section id="why-zenith" class="py-24 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-20">
-                <span class="inline-block px-6 py-2 rounded-full bg-indigo-50 text-indigo-800 font-bold text-sm mb-6 border border-indigo-100 shadow-sm">
-                    لماذا كوتة ؟
+                <span class="inline-block px-6 py-2 rounded-full bg-gray-50 text-gray-600 font-bold text-sm mb-6 border border-gray-200 shadow-sm">
+                    لماذا Zenith ERP ؟
                 </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
+                <h2 class="text-4xl md:text-5xl font-black text-[#0f1419] mb-8 leading-tight">
                     كل ما تحتاجه لإدارة مشروعك <br />
-                    <span class="text-indigo-800"> في مكان واحد بتجربة مجانية</span>
+                    <span class="text-gray-600"> في مكان واحد بتجربة مجانية</span>
                 </h2>
             </div>
             
@@ -159,22 +160,22 @@
                 <!-- 1. Dashboard -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-chart-line text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">داش بورد</h3>
+                        <i data-lucide="trending-up" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">داش بورد</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        يمتلك كوتة  داش بورد هي الاسهل والاسرع في الحصول على إحصائيات شهرية فورية، مقارنات ، عدد الفواتير، الإيرادات، المصاريف، والرصيد الكلي في شاشة واحدة.
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        يمتلك Zenith ERP  داش بورد هي الاسهل والاسرع في الحصول على إحصائيات شهرية فورية، مقارنات ، عدد الفواتير، الإيرادات، المصاريف، والرصيد الكلي في شاشة واحدة.
                     </p>
                 </div>
 
                 <!-- 2. WhatsApp -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fab fa-whatsapp text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">واتساب مدمج</h3>
+                        <i data-lucide="message-circle" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">واتساب مدمج</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        ينفرد كوتة بهذة الخدمة التي تتيح إرسال الفواتير للعملاء، رسائل جماعية دعائية للترويج لعملك و تنبيهات الأقساط المتأخرة.
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        ينفرد Zenith ERP بهذة الخدمة التي تتيح إرسال الفواتير للعملاء، رسائل جماعية دعائية للترويج لعملك و تنبيهات الأقساط المتأخرة.
                     </p>
                 </div>
 
@@ -182,22 +183,22 @@
                 <!-- 3. Installments -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-hand-holding-usd text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">الأقساط والتحصيل</h3>
+                        <i data-lucide="hand-coins" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">الأقساط والتحصيل</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        يتميز كوتة باسهل وافضل نظام ادارة لاقساطك حيث يقوم بحساب تلقائي للقسط والفائدة، جدول دفعات شهري، عقود قانونية، وتنبيهات واتساب بضغطة زر للمتأخرين.
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        يتميز Zenith ERP باسهل وافضل نظام ادارة لاقساطك حيث يقوم بحساب تلقائي للقسط والفائدة، جدول دفعات شهري، عقود قانونية، وتنبيهات واتساب بضغطة زر للمتأخرين.
                     </p>
                 </div>
 
                 <!-- 4. Sales & Invoices -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-file-invoice-dollar text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">المبيعات والفواتير</h3>
+                        <i data-lucide="receipt" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">المبيعات والفواتير</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        يوفر كوتة فواتير ضريبية، نقاط بيع (POS)،  3 انواع للدفع (كاش/آجل/جزئي)، خصومايت ذكية، وإرسال مباشر عبر واتساب.
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        يوفر Zenith ERP فواتير ضريبية، نقاط بيع (POS)،  3 انواع للدفع (كاش/آجل/جزئي)، خصومايت ذكية، وإرسال مباشر عبر واتساب.
                     </p>
                 </div>
 
@@ -205,22 +206,22 @@
                 <!-- 5. Inventory -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-boxes text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">المخزون والمستودعات</h3>
+                        <i data-lucide="package" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">المخزون والمستودعات</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        يوفر كوتة اسهل تجربة اضافة وتعديل وتتبع دقيق مخزون المنتجات، باركود (توليد تلقائي)، تنبيهات النقص (أقل من عدد معين قطع)، وحساب الربح المتوقع.
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        يوفر Zenith ERP اسهل تجربة اضافة وتعديل وتتبع دقيق مخزون المنتجات، باركود (توليد تلقائي)، تنبيهات النقص (أقل من عدد معين قطع)، وحساب الربح المتوقع.
                     </p>
                 </div>
 
                 <!-- 6. CRM -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-users text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">إدارة العملاء</h3>
+                        <i data-lucide="users" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">إدارة العملاء</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        يسهل كوتة من تواصلك مع عملائك ويوفر لهم تجربة مميزة قريبة منك حيث يوفر كشف حساب كامل، قائمة أفضل العملاء (Top Customers)، ورسائل جماعية عبر واتساب.
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        يسهل Zenith ERP من تواصلك مع عملائك ويوفر لهم تجربة مميزة قريبة منك حيث يوفر كشف حساب كامل، قائمة أفضل العملاء (Top Customers)، ورسائل جماعية عبر واتساب.
                     </p>
                 </div>
 
@@ -228,22 +229,22 @@
                 <!-- 7. Reports -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-chart-pie text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">التقارير والتحليلات</h3>
+                        <i data-lucide="pie-chart" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">التقارير والتحليلات</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        يوفر كوتة أكثر من 10 أنواع من التقارير (مبيعات، أرباح، مديونيات، مخزون)، تصدير Excel، ورسوم بيانية تفاعلية.
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        يوفر Zenith ERP أكثر من 10 أنواع من التقارير (مبيعات، أرباح، مديونيات، مخزون)، تصدير Excel، ورسوم بيانية تفاعلية.
                     </p>
                 </div>
 
                 <!-- 8. Printing -->
                 <div class="feature-item">
                     <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-print text-2xl text-indigo-800"></i>
-                        <h3 class="text-xl font-bold text-slate-900">الطباعة والباركود</h3>
+                        <i data-lucide="printer" class="text-2xl text-gray-600 w-8 h-8"></i>
+                        <h3 class="text-xl font-bold text-[#0f1419]">الطباعة والباركود</h3>
                     </div>
-                    <p class="text-slate-600 text-base leading-relaxed">
-                        يوفر كوتة اسرع واسهل طباعة للباركود والأسعار يمكنك طباعة اي عدد من الباركود او الاسعار بضغطة واحدة (price tags)، عقود الأقساط، ودعم طابعات .
+                    <p class="text-gray-500 text-base leading-relaxed">
+                        يوفر Zenith ERP اسرع واسهل طباعة للباركود والأسعار يمكنك طباعة اي عدد من الباركود او الاسعار بضغطة واحدة (price tags)، عقود الأقساط، ودعم طابعات .
                     </p>
                 </div>
             </div>
@@ -251,13 +252,13 @@
     </section>
 
     <!-- How It Works - Treasure Map Style -->
-    <section id="how-it-works" class="py-20 bg-gradient-to-br from-gray-100 via-indigo-50 to-gray-100 relative overflow-hidden">
+    <section id="how-it-works" class="py-20  from-gray-100 via-gray-50 to-gray-100 relative overflow-hidden">
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #3730a3 0px, #3730a3 1px, transparent 1px, transparent 20px);"></div>
         
         <div class="max-w-6xl mx-auto px-6 relative z-10">
             <div class="text-center mb-16">
-                <span class="inline-block px-6 py-2 rounded-full bg-indigo-50 text-indigo-800 font-bold text-sm mb-6 border border-indigo-100 shadow-sm">
+                <span class="inline-block px-6 py-2 rounded-full bg-gray-50 text-gray-600 font-bold text-sm mb-6 border border-gray-200 shadow-sm">
                     🗺️ خارطة طريق
                 </span>
                 <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 flex items-center justify-center gap-3">
@@ -288,8 +289,8 @@
 
                 <!-- Step 1 -->
                 <div class="treasure-step" style="left: 8%; top: 50%;">
-                    <div class="step-marker bg-gradient-to-br from-indigo-800 to-indigo-900">
-                        <i class="fas fa-user-plus text-3xl text-white"></i>
+                    <div class="step-marker  bg-[#0f1419] ">
+                        <i data-lucide="user-plus" class="text-3xl text-white w-10 h-10"></i>
                         <span class="step-number">1</span>
                     </div>
                     <div class="step-content">
@@ -300,8 +301,8 @@
 
                 <!-- Step 2 -->
                 <div class="treasure-step" style="left: 32%; top: 25%;">
-                    <div class="step-marker bg-gradient-to-br from-indigo-800 to-indigo-900">
-                        <i class="fas fa-box-open text-3xl text-white"></i>
+                    <div class="step-marker  bg-[#0f1419] ">
+                        <i data-lucide="package" class="text-3xl text-white w-10 h-10"></i>
                         <span class="step-number">2</span>
                     </div>
                     <div class="step-content">
@@ -312,8 +313,8 @@
 
                 <!-- Step 3 -->
                 <div class="treasure-step" style="left: 56%; top: 50%;">
-                    <div class="step-marker bg-gradient-to-br from-indigo-800 to-indigo-900">
-                        <i class="fas fa-shopping-cart text-3xl text-white"></i>
+                    <div class="step-marker  bg-[#0f1419] ">
+                        <i data-lucide="shopping-cart" class="text-3xl text-white w-10 h-10"></i>
                         <span class="step-number">3</span>
                     </div>
                     <div class="step-content">
@@ -324,14 +325,14 @@
 
                 <!-- Step 4 - Treasure! -->
                 <div class="treasure-step treasure-final" style="left: 85%; top: 50%;">
-                    <div class="step-marker bg-gradient-to-br from-indigo-800 to-indigo-900 treasure-glow">
-                        <i class="fas fa-trophy text-4xl text-white"></i>
+                    <div class="step-marker  bg-[#0f1419]  treasure-glow">
+                        <i data-lucide="trophy" class="text-4xl text-white w-12 h-12"></i>
                         <span class="step-number">4</span>
                         <div class="treasure-shine"></div>
                     </div>
                     <div class="step-content">
-                        <h3 class="text-lg font-bold text-indigo-900 mb-2 flex items-center gap-2">
-                            <i class="fas fa-chart-line text-indigo-800"></i>  تقارير شاملة
+                        <h3 class="text-lg font-bold text-[#0f1419] mb-2 flex items-center gap-2">
+                            <i data-lucide="trending-up" class="text-gray-600 w-5 h-5"></i>  تقارير شاملة
                         </h3>
                         <p class="text-gray-700 text-sm font-bold">راقب نمو عملك بالتقارير</p>
                     </div>
@@ -488,43 +489,43 @@
     <section id="detailed-features" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20">
-                <span class="inline-block px-6 py-2 rounded-full bg-indigo-50 text-indigo-800 font-bold text-sm mb-6 border border-indigo-100 shadow-sm">
+                <span class="inline-block px-6 py-2 rounded-full bg-gray-50 text-gray-600 font-bold text-sm mb-6 border border-gray-200 shadow-sm">
                     ✨ مميزات شاملة
                 </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
-                    كل ما تحتاجه لإدارة <br class="hidden md:block" /> <span class="text-indigo-800 relative inline-block">
+                <h2 class="text-4xl md:text-5xl font-black text-[#0f1419] mb-8 leading-tight">
+                    كل ما تحتاجه لإدارة <br class="hidden md:block" /> <span class="text-gray-600 relative inline-block">
                         مشروعك بنجاح
-                        <svg class="absolute w-full h-3 -bottom-2 right-0 text-indigo-200 -z-10 opacity-60" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99992C25.0003 4.49993 100.001 -1.49397 198.001 2.99992" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg>
+                        <svg class="absolute w-full h-3 -bottom-2 right-0 text-gray-500 -z-10 opacity-60" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99992C25.0003 4.49993 100.001 -1.49397 198.001 2.99992" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg>
                     </span>
                 </h2>
-                <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
                     منظومة متكاملة تجمع بين سهولة الاستخدام وقوة الأداء لتلبية احتياجات نمو عملك
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Installments Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_installments.webp" alt="نظام الأقساط الذكي" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">نظام الأقساط الذكي</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">نظام الأقساط الذكي</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">عقود تقسيط متكاملة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">حسابات تلقائية للقسط والفائدة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">جدول دفعات شهري تفصيلي</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">تنبيهات واتساب للمتأخرين</span>
                             </li>
                         </ul>
@@ -532,27 +533,27 @@
                 </div>
 
                 <!-- WhatsApp Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_whatsapp.webp" alt="تكامل WhatsApp" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">تكامل WhatsApp</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">تكامل WhatsApp</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">إرسال فواتير مباشرة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">رسائل جماعية لجميع العملاء</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">تنبيهات أقساط تلقائية</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">رسائل مخصصة حسب الحاجة</span>
                             </li>
                         </ul>
@@ -560,23 +561,23 @@
                 </div>
 
                 <!-- Backup Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_backup.webp" alt="النسخ الاحتياطي" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">النسخ الاحتياطي</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">النسخ الاحتياطي</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">نسخ احتياطية تلقائية</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">استعادة فورية عند الحاجة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">أمان كامل للبيانات</span>
                             </li>
                         </ul>
@@ -584,31 +585,31 @@
                 </div>
 
                 <!-- Sales Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_sales.webp" alt="المبيعات والفواتير" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">المبيعات والفواتير</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">المبيعات والفواتير</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">أنواع دفع متعددة (كاش/آجل/جزئي)</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">خصومات ذكية (نسبة أو مبلغ)</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">طباعة فورية احترافية</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">طرق دفع متعددة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">إرسال واتساب مباشر</span>
                             </li>
                         </ul>
@@ -616,27 +617,27 @@
                 </div>
 
                 <!-- Inventory Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_inventory.webp" alt="المخزون والمنتجات" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">المخزون والمنتجات</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">المخزون والمنتجات</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">تتبع الكميات بدقة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">تنبيهات النقص التلقائية</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">حساب الأرباح المتوقعة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">إدارة الباركود</span>
                             </li>
                         </ul>
@@ -644,27 +645,27 @@
                 </div>
 
                 <!-- Customers Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_customers.webp" alt="العملاء والموردين" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">العملاء والموردين</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">العملاء والموردين</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">كشف حساب كامل لكل عميل</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">قائمة Top Customers</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">تتبع الديون والمدفوعات</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">فواتير الشراء من الموردين</span>
                             </li>
                         </ul>
@@ -672,27 +673,27 @@
                 </div>
 
                 <!-- Reports Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_reports.webp" alt="التقارير والإحصائيات" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">التقارير والإحصائيات</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">التقارير والإحصائيات</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">أكثر من 10 أنواع تقارير</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">رسوم بيانية تفاعلية</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">تصدير Excel بنقرة واحدة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">فلاتر متقدمة ومرنة</span>
                             </li>
                         </ul>
@@ -700,27 +701,27 @@
                 </div>
 
                 <!-- Employees Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_employees.webp" alt="الموظفين والصلاحيات" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">الموظفين والصلاحيات</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">الموظفين والصلاحيات</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">6 أدوار جاهزة (Owner, Manager...)</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">أكثر من 100 صلاحية مختلفة</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">تتبع نشاط الموظفين</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">صلاحيات مخصصة لكل واحد</span>
                             </li>
                         </ul>
@@ -728,27 +729,27 @@
                 </div>
 
                 <!-- Printing Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-indigo-100 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-indigo-50 relative overflow-hidden">
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
+                    <div class="h-56 bg-gray-50 relative overflow-hidden">
                         <img src="~/images/detail_printing.webp" alt="الطباعة والباركود" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">الطباعة والباركود</h3>
+                        <h3 class="text-2xl font-bold text-[#0f1419] mb-4">الطباعة والباركود</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">طباعة باركود للمنتجات</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">طباعة Price Tags (الأسعار)</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">طباعة عقود الأقساط</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-indigo-700 mt-1"></i>
+                                <i data-lucide="check-circle" class="text-gray-600 mt-1 w-5 h-5"></i>
                                 <span class="text-gray-700 font-medium">دعم طابعات XP360B</span>
                             </li>
                         </ul>
@@ -765,65 +766,65 @@
     <section id="testimonials" class="py-24 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16 animate-fade-in-up">
-                <span class="inline-block px-6 py-2 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm mb-6 border border-indigo-200">
+                <span class="inline-block px-6 py-2 rounded-full bg-gray-100 text-gray-600 font-bold text-sm mb-6 border border-gray-200">
                     قصص نجاح
                 </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6">
-                    كيف يمكن ان يساعد <span class="text-indigo-800 font-bold">كوتة</span> مشروعك
+                <h2 class="text-4xl md:text-5xl font-black text-[#0f1419] mb-6">
+                    كيف يمكن ان يساعد <span class="text-gray-600 font-bold">Zenith ERP</span> مشروعك
                 </h2>
-                <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                    اكتشف سيناريوهات يساعد <span class="text-indigo-800 font-bold">كوتة</span> فيها الشركات والمتاجر في تنظيم أعمالهم، زيادة مبيعاتهم، وتحقيق نمو مستدام من خلال حلول ذكية ومتكاملة.
+                <p class="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">
+                    اكتشف سيناريوهات يساعد <span class="text-gray-600 font-bold">Zenith ERP</span> فيها الشركات والمتاجر في تنظيم أعمالهم، زيادة مبيعاتهم، وتحقيق نمو مستدام من خلال حلول ذكية ومتكاملة.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Story 1 -->
-                <div class="bg-indigo-50/50 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-indigo-100 flex flex-col group">
+                <div class="bg-gray-50/50 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-200 flex flex-col group">
                     <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
                         <img src="~/images/story_electronics.webp" alt="متجر إلكترونيات" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0  from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex-grow">
-                        <span class="text-indigo-800 font-bold text-sm uppercase mb-2 block tracking-wider">المدينة للإلكترونيات</span>
+                        <span class="text-gray-600 font-bold text-sm uppercase mb-2 block tracking-wider">المدينة للإلكترونيات</span>
                         <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-tight">
-                            كيف تضاعفت مبيعاتنا 3 مرات مع كوتة
+                            كيف تضاعفت مبيعاتنا 3 مرات مع Zenith ERP
                         </h3>
                         <p class="text-gray-600 mb-6 leading-relaxed text-sm">
-                            "كنا نعاني من الفوضى في المخزون والحسابات. مع كوتة، أصبح كل شيء منظماً. تقارير المبيعات اليومية ساعدتنا على اتخاذ قرارات صائبة وزيادة أرباحنا بشكل ملحوظ."
+                            "كنا نعاني من الفوضى في المخزون والحسابات. مع Zenith ERP، أصبح كل شيء منظماً. تقارير المبيعات اليومية ساعدتنا على اتخاذ قرارات صائبة وزيادة أرباحنا بشكل ملحوظ."
                         </p>
                     </div>
                 </div>
 
                 <!-- Story 2 -->
-                <div class="bg-indigo-50/50 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-indigo-100 flex flex-col group">
+                <div class="bg-gray-50/50 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-200 flex flex-col group">
                     <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
                         <img src="~/images/story_warehouse.webp" alt="مستودع جملة" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                         <div class="absolute inset-0  from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex-grow">
-                        <span class="text-indigo-800 font-bold text-sm uppercase mb-2 block tracking-wider">مؤسسة التوريد الحديثة</span>
+                        <span class="text-gray-600 font-bold text-sm uppercase mb-2 block tracking-wider">مؤسسة التوريد الحديثة</span>
                         <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-tight">
                             إدارة مخزون الجملة أصبحت أسهل
                         </h3>
                         <p class="text-gray-600 mb-6 leading-relaxed text-sm">
-                            "إدارة آلاف الأصناف كانت كابوساً. نظام كوتة للمخزون والباركود جعل الجرد عملية ممتعة وسريعة. وفرنا مئات الساعات من العمل اليدوي."
+                            "إدارة آلاف الأصناف كانت كابوساً. نظام Zenith ERP للمخزون والباركود جعل الجرد عملية ممتعة وسريعة. وفرنا مئات الساعات من العمل اليدوي."
                         </p>
                     </div>
                 </div>
 
                 <!-- Story 3 -->
-                <div class="bg-indigo-50/50 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-indigo-100 flex flex-col group">
+                <div class="bg-gray-50/50 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-200 flex flex-col group">
                     <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
                         <img src="~/images/story_mobile.webp" alt="متجر جوالات" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                         <div class="absolute inset-0  from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="flex-grow">
-                        <span class="text-indigo-800 font-bold text-sm uppercase mb-2 block tracking-wider">تكنو فون</span>
+                        <span class="text-gray-600 font-bold text-sm uppercase mb-2 block tracking-wider">تكنو فون</span>
                         <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-tight">
                             تجربة عملاء استثنائية وسرعة في البيع
                         </h3>
                         <p class="text-gray-600 mb-6 leading-relaxed text-sm">
-                            "السرعة هي كل شيء في متجرنا. واجهة البيع في كوتة سريعة جداً، وإرسال الفواتير عبر واتساب أبهر عملائنا وجعلهم يعودون إلينا دائماً."
+                            "السرعة هي كل شيء في متجرنا. واجهة البيع في Zenith ERP سريعة جداً، وإرسال الفواتير عبر واتساب أبهر عملائنا وجعلهم يعودون إلينا دائماً."
                         </p>
                     </div>
                 </div>
@@ -832,25 +833,25 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-indigo-900 text-indigo-50 py-8 border-t border-indigo-800">
+    <footer class="bg-black text-white py-8 border-t border-gray-200">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid md:grid-cols-3 gap-8 mb-8">
                 <div>
-                    <h3 class="text-2xl font-bold mb-4">كوتة</h3>
+                    <h3 class="text-2xl font-bold mb-4">Zenith ERP</h3>
                     <p class="leading-relaxed font-medium opacity-90 mb-6">
                         نظام شامل لإدارة المبيعات والمخزون والعملاء بسهولة واحترافية.
                     </p>
                     <div class="flex items-center gap-4">
-                        <a href="https://www.facebook.com/profile.php?id=61586835293416" target="_blank" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-white hover:text-indigo-900 transition-all duration-300 transform hover:-translate-y-1">
-                            <i class="fab fa-facebook-f text-lg"></i>
+                        <a href="https://www.facebook.com/profile.php?id=61586835293416" target="_blank" class="w-10 h-10 rounded-full bg-[#0f1419] flex items-center justify-center hover:bg-white hover:text-[#0f1419] transition-all duration-300 transform hover:-translate-y-1">
+                            <i data-lucide="facebook" class="text-lg w-5 h-5"></i>
                         </a>
-                        <a href="https://www.youtube.com/@@qotaSystem" target="_blank" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-white hover:text-red-600 transition-all duration-300 transform hover:-translate-y-1">
-                            <i class="fab fa-youtube text-lg"></i>
+                        <a href="https://www.youtube.com/@@qotaSystem" target="_blank" class="w-10 h-10 rounded-full bg-[#0f1419] flex items-center justify-center hover:bg-white hover:text-red-600 transition-all duration-300 transform hover:-translate-y-1">
+                            <i data-lucide="youtube" class="text-lg w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-white hover:text-pink-600 transition-all duration-300 transform hover:-translate-y-1">
-                            <i class="fab fa-instagram text-lg"></i>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#0f1419] flex items-center justify-center hover:bg-white hover:text-[#0f1419] transition-all duration-300 transform hover:-translate-y-1">
+                            <i data-lucide="instagram" class="text-lg w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-indigo-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#0f1419] flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
                             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                             </svg>
@@ -871,20 +872,20 @@
                     <h4 class="text-lg font-bold mb-4">الدعم</h4>
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center">
-                                <i class="fas fa-headset"></i>
+                            <div class="w-8 h-8 rounded-full bg-[#0f1419] flex items-center justify-center">
+                                <i data-lucide="headset" class="w-5 h-5"></i>
                             </div>
                             <span>دعم فني 24/7</span>
                         </li>
                         <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center">
-                                <i class="fas fa-sync"></i>
+                            <div class="w-8 h-8 rounded-full bg-[#0f1419] flex items-center justify-center">
+                                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
                             </div>
                             <span>تحديثات مستمرة</span>
                         </li>
                         <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-indigo-800 flex items-center justify-center">
-                                <i class="fas fa-shield-alt"></i>
+                            <div class="w-8 h-8 rounded-full bg-[#0f1419] flex items-center justify-center">
+                                <i data-lucide="shield" class="w-5 h-5"></i>
                             </div>
                             <span>أمان متقدم</span>
                         </li>
@@ -892,7 +893,7 @@
                 </div>
             </div>
 
-            <div class="border-t border-indigo-800 pt-6 text-center opacity-75">
+            <div class="border-t border-gray-200 pt-6 text-center opacity-75">
                 <p id="footer-year"></p>
             </div>
         </div>
@@ -901,7 +902,8 @@
     <script src="~/js/landing.js" asp-append-version="true"></script>
     <script>
         // Set footer year
-        document.getElementById('footer-year').textContent = `© ${new Date().getFullYear()} كوتة. جميع الحقوق محفوظة.`;
+        document.getElementById('footer-year').textContent = `© ${new Date().getFullYear()} Zenith ERP. جميع الحقوق محفوظة.`;
+        lucide.createIcons();
     </script>
 
     <style>

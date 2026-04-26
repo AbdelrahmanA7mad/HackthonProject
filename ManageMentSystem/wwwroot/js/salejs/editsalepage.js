@@ -296,7 +296,7 @@ function renderProductsGrid(products) {
         const hasStock = (p.quantity || 0) > 0;
 
         const stockBadge = hasStock
-            ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-bold bg-indigo-50 text-indigo-900">${p.quantity}</span>`
+            ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-bold bg-bgSubtle text-primary">${p.quantity}</span>`
             : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-medium bg-red-100 text-red-700">0</span>`;
 
         const bgClass = hasStock ? 'bg-white border-gray-200' : 'bg-red-100 border-red-300';
@@ -312,7 +312,7 @@ function renderProductsGrid(products) {
             <div class="qs-hover-overlay">
                 <button type="button" onclick="qsAddToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, ${p.purchasePrice}, ${p.quantity}, '${p.barcode || ''}')" 
                     class="qs-hover-btn">
-                    <i class="fas fa-plus fa-2x"></i>
+                    <i data-lucide="plus" class="w-8 h-8"></i>
                 </button>
             </div>
             ` : ''}
@@ -327,11 +327,11 @@ function renderProductsGrid(products) {
             <div class="qs-desc mb-2 text-sm text-bold text-gray-500 line-clamp-2" title="${p.description || ''}">${p.description || ''}</div>
 
             <div class="mt-auto flex flex-col items-start border-t border-gray-50 pt-2">
-                <span class="text-lg font-bold text-indigo-800 mb-1">${(p.price || 0).toFixed(2)}</span>
+                <span class="text-lg font-bold text-primary mb-1">${(p.price || 0).toFixed(2)}</span>
                 
                 ${p.barcode ? `
                 <div class="flex items-center text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded w-full">
-                    <i class="fas fa-barcode text-[15px] ml-1"></i>
+                    <i data-lucide="barcode" class="w-4 h-4 ml-1"></i>
                     <span class="text-[.8rem] font-bold font-mono tracking-wider truncate">${p.barcode}</span>
                 </div>
                 ` : '<span class="h-6 block"></span>'}
@@ -339,6 +339,7 @@ function renderProductsGrid(products) {
         </div>`;
         grid.append(card);
     });
+    lucide.createIcons();
 }
 
 function qsAddToCart(productId, productName, price, purchasePrice, availableStock, barcode) {
@@ -383,12 +384,13 @@ function renderCart() {
             </td>
             <td class="px-2 py-2 text-right">
                 <button type="button" onclick="qsRemove(${item.productId})" class="text-red-500 hover:text-red-700">
-                    <i class="fas fa-trash-alt"></i>
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </td>
         </tr>`;
         tbody.append(row);
     });
+    lucide.createIcons();
 }
 
 function qsUpdateQty(productId, qty) {

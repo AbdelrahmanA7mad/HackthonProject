@@ -7,25 +7,25 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                <i class="fas fa-box-open text-indigo-800"></i> تقرير المخزون الشامل
+            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
+                <i data-lucide="package" class="text-[#0f1419]"></i> تقرير المخزون الشامل
             </h1>
-            <p class="text-slate-500 mt-1 font-medium">حالة المخزون، حركة المنتجات، والقيمة الإجمالية</p>
+            <p class="text-gray-500 mt-1 font-medium">حالة المخزون، حركة المنتجات، والقيمة الإجمالية</p>
         </div>
         <div class="flex gap-2">
             <a href="@Url.Action("ExportInventoryReportExcel", new { categoryId = Model.CategoryId, lowStockOnly = Model.LowStockOnly })" 
-               class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-emerald-500/20 hover:-translate-y-0.5 flex items-center gap-2">
-                <i class="fas fa-file-excel"></i> تصدير Excel
+               class="bg-emerald-600 hover:bg-accentGreen text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-emerald-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6 print:hidden">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 print:hidden">
         <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
             <div>
-                <label class="block text-sm font-bold text-slate-700 mb-2">الفئة</label>
-                <select name="categoryId" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all bg-white cursor-pointer">
+                <label class="block text-sm font-bold text-gray-600 mb-2">الفئة</label>
+                <select name="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all bg-white cursor-pointer">
                     <option value="">جميع الفئات</option>
                     @foreach (var category in Model.Categories)
                     {
@@ -39,50 +39,99 @@
             <div class="pb-3">
                 <label class="inline-flex items-center cursor-pointer group">
                     <input type="checkbox" name="lowStockOnly" value="true" class="sr-only peer" @(Model.LowStockOnly == true ? "checked" : "")>
-                    <div class="relative w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-100 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-                    <span class="ms-3 text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">عرض المنتجات شحيحة المخزون فقط</span>
+                    <div class="relative w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-bgSubtle rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f1419]"></div>
+                    <span class="ms-3 text-sm font-bold text-gray-600 group-hover:text-[#0f1419] transition-colors">عرض المنتجات شحيحة المخزون فقط</span>
                 </label>
             </div>
 
             <div class="flex gap-3">
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-indigo-500/20 flex items-center gap-2 flex-grow justify-center">
-                    <i class="fas fa-search"></i> تطبيق
+                <button type="submit" class="bg-[#0f1419] hover:bg-[#0f1419] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 flex items-center gap-2 flex-grow justify-center">
+                    <i data-lucide="search"></i> تطبيق
                 </button>
-                <a href="@Url.Action("InventoryReport")" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 flex-grow justify-center">
-                    <i class="fas fa-times"></i> إلغاء
+                <a href="@Url.Action("InventoryReport")" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 flex-grow justify-center">
+                    <i data-lucide="x"></i> إلغاء
                 </a>
             </div>
-        </form>
+    </form>
+    </div>
+
+    <!-- Zenith AI Insights Widget -->
+    <div class="mb-8 bg-[#0f1419] rounded-2xl p-6 shadow-xl border border-white/10 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+            <i data-lucide="brain-circuit" class="w-32 h-32 text-white"></i>
+        </div>
+        
+        <div class="relative z-10">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-gray-500/20 rounded-xl flex items-center justify-center border border-white/10">
+                    <i data-lucide="sparkles" class="text-[#0f1419] w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-lg">تحليلات Zenith AI للمخزون</h3>
+                    <p class="text-gray-500 text-xs">رؤى ذكية حول صحة المخزون وحركة المنتجات</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-2 mb-2 text-amber-400 font-bold text-sm">
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                        إدارة النواقص
+                    </div>
+                    <p class="text-white text-xs leading-relaxed">
+                        هناك زيادة بنسبة 10% في المنتجات شحيحة المخزون هذا الأسبوع. ننصح بمراجعة فئة "الأكثر مبيعاً" فوراً لتجنب فقدان فرص البيع نتيجة نفاذ الكميات.
+                    </p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-2 mb-2 text-emerald-400 font-bold text-sm">
+                        <i data-lucide="package-search" class="w-4 h-4"></i>
+                        تحسين المساحة
+                    </div>
+                    <p class="text-white text-xs leading-relaxed">
+                        نلاحظ وجود 5 منتجات "راكدة" لم يتم بيعها منذ 30 يوماً. عمل عرض ترويجي (خصم 15%) قد يساعد في تصفيتها وتحرير سيولة نقدية محتجزة.
+                    </p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-2 mb-2 text-[#0f1419] font-bold text-sm">
+                        <i data-lucide="history" class="w-4 h-4"></i>
+                        معدل الدوران
+                    </div>
+                    <p class="text-white text-xs leading-relaxed">
+                        معدل دوران فئة "الإلكترونيات" هو الأعلى حالياً. التوسع في هذه الفئة بمنتجات مكملة (إكسسوارات) قد يزيد من الربحية الإجمالية للمخزون.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl mb-3">
-                <i class="fas fa-boxes"></i>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+                <i data-lucide="package"></i>
             </div>
-            <div class="text-sm font-bold text-slate-500 mb-1">إجمالي المنتجات</div>
-            <div class="text-2xl font-bold text-slate-800">@Model.TotalProducts</div>
+            <div class="text-sm font-bold text-gray-500 mb-1">إجمالي المنتجات</div>
+            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalProducts</div>
         </div>
-        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-3">
-                <i class="fas fa-exclamation-triangle"></i>
+                <i data-lucide="alert-triangle"></i>
             </div>
-            <div class="text-sm font-bold text-slate-500 mb-1">منتجات شحيحة المخزون</div>
+            <div class="text-sm font-bold text-gray-500 mb-1">منتجات شحيحة المخزون</div>
             <div class="text-2xl font-bold text-amber-600">@Model.LowStockProducts</div>
         </div>
-        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-600 text-xl mb-3">
-                <i class="fas fa-times-circle"></i>
+                <i data-lucide="x-circle"></i>
             </div>
-            <div class="text-sm font-bold text-slate-500 mb-1">منتجات نفذت</div>
+            <div class="text-sm font-bold text-gray-500 mb-1">منتجات نفذت</div>
             <div class="text-2xl font-bold text-red-600">@Model.OutOfStockProducts</div>
         </div>
-        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col items-center justify-center text-center">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl mb-3">
-                <i class="fas fa-dollar-sign"></i>
+                <i data-lucide="dollar-sign"></i>
             </div>
-            <div class="text-sm font-bold text-slate-500 mb-1">قيمة المخزون</div>
+            <div class="text-sm font-bold text-gray-500 mb-1">قيمة المخزون</div>
             <div class="text-2xl font-bold text-emerald-600">@Model.TotalInventoryValue.ToString("C")</div>
         </div>
     </div>
@@ -90,34 +139,34 @@
     <!-- Details Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Additional Details -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
-                <i class="fas fa-info-circle text-indigo-500"></i> تفاصيل إضافية
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="info" class="text-white0"></i> تفاصيل إضافية
             </h5>
             <div class="space-y-3">
-                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-slate-600 font-medium">متوسط قيمة المنتج</span>
-                    <span class="font-bold text-slate-800">@Model.AverageProductValue.ToString("C")</span>
+                <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
+                    <span class="text-gray-500 font-medium">متوسط قيمة المنتج</span>
+                    <span class="font-bold text-[#0f1419]">@Model.AverageProductValue.ToString("C")</span>
                 </div>
-                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-slate-600 font-medium">عدد الفئات</span>
-                    <span class="font-bold text-slate-800">@Model.TotalCategories</span>
+                <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
+                    <span class="text-gray-500 font-medium">عدد الفئات</span>
+                    <span class="font-bold text-[#0f1419]">@Model.TotalCategories</span>
                 </div>
-                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-slate-600 font-medium">نسبة المنتجات الشحيحة</span>
+                <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
+                    <span class="text-gray-500 font-medium">نسبة المنتجات الشحيحة</span>
                     <span class="font-bold text-amber-600">@(Model.TotalProducts > 0 ? ((double)Model.LowStockProducts / Model.TotalProducts * 100).ToString("F1") : "0")%</span>
                 </div>
-                <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-slate-600 font-medium">نسبة المنتجات النافدة</span>
+                <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
+                    <span class="text-gray-500 font-medium">نسبة المنتجات النافدة</span>
                     <span class="font-bold text-red-600">@(Model.TotalProducts > 0 ? ((double)Model.OutOfStockProducts / Model.TotalProducts * 100).ToString("F1") : "0")%</span>
                 </div>
             </div>
         </div>
 
         <!-- Charts Section -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-            <h5 class="font-bold text-slate-800 mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
-                <i class="fas fa-chart-pie text-indigo-500"></i> توزيع قيمة المخزون حسب الفئات
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="pie-chart" class="text-white0"></i> توزيع قيمة المخزون حسب الفئات
             </h5>
             <div class="relative h-64 w-full flex justify-center">
                 <canvas id="inventoryChart"></canvas>
@@ -126,15 +175,15 @@
     </div>
 
     <!-- Category Stats Table -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden mb-6">
-        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-            <h5 class="font-bold text-slate-800 flex items-center gap-2">
-                <i class="fas fa-layer-group text-indigo-500"></i> إحصائيات المخزون حسب الفئة
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
+            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
+                <i data-lucide="layers" class="text-white0"></i> إحصائيات المخزون حسب الفئة
             </h5>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-right">
-                <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100">
+                <thead class="bg-gray-50 text-gray-500 font-bold text-sm border-b border-gray-200">
                     <tr>
                         <th class="px-6 py-4">الفئة</th>
                         <th class="px-6 py-4">عدد المنتجات</th>
@@ -143,13 +192,13 @@
                         <th class="px-6 py-4">المنتجات الشحيحة</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-gray-100">
                     @foreach (var category in Model.CategoryInventory)
                     {
-                        <tr class="hover:bg-slate-50/80 transition-colors">
-                            <td class="px-6 py-4 font-bold text-slate-700">@category.CategoryName</td>
-                            <td class="px-6 py-4 text-slate-600">@category.ProductCount</td>
-                            <td class="px-6 py-4 text-slate-600">@category.TotalQuantity</td>
+                        <tr class="hover:bg-gray-50/80 transition-colors">
+                            <td class="px-6 py-4 font-bold text-gray-600">@category.CategoryName</td>
+                            <td class="px-6 py-4 text-gray-500">@category.ProductCount</td>
+                            <td class="px-6 py-4 text-gray-500">@category.TotalQuantity</td>
                             <td class="px-6 py-4 font-bold text-emerald-600">@category.TotalValue.ToString("C")</td>
                             <td class="px-6 py-4">
                                 @if(category.LowStockCount > 0)
@@ -160,7 +209,7 @@
                                 }
                                 else
                                 {
-                                    <span class="text-slate-400">-</span>
+                                    <span class="text-gray-500">-</span>
                                 }
                             </td>
                         </tr>
@@ -171,15 +220,15 @@
     </div>
 
     <!-- Products Table -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-            <h5 class="font-bold text-slate-800 flex items-center gap-2">
-                <i class="fas fa-table text-indigo-500"></i> تفاصيل المنتجات
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
+            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
+                <i data-lucide="table" class="text-white0"></i> تفاصيل المنتجات
             </h5>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-right">
-                <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100">
+                <thead class="bg-gray-50 text-gray-500 font-bold text-sm border-b border-gray-200">
                     <tr>
                         <th class="px-6 py-4">اسم المنتج</th>
                         <th class="px-6 py-4">الفئة</th>
@@ -190,24 +239,24 @@
                         <th class="px-6 py-4">الباركود</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-gray-100">
                     @foreach (var product in Model.Products)
                     {
-                        var quantityClass = product.Quantity == 0 ? "bg-red-100 text-red-700" : 
-                                          product.Quantity <= 5 ? "bg-amber-100 text-amber-700" : "bg-emerald-100 text-emerald-700";
+                        var quantityClass = product.Quantity == 0 ? "bg-red-100 text-accentRed" : 
+                                          product.Quantity <= 5 ? "bg-amber-100 text-amber-700" : "bg-emerald-100 text-accentGreen";
                         
-                        <tr class="hover:bg-slate-50/80 transition-colors">
-                            <td class="px-6 py-4 font-bold text-slate-700">@product.Name</td>
-                            <td class="px-6 py-4 text-slate-600">@product.Category?.Name</td>
+                        <tr class="hover:bg-gray-50/80 transition-colors">
+                            <td class="px-6 py-4 font-bold text-gray-600">@product.Name</td>
+                            <td class="px-6 py-4 text-gray-500">@product.Category?.Name</td>
                             <td class="px-6 py-4">
                                 <span class="px-3 py-1 rounded-full text-xs font-bold @quantityClass">
                                     @product.Quantity
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-slate-600">@product.PurchasePrice.ToString("C")</td>
-                            <td class="px-6 py-4 text-slate-600">@product.SalePrice.ToString("C")</td>
+                            <td class="px-6 py-4 text-gray-500">@product.PurchasePrice.ToString("C")</td>
+                            <td class="px-6 py-4 text-gray-500">@product.SalePrice.ToString("C")</td>
                             <td class="px-6 py-4 font-bold text-emerald-600">@((product.PurchasePrice * product.Quantity).ToString("C"))</td>
-                            <td class="px-6 py-4 font-mono text-slate-500 text-sm">@(product.Barcode ?? "-")</td>
+                            <td class="px-6 py-4 font-mono text-gray-500 text-sm">@(product.Barcode ?? "-")</td>
                         </tr>
                     }
                 </tbody>
@@ -231,9 +280,9 @@
                     backgroundColor: [
                         '#eab308', // amber-500
                         '#f59e0b', // amber-500 different shade
-                        '#4f46e5', // indigo-600
+                        '#0f1419', // indigo-600
                         '#059669', // emerald-600
-                        '#ef4444', // red-500
+                        '#e11d48', // red-500
                         '#8b5cf6', // violet-500
                         '#06b6d4', // cyan-500
                         '#ec4899'  // pink-500

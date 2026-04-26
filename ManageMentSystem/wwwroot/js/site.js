@@ -1,4 +1,4 @@
-﻿// ============================================
+// ============================================
 // نسخة محسنة من site.js للاستخدام المحلي فقط
 // ============================================
 
@@ -161,7 +161,8 @@ function setupTableSorting(table) {
     const headers = table.querySelectorAll('th[data-sortable]');
     headers.forEach((header, index) => {
         header.style.cursor = 'pointer';
-        header.innerHTML += ' <i class="fas fa-sort text-muted"></i>';
+        header.innerHTML += ' <i data-lucide="arrow-up-down" class="text-muted w-4 h-4 inline-block"></i>';
+        lucide.createIcons();
 
         header.addEventListener('click', function () {
             sortTable(table, index);
@@ -201,13 +202,18 @@ function sortTable(table, columnIndex) {
     // تحديث أيقونات الفرز
     const allHeaders = table.querySelectorAll('th[data-sortable] i');
     allHeaders.forEach(icon => {
-        icon.className = 'fas fa-sort text-muted';
+        icon.setAttribute('data-lucide', 'arrow-up-down');
+        icon.className = 'text-muted w-4 h-4 inline-block';
     });
+    lucide.createIcons();
 
-    const currentIcon = table.querySelectorAll('th[data-sortable]')[columnIndex].querySelector('i');
-    currentIcon.className = isAscending ?
-        'fas fa-sort-up text-primary' :
-        'fas fa-sort-down text-primary';
+    const currentIcon = table.querySelectorAll('th[data-sortable]')[columnIndex].querySelector('[data-lucide], svg.lucide');
+    if (currentIcon) {
+        const iconName = isAscending ? 'arrow-up' : 'arrow-down';
+        currentIcon.setAttribute('data-lucide', iconName);
+        currentIcon.className = 'text-primary w-4 h-4 inline-block ' + (currentIcon.classList.contains('lucide') ? 'lucide lucide-' + iconName : '');
+        lucide.createIcons();
+    }
 }
 
 // إعداد رسائل التأكيد

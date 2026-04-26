@@ -1,4 +1,4 @@
-﻿@model ManageMentSystem.ViewModels.CreateInstallmentViewModel
+@model ManageMentSystem.ViewModels.CreateInstallmentViewModel
 @{
     ViewData["Title"] = "إضافة تقسيط جديد";
 }
@@ -9,9 +9,9 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">إنشاء عقد تقسيط جديد</h1>
             
-            <a href="@Url.Action("Index")" class="px-6 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-indigo-100 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
+            <a href="@Url.Action("Index")" class="px-6 py-2.5 bg-white border border-gray-200 text-gray-500 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
                 العودة للأقساط
-                <i class="mx-2 fas fa-arrow-left ml-2"></i>
+                <i class="mx-2" data-lucide="arrow-left"></i>
             </a>
         </div>
 
@@ -25,14 +25,14 @@
                     <!-- Customer Section -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 relative z-30">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center">
-                            <i class="fas fa-user ml-2 text-indigo-800"></i>
+                            <i data-lucide="user" class="ml-2 text-[#0f1419] w-4 h-4"></i>
                             <h3 class="font-bold text-gray-700 text-sm">بيانات العميل</h3>
                         </div>
                         
                         <div class="p-4 space-y-4">
                             <div class="relative">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">العميل *</label>
-                                <input type="text" id="installmentCustomerSearch" class="block w-full border-gray-300 rounded-lg focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm border py-2 px-3" placeholder="بحث عن عميل..." autocomplete="off">
+                                <input type="text" id="installmentCustomerSearch" class="block w-full border-gray-200 rounded-lg focus:ring-[#0f1419] focus:border-[#0f1419] sm:text-sm border py-2 px-3" placeholder="بحث عن عميل..." autocomplete="off">
 
                                 <select name="CustomerId" id="modalCustomerSelect" class="hidden">
                                     <option value="">اختر العميل</option>
@@ -48,13 +48,13 @@
                                 <div id="installmentCustomerSearchResults" class="absolute z-50 w-full mt-1 bg-white shadow-lg max-h-48 rounded-md py-1 text-sm overflow-auto ring-1 ring-black ring-opacity-5 hidden"></div>
                             </div>
 
-                            <div id="modalNewCustomerFields" class="hidden space-y-3 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                                <div class="text-sm text-indigo-700 font-bold mb-1 flex items-center">
-                                    <i class="fas fa-plus-circle ml-1"></i> عميل جديد
+                            <div id="modalNewCustomerFields" class="hidden space-y-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="text-sm text-[#0f1419] font-bold mb-1 flex items-center">
+                                    <i data-lucide="plus-circle" class="ml-1 w-4 h-4"></i> عميل جديد
                                 </div>
-                                <input type="text" id="modalNewCustomerName" name="NewCustomerName" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" placeholder="اسم العميل *">
-                                <input type="text" id="modalNewCustomerPhone" name="NewCustomerPhone" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" placeholder="رقم الهاتف *">
-                                <input type="text" id="modalNewCustomerAddress" name="NewCustomerAddress" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" placeholder="العنوان">
+                                <input type="text" id="modalNewCustomerName" name="NewCustomerName" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="اسم العميل *">
+                                <input type="text" id="modalNewCustomerPhone" name="NewCustomerPhone" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="رقم الهاتف *">
+                                <input type="text" id="modalNewCustomerAddress" name="NewCustomerAddress" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="العنوان">
                             </div>
                         </div>
                     </div>
@@ -62,16 +62,16 @@
                     <!-- Products Section -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 relative z-20">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center">
-                            <i class="fas fa-shopping-cart ml-2 text-indigo-800"></i>
+                            <i data-lucide="shopping-cart" class="ml-2 text-[#0f1419] w-4 h-4"></i>
                             <h3 class="font-bold text-gray-700 text-sm">المنتجات</h3>
                         </div>
 
                         <div class="p-4 space-y-4">
                             <div class="relative">
-                                <input type="text" id="productSearch" class="block w-full border-gray-300 rounded-lg focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm border py-2 px-3 pl-10" placeholder="ابحث عن منتج أو امسح الباركود..." autocomplete="off">
-                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                <input type="text" id="productSearch" class="block w-full border-gray-200 rounded-lg focus:ring-[#0f1419] focus:border-[#0f1419] sm:text-sm border py-2 px-3 pl-10" placeholder="ابحث عن منتج أو امسح الباركود..." autocomplete="off">
+                                <i data-lucide="search" class="absolute left-3 top-3 text-gray-500 w-4 h-4"></i>
 
-                                <div id="productSearchResults" class="hidden absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-slate-200 shadow-2xl z-20 max-h-[300px] overflow-y-auto custom-scrollbar">
+                                <div id="productSearchResults" class="hidden absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-20 max-h-[300px] overflow-y-auto custom-scrollbar">
                                     <table class="w-full text-right text-sm" id="productSearchTable">
                                         <thead class="bg-gray-50 sticky top-0 border-b border-gray-200">
                                             <tr>
@@ -80,7 +80,7 @@
                                                 <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase w-20">المخزون</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-slate-100"></tbody>
+                                        <tbody class="divide-y divide-gray-100"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -101,8 +101,8 @@
                                         </tbody>
                                     </table>
 
-                                    <div id="emptyCartMessage" class="flex flex-col items-center justify-center py-12 text-gray-400">
-                                        <i class="fas fa-box-open text-4xl mb-3 opacity-50"></i>
+                                    <div id="emptyCartMessage" class="flex flex-col items-center justify-center py-12 text-gray-500">
+                                        <i data-lucide="package" class="text-4xl mb-3 opacity-50 w-12 h-12"></i>
                                         <p>السلة فارغة، ابدأ بإضافة المنتجات</p>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                     <!-- Guarantor Section -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center">
-                            <i class="fas fa-shield-alt ml-2 text-indigo-800"></i>
+                            <i data-lucide="shield" class="ml-2 text-[#0f1419] w-4 h-4"></i>
                             <h3 class="font-bold text-gray-700 text-sm">بيانات الضامن (اختياري)</h3>
                         </div>
                         
@@ -121,11 +121,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">اسم الضامن</label>
-                                    <input type="text" name="GuarantorName" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" placeholder="اسم الضامن">
+                                    <input type="text" name="GuarantorName" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="اسم الضامن">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">رقم هاتف الضامن</label>
-                                    <input type="text" name="GuarantorPhone" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" placeholder="رقم هاتف الضامن">
+                                    <input type="text" name="GuarantorPhone" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="رقم هاتف الضامن">
                                 </div>
                             </div>
                         </div>
@@ -140,41 +140,41 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-visible">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
                             <div class="flex items-center">
-                                <i class="fas fa-calculator ml-2 text-indigo-800"></i>
+                                <i data-lucide="calculator" class="ml-2 text-[#0f1419] w-4 h-4"></i>
                                 <h3 class="font-bold text-gray-700 text-sm">الحسابات المالية</h3>
                             </div>
                             <div>
                                 <label class="text-xs text-gray-500">تاريخ البدء</label>
-                                <input type="date" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-xs py-1 px-2 border" required>
+                                <input type="date" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-xs py-1 px-2 border" required>
                             </div>
                         </div>
                         
                         <div class="p-4 space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">المبلغ الإجمالي *</label>
-                                <input type="number" step="0.01" min="0" name="TotalAmount" id="totalAmount" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" required>
+                                <input type="number" step="0.01" min="0" name="TotalAmount" id="totalAmount" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">الدفعة المقدمة *</label>
-                                <input type="number" step="0.01" min="0" name="DownPayment" id="downPayment" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" required>
+                                <input type="number" step="0.01" min="0" name="DownPayment" id="downPayment" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
                             </div>
 
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">الفائدة %</label>
-                                    <input type="number" step="0.1" min="0" max="100" name="InterestRate" id="interestRate" value="0" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" required>
+                                    <input type="number" step="0.1" min="0" max="100" name="InterestRate" id="interestRate" value="0" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">المدة (أشهر)</label>
-                                    <input type="number" min="1" name="NumberOfMonths" id="numberOfMonths" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" required>
+                                    <input type="number" min="1" name="NumberOfMonths" id="numberOfMonths" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
                                 </div>
                             </div>
 
                             <!-- Payment Method -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">طريقة الدفع للمقدم</label>
-                                <select name="PaymentMethodId" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border bg-white">
+                                <select name="PaymentMethodId" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border bg-white">
                                     <option value="">اختر الطريقة</option>
                                     @if (ViewBag.PaymentMethods != null)
                                     {
@@ -189,24 +189,24 @@
                     </div>
 
                     <!-- Summary Card -->
-                    <div class="bg-gradient-to-br from-indigo-900 to-indigo-800 rounded-xl shadow-lg border border-indigo-700 p-4 text-white">
-                        <h3 class="text-sm font-bold mb-3 text-indigo-200">ملخص التقسيط</h3>
+                    <div class=" bg-[#0f1419]  rounded-xl shadow-lg border border-gray-200 p-4 text-white">
+                        <h3 class="text-sm font-bold mb-3 text-gray-500">ملخص التقسيط</h3>
                         
                         <div class="space-y-2 text-sm">
-                            <div class="flex justify-between items-center pb-2 border-b border-indigo-700/50">
-                                <span class="text-indigo-200">المبلغ المتبقي</span>
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-200/50">
+                                <span class="text-gray-500">المبلغ المتبقي</span>
                                 <span class="font-mono font-bold" id="remainingAmount">0.00</span>
                             </div>
-                            <div class="flex justify-between items-center pb-2 border-b border-indigo-700/50">
-                                <span class="text-indigo-200">قيمة الفائدة</span>
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-200/50">
+                                <span class="text-gray-500">قيمة الفائدة</span>
                                 <span class="font-mono font-bold text-red-300" id="interestAmount">0.00</span>
                             </div>
-                            <div class="flex justify-between items-center pb-2 border-b border-indigo-700/50">
-                                <span class="text-indigo-200">الإجمالي + الفوائد</span>
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-200/50">
+                                <span class="text-gray-500">الإجمالي + الفوائد</span>
                                 <span class="font-mono font-bold" id="totalWithInterest">0.00</span>
                             </div>
                             <div class="flex justify-between items-center pt-2">
-                                <span class="text-indigo-200">القسط الشهري</span>
+                                <span class="text-gray-500">القسط الشهري</span>
                                 <span class="font-mono font-bold text-xl text-emerald-400" id="calculatedMonthlyPayment">0.00</span>
                             </div>
                         </div>
@@ -215,8 +215,8 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" id="saveBtn" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-800 hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 hover:-translate-y-0.5 transition-all">
-                        <i class="fas fa-save ml-2"></i> حفظ وإنشاء التقسيط
+                    <button type="submit" id="saveBtn" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0f1419] hover:-translate-y-0.5 transition-all">
+                        <i data-lucide="save" class="ml-2 w-4 h-4"></i> حفظ وإنشاء التقسيط
                     </button>
 
                 </div>
@@ -286,7 +286,8 @@
         document.getElementById('addInstallmentForm')?.addEventListener('submit', function(e) {
             const btn = document.getElementById('saveBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري الحفظ...';
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin inline-block"></i> جاري الحفظ...';
+            lucide.createIcons();
         });
 
         // مراقبة سلة المنتجات

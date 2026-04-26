@@ -12,9 +12,9 @@
                 <h1 class="text-2xl font-bold text-gray-800">تعديل فاتورة بيع #@ViewBag.SaleId</h1>
 
             <div class="flex items-center gap-3">
-                <a href="@Url.Action("Index", "Sales")" class="px-6 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-indigo-100 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
+                <a href="@Url.Action("Index", "Sales")" class="px-6 py-2.5 bg-white border border-gray-200 text-gray-500 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
                     العودة للمبيعات
-                    <i class="mx-2 fas fa-arrow-left ml-2"></i>
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
                 </a>
             </div>
         </div>
@@ -32,20 +32,20 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 items-center">
 
                             <div class="relative group">
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
-                                    <i class="fas fa-barcode"></i>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                                    <i data-lucide="barcode" class="w-4 h-4"></i>
                                 </div>
-                                <input type="text" id="barcodeScanner" class="block w-full pr-10 pl-10 py-2 border-gray-500 rounded-lg focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm border transition-shadow" placeholder="مسح باركود..." autocomplete="off">
-                                <button type="button" onclick="clearBarcodeScanner()" class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 hover:text-red-700 cursor-pointer" title="مسح">
-                                    <i class="fas fa-times"></i>
+                                <input type="text" id="barcodeScanner" class="block w-full pr-10 pl-10 py-2 border-gray-500 rounded-lg focus:ring-[#0f1419] focus:border-[#0f1419] sm:text-sm border transition-shadow" placeholder="مسح باركود..." autocomplete="off">
+                                <button type="button" onclick="clearBarcodeScanner()" class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 hover:text-accentRed cursor-pointer" title="مسح">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
                                 </button>
                             </div>
 
                             <div class="relative">
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
-                                    <i class="fas fa-search"></i>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                                    <i data-lucide="search" class="w-4 h-4"></i>
                                 </div>
-                                <input type="text" id="qsSearch" class="block w-full pr-10 py-2 border-gray-500 rounded-lg focus:ring-indigo-500 focus:border-indigo-800 sm:text-sm border" placeholder="بحث باسم المنتج...">
+                                <input type="text" id="qsSearch" class="block w-full pr-10 py-2 border-gray-500 rounded-lg focus:ring-[#0f1419] focus:border-[#0f1419] sm:text-sm border" placeholder="بحث باسم المنتج...">
                             </div>
                         </div>
                     </div>
@@ -54,15 +54,15 @@
                         <div id="qsProductsGrid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 pr-1 pb-2 w-full h-fit">
                         </div>
 
-                        <div id="qsNoResults" class="hidden flex flex-col items-center justify-center py-12 text-gray-400">
-                            <i class="fas fa-box-open text-4xl mb-3 opacity-50"></i>
+                        <div id="qsNoResults" class="hidden flex flex-col items-center justify-center py-12 text-gray-500">
+                            <i data-lucide="package-open" class="text-4xl mb-3 opacity-50"></i>
                             <p>لا توجد منتجات مطابقة</p>
                         </div>
 
-                        <div id="qsPager" class="mt-2 pt-4 border-t border-gray-100 flex justify-between items-center hidden">
-                            <button type="button" id="qsPrev" class="px-3 py-1.5 border border-gray-300 rounded-md text-sm font-medium text-white bg-indigo-800 hover:bg-indigo-900 disabled:opacity-50 hover:-translate-y-0.5 transition-all">السابق</button>
+                        <div id="qsPager" class="mt-2 pt-4 border-t border-gray-200 flex justify-between items-center hidden">
+                            <button type="button" id="qsPrev" class="px-3 py-1.5 border border-gray-200 rounded-md text-sm font-medium text-white bg-[#0f1419] hover:bg-primaryHover disabled:opacity-50 hover:-translate-y-0.5 transition-all">السابق</button>
                             <span class="text-sm text-gray-600 font-bold" id="qsRange">عرض 0–0 من 0</span>
-                            <button type="button" id="qsNext" class="px-3 py-1.5 border border-gray-300 rounded-md text-sm font-medium text-white bg-indigo-800 hover:bg-indigo-900 disabled:opacity-50 hover:-translate-y-0.5 transition-all">التالي</button>
+                            <button type="button" id="qsNext" class="px-3 py-1.5 border border-gray-200 rounded-md text-sm font-medium text-white bg-[#0f1419] hover:bg-primaryHover disabled:opacity-50 hover:-translate-y-0.5 transition-all">التالي</button>
                         </div>
                     </div>
                 </div>
@@ -72,13 +72,13 @@
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-visible">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center">
-                            <i class="fas fa-user ml-2 text-indigo-800"></i>
+                            <i data-lucide="user" class="ml-2 text-[#0f1419] w-4 h-4"></i>
                             <h3 class="font-bold text-gray-700 text-sm">بيانات العميل والفاتورة</h3>
                         </div>
                         <div class="p-4 space-y-4">
                             <div class="relative">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">العميل</label>
-                                <input type="text" id="customerSearch" class="block w-full border-gray-300 rounded-lg focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm border py-2 px-3" placeholder="بحث عن عميل..." autocomplete="off">
+                                <input type="text" id="customerSearch" class="block w-full border-gray-200 rounded-lg focus:ring-[#0f1419] focus:border-[#0f1419] sm:text-sm border py-2 px-3" placeholder="بحث عن عميل..." autocomplete="off">
 
                                 <select name="CustomerId" id="modalCustomerSelect" class="hidden">
                                     <option value="">اختر العميل</option>
@@ -96,11 +96,11 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">تاريخ البيع</label>
-                                    <input type="date" name="SaleDate" value="@Model.SaleDate.ToString("yyyy-MM-dd")" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border">
+                                    <input type="date" name="SaleDate" value="@Model.SaleDate.ToString("yyyy-MM-dd")" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">نوع الدفع</label>
-                                    <select disabled class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border bg-gray-100 cursor-not-allowed">
+                                    <select disabled class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border bg-gray-100 cursor-not-allowed">
                                         <!option value="1" @(Model.PaymentType == SalePaymentType.Cash ? "selected" : "")>كاش</!option>
                                         <!option value="2" @(Model.PaymentType == SalePaymentType.Partial ? "selected" : "")>جزئي</!option>
                                         <!option value="3" @(Model.PaymentType == SalePaymentType.Credit ? "selected" : "")>آجل</!option>
@@ -111,12 +111,12 @@
 
                             <div id="qsPaidWrapper" class="@(Model.PaymentType == SalePaymentType.Partial ? "" : "hidden")">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">المبلغ المدفوع</label>
-                                <input type="number" step="0.01" min="0" name="PaidAmount" id="qsPaidAmount" value="@Model.PaidAmount" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border" readonly>
+                                <input type="number" step="0.01" min="0" name="PaidAmount" id="qsPaidAmount" value="@Model.PaidAmount" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" readonly>
                             </div>
 
                             <div id="qsPaymentMethodWrapper" class="@(Model.PaymentType == SalePaymentType.Credit ? "hidden" : "")">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">طريقة الدفع</label>
-                                <select disabled class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1.5 px-2 border bg-gray-100 cursor-not-allowed">
+                                <select disabled class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border bg-gray-100 cursor-not-allowed">
                                     <option value="">اختر الطريقة</option>
                                     @foreach (var pm in (IEnumerable<PaymentMethodOption>)(ViewBag.PaymentMethods ?? new List<PaymentMethodOption>()))
                                     {
@@ -131,10 +131,10 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex-grow flex flex-col">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
                             <div class="flex items-center">
-                                <i class="fas fa-shopping-cart ml-2 text-indigo-800"></i>
+                                <i data-lucide="shopping-cart" class="ml-2 text-[#0f1419] w-4 h-4"></i>
                                 <h3 class="font-bold text-gray-700 text-sm">السلة</h3>
                             </div>
-                            <button type="button" id="qsClearCart" class="text-sm text-red-700 hover:text-red-800 font-medium hover:underline transition-colors">
+                            <button type="button" id="qsClearCart" class="text-sm text-accentRed hover:text-red-800 font-medium hover:underline transition-colors">
                                 تفريغ
                             </button>
                         </div>
@@ -159,11 +159,11 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-sm text-gray-500 mb-1">خصم %</label>
-                                    <input type="number" id="qsDiscountPercentage" step=".5" min="0" max="100" value="@Model.DiscountPercentage" class="block w-full border-gray-300 rounded shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1 px-2 border text-center">
+                                    <input type="number" id="qsDiscountPercentage" step=".5" min="0" max="100" value="@Model.DiscountPercentage" class="block w-full border-gray-200 rounded shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1 px-2 border text-center">
                                 </div>
                                 <div>
                                     <label class="block text-sm text-gray-500 mb-1">مبلغ الخصم</label>
-                                    <input type="number" id="qsDiscountAmount" step=".5" min="0" value="@Model.DiscountAmount" class="block w-full border-gray-300 rounded shadow-sm focus:ring-indigo-800 focus:border-indigo-800 text-sm py-1 px-2 border text-center">
+                                    <input type="number" id="qsDiscountAmount" step=".5" min="0" value="@Model.DiscountAmount" class="block w-full border-gray-200 rounded shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1 px-2 border text-center">
                                 </div>
                             </div>
 
@@ -174,8 +174,8 @@
                             <input type="hidden" name="TotalAmount" id="qsTotalInput" value="@Model.TotalAmount" />
 
                             <div class="grid grid-cols-1 gap-3 mt-3">
-                                <button type="submit" id="qsSaveEditBtn" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-800 hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-900 hover:-translate-y-0.5 transition-all">
-                                    <i class="fas fa-save ml-2"></i> حفظ التعديلات
+                                <button type="submit" id="qsSaveEditBtn" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0f1419] hover:-translate-y-0.5 transition-all">
+                                    <i data-lucide="save" class="ml-2 w-4 h-4"></i> حفظ التعديلات
                                 </button>
                             </div>
                         </div>

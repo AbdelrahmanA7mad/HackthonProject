@@ -37,6 +37,6 @@ namespace ManageMentSystem.Models
         public string AlertColor { get; set; } = "warning";
 
         [Display(Name = "أيقونة التنبيه")]
-        public string AlertIcon { get; set; } = "fas fa-exclamation-triangle";
+        public string AlertIcon { get; set; } = "alert-triangle";
     }
 }

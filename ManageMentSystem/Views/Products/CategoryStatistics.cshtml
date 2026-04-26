@@ -8,107 +8,107 @@
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 font-cairo flex items-center gap-3">
-                <span class="p-2 bg-indigo-50 rounded-xl text-indigo-800">
-                    <i class="fas fa-chart-pie"></i>
+            <h1 class="text-2xl font-bold text-[#0f1419] font-cairo flex items-center gap-3">
+                <span class="p-2 bg-gray-50 rounded-xl text-[#0f1419]">
+                    <i data-lucide="pie-chart" class="w-5 h-5"></i>
                 </span>
                 @ViewData["Title"]
             </h1>
-            <p class="text-slate-500 mt-1 mr-12 text-sm font-medium">نظرة شاملة على أداء ومخزون الفئة</p>
+            <p class="text-gray-500 mt-1 mr-12 text-sm font-medium">نظرة شاملة على أداء ومخزون الفئة</p>
         </div>
     </div>
 
     <section>
-        <h4 class="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
-            <i class="fas fa-boxes text-slate-400"></i>
+        <h4 class="text-lg font-bold text-gray-600 mb-4 flex items-center gap-2">
+            <i data-lucide="package" class="text-gray-500 w-5 h-5"></i>
             نظرة عامة على المخزون
         </h4>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-start mb-4">
-                    <div class="p-3 bg-blue-50 rounded-xl">
-                        <i class="fas fa-box text-xl text-blue-600"></i>
+                    <div class="p-3 bg-gray-50 rounded-xl">
+                        <i data-lucide="package" class="w-6 h-6 text-[#0f1419]"></i>
                     </div>
-                    <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-full">العدد</span>
+                    <span class="bg-gray-50 text-[#0f1419] text-xs font-bold px-2.5 py-1 rounded-full">العدد</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-slate-800 mb-1">@Model.TotalProducts</h3>
-                    <p class="text-slate-500 text-sm font-medium">إجمالي المنتجات</p>
+                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1">@Model.TotalProducts</h3>
+                    <p class="text-gray-500 text-sm font-medium">إجمالي المنتجات</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-start mb-4">
                     <div class="p-3 bg-emerald-50 rounded-xl">
-                        <i class="fas fa-coins text-xl text-emerald-600"></i>
+                        <i data-lucide="coins" class="w-6 h-6 text-emerald-600"></i>
                     </div>
-                    <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-full">شراء</span>
+                    <span class="bg-emerald-100 text-accentGreen text-xs font-bold px-2.5 py-1 rounded-full">شراء</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-slate-800 mb-1 font-mono truncate" title="@Model.TotalPurchaseValue.ToString("C0")">@Model.TotalPurchaseValue.ToString("C0")</h3>
-                    <p class="text-slate-500 text-sm font-medium">رأس المال المستثمر</p>
+                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1 font-mono truncate" title="@Model.TotalPurchaseValue.ToString("C0")">@Model.TotalPurchaseValue.ToString("C0")</h3>
+                    <p class="text-gray-500 text-sm font-medium">رأس المال المستثمر</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-start mb-4">
-                    <div class="p-3 bg-cyan-50 rounded-xl">
-                        <i class="fas fa-tag text-xl text-cyan-600"></i>
+                    <div class="p-3 bg-gray-50 rounded-xl">
+                        <i data-lucide="tag" class="w-6 h-6 text-[#0f1419]"></i>
                     </div>
-                    <span class="bg-cyan-100 text-cyan-700 text-xs font-bold px-2.5 py-1 rounded-full">بيع</span>
+                    <span class="bg-gray-50 text-[#0f1419] text-xs font-bold px-2.5 py-1 rounded-full">بيع</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-slate-800 mb-1 font-mono truncate" title="@Model.TotalSaleValue.ToString("C0")">@Model.TotalSaleValue.ToString("C0")</h3>
-                    <p class="text-slate-500 text-sm font-medium">قيمة المخزون (بيع)</p>
+                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1 font-mono truncate" title="@Model.TotalSaleValue.ToString("C0")">@Model.TotalSaleValue.ToString("C0")</h3>
+                    <p class="text-gray-500 text-sm font-medium">قيمة المخزون (بيع)</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-start mb-4">
                     <div class="p-3 bg-amber-50 rounded-xl">
-                        <i class="fas fa-wallet text-xl text-amber-600"></i>
+                        <i data-lucide="wallet" class="w-6 h-6 text-amber-600"></i>
                     </div>
                     <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">ربح</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-slate-800 mb-1 font-mono truncate" title="@Model.PotentialProfit.ToString("C0")">@Model.PotentialProfit.ToString("C0")</h3>
-                    <p class="text-slate-500 text-sm font-medium">الربح المتوقع</p>
+                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1 font-mono truncate" title="@Model.PotentialProfit.ToString("C0")">@Model.PotentialProfit.ToString("C0")</h3>
+                    <p class="text-gray-500 text-sm font-medium">الربح المتوقع</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section>
-        <h4 class="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
-            <i class="fas fa-shopping-cart text-slate-400"></i>
+        <h4 class="text-lg font-bold text-gray-600 mb-4 flex items-center gap-2">
+            <i data-lucide="shopping-cart" class="text-gray-500 w-5 h-5"></i>
             نظرة عامة على المبيعات
         </h4>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-4">
-                        <div class="p-3 bg-slate-100 rounded-xl">
-                            <i class="fas fa-receipt text-xl text-slate-600"></i>
+                        <div class="p-3 bg-gray-100 rounded-xl">
+                            <i data-lucide="receipt" class="w-6 h-6 text-gray-500"></i>
                         </div>
                         <div>
-                            <p class="text-slate-500 text-sm font-medium">إجمالي عمليات البيع</p>
-                            <h3 class="text-3xl font-bold text-slate-800">@Model.TotalSalesCount</h3>
+                            <p class="text-gray-500 text-sm font-medium">إجمالي عمليات البيع</p>
+                            <h3 class="text-3xl font-bold text-[#0f1419]">@Model.TotalSalesCount</h3>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-4">
-                        <div class="p-3 bg-violet-50 rounded-xl">
-                            <i class="fas fa-hand-holding-usd text-xl text-violet-600"></i>
+                        <div class="p-3 bg-gray-50 rounded-xl">
+                            <i data-lucide="hand-coins" class="w-6 h-6 text-[#0f1419]"></i>
                         </div>
                         <div>
-                            <p class="text-slate-500 text-sm font-medium">إجمالي قيمة المبيعات</p>
-                            <h3 class="text-3xl font-bold text-slate-800 font-mono" title="@Model.TotalSalesValue.ToString("C0")">@Model.TotalSalesValue.ToString("C0")</h3>
+                            <p class="text-gray-500 text-sm font-medium">إجمالي قيمة المبيعات</p>
+                            <h3 class="text-3xl font-bold text-[#0f1419] font-mono" title="@Model.TotalSalesValue.ToString("C0")">@Model.TotalSalesValue.ToString("C0")</h3>
                         </div>
                     </div>
                 </div>
@@ -116,20 +116,20 @@
         </div>
     </section>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
 
-        <div class="border-b border-slate-100 px-6 pt-4">
+        <div class="border-b border-gray-200 px-6 pt-4">
             <ul class="nav nav-tabs flex flex-wrap -mb-px gap-2" id="categoryTab" role="tablist" style="border-bottom: none;">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-indigo-800 hover:bg-slate-50"
+                    <button class="nav-link active inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-[#0f1419] hover:bg-gray-50"
                             id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="true">
-                        <i class="fas fa-box-open mr-2"></i> المنتجات المتاحة
+                        <i data-lucide="package-open" class="mr-2 w-4 h-4 inline-block"></i> المنتجات المتاحة
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-indigo-800 hover:bg-slate-50"
+                    <button class="nav-link inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-[#0f1419] hover:bg-gray-50"
                             id="sales-tab" data-bs-toggle="tab" data-bs-target="#sales" type="button" role="tab" aria-controls="sales" aria-selected="false">
-                        <i class="fas fa-history mr-2"></i> سجل المبيعات
+                        <i data-lucide="history" class="mr-2 w-4 h-4 inline-block"></i> سجل المبيعات
                     </button>
                 </li>
             </ul>
@@ -139,21 +139,21 @@
 p-0" id="categoryTabContent">
 
             <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
-                <div class="p-5 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50">
-                    <h5 class="font-bold text-slate-700 flex items-center gap-2">
-                        <i class="fas fa-list text-indigo-800"></i>
+                <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-50/50">
+                    <h5 class="font-bold text-gray-600 flex items-center gap-2">
+                        <i data-lucide="list" class="text-[#0f1419] w-4 h-4"></i>
                         قائمة المنتجات في @Model.CategoryName
                     </h5>
-                    <button type="button" class="flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-indigo-800 hover:bg-indigo-900 rounded-xl shadow-sm shadow-indigo-200 transition-all duration-200 gap-2"
+                    <button type="button" class="flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover rounded-xl shadow-sm  transition-all duration-200 gap-2"
                             onclick="printAllBarcodes()" title="طباعة جميع الباركود">
-                        <i class="fas fa-print"></i>
+                        <i data-lucide="print" class="w-4 h-4"></i>
                         طباعة جميع الباركود
                     </button>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-right" id="productsTable">
-                        <thead class="bg-slate-50 text-slate-700 text-sm uppercase font-bold">
+                        <thead class="bg-gray-50 text-gray-600 text-sm uppercase font-bold">
                             <tr>
                                 <th class="px-6 py-4 rounded-tr-lg">الاسم</th>
                                 <th class="px-6 py-4">الكمية</th>
@@ -164,52 +164,52 @@ p-0" id="categoryTabContent">
                                 <th class="px-6 py-4 rounded-tl-lg text-center">الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 text-sm">
+                        <tbody class="divide-y divide-gray-100 text-sm">
                             @foreach (var product in Model.Products)
                             {
-                                <tr class="hover:bg-slate-50/80 transition-colors duration-150">
-                                    <td class="px-6 py-4 font-bold text-slate-700">@product.Name</td>
+                                <tr class="hover:bg-gray-50/80 transition-colors duration-150">
+                                    <td class="px-6 py-4 font-bold text-gray-600">@product.Name</td>
                                     <td class="px-6 py-4">
                                         @if (product.Quantity < 5)
                                         {
-                                            <span class="flex items-center gap-1.5 text-red-700 bg-red-50 px-2.5 py-1 rounded-full w-fit border border-red-100 font-bold">@product.Quantity</span>
+                                            <span class="flex items-center gap-1.5 text-accentRed bg-red-50 px-2.5 py-1 rounded-full w-fit border border-red-100 font-bold">@product.Quantity</span>
                                         }
                                         else
                                         {
-                                            <span class="flex items-center gap-1.5 text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-full w-fit border border-indigo-100 font-bold">@product.Quantity</span>
+                                            <span class="flex items-center gap-1.5 text-[#0f1419] bg-gray-50 px-2.5 py-1 rounded-full w-fit border border-gray-200 font-bold">@product.Quantity</span>
                                         }
                                     </td>
-                                    <td class="px-6 py-4 font-mono font-bold text-slate-600">@product.PurchasePrice.ToString("C")</td>
-                                    <td class="px-6 py-4 font-mono font-bold text-slate-800">@product.SalePrice.ToString("C")</td>
+                                    <td class="px-6 py-4 font-mono font-bold text-gray-500">@product.PurchasePrice.ToString("C")</td>
+                                    <td class="px-6 py-4 font-mono font-bold text-[#0f1419]">@product.SalePrice.ToString("C")</td>
                                     <td class="px-6 py-4">
                                         @if (!string.IsNullOrEmpty(product.Barcode))
                                         {
                                             <span class="badge bg-info" style="display:none !important;">@product.Barcode</span>
 
                                             <div class="flex items-center gap-2">
-                                                <span class="bg-indigo-50 text-indigo-800 px-2 py-1 rounded border border-indigo-100 font-mono text-xs select-all">@product.Barcode</span>
-                                                <button type="button" class="text-indigo-800 hover:text-indigo-900 hover:bg-indigo-100 rounded-lg p-1.5 transition-colors"
+                                                <span class="bg-gray-50 text-[#0f1419] px-2 py-1 rounded border border-gray-200 font-mono text-xs select-all">@product.Barcode</span>
+                                                <button type="button" class="text-[#0f1419] hover:text-[#0f1419] hover:bg-gray-50 rounded-lg p-1.5 transition-colors"
                                                         onclick="printBarcode('@product.Barcode', '@product.Name')" title="طباعة الباركود">
-                                                    <i class="fas fa-print"></i>
+                                                    <i data-lucide="print" class="w-4 h-4"></i>
                                                 </button>
                                             </div>
                                         }
                                         else
                                         {
-                                            <span class="text-slate-400 text-xs italic">-</span>
+                                            <span class="text-gray-500 text-xs italic">-</span>
                                         }
                                     </td>
-                                    <td class="px-6 py-4 text-slate-500 max-w-xs truncate" title="@product.Description">
+                                    <td class="px-6 py-4 text-gray-500 max-w-xs truncate" title="@product.Description">
                                         @product.Description
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-center gap-1">
-                                            <a href="/Products/Details/@product.Id" class="p-2 text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors" title="عرض">
-                                                <i class="fas fa-eye"></i>
+                                            <a href="/Products/Details/@product.Id" class="p-2 text-accentGreen hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors" title="عرض">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
                                             </a>
-                                            <button type="button" class="p-2 text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                                            <button type="button" class="p-2 text-accentRed hover:bg-red-50 rounded-lg transition-colors"
                                                     onclick="deleteProduct(@product.Id)" title="حذف">
-                                                <i class="fas fa-trash"></i>
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -221,16 +221,16 @@ p-0" id="categoryTabContent">
             </div>
 
             <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
-                <div class="p-5 border-b border-slate-100 bg-slate-50/50">
-                    <h5 class="font-bold text-slate-700 flex items-center gap-2">
-                        <i class="fas fa-history text-indigo-800"></i>
+                <div class="p-5 border-b border-gray-200 bg-gray-50/50">
+                    <h5 class="font-bold text-gray-600 flex items-center gap-2">
+                        <i data-lucide="history" class="text-[#0f1419] w-4 h-4"></i>
                         سجل مبيعات @Model.CategoryName
                     </h5>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-right" id="salesTable">
-                        <thead class="bg-slate-50 text-slate-700 text-sm uppercase font-bold">
+                        <thead class="bg-gray-50 text-gray-600 text-sm uppercase font-bold">
                             <tr>
                                 <th class="px-6 py-4 rounded-tr-lg">العميل</th>
                                 <th class="px-6 py-4">تاريخ البيع</th>
@@ -240,30 +240,30 @@ p-0" id="categoryTabContent">
                                 <th class="px-6 py-4 rounded-tl-lg text-center">الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 text-sm">
+                        <tbody class="divide-y divide-gray-100 text-sm">
                             @foreach (var sale in Model.RecentSales)
                             {
-                                <tr class="hover:bg-slate-50/80 transition-colors duration-150">
-                                    <td class="px-6 py-4 font-bold text-slate-700">
+                                <tr class="hover:bg-gray-50/80 transition-colors duration-150">
+                                    <td class="px-6 py-4 font-bold text-gray-600">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center">
-                                                <i class="fas fa-user text-xs text-slate-400"></i>
+                                            <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
+                                                <i data-lucide="user" class="w-3 h-3 text-gray-500"></i>
                                             </div>
                                             @sale.CustomerName
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 font-mono text-slate-500" dir="ltr">@sale.SaleDate.ToShortDateString()</td>
-                                    <td class="px-6 py-4 text-slate-700">@sale.ProductName</td>
-                                    <td class="px-6 py-4 font-mono text-slate-600">@sale.UnitPrice.ToString("C")</td>
-                                    <td class="px-6 py-4 font-mono font-bold text-slate-800">@sale.TotalPrice.ToString("C")</td>
+                                    <td class="px-6 py-4 font-mono text-gray-500" dir="ltr">@sale.SaleDate.ToShortDateString()</td>
+                                    <td class="px-6 py-4 text-gray-600">@sale.ProductName</td>
+                                    <td class="px-6 py-4 font-mono text-gray-500">@sale.UnitPrice.ToString("C")</td>
+                                    <td class="px-6 py-4 font-mono font-bold text-[#0f1419]">@sale.TotalPrice.ToString("C")</td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-center gap-1">
-                                            <a href="/Sales/Details/@sale.SaleId" class="p-2 text-cyan-700 hover:bg-cyan-50 rounded-lg transition-colors" title="عرض">
-                                                <i class="fas fa-eye"></i>
+                                            <a href="/Sales/Details/@sale.SaleId" class="p-2 text-[#0f1419] hover:bg-gray-50 rounded-lg transition-colors" title="عرض">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
                                             </a>
-                                            <button type="button" class="p-2 text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                                            <button type="button" class="p-2 text-accentRed hover:bg-red-50 rounded-lg transition-colors"
                                                     onclick="deleteSale(@sale.SaleId)" title="حذف">
-                                                <i class="fas fa-trash"></i>
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -282,22 +282,22 @@ p-0" id="categoryTabContent">
         <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
             <div class="modal-header bg-red-50 border-b border-red-100 p-5">
                 <h5 class="modal-title font-bold text-red-800 flex items-center gap-2" id="deleteProductModalLabel">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i data-lucide="alert-circle" class="w-5 h-5"></i>
                     تأكيد حذف المنتج
                 </h5>
                 <button type="button" class="btn-close text-red-400 hover:text-red-600 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-6 bg-white text-center space-y-4">
                 <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-                    <i class="fas fa-trash-alt text-2xl text-red-500"></i>
+                    <i data-lucide="trash-2" class="text-2xl text-accentRed w-8 h-8"></i>
                 </div>
                 <div>
-                    <p class="font-bold text-slate-800 text-lg">هل أنت متأكد من حذف هذا المنتج؟</p>
-                    <p class="text-slate-500 mt-2 text-sm">سيتم حذف المنتج نهائياً من السجلات.</p>
+                    <p class="font-bold text-[#0f1419] text-lg">هل أنت متأكد من حذف هذا المنتج؟</p>
+                    <p class="text-gray-500 mt-2 text-sm">سيتم حذف المنتج نهائياً من السجلات.</p>
                 </div>
             </div>
-            <div class="modal-footer bg-slate-50 border-t border-slate-100 p-4 flex gap-2 justify-center">
-                <button type="button" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition-colors" data-bs-dismiss="modal">إلغاء</button>
+            <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-center">
+                <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors" data-bs-dismiss="modal">إلغاء</button>
                 <form id="deleteProductForm" method="post" style="display: inline;">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 transition-all">نعم، احذف المنتج</button>
@@ -312,19 +312,19 @@ p-0" id="categoryTabContent">
         <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
             <div class="modal-header bg-red-50 border-b border-red-100 p-5">
                 <h5 class="modal-title font-bold text-red-800 flex items-center gap-2" id="deleteSaleModalLabel">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i data-lucide="alert-circle" class="w-5 h-5"></i>
                     تأكيد حذف البيع
                 </h5>
                 <button type="button" class="btn-close text-red-400 hover:text-red-600 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-6 bg-white text-center space-y-4">
                 <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-                    <i class="fas fa-receipt text-2xl text-red-500"></i>
+                    <i data-lucide="receipt" class="text-2xl text-accentRed w-8 h-8"></i>
                 </div>
-                <p class="font-bold text-slate-800 text-lg">هل أنت متأكد من حذف عملية البيع هذه؟</p>
+                <p class="font-bold text-[#0f1419] text-lg">هل أنت متأكد من حذف عملية البيع هذه؟</p>
             </div>
-            <div class="modal-footer bg-slate-50 border-t border-slate-100 p-4 flex gap-2 justify-center">
-                <button type="button" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-800 rounded-xl transition-colors" data-bs-dismiss="modal">إلغاء</button>
+            <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-center">
+                <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors" data-bs-dismiss="modal">إلغاء</button>
                 <form id="deleteSaleForm" method="post" style="display: inline;">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 transition-all">نعم، حذف</button>

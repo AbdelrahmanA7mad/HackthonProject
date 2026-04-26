@@ -1,25 +1,34 @@
-﻿@model ErrorViewModel
+@model ErrorViewModel
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "خطأ";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="min-h-[80vh] flex items-center justify-center p-6">
+    <div class="max-w-xl w-full bg-white rounded-3xl shadow-sm border border-gray-200 p-8 text-center">
+        <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i data-lucide="alert-circle" class="w-10 h-10 text-red-600"></i>
+        </div>
+        
+        <h1 class="text-2xl font-bold text-[#0f1419] mb-2">حدث خطأ</h1>
+        <h2 class="text-gray-500 mb-6">عذراً، حدث خطأ أثناء معالجة طلبك.</h2>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+        @if (Model.ShowRequestId)
+        {
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-6 inline-block text-left" dir="ltr">
+                <p class="text-sm text-gray-500 mb-1 font-bold">Request ID:</p>
+                <code class="text-[#0f1419] font-mono text-sm bg-white px-2 py-1 rounded border border-gray-200">@Model.RequestId</code>
+            </div>
+        }
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+        <div class="flex items-center justify-center gap-4">
+            <a href="javascript:history.back()" class="px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition-colors flex items-center gap-2">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                رجوع
+            </a>
+            <a asp-controller="Home" asp-action="Index" class="px-6 py-3 bg-[#0f1419] hover:bg-primaryHover text-white font-bold rounded-xl transition-colors flex items-center gap-2">
+                <i data-lucide="home" class="w-4 h-4"></i>
+                الرئيسية
+            </a>
+        </div>
+    </div>
+</div>

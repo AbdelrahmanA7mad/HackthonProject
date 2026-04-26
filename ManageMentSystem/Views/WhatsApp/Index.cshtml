@@ -1,4 +1,4 @@
-﻿@* Views/WhatsApp/Index.cshtml - محسّن ومعدل لـ Tailwind *@
+@* Views/WhatsApp/Index.cshtml - محسّن ومعدل لـ Tailwind *@
 @using ManageMentSystem.Models
 @inject ManageMentSystem.Services.UserServices.IUserService UserService
 @{
@@ -9,34 +9,34 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                <i class="fab fa-whatsapp text-emerald-600"></i> إعدادات واتساب
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="message-circle" class="text-emerald-600"></i> إعدادات واتساب
             </h1>
-            <p class="text-slate-500 mt-1 font-medium">إدارة اتصال واتساب لإرسال الفواتير والإشعارات</p>
+            <p class="text-gray-500 mt-1 font-medium">إدارة اتصال واتساب لإرسال الفواتير والإشعارات</p>
         </div>
-        <a asp-controller="SystemSettings" asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
-            العودة للإعدادات<i class="fas fa-arrow-left"></i>
+        <a asp-controller="SystemSettings" asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+            العودة للإعدادات<i data-lucide="arrow-left" class="w-4 h-4 inline-block mr-1"></i>
         </a>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         <!-- Main Connection Card -->
         <div class="lg:col-span-2">
-            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="bg-emerald-600 px-6 py-4 flex items-center justify-between">
                     <h4 class="text-white font-bold text-lg flex items-center gap-2">
-                        <i class="fab fa-whatsapp"></i> حالة الاتصال
+                        <i data-lucide="message-circle"></i> حالة الاتصال
                     </h4>
                     @if (ViewBag.IsConnected)
                     {
                         <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm">
-                            <i class="fas fa-wifi text-xs"></i> متصل
+                            <i data-lucide="wifi" class="text-xs w-4 h-4 inline-block"></i> متصل
                         </span>
                     }
                     else
                     {
                         <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm">
-                            <i class="fas fa-wifi-slash text-xs"></i> غير متصل
+                            <i data-lucide="wifi-off" class="text-xs w-4 h-4 inline-block"></i> غير متصل
                         </span>
                     }
                 </div>
@@ -47,7 +47,7 @@
                         <div class="bg-red-50 border border-red-200 rounded-xl p-6 mb-6">
                             <div class="flex items-start gap-4">
                                 <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 shrink-0">
-                                    <i class="fas fa-server"></i>
+                                    <i data-lucide="server"></i>
                                 </div>
                                 <div>
                                     <h5 class="text-red-800 font-bold text-lg mb-1">خطأ في الاتصال بالسيرفر!</h5>
@@ -62,13 +62,13 @@
                     <div id="connected-state" style="display: @(ViewBag.IsConnected ? "block" : "none")">
                         <div class="text-center py-8">
                             <div class="w-24 h-24 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 text-5xl mx-auto mb-6 animate-pulse">
-                                <i class="fas fa-check-circle"></i>
+                                <i data-lucide="check-circle"></i>
                             </div>
-                            <h3 class="text-2xl font-bold text-slate-800 mb-2">تم الاتصال بنجاح!</h3>
-                            <p class="text-slate-500 max-w-md mx-auto mb-8">حسابك متصل الآن بسيرفر واتساب. يمكنك إرسال الفواتير والرسائل مباشرة للعملاء.</p>
+                            <h3 class="text-2xl font-bold text-primary mb-2">تم الاتصال بنجاح!</h3>
+                            <p class="text-gray-500 max-w-md mx-auto mb-8">حسابك متصل الآن بسيرفر واتساب. يمكنك إرسال الفواتير والرسائل مباشرة للعملاء.</p>
                        
                                 <button onclick="WhatsAppManager.disconnect()" class="bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 px-8 py-3 rounded-xl font-bold transition-all border border-red-100 hover:border-red-200">
-                                    <i class="fas fa-sign-out-alt"></i> قطع الاتصال
+                                    <i data-lucide="log-out" class="w-4 h-4 inline-block mr-1"></i> قطع الاتصال
                                 </button>
                         </div>
                     </div>
@@ -80,30 +80,30 @@
                             <!-- QR Code Section -->
                             <div id="qr-section">
                                 <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 mb-8 flex items-center gap-3 text-amber-800 font-medium">
-                                    <i class="fas fa-qrcode text-xl"></i>
+                                    <i data-lucide="qr-code" class="text-xl"></i>
                                     يرجى مسح رمز QR أدناه لتوصيل حسابك
                                 </div>
 
                                 <div class="flex flex-col md:flex-row items-center justify-center gap-12">
                                     <!-- Instructions -->
                                     <div class="flex-1 max-w-sm">
-                                        <h5 class="font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">خطوات التوصيل:</h5>
+                                        <h5 class="font-bold text-primary mb-4 border-b border-gray-200 pb-2">خطوات التوصيل:</h5>
                                         <ol class="space-y-4">
                                             <li class="flex items-start gap-3">
-                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-sm font-bold shrink-0">1</span>
-                                                <span class="text-slate-600">افتح تطبيق واتساب على هاتفك</span>
+                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                                                <span class="text-gray-500">افتح تطبيق واتساب على هاتفك</span>
                                             </li>
                                             <li class="flex items-start gap-3">
-                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-sm font-bold shrink-0">2</span>
-                                                <span class="text-slate-600">اضغط على القائمة <strong class="mx-1">(⋮)</strong> أو الإعدادات</span>
+                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                                                <span class="text-gray-500">اضغط على القائمة <strong class="mx-1">(⋮)</strong> أو الإعدادات</span>
                                             </li>
                                             <li class="flex items-start gap-3">
-                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-sm font-bold shrink-0">3</span>
-                                                <span class="text-slate-600">اختر <strong>"الأجهزة المرتبطة"</strong></span>
+                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                                                <span class="text-gray-500">اختر <strong>"الأجهزة المرتبطة"</strong></span>
                                             </li>
                                             <li class="flex items-start gap-3">
-                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-sm font-bold shrink-0">4</span>
-                                                <span class="text-slate-600">اضغط على <strong>"ربط جهاز"</strong> وامسح الكود</span>
+                                                <span class="w-6 h-6 rounded-full bg-slate-100 text-gray-500 flex items-center justify-center text-sm font-bold shrink-0">4</span>
+                                                <span class="text-gray-500">اضغط على <strong>"ربط جهاز"</strong> وامسح الكود</span>
                                             </li>
                                         </ol>
                                     </div>
@@ -112,21 +112,21 @@
                                     <div class="flex-1 flex flex-col items-center">
                                         <div id="qr-loading" class="text-center py-8">
                                             <div class="w-12 h-12 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto mb-4"></div>
-                                            <p class="text-slate-500 font-medium">جاري إنشاء رمز QR...</p>
+                                            <p class="text-gray-500 font-medium">جاري إنشاء رمز QR...</p>
                                         </div>
 
-                                        <div id="qr-container" style="display: none;" class="bg-white p-4 border border-slate-200 rounded-2xl shadow-sm">
+                                        <div id="qr-container" style="display: none;" class="bg-white p-4 border border-gray-200 rounded-2xl shadow-sm">
                                             <img id="qr-code" src="" alt="QR Code" class="max-w-[280px] w-full mx-auto" />
-                                            <p class="text-slate-500 text-sm text-center mt-3 font-medium animate-pulse">
-                                                <i class="fas fa-sync-alt fa-spin mr-1"></i> في انتظار المسح...
+                                            <p class="text-gray-500 text-sm text-center mt-3 font-medium animate-pulse">
+                                                <i data-lucide="refresh-cw" class="mr-1 w-4 h-4 animate-spin inline-block"></i> في انتظار المسح...
                                             </p>
                                         </div>
 
                                         <div id="qr-error" style="display: none;" class="bg-red-50 border border-red-200 rounded-xl p-6 text-center max-w-xs">
-                                            <div class="text-red-500 text-3xl mb-2"><i class="fas fa-exclamation-circle"></i></div>
+                                            <div class="text-red-500 text-3xl mb-2"><i data-lucide="alert-circle"></i></div>
                                             <p id="qr-error-message" class="text-red-700 font-medium mb-4">حدث خطأ</p>
                                             <button onclick="WhatsAppManager.retryQR()" class="bg-white text-red-600 border border-red-200 hover:bg-red-50 px-4 py-2 rounded-lg font-bold text-sm transition-all">
-                                                <i class="fas fa-redo"></i> إعادة المحاولة
+                                                <i data-lucide="rotate-ccw" class="w-4 h-4 inline-block mr-1"></i> إعادة المحاولة
                                             </button>
                                         </div>
                                     </div>
@@ -137,15 +137,15 @@
                         {
                             <!-- Initial Setup -->
                             <div id="setup-section" class="text-center py-12">
-                                <div class="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-4xl mx-auto mb-6">
-                                    <i class="fas fa-plug"></i>
+                                <div class="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center text-gray-500 text-4xl mx-auto mb-6">
+                                    <i data-lucide="plug"></i>
                                 </div>
-                                <h3 class="text-xl font-bold text-slate-800 mb-2">لم يتم إنشاء جلسة واتساب بعد</h3>
-                                <p class="text-slate-500 max-w-sm mx-auto mb-8">قم بإنشاء جلسة جديدة للبدء في ربط حسابك واستخدام خدمة الرسائل.</p>
+                                <h3 class="text-xl font-bold text-primary mb-2">لم يتم إنشاء جلسة واتساب بعد</h3>
+                                <p class="text-gray-500 max-w-sm mx-auto mb-8">قم بإنشاء جلسة جديدة للبدء في ربط حسابك واستخدام خدمة الرسائل.</p>
 
                           
                                     <button onclick="WhatsAppManager.createSession()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-emerald-500/30 hover:-translate-y-0.5 flex items-center gap-2 mx-auto">
-                                        <i class="fab fa-whatsapp text-xl"></i> إنشاء جلسة واتساب
+                                        <i data-lucide="message-circle" class="text-xl"></i> إنشاء جلسة واتساب
                                     </button>
                             </div>
                         }
@@ -156,25 +156,25 @@
 
         <!-- Info Sidebar -->
         <div class="lg:col-span-1">
-            <div class="bg-indigo-50/50 rounded-xl border border-indigo-100 p-6">
-                <h5 class="font-bold text-indigo-900 mb-4 flex items-center gap-2">
-                    <i class="fas fa-lightbulb text-indigo-500"></i> معلومات مهمة
+            <div class="bg-gray-50/50 rounded-xl border border-gray-200 p-6">
+                <h5 class="font-bold text-primary mb-4 flex items-center gap-2">
+                    <i data-lucide="lightbulb" class="text-white0"></i> معلومات مهمة
                 </h5>
                 <ul class="space-y-4">
-                    <li class="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
-                        <i class="fas fa-check text-indigo-500 mt-1"></i>
+                    <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
+                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
                         يمكنك إرسال الفواتير بصيغة PDF مباشرة لعملائك بمجرد إصدار الفاتورة.
                     </li>
-                    <li class="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
-                        <i class="fas fa-check text-indigo-500 mt-1"></i>
+                    <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
+                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
                         ستبقى الجلسة متصلة حتى تقوم بقطع الاتصال يدوياً أو تسجيل الخروج من تطبيق واتساب.
                     </li>
-                    <li class="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
-                        <i class="fas fa-check text-indigo-500 mt-1"></i>
+                    <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
+                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
                         يمكن ربط رقم واحد فقط لكل حساب في النظام.
                     </li>
-                    <li class="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
-                        <i class="fas fa-check text-indigo-500 mt-1"></i>
+                    <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
+                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
                         في حالة عدم استجابة السيرفر، حاول تحديث الصفحة أو إعادة تشغيل سيرفر الرسائل.
                     </li>
                 </ul>
@@ -206,7 +206,7 @@
             showLoading(title = 'جاري المعالجة...') {
                 Swal.fire({
                     title: title,
-                    html: '<p class="text-sm text-slate-500">يرجى الانتظار، قد تستغرق العملية ثوانٍ...</p>',
+                    html: '<p class="text-sm text-gray-500">يرجى الانتظار، قد تستغرق العملية ثوانٍ...</p>',
                     allowOutsideClick: false,
                     didOpen: () => Swal.showLoading()
                 });
@@ -360,7 +360,7 @@
                     text: "لن تتمكن من إرسال رسائل تلقائية حتى تعيد الربط.",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#ef4444',
+                    confirmButtonColor: '#e11d48',
                     cancelButtonColor: '#64748b',
                     confirmButtonText: 'نعم، افصل الآن',
                     cancelButtonText: 'تراجع'

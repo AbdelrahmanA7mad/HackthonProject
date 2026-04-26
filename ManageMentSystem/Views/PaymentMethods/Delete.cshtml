@@ -7,16 +7,16 @@
 <div class="container mx-auto px-4 py-6 max-w-2xl">
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <!-- Header -->
-        <div class="bg-gradient-to-r from-red-600 to-red-700 px-6 py-4">
+        <div class=" from-red-600 to-red-700 px-6 py-4">
             <h3 class="text-2xl font-bold text-white flex items-center gap-3">
-                <i class="fas fa-trash-alt"></i>
+                <i data-lucide="trash-2" class="w-6 h-6"></i>
                 حذف طريقة دفع
             </h3>
         </div>
 
         <!-- Warning Alert -->
         <div class="bg-red-50 border-r-4 border-red-500 text-red-800 p-4 m-6 rounded-lg flex items-center gap-3">
-            <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+            <i data-lucide="alert-triangle" class="text-red-500 w-8 h-8"></i>
             <span class="font-semibold">هل أنت متأكد من حذف هذه الطريقة؟</span>
         </div>
 
@@ -25,14 +25,14 @@
             <dl class="space-y-4">
                 <div class="flex items-center justify-between border-b border-gray-200 pb-3">
                     <dt class="text-sm font-semibold text-gray-600 flex items-center gap-2">
-                        <i class="fas fa-tag text-indigo-800"></i>
+                        <i data-lucide="tag" class="text-primary w-4 h-4"></i>
                         الاسم
                     </dt>
                     <dd class="text-base font-bold text-gray-900">@Model.Name</dd>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-200 pb-3">
                     <dt class="text-sm font-semibold text-gray-600 flex items-center gap-2">
-                        <i class="fas fa-star text-amber-600"></i>
+                        <i data-lucide="star" class="text-amber-600 w-4 h-4"></i>
                         افتراضي
                     </dt>
                     <dd class="text-base font-medium text-gray-900">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <dt class="text-sm font-semibold text-gray-600 flex items-center gap-2">
-                        <i class="fas fa-toggle-on text-green-600"></i>
+                        <i data-lucide="toggle-right" class="text-green-600 w-4 h-4"></i>
                         نشط
                     </dt>
                     <dd class="text-base font-medium text-gray-900">
@@ -70,12 +70,12 @@
             <input type="hidden" asp-for="Id" />
             <div class="flex gap-3">
                 <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
-                    <i class="fas fa-trash"></i>
+                    <i data-lucide="trash" class="w-5 h-5"></i>
                     تأكيد الحذف
                 </button>
                 <a asp-action="Index" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
                     إلغاء
-                    <i class="fas fa-arrow-left"></i>
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 </a>
             </div>
         </form>

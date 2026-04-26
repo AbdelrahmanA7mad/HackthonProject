@@ -122,7 +122,7 @@ namespace ManageMentSystem.Services.SystemSettings
                 ShowProductsPageAlert = true,
                 ShowReportsAlert = true,
                 AlertColor = "warning",
-                AlertIcon = "fas fa-exclamation-triangle"
+                AlertIcon = "alert-triangle"
             };
         }
 

@@ -7,25 +7,25 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                <i class="fas fa-boxes text-indigo-800"></i> إعدادات المخزون
+            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
+                <i data-lucide="package" class="text-[#0f1419]"></i> إعدادات المخزون
             </h1>
-            <p class="text-slate-500 mt-1 font-medium">إدارة تنبيهات المخزون والحد الأدنى للكميات</p>
+            <p class="text-gray-500 mt-1 font-medium">إدارة تنبيهات المخزون والحد الأدنى للكميات</p>
         </div>
-        <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
-            العودة للإعدادات<i class="fas fa-arrow-left"></i>
+        <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+            العودة للإعدادات<i data-lucide="arrow-left"></i>
         </a>
     </div>
 
     <!-- Main Content -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8 max-w-3xl mx-auto">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 max-w-3xl mx-auto">
         @if (TempData["SuccessMessage"] != null)
         {
             <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm relative" role="alert">
-                <i class="fas fa-check-circle text-xl"></i>
+                <i data-lucide="check-circle" class="text-xl"></i>
                 <span class="font-bold">@TempData["SuccessMessage"]</span>
                 <button type="button" class="absolute left-4 top-3 text-emerald-400 hover:text-emerald-600 transition-colors" onclick="this.parentElement.remove()">
-                    <i class="fas fa-times"></i>
+                    <i data-lucide="x"></i>
                 </button>
             </div>
         }
@@ -33,10 +33,10 @@
         @if (TempData["ErrorMessage"] != null)
         {
             <div class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm relative" role="alert">
-                <i class="fas fa-exclamation-circle text-xl"></i>
+                <i data-lucide="alert-circle" class="text-xl"></i>
                 <span class="font-bold">@TempData["ErrorMessage"]</span>
                 <button type="button" class="absolute left-4 top-3 text-red-400 hover:text-red-600 transition-colors" onclick="this.parentElement.remove()">
-                    <i class="fas fa-times"></i>
+                    <i data-lucide="x"></i>
                 </button>
             </div>
         }
@@ -46,37 +46,37 @@
 
             <!-- Basic Settings -->
             <div>
-                <div class="flex items-center gap-3 mb-6 border-b border-indigo-50 pb-4">
-                    <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-800 text-lg">
-                        <i class="fas fa-cog"></i>
+                <div class="flex items-center gap-3 mb-6 border-b border-gray-200 pb-4">
+                    <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-[#0f1419] text-lg">
+                        <i data-lucide="settings"></i>
                     </div>
-                    <h5 class="font-bold text-slate-800 text-lg">الإعدادات الأساسية</h5>
+                    <h5 class="font-bold text-[#0f1419] text-lg">الإعدادات الأساسية</h5>
                 </div>
 
                 <div class="space-y-6">
                     <!-- Low Stock Threshold -->
                     <div>
-                        <label asp-for="LowStockThreshold" class="block text-sm font-bold text-slate-700 mb-2"></label>
+                        <label asp-for="LowStockThreshold" class="block text-sm font-bold text-gray-600 mb-2"></label>
                         <div class="relative">
-                            <input asp-for="LowStockThreshold" class="w-full pr-16 pl-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-bold text-slate-800 transition-all placeholder:text-slate-300" type="number" min="1" max="1000" />
-                            <div class="absolute right-0 top-0 bottom-0 px-4 bg-slate-50 border-l border-slate-200 rounded-r-xl flex items-center text-slate-500 font-bold text-sm">
+                            <input asp-for="LowStockThreshold" class="w-full pr-16 pl-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all placeholder:text-gray-500" type="number" min="1" max="1000" />
+                            <div class="absolute right-0 top-0 bottom-0 px-4 bg-gray-50 border-l border-gray-200 rounded-r-xl flex items-center text-gray-500 font-bold text-sm">
                                 وحدة
                             </div>
                         </div>
-                        <span asp-validation-for="LowStockThreshold" class="text-sm font-bold text-red-500 mt-1 block"></span>
-                        <p class="text-xs text-slate-400 mt-2 flex items-center gap-1">
-                            <i class="fas fa-info-circle"></i>
+                        <span asp-validation-for="LowStockThreshold" class="text-sm font-bold text-accentRed mt-1 block"></span>
+                        <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
+                            <i data-lucide="info"></i>
                             سيتم إظهار تنبيه عندما يصل مخزون المنتج لهذه الكمية أو أقل
                         </p>
                     </div>
 
                     <!-- Alert Message -->
                     <div>
-                        <label asp-for="AlertMessage" class="block text-sm font-bold text-slate-700 mb-2"></label>
-                        <textarea asp-for="AlertMessage" rows="3" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-100 focus:border-indigo-600 outline-none font-medium text-slate-800 transition-all placeholder:text-slate-300 resize-none" placeholder="رسالة التنبيه"></textarea>
-                        <span asp-validation-for="AlertMessage" class="text-sm font-bold text-red-500 mt-1 block"></span>
-                        <div class="mt-2 text-xs text-slate-500 font-medium bg-slate-50 p-3 rounded-lg border border-slate-100">
-                            <strong>تعليمات:</strong> استخدم <code class="bg-white border px-1 rounded mx-1 text-indigo-600">{0}</code> لاسم المنتج و <code class="bg-white border px-1 rounded mx-1 text-indigo-600">{1}</code> للكمية الحالية.
+                        <label asp-for="AlertMessage" class="block text-sm font-bold text-gray-600 mb-2"></label>
+                        <textarea asp-for="AlertMessage" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all placeholder:text-gray-500 resize-none" placeholder="رسالة التنبيه"></textarea>
+                        <span asp-validation-for="AlertMessage" class="text-sm font-bold text-accentRed mt-1 block"></span>
+                        <div class="mt-2 text-xs text-gray-500 font-medium bg-gray-50 p-3 rounded-lg border border-gray-200">
+                            <strong>تعليمات:</strong> استخدم <code class="bg-white border px-1 rounded mx-1 text-[#0f1419]">{0}</code> لاسم المنتج و <code class="bg-white border px-1 rounded mx-1 text-[#0f1419]">{1}</code> للكمية الحالية.
                             <br/>
                             مثال: "تنبيه: المنتج {0} وصل إلى الحد الأدنى للمخزون ({1} وحدة)"
                         </div>
@@ -85,12 +85,12 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="pt-6 border-t border-slate-100 flex items-center gap-4">
-                <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-indigo-500/20 hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fas fa-save"></i> حفظ الإعدادات
+            <div class="pt-6 border-t border-gray-200 flex items-center gap-4">
+                <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+                    <i data-lucide="save"></i> حفظ الإعدادات
                 </button>
-                <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
-                    <i class="fas fa-times"></i> إلغاء
+                <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                    <i data-lucide="x"></i> إلغاء
                 </a>
             </div>
         </form>

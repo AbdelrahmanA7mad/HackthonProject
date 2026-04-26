@@ -7,20 +7,20 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                <i class="fas fa-columns text-indigo-800"></i> إعدادات ظهور القوائم
+            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
+                <i data-lucide="columns" class="text-[#0f1419]"></i> إعدادات ظهور القوائم
             </h1>
-            <p class="text-slate-500 mt-1 font-medium">التحكم في القوائم المرئية في الشريط الجانبي</p>
+            <p class="text-gray-500 mt-1 font-medium">التحكم في القوائم المرئية في الشريط الجانبي</p>
         </div>
-        <a asp-controller="SystemSettings" asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
-            العودة للإعدادات<i class="fas fa-arrow-left"></i>
+        <a asp-controller="SystemSettings" asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+            العودة للإعدادات<i data-lucide="arrow-left"></i>
         </a>
     </div>
 
     <!-- Main Content -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8 max-w-5xl mx-auto">
-        <div class="mb-8 bg-blue-50 border border-blue-100 text-blue-800 px-6 py-4 rounded-xl flex items-start gap-4">
-            <i class="fas fa-info-circle text-xl mt-0.5"></i>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 max-w-5xl mx-auto">
+        <div class="mb-8 bg-gray-50 border border-gray-200 text-[#0f1419] px-6 py-4 rounded-xl flex items-start gap-4">
+            <i data-lucide="info" class="text-xl mt-0.5"></i>
             <div>
                 <h6 class="font-bold mb-1">تعليمات</h6>
                 <p class="text-sm opacity-90 leading-relaxed font-medium">
@@ -36,168 +36,168 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Products -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-indigo-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-gray-200">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-800 text-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-box"></i>
+                        <div class="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                            <i data-lucide="box"></i>
                         </div>
-                        <label asp-for="ShowProducts" class="font-bold text-slate-700 cursor-pointer select-none">المنتجات</label>
+                        <label asp-for="ShowProducts" class="font-bold text-gray-600 cursor-pointer select-none">المنتجات</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowProducts" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-bgSubtle rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f1419]"></div>
                     </label>
                 </div>
 
                 <!-- Categories -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-emerald-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-emerald-100">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-700 text-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-tags"></i>
+                        <div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-accentGreen text-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <i data-lucide="tags"></i>
                         </div>
-                        <label asp-for="ShowCategories" class="font-bold text-slate-700 cursor-pointer select-none">الفئات</label>
+                        <label asp-for="ShowCategories" class="font-bold text-gray-600 cursor-pointer select-none">الفئات</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowCategories" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
                     </label>
                 </div>
 
                 <!-- Customers -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-sky-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-sky-100">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-lg bg-sky-50 flex items-center justify-center text-sky-700 text-xl group-hover:bg-sky-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-users"></i>
+                            <i data-lucide="users"></i>
                         </div>
-                        <label asp-for="ShowCustomers" class="font-bold text-slate-700 cursor-pointer select-none">العملاء</label>
+                        <label asp-for="ShowCustomers" class="font-bold text-gray-600 cursor-pointer select-none">العملاء</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowCustomers" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-sky-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-sky-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
                     </label>
                 </div>
 
                 <!-- Sales -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-amber-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-amber-100">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 text-xl group-hover:bg-amber-500 group-hover:text-white transition-colors">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i data-lucide="shopping-cart"></i>
                         </div>
-                        <label asp-for="ShowSales" class="font-bold text-slate-700 cursor-pointer select-none">المبيعات</label>
+                        <label asp-for="ShowSales" class="font-bold text-gray-600 cursor-pointer select-none">المبيعات</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowSales" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-amber-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-amber-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
                     </label>
                 </div>
 
                 <!-- Returns -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-red-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-red-100">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-lg bg-red-50 flex items-center justify-center text-red-600 text-xl group-hover:bg-red-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-undo"></i>
+                            <i data-lucide="rotate-ccw"></i>
                         </div>
-                        <label asp-for="ShowReturns" class="font-bold text-slate-700 cursor-pointer select-none">المرتجعات</label>
+                        <label asp-for="ShowReturns" class="font-bold text-gray-600 cursor-pointer select-none">المرتجعات</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowReturns" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
                     </label>
                 </div>
 
                 <!-- Installments -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-slate-200">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-gray-200">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600 text-xl group-hover:bg-slate-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-credit-card"></i>
+                        <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center text-gray-500 text-xl group-hover:bg-gray-50 group-hover:text-white transition-colors">
+                            <i data-lucide="credit-card"></i>
                         </div>
-                        <label asp-for="ShowInstallments" class="font-bold text-slate-700 cursor-pointer select-none">الأقساط</label>
+                        <label asp-for="ShowInstallments" class="font-bold text-gray-600 cursor-pointer select-none">الأقساط</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowInstallments" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-slate-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-slate-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-slate-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-100"></div>
                     </label>
                 </div>
 
                 <!-- General Debts -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-slate-200">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-gray-200">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center text-gray-700 text-xl group-hover:bg-gray-700 group-hover:text-white transition-colors">
-                            <i class="fas fa-scale-balanced"></i>
+                            <i data-lucide="scale"></i>
                         </div>
-                        <label asp-for="ShowGeneralDebts" class="font-bold text-slate-700 cursor-pointer select-none">الديون</label>
+                        <label asp-for="ShowGeneralDebts" class="font-bold text-gray-600 cursor-pointer select-none">الديون</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowGeneralDebts" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-700"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-700"></div>
                     </label>
                 </div>
 
                 <!-- Suppliers -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-indigo-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-gray-200">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-800 text-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-truck"></i>
+                        <div class="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                            <i data-lucide="truck"></i>
                         </div>
-                        <label asp-for="ShowSuppliers" class="font-bold text-slate-700 cursor-pointer select-none">الموردين</label>
+                        <label asp-for="ShowSuppliers" class="font-bold text-gray-600 cursor-pointer select-none">الموردين</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowSuppliers" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-bgSubtle rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f1419]"></div>
                     </label>
                 </div>
 
                 <!-- Purchase Invoices -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-emerald-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-emerald-100">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-700 text-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-file-invoice"></i>
+                        <div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-accentGreen text-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <i data-lucide="file-text"></i>
                         </div>
-                        <label asp-for="ShowPurchaseInvoices" class="font-bold text-slate-700 cursor-pointer select-none">فواتير المشتريات</label>
+                        <label asp-for="ShowPurchaseInvoices" class="font-bold text-gray-600 cursor-pointer select-none">فواتير المشتريات</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowPurchaseInvoices" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
                     </label>
                 </div>
 
                 <!-- Store Account -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-indigo-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-gray-200">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-800 text-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-calculator"></i>
+                        <div class="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                            <i data-lucide="calculator"></i>
                         </div>
-                        <label asp-for="ShowStoreAccount" class="font-bold text-slate-700 cursor-pointer select-none">الحسابات</label>
+                        <label asp-for="ShowStoreAccount" class="font-bold text-gray-600 cursor-pointer select-none">الحسابات</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowStoreAccount" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-bgSubtle rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f1419]"></div>
                     </label>
                 </div>
 
 
                 <!-- Reports -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-red-100">
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between hover:shadow-md transition-all group hover:bg-white hover:border-red-100">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-lg bg-red-50 flex items-center justify-center text-red-600 text-xl group-hover:bg-red-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-chart-bar"></i>
+                            <i data-lucide="bar-chart-2"></i>
                         </div>
-                        <label asp-for="ShowReports" class="font-bold text-slate-700 cursor-pointer select-none">التقارير</label>
+                        <label asp-for="ShowReports" class="font-bold text-gray-600 cursor-pointer select-none">التقارير</label>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input asp-for="ShowReports" type="checkbox" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                        <div class="w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
                     </label>
                 </div>
             </div>
 
             <!-- Action Buttons -->
-            <div class="pt-6 border-t flex flex-wrap border-slate-100 flex items-center gap-4">
-                <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-indigo-500/20 hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fas fa-save"></i> حفظ التغييرات
+            <div class="pt-6 border-t flex flex-wrap border-gray-200 flex items-center gap-4">
+                <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+                    <i data-lucide="save"></i> حفظ التغييرات
                 </button>
-                <a asp-action="Index" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
-                    <i class="fas fa-arrow-right"></i> العودة للإعدادات
+                <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                    <i data-lucide="arrow-right"></i> العودة للإعدادات
                 </a>
             </div>
         </form>

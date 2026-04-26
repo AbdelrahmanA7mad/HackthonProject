@@ -7,9 +7,9 @@
 
 // التكوين الأساسي الموحد للكلاسات
 const swalClasses = {
-    popup: 'rounded-2xl shadow-2xl border border-slate-100',
-    title: 'text-xl font-bold text-slate-800',
-    htmlContainer: 'text-slate-600',
+    popup: 'rounded-2xl shadow-2xl border border-gray-200',
+    title: 'text-xl font-bold text-primary',
+    htmlContainer: 'text-gray-500',
     confirmButton: 'px-6 py-2.5 rounded-xl font-bold shadow-lg transition-all hover:-translate-y-0.5 mx-1 text-white',
     cancelButton: 'px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 mx-1 text-gray-700 bg-gray-100 border border-gray-200',
     denyButton: 'px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 mx-1 text-white bg-red-500',
@@ -38,7 +38,7 @@ window.showSuccess = function (title, text = '', timer = 3000) {
         text: text,
         customClass: {
             ...swalClasses,
-            confirmButton: swalClasses.confirmButton + ' bg-emerald-700 hover:bg-emerald-600'
+            confirmButton: swalClasses.confirmButton + ' bg-primary hover:bg-black'
         },
         confirmButtonText: 'حسناً',
         timer: timer,
@@ -56,7 +56,7 @@ window.showError = function (title, text = '') {
         text: text,
         customClass: {
             ...swalClasses,
-            confirmButton: swalClasses.confirmButton + ' bg-red-700 hover:bg-red-800'
+            confirmButton: swalClasses.confirmButton + ' bg-accentRed hover:bg-accentRed'
         },
         confirmButtonText: 'حسناً',
     });
@@ -72,7 +72,7 @@ window.showWarning = function (title, text = '') {
         text: text,
         customClass: {
             ...swalClasses,
-            confirmButton: swalClasses.confirmButton + ' bg-amber-700 hover:bg-amber-800'
+            confirmButton: swalClasses.confirmButton + ' bg-primary hover:bg-black'
         },
         confirmButtonText: 'حسناً',
     });
@@ -88,7 +88,7 @@ window.showInfo = function (title, text = '') {
         text: text,
         customClass: {
             ...swalClasses,
-            confirmButton: swalClasses.confirmButton + ' bg-indigo-800 hover:bg-indigo-900'
+            confirmButton: swalClasses.confirmButton + ' bg-primary hover:bg-black'
         },
         confirmButtonText: 'حسناً',
     });
@@ -105,7 +105,7 @@ window.showConfirm = function (title, text = '', confirmText = 'نعم، تأك�
         showCancelButton: true,
         customClass: {
             ...swalClasses,
-            confirmButton: swalClasses.confirmButton + ' bg-indigo-800 hover:bg-indigo-900'
+            confirmButton: swalClasses.confirmButton + ' bg-primary hover:bg-black'
         },
         confirmButtonText: confirmText,
         cancelButtonText: cancelText,
@@ -123,7 +123,7 @@ window.showDangerConfirm = function (title, html = '', confirmText = 'نعم، �
         showCancelButton: true,
         customClass: {
             ...swalClasses,
-            confirmButton: swalClasses.confirmButton + ' bg-red-800 hover:bg-red-900'
+            confirmButton: swalClasses.confirmButton + ' bg-accentRed hover:bg-black'
         },
         confirmButtonText: confirmText,
         cancelButtonText: cancelText,
@@ -166,9 +166,9 @@ window.showToast = function (title, icon = 'success', position = 'top-end') {
         timer: 3000,
         timerProgressBar: true,
         customClass: {
-            popup: 'rounded-xl shadow-xl border border-slate-100',
+            popup: 'rounded-xl shadow-xl border border-gray-200',
             title: 'text-sm font-bold m-0 p-0',
-            timerProgressBar: icon === 'error' ? 'bg-red-500' : (icon === 'warning' ? 'bg-amber-700' : 'bg-emerald-700')
+            timerProgressBar: icon === 'error' ? 'bg-red-500' : (icon === 'warning' ? 'bg-primary' : 'bg-primary')
         },
         didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer);
@@ -194,7 +194,7 @@ window.showInputDialog = function (title, inputType = 'text', inputPlaceholder =
         showCancelButton: true,
         customClass: {
             ...swalClasses,
-            confirmButton: swalClasses.confirmButton + ' bg-indigo-800 hover:bg-indigo-900'
+            confirmButton: swalClasses.confirmButton + ' bg-primary hover:bg-black'
         },
         confirmButtonText: 'تأكيد',
         cancelButtonText: 'إلغاء',

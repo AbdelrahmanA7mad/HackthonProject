@@ -34,7 +34,7 @@ $('#productSearch').on('input', function () {
 
         matchingProducts.slice(0, 10).forEach(product => {
             const stockClass = product.quantity > 10 ? 'text-success' : product.quantity > 0 ? 'text-warning' : 'text-danger';
-            const stockIcon = product.quantity > 10 ? 'check-circle' : product.quantity > 0 ? 'exclamation-circle' : 'times-circle';
+            const stockIcon = product.quantity > 10 ? 'check-circle' : product.quantity > 0 ? 'alert-circle' : 'x-circle';
 
             // Escape single quotes in product name for onclick
             const escapedName = product.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
@@ -44,26 +44,28 @@ $('#productSearch').on('input', function () {
                     onclick="addProductToInstallmentAndHide(${product.id}, '${escapedName}', ${product.salePrice}, ${product.quantity}, '${product.barcode || ''}'); return false;">
                     <td class="px-4 py-3">
                         <div class="font-medium text-gray-900">${product.name}</div>
-                        ${product.barcode ? `<div class="text-xs text-gray-500"><i class="fas fa-barcode"></i> ${product.barcode}</div>` : ''}
+                        ${product.barcode ? `<div class="text-xs text-gray-500"><i data-lucide="barcode"></i> ${product.barcode}</div>` : ''}
                     </td>
                     <td class="px-4 py-3 text-center">
-                        <span class="px-2 py-1 text-xs font-bold rounded-full bg-indigo-100 text-indigo-800">${product.salePrice.toFixed(2)}</span>
+                        <span class="px-2 py-1 text-xs font-bold rounded-full bg-indigo-100 text-primary">${product.salePrice.toFixed(2)}</span>
                     </td>
                     <td class="px-4 py-3 text-center">
                         <span class="${stockClass}">
-                            <i class="fas fa-${stockIcon}"></i> ${product.quantity}
+                            <i data-lucide="${stockIcon}"></i> ${product.quantity}
                         </span>
                     </td>
                 </tr>
             `;
             tbody.append(row);
         });
+        lucide.createIcons();
 
         if (matchingProducts.length > 10) {
             tbody.append(`<tr><td colspan="3" class="text-center text-gray-500 text-sm py-2">عرض أول 10 نتائج من ${matchingProducts.length} منتج</td></tr>`);
         }
     } else {
-        $('#productSearchTable tbody').html('<tr><td colspan="3" class="text-center text-gray-500 py-4"><i class="fas fa-search text-2xl mb-2"></i><br>لا توجد منتجات مطابقة</td></tr>');
+        $('#productSearchTable tbody').html('<tr><td colspan="3" class="text-center text-gray-500 py-4"><i data-lucide="search" class="text-2xl mb-2"></i><br>لا توجد منتجات مطابقة</td></tr>');
+        lucide.createIcons();
     }
 
     $('#productSearchResults').show();
@@ -137,18 +139,18 @@ function addProductRow(product) {
         <tr data-product-id="${product.productId}" class="hover:bg-gray-50 transition-colors">
             <td class="px-3 py-2">
                 <div class="font-medium text-gray-900">${product.productName}</div>
-                ${product.barcode ? `<div class="text-xs text-gray-500"><i class="fas fa-barcode"></i> ${product.barcode}</div>` : ''}
+                ${product.barcode ? `<div class="text-xs text-gray-500"><i data-lucide="barcode"></i> ${product.barcode}</div>` : ''}
                 <input type="hidden" name="Items[${index}].ProductId" value="${product.productId}">
                 <input type="hidden" name="Items[${index}].ProductName" value="${product.productName}">
             </td>
             <td class="px-3 py-2 text-center">
-                <input type="number" class="w-20 text-center border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm py-1"
+                <input type="number" class="w-20 text-center border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary text-sm py-1"
                        value="${product.quantity}" min="1" max="${product.availableStock}"
                        onchange="updateProductQuantity(${product.productId}, this.value)"
                        name="Items[${index}].Quantity">
             </td>
             <td class="px-3 py-2 text-center">
-                <input type="number" class="w-24 text-center border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm py-1"
+                <input type="number" class="w-24 text-center border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary text-sm py-1"
                        value="${product.price.toFixed(2)}" step="0.01" min="0"
                        onchange="updateProductPrice(${product.productId}, this.value)"
                        name="Items[${index}].UnitPrice">
@@ -157,12 +159,13 @@ function addProductRow(product) {
             <td class="px-3 py-2 text-center">
                 <button type="button" class="text-red-600 hover:text-red-800 hover:bg-red-50 p-1.5 rounded transition-colors" 
                         onclick="removeProduct(${product.productId})" title="حذف">
-                    <i class="fas fa-trash"></i>
+                    <i data-lucide="trash-2"></i>
                 </button>
             </td>
         </tr>
     `;
     $('#selectedProductsTable tbody').append(row);
+    lucide.createIcons();
 }
 
 // تحديث صف المنتج

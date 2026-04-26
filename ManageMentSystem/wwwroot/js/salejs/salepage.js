@@ -1,4 +1,4 @@
-﻿// quicksale.js - Tailwind CSS Edition (Red & 3 Rows Updated)
+// quicksale.js - Tailwind CSS Edition (Red & 3 Rows Updated)
 let qsAllProducts = [];
 let qsCart = [];
 let qsSearchTimeout;
@@ -330,18 +330,20 @@ $(document).ready(function () {
         const icon = $(this).find('i');
 
         if (isFullscreen) {
-            icon.removeClass('fa-expand').addClass('fa-compress');
+            icon.attr('data-lucide', 'minimize');
+            lucide.createIcons();
             $(this).attr('title', 'إنهاء ملء الشاشة')
-                .removeClass('text-indigo-800 border-indigo-500')
+                .removeClass('text-primary border-indigo-500')
                 .addClass('text-red-700 border-red-500 hover:bg-red-50');
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen().catch(e => console.log(e));
             }
         } else {
-            icon.removeClass('fa-compress').addClass('fa-expand');
+            icon.attr('data-lucide', 'maximize');
+            lucide.createIcons();
             $(this).attr('title', 'ملء الشاشة')
                 .removeClass('text-red-700 border-red-500 hover:bg-red-50')
-                .addClass('text-indigo-800 border-indigo-500 hover:bg-indigo-50');
+                .addClass('text-primary border-indigo-500 hover:bg-bgSubtle');
             if (document.exitFullscreen && document.fullscreenElement) {
                 document.exitFullscreen();
             }
@@ -421,7 +423,7 @@ function renderProductsGrid(products) {
         const hasStock = (p.quantity || 0) > 0;
 
         const stockBadge = hasStock
-            ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-bold bg-indigo-50 text-indigo-900">${p.quantity}</span>`
+            ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-bold bg-bgSubtle text-primary">${p.quantity}</span>`
             : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-medium bg-red-100 text-red-700">0</span>`;
 
         // --- تعديل الستايل للأحمر ---
@@ -441,7 +443,7 @@ function renderProductsGrid(products) {
             <div class="qs-hover-overlay">
                 <button type="button" onclick="qsAddToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, ${p.purchasePrice}, ${p.quantity}, '${p.barcode || ''}')" 
                     class="qs-hover-btn">
-                    <i class="fas fa-plus fa-2x"></i>
+                    <i data-lucide="plus" class="w-8 h-8"></i>
                 </button>
             </div>
             ` : ''}
@@ -456,11 +458,11 @@ function renderProductsGrid(products) {
             <div class="qs-desc mb-2 text-sm text-bold text-gray-500 line-clamp-2" title="${p.description || ''}">${p.description || ''}</div>
 
             <div class="mt-auto flex flex-col items-start border-t border-gray-50 pt-2">
-                <span class="text-lg font-bold text-indigo-800 mb-1">${(p.price || 0).toFixed(2)}</span>
+                <span class="text-lg font-bold text-primary mb-1">${(p.price || 0).toFixed(2)}</span>
                 
                 ${p.barcode ? `
                 <div class="flex items-center text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded w-full">
-                    <i class="fas fa-barcode text-[15px] ml-1"></i>
+                    <i data-lucide="barcode" class="w-4 h-4 ml-1"></i>
                     <span class="text-[.8rem] font-bold font-mono tracking-wider truncate">${p.barcode}</span>
                 </div>
                 ` : '<span class="h-6 block"></span>'}
@@ -469,6 +471,7 @@ function renderProductsGrid(products) {
 
         grid.append(card);
     });
+    lucide.createIcons();
 }
 
 function updateProductCardStock(productId) {
@@ -478,7 +481,7 @@ function updateProductCardStock(productId) {
 
     const badgeContainer = card.find('.js-stock-badge');
     if (prod.quantity > 0) {
-        badgeContainer.html(`<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-bold bg-indigo-50 text-indigo-900">${prod.quantity}</span>`);
+        badgeContainer.html(`<span class="inline-flex items-center px-2 py-0.5 rounded-full text-md font-bold bg-bgSubtle text-primary">${prod.quantity}</span>`);
 
         // --- تحديث الستايل عند توفر المنتج ---
         card.removeClass('bg-red-100 border-red-300 cursor-not-allowed grayscale opacity-75')
@@ -490,10 +493,11 @@ function updateProductCardStock(productId) {
             <div class="qs-hover-overlay">
                 <button type="button" onclick="qsAddToCart(${prod.id}, '${prod.name.replace(/'/g, "\\'")}', ${prod.price}, ${prod.purchasePrice}, ${prod.quantity}, '${prod.barcode || ''}')" 
                     class="qs-hover-btn">
-                    <i class="fas fa-plus fa-2x"></i>
+                    <i data-lucide="plus" class="w-8 h-8"></i>
                 </button>
             </div>
            `);
+            lucide.createIcons();
         }
 
     } else {
@@ -544,22 +548,23 @@ function renderCart() {
                 ${item.productName}
             </td>
             <td class="px-2 py-2 whitespace-nowrap text-center">
-                <input type="number" min="1" value="${item.quantity}" onchange="qsUpdateQty(${item.productId}, this.value)" class="w-10 text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-1 px-1 border">
+                <input type="number" min="1" value="${item.quantity}" onchange="qsUpdateQty(${item.productId}, this.value)" class="w-10 text-center border-gray-300 rounded-md shadow-sm focus:ring-gray-200 focus:border-blue-500 text-sm py-1 px-1 border">
             </td>
             <td class="px-2 py-2 whitespace-nowrap text-center">
-                <input type="number" step="1" min="0" value="${(item.customSalePrice || 0).toFixed(2)}" onchange="qsUpdatePrice(${item.productId}, this.value)" class="w-20 text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-1 px-1 border">
+                <input type="number" step="1" min="0" value="${(item.customSalePrice || 0).toFixed(2)}" onchange="qsUpdatePrice(${item.productId}, this.value)" class="w-20 text-center border-gray-300 rounded-md shadow-sm focus:ring-gray-200 focus:border-blue-500 text-sm py-1 px-1 border">
             </td>
             <td class="px-2 py-2 whitespace-nowrap text-center text-sm font-bold text-gray-700">
                 ${(item.quantity * item.customSalePrice).toFixed(2)}
             </td>
             <td class="px-2 py-2 whitespace-nowrap text-right">
                 <button type="button" onclick="qsRemove(${item.productId})" class="text-red-500 hover:text-red-700 transition-colors">
-                    <i class="fas fa-trash-alt"></i>
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </td>
         </tr>`;
         tbody.append(row);
     });
+    lucide.createIcons();
 }
 
 function qsUpdateQty(productId, qty) {

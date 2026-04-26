@@ -75,12 +75,18 @@ function showSaleDeleteConfirmation(saleId, customerName, totalAmount) {
             <p><strong>العميل:</strong> ${customerName}</p>
             <p><strong>المبلغ الإجمالي:</strong> ${totalAmount} جنيه</p>
             <div class="alert alert-warning mt-3">
-                <i class="fas fa-exclamation-triangle me-2"></i>
+                <i data-lucide="alert-triangle" class="me-2 w-4 h-4 inline-block"></i>
                 <strong>تحذير:</strong> سيتم حذف البيع بالكامل وإرجاع المنتجات للمخزون وحذف جميع العمليات المرتبطة.
             </div>
             <p class="text-danger"><strong>لا يمكن التراجع عن هذا الإجراء.</strong></p>
         </div>`
-    );
+    ).then((result) => {
+        if (result.isConfirmed) {
+            // Confirmation logic if needed, but showDangerConfirm usually handles it
+        }
+        lucide.createIcons();
+        return result;
+    });
 }
 
 // Product validation error

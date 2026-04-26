@@ -51,10 +51,10 @@ function displaySearchResults(products) {
             const addButton = product.quantity > 0 ?
                 `<button type="button" class="btn btn-sm btn-outline-success" 
                         onclick="addProductToSale(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, ${product.purchasePrice}, ${product.quantity}, '${product.barcode || ''}')">
-                    <i class="fas fa-plus"></i> إضافة
+                    <i data-lucide="plus" class="w-4 h-4 inline-block"></i> إضافة
                 </button>` :
                 `<button type="button" class="btn btn-sm btn-outline-secondary" disabled>
-                    <i class="fas fa-times"></i> غير متوفر
+                    <i data-lucide="x" class="w-4 h-4 inline-block"></i> غير متوفر
                 </button>`;
 
             // التحقق من الصلاحيات
@@ -84,6 +84,7 @@ function displaySearchResults(products) {
             `;
             tbody.append(row);
         });
+        lucide.createIcons();
 
         if (products.length > 10) {
             const colspan = 7;
@@ -143,10 +144,10 @@ function displayEditSearchResults(products) {
             const addButton = product.quantity > 0 ?
                 `<button type="button" class="group flex items-center justify-center gap-1 w-full bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-200 hover:border-emerald-300 px-3 py-1.5 rounded-lg transition-all shadow-sm active:scale-95 text-xs font-bold" 
                         onclick="addEditProductToSale(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, ${product.purchasePrice}, ${product.quantity}, '${product.barcode || ''}')">
-                    <i class="fas fa-plus group-hover:scale-110 transition-transform"></i> إضافة
+                    <i data-lucide="plus" class="w-4 h-4 group-hover:scale-110 transition-transform"></i> إضافة
                 </button>` :
                 `<button type="button" class="w-full bg-gray-50 text-gray-400 border border-gray-200 px-3 py-1.5 rounded-lg cursor-not-allowed text-xs font-bold" disabled>
-                    <i class="fas fa-times"></i> نفذت
+                    <i data-lucide="x" class="w-4 h-4"></i> نفذت
                 </button>`;
 
             let row = `
@@ -156,14 +157,15 @@ function displayEditSearchResults(products) {
                         <div class="text-xs text-gray-500 mt-0.5 truncate max-w-[200px]">${product.description || ''}</div>
                     </td>
                     <td class="px-4 py-3 text-right whitespace-nowrap">${barcodeDisplay}</td>
-                    <td class="px-4 py-3 text-right whitespace-nowrap"><span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold border border-blue-100">${product.purchasePrice.toFixed(2)}</span></td>
-                    <td class="px-4 py-3 text-right whitespace-nowrap"><span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-xs font-bold border border-indigo-100">${product.price.toFixed(2)}</span></td>
+                    <td class="px-4 py-3 text-right whitespace-nowrap"><span class="bg-gray-50 text-primary px-2 py-1 rounded text-xs font-bold border border-gray-100">${product.purchasePrice.toFixed(2)}</span></td>
+                    <td class="px-4 py-3 text-right whitespace-nowrap"><span class="bg-bgSubtle text-primary px-2 py-1 rounded text-xs font-bold border border-gray-200">${product.price.toFixed(2)}</span></td>
                     <td class="px-4 py-3 text-center whitespace-nowrap">${stockStatus}</td>
                     <td class="px-4 py-3 text-center whitespace-nowrap w-24">${addButton}</td>
                 </tr>
             `;
             tbody.append(row);
         });
+        lucide.createIcons();
 
         if (products.length > 10) {
             const colspan = 7;

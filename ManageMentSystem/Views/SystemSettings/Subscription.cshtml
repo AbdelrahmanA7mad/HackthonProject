@@ -56,14 +56,14 @@
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-indigo-900 flex items-center gap-2">
-                <i class="fas fa-crown text-amber-500"></i> إدارة الاشتراك
+            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
+                <i data-lucide="crown" class="text-amber-500"></i> إدارة الاشتراك
             </h1>
-            <p class="text-slate-500 mt-1 font-medium">تفاصيل باقتك الحالية وموعد التجديد</p>
+            <p class="text-gray-500 mt-1 font-medium">تفاصيل باقتك الحالية وموعد التجديد</p>
         </div>
-        <a asp-action="Index" class="bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 font-medium py-2.5 px-4 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2">
+        <a asp-action="Index" class="bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 font-medium py-2.5 px-4 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2">
             عودة للإعدادات
-            <i class="fas fa-arrow-left"></i>
+            <i data-lucide="arrow-left"></i>
         </a>
     </div>
 
@@ -71,33 +71,33 @@
     <div class="max-w-4xl mx-auto">
         
         <!-- Status Card -->
-        <div class="bg-white rounded-3xl shadow-sm border border-indigo-200 overflow-hidden mb-8 relative">
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden mb-8 relative">
             <!-- Decorative BG -->
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-800 via-indigo-900 to-indigo-600"></div>
+            <div class="absolute top-0 left-0 w-full h-1  bg-[#0f1419]  "></div>
             
             <div class="p-8">
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
                     
                     <!-- Icon & Plan Name -->
                     <div class="flex items-center gap-6 text-center lg:text-right w-full lg:w-auto justify-center lg:justify-start">
-                        <div class="w-20 h-20 bg-indigo-50 rounded-2xl flex items-center justify-center shrink-0">
-                            <i class="fas fa-rocket text-4xl text-indigo-800"></i>
+                        <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center shrink-0">
+                            <i data-lucide="rocket" class="text-4xl text-[#0f1419]"></i>
                         </div>
                         <div>
-                            <h2 class="text-2xl font-bold text-slate-800 mb-1">
+                            <h2 class="text-2xl font-bold text-[#0f1419] mb-1">
                                 الباقة @(isTrial ? "التجريبية" : "الأساسية")
                             </h2>
                             <div class="flex items-center gap-2 justify-center lg:justify-start">
                                 @if (Model.IsSubscriptionActive)
                                 {
-                                    <span class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-bold">
-                                        <span class="w-2 h-2 rounded-full bg-emerald-700 animate-pulse"></span>
+                                    <span class="inline-flex items-center gap-1.5 bg-emerald-100 text-accentGreen px-3 py-1 rounded-full text-sm font-bold">
+                                        <span class="w-2 h-2 rounded-full bg-accentGreen animate-pulse"></span>
                                         نشط حالياً
                                     </span>
                                 }
                                 else
                                 {
-                                    <span class="inline-flex items-center gap-1.5 bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-bold">
+                                    <span class="inline-flex items-center gap-1.5 bg-red-100 text-accentRed px-3 py-1 rounded-full text-sm font-bold">
                                         <span class="w-2 h-2 rounded-full bg-red-500"></span>
                                         منتهية الصلاحية
                                     </span>
@@ -109,30 +109,30 @@
                     <!-- Detailed Countdown -->
                     <div class="flex items-center flex flex-wrap gap-3 w-full lg:w-auto justify-center">
                         <!-- Days -->
-                        <div class="text-center bg-slate-50 rounded-2xl p-3 min-w-[80px] border border-slate-100">
-                            <span class="block text-slate-500 text-xs font-bold mb-1">يوم</span>
-                            <span class="block text-2xl font-black text-indigo-800 font-sans">@remainingDays</span>
+                        <div class="text-center bg-gray-50 rounded-2xl p-3 min-w-[80px] border border-gray-200">
+                            <span class="block text-gray-500 text-xs font-bold mb-1">يوم</span>
+                            <span class="block text-2xl font-black text-[#0f1419] font-sans">@remainingDays</span>
                         </div>
                         
-                        <span class="text-slate-300 font-bold text-xl">:</span>
+                        <span class="text-gray-500 font-bold text-xl">:</span>
 
                         <!-- Months -->
-                        <div class="text-center bg-slate-50 rounded-2xl p-3 min-w-[80px] border border-slate-100">
-                            <span class="block text-slate-500 text-xs font-bold mb-1">شهر</span>
-                            <span class="block text-2xl font-black text-indigo-800 font-sans">@remainingMonths</span>
+                        <div class="text-center bg-gray-50 rounded-2xl p-3 min-w-[80px] border border-gray-200">
+                            <span class="block text-gray-500 text-xs font-bold mb-1">شهر</span>
+                            <span class="block text-2xl font-black text-[#0f1419] font-sans">@remainingMonths</span>
                         </div>
 
-                        <span class="text-slate-300 font-bold text-xl">:</span>
+                        <span class="text-gray-500 font-bold text-xl">:</span>
 
                         <!-- Years -->
-                        <div class="text-center bg-slate-50 rounded-2xl p-3 min-w-[80px] border border-slate-100">
-                            <span class="block text-slate-500 text-xs font-bold mb-1">سنة</span>
-                            <span class="block text-2xl font-black text-indigo-800 font-sans">@remainingYears</span>
+                        <div class="text-center bg-gray-50 rounded-2xl p-3 min-w-[80px] border border-gray-200">
+                            <span class="block text-gray-500 text-xs font-bold mb-1">سنة</span>
+                            <span class="block text-2xl font-black text-[#0f1419] font-sans">@remainingYears</span>
                         </div>
                     </div>
                 </div>
 
-                <hr class="my-8 border-slate-100" />
+                <hr class="my-8 border-gray-200" />
 
                 <!-- Progress & Dates -->
                 <div class="grid md:grid-cols-2 gap-12">
@@ -140,13 +140,13 @@
                     <!-- Progress Bar -->
                     <div>
                         <div class="flex justify-between items-end mb-2">
-                            <span class="text-slate-700 font-bold text-sm">استهلاك الفترة</span>
-                            <span class="text-indigo-800 font-bold text-sm">%@progressPercentage</span>
+                            <span class="text-gray-600 font-bold text-sm">استهلاك الفترة</span>
+                            <span class="text-[#0f1419] font-bold text-sm">%@progressPercentage</span>
                         </div>
-                        <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-indigo-800 to-indigo-900 rounded-full transition-all duration-1000 ease-out" style="width: @progressPercentage%"></div>
+                        <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full  bg-[#0f1419]  rounded-full transition-all duration-1000 ease-out" style="width: @progressPercentage%"></div>
                         </div>
-                        <p class="text-slate-400 text-xs mt-2">
+                        <p class="text-gray-500 text-xs mt-2">
                             تم انقضاء @progressPercentage% من مدة الاشتراك الحالية
                         </p>
                     </div>
@@ -154,34 +154,34 @@
                     <!-- Dates -->
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-500 text-sm flex items-center gap-2">
-                                <i class="far fa-calendar-alt text-slate-400"></i>
+                            <span class="text-gray-500 text-sm flex items-center gap-2">
+                                <i data-lucide="calendar" class="text-gray-500"></i>
                                 تاريخ البداية
                             </span>
-                            <span class="text-slate-800 font-bold font-sans">@startDate.ToString("yyyy/MM/dd")</span>
+                            <span class="text-[#0f1419] font-bold font-sans">@startDate.ToString("yyyy/MM/dd")</span>
                         </div>
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-500 text-sm flex items-center gap-2">
-                                <i class="far fa-calendar-check text-slate-400"></i>
+                            <span class="text-gray-500 text-sm flex items-center gap-2">
+                                <i data-lucide="calendar-check" class="text-gray-500"></i>
                                 تاريخ الانتهاء
                             </span>
-                            <span class="text-indigo-800 font-bold font-sans bg-indigo-50 px-2 py-0.5 rounded">@(endDate?.ToString("yyyy/MM/dd") ?? "غير محدد")</span>
+                            <span class="text-[#0f1419] font-bold font-sans bg-gray-50 px-2 py-0.5 rounded">@(endDate?.ToString("yyyy/MM/dd") ?? "غير محدد")</span>
                         </div>
                     </div>
                 </div>
             </div>
             
             <!-- Footer Actions -->
-            <div class="bg-slate-50 p-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
-                <span class="text-slate-500 text-sm font-medium flex items-center gap-2">
-                    <i class="fas fa-headset text-indigo-800"></i>
+            <div class="bg-gray-50 p-6 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
+                <span class="text-gray-500 text-sm font-medium flex items-center gap-2">
+                    <i data-lucide="headset" class="text-[#0f1419]"></i>
                     هل تحتاج إلى مساعدة أو ترغب في ترقية الباقة؟
                 </span>
                 
                 <a href="https://wa.me/201129452725?text=أريد%20تجديد%20الاشتراك%20أو%20الاستفسار" 
                    target="_blank" 
-                   class="inline-flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 px-6 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-200 hover:-translate-y-0.5 group w-full md:w-auto text-decoration-none">
-                    <i class="fab fa-whatsapp text-xl group-hover:scale-110 transition-transform"></i>
+                   class="inline-flex items-center justify-center gap-2 bg-accentGreen hover:bg-emerald-800 text-white font-bold py-2.5 px-6 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-200 hover:-translate-y-0.5 group w-full md:w-auto text-decoration-none">
+                    <i data-lucide="message-circle" class="text-xl group-hover:scale-110 transition-transform"></i>
                     تواصل للتجديد
                 </a>
             </div>
@@ -189,26 +189,26 @@
 
         <!-- Features Grid (Legacy/Info) -->
         <div class="grid md:grid-cols-3 gap-6 opacity-75 grayscale hover:grayscale-0 transition-all duration-500">
-            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-3">
-                    <i class="fas fa-users text-indigo-800"></i>
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center mb-3">
+                    <i data-lucide="users" class="text-[#0f1419]"></i>
                 </div>
-                <h3 class="font-bold text-slate-800 mb-1">دعم فني متميز</h3>
-                <p class="text-slate-500 text-xs">فريقنا جاهز للمساعدة دائماً</p>
+                <h3 class="font-bold text-[#0f1419] mb-1">دعم فني متميز</h3>
+                <p class="text-gray-500 text-xs">فريقنا جاهز للمساعدة دائماً</p>
             </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
                 <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
-                    <i class="fas fa-cloud-upload-alt text-amber-700"></i>
+                    <i data-lucide="cloud-upload" class="text-amber-700"></i>
                 </div>
-                <h3 class="font-bold text-slate-800 mb-1">نسخ احتياطي يومي</h3>
-                <p class="text-slate-500 text-xs">بياناتك في أمان تام</p>
+                <h3 class="font-bold text-[#0f1419] mb-1">نسخ احتياطي يومي</h3>
+                <p class="text-gray-500 text-xs">بياناتك في أمان تام</p>
             </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
                 <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-3">
-                    <i class="fas fa-bolt text-emerald-700"></i>
+                    <i data-lucide="zap" class="text-accentGreen"></i>
                 </div>
-                <h3 class="font-bold text-slate-800 mb-1">تحديثات مستمرة</h3>
-                <p class="text-slate-500 text-xs">مزايا جديدة تضاف باستمرار</p>
+                <h3 class="font-bold text-[#0f1419] mb-1">تحديثات مستمرة</h3>
+                <p class="text-gray-500 text-xs">مزايا جديدة تضاف باستمرار</p>
             </div>
         </div>
 

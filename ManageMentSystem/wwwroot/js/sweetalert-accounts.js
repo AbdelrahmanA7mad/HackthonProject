@@ -14,7 +14,7 @@ function showTransactionSuccess(type, amount) {
             <div class="text-start">
                 <p class="mb-2"><strong>المبلغ:</strong> <span class="${isIncome ? 'text-emerald-700' : 'text-red-700'} font-bold">${amount} جنيه</span></p>
                 <div class="bg-slate-50 border border-slate-200 text-slate-600 p-3 rounded-lg mt-2 text-sm">
-                    <i class="fas fa-check-circle me-2 text-emerald-500"></i>
+                    <i data-lucide="check-circle" class="me-2 text-emerald-500 inline-block w-4 h-4"></i>
                     تم تسجيل العملية وتحديث الأرصدة.
                 </div>
             </div>
@@ -22,6 +22,9 @@ function showTransactionSuccess(type, amount) {
         timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
+        didOpen: () => {
+            lucide.createIcons();
+        },
         customClass: {
             popup: 'rounded-2xl shadow-2xl border border-slate-100',
             title: 'text-xl font-bold text-slate-800',
@@ -66,7 +69,7 @@ function showDeleteTransactionConfirmation(id) {
                 <p class="mb-2">هل أنت متأكد من حذف هذه العملية المالية؟</p>
                 <div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl mb-2 text-sm">
                     <div class="flex items-center gap-2 mb-1 font-bold">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                         تحذير:
                     </div>
                     سيتم عكس تأثير هذه العملية على الأرصدة وحذفها نهائياً.
@@ -79,6 +82,9 @@ function showDeleteTransactionConfirmation(id) {
         confirmButtonText: 'نعم، احذف',
         cancelButtonText: 'إلغاء',
         reverseButtons: true,
+        didOpen: () => {
+            lucide.createIcons();
+        },
         customClass: {
             popup: 'rounded-2xl shadow-2xl border border-slate-100',
             title: 'text-xl font-bold text-slate-800',

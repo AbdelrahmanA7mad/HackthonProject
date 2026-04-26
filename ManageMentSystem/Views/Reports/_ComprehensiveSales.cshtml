@@ -1,24 +1,24 @@
 @model ManageMentSystem.ViewModels.ComprehensiveReportViewModel
 
-<div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-    <div class="bg-slate-50 px-6 py-4 border-b border-slate-100">
-        <h3 class="font-bold text-slate-800">سجل المبيعات</h3>
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+        <h3 class="font-bold text-[#0f1419]">سجل المبيعات</h3>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-right">
-            <thead class="bg-slate-50 text-slate-600 font-bold text-sm border-b border-slate-100">
+            <thead class="bg-gray-50 text-gray-500 font-bold text-sm border-b border-gray-200">
                 <tr>
                     <th class="px-6 py-4">العميل</th>
                     <th class="px-6 py-4">التاريخ</th>
                     <th class="px-6 py-4">المبلغ الإجمالي</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-gray-100">
                 @foreach (var item in Model.Sales)
                 {
-                    <tr class="hover:bg-slate-50/50">
-                        <td class="px-6 py-4 font-bold text-slate-700">@item.Customer.FullName</td>
-                        <td class="px-6 py-4 text-slate-600">@item.SaleDate.ToShortDateString()</td>
+                    <tr class="hover:bg-gray-50/50">
+                        <td class="px-6 py-4 font-bold text-gray-600">@item.Customer.FullName</td>
+                        <td class="px-6 py-4 text-gray-500">@item.SaleDate.ToShortDateString()</td>
                         <td class="px-6 py-4 font-bold text-emerald-600">@item.TotalAmount.ToString("C")</td>
                     </tr>
                 }

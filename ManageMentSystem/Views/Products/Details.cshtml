@@ -7,70 +7,70 @@
 <div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-6" dir="rtl">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-            <div class="p-3 bg-indigo-50 rounded-xl">
-                <i class="fas fa-box text-indigo-800 text-xl"></i>
+            <div class="p-3 bg-gray-50 rounded-xl">
+                <i data-lucide="package" class="text-[#0f1419] w-6 h-6"></i>
             </div>
-            <h1 class="text-2xl font-bold text-slate-800">تفاصيل المنتج</h1>
+            <h1 class="text-2xl font-bold text-[#0f1419]">تفاصيل المنتج</h1>
         </div>
-        <a asp-action="Index" class="px-6 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-indigo-100 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
+        <a asp-action="Index" class="px-6 py-2.5 bg-white border border-gray-200 text-gray-500 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
             العودة للقائمة
-            <i class="fas fa-arrow-left"></i>
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
         </a>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                <div class="p-6 border-b border-slate-100 bg-slate-50/50">
-                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fas fa-info-circle text-indigo-800"></i>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-6 border-b border-gray-200 bg-gray-50/50">
+                    <h3 class="font-bold text-[#0f1419] flex items-center gap-2">
+                        <i data-lucide="info" class="text-[#0f1419] w-5 h-5"></i>
                         معلومات المنتج الأساسية
                     </h3>
                 </div>
                 <div class="p-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <label class="block text-sm font-bold text-slate-500 mb-1">اسم المنتج</label>
-                            <p class="text-lg text-slate-800 font-semibold bg-slate-50 p-3 rounded-xl">@Model.Name</p>
+                            <label class="block text-sm font-bold text-gray-500 mb-1">اسم المنتج</label>
+                            <p class="text-lg text-[#0f1419] font-semibold bg-gray-50 p-3 rounded-xl">@Model.Name</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-slate-500 mb-1">كود المنتج (الباركود)</label>
-                            <div class="bg-slate-50 p-3 rounded-xl flex items-center gap-2">
-                                <i class="fas fa-barcode text-slate-400"></i>
-                                <span class="text-lg text-slate-800 font-mono">@(Model.Barcode ?? "--")</span>
+                            <label class="block text-sm font-bold text-gray-500 mb-1">كود المنتج (الباركود)</label>
+                            <div class="bg-gray-50 p-3 rounded-xl flex items-center gap-2">
+                                <i data-lucide="barcode" class="text-gray-500 w-5 h-5"></i>
+                                <span class="text-lg text-[#0f1419] font-mono">@(Model.Barcode ?? "--")</span>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-slate-500 mb-1">الفئة</label>
+                            <label class="block text-sm font-bold text-gray-500 mb-1">الفئة</label>
                             <div>
                                 @if (Model.Category != null)
                                 {
-                                    <p class="text-lg text-slate-800 font-semibold bg-slate-50 p-3 rounded-xl">@Model.Category.Name</p>
+                                    <p class="text-lg text-[#0f1419] font-semibold bg-gray-50 p-3 rounded-xl">@Model.Category.Name</p>
                                 }
                                 else
                                 {
-                                    <span class="text-slate-400 italic">غير محدد</span>
+                                    <span class="text-gray-500 italic">غير محدد</span>
                                 }
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 border-t border-slate-100 pt-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 border-t border-gray-200 pt-8">
                         <div>
-                            <label class="block text-sm font-bold text-slate-500 mb-1">سعر الشراء</label>
-                            <p class="text-2xl font-bold text-slate-600">@Model.PurchasePrice.ToString("C")</p>
+                            <label class="block text-sm font-bold text-gray-500 mb-1">سعر الشراء</label>
+                            <p class="text-2xl font-bold text-gray-500">@Model.PurchasePrice.ToString("C")</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-slate-500 mb-1">سعر البيع</label>
-                            <p class="text-2xl font-bold text-slate-600">@Model.SalePrice.ToString("C")</p>
+                            <label class="block text-sm font-bold text-gray-500 mb-1">سعر البيع</label>
+                            <p class="text-2xl font-bold text-gray-500">@Model.SalePrice.ToString("C")</p>
                         </div>
                     </div>
 
                     @if (!string.IsNullOrEmpty(Model.Description))
                     {
-                        <div class="mt-8 pt-8 border-t border-slate-100">
-                            <label class="block text-sm font-bold text-slate-500 mb-2">الوصف</label>
-                            <div class="bg-slate-50 p-4 rounded-xl text-slate-600 leading-relaxed">
+                        <div class="mt-8 pt-8 border-t border-gray-200">
+                            <label class="block text-sm font-bold text-gray-500 mb-2">الوصف</label>
+                            <div class="bg-gray-50 p-4 rounded-xl text-gray-500 leading-relaxed">
                                 @Model.Description
                             </div>
                         </div>
@@ -80,32 +80,32 @@
         </div>
 
         <div class="space-y-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-                <h3 class="font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i class="fas fa-chart-pie text-indigo-800"></i>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 class="font-bold text-[#0f1419] mb-6 flex items-center gap-2">
+                    <i data-lucide="pie-chart" class="text-[#0f1419] w-5 h-5"></i>
                     حالة المخزون
                 </h3>
 
                 <div class="space-y-4">
-                    <div class="flex justify-between items-center p-3 rounded-xl bg-slate-50">
-                        <span class="text-slate-600 font-bold">الكمية المتوفرة:</span>
-                        <span class="text-md font-bold @(Model.Quantity <= 5 ? "text-amber-600" : "text-slate-600")">
+                    <div class="flex justify-between items-center p-3 rounded-xl bg-gray-50">
+                        <span class="text-gray-500 font-bold">الكمية المتوفرة:</span>
+                        <span class="text-md font-bold @(Model.Quantity <= 5 ? "text-amber-600" : "text-gray-500")">
                             @Model.Quantity
                         </span>
                     </div>
 
-                    <div class="flex justify-between items-center p-3 rounded-xl bg-slate-50">
-                        <span class="text-slate-600 font-bold">تاريخ الإضافة:</span>
-                        <span class="text-md font-bold @(Model.Quantity <= 5 ? "text-amber-600" : "text-slate-600")">
+                    <div class="flex justify-between items-center p-3 rounded-xl bg-gray-50">
+                        <span class="text-gray-500 font-bold">تاريخ الإضافة:</span>
+                        <span class="text-md font-bold @(Model.Quantity <= 5 ? "text-amber-600" : "text-gray-500")">
                             @DateTime.Now.ToString("dd/MM/yyyy")
                         </span>
                     </div>
 
                     <div class="flex justify-between items-center p-3 rounded-xl @(Model.Quantity == 0 ? "bg-red-50" : (Model.Quantity <= 5 ? "bg-amber-50" : "bg-emerald-50"))">
-                        <span class="text-slate-600 font-bold">حالة التوفر:</span>
+                        <span class="text-gray-500 font-bold">حالة التوفر:</span>
                         @if (Model.Quantity == 0)
                         {
-                            <span class="text-red-700 font-bold text-md">نفذ المخزون</span>
+                            <span class="text-accentRed font-bold text-md">نفذ المخزون</span>
                         }
                         else if (Model.Quantity <= 5)
                         {
@@ -113,14 +113,14 @@
                         }
                         else
                         {
-                            <span class="text-emerald-700 font-bold text-md">متوفر</span>
+                            <span class="text-accentGreen font-bold text-md">متوفر</span>
                         }
                     </div>
 
-                    <div class="pt-4 border-t border-slate-100">
+                    <div class="pt-4 border-t border-gray-200">
                         <div class="flex justify-between items-center">
-                            <span class="text-slate-500 text-sm font-bold">إجمالي قيمة البيع:</span>
-                            <span class="text-lg font-bold text-slate-800">@((Model.SalePrice * Model.Quantity).ToString("C"))</span>
+                            <span class="text-gray-500 text-sm font-bold">إجمالي قيمة البيع:</span>
+                            <span class="text-lg font-bold text-[#0f1419]">@((Model.SalePrice * Model.Quantity).ToString("C"))</span>
                         </div>
                     </div>
                 </div>

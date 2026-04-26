@@ -11,66 +11,66 @@
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
             <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                <i class="fas fa-users text-indigo-800 "></i> إدارة العملاء
+                <i data-lucide="users" class="text-[#0f1419] "></i> إدارة العملاء
             </h1>
             <p class="text-sm text-gray-500 font-bold mt-1 pt-2">عرض وإدارة قائمة العملاء</p>
         </div>
 
         <div class="flex flex-wrap gap-3">
             
-                <a href="@Url.Action("SendBulkWhatsapp", "Customers")" class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fab fa-whatsapp text-lg"></i> رسائل جماعية
+                <a href="@Url.Action("SendBulkWhatsapp", "Customers")" class="bg-accentGreen hover:bg-accentGreen text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
+                    <i data-lucide="message-circle" class="text-lg"></i> رسائل جماعية
                 </a>
 
-            <a href="@Url.Action("TopCustomers", "Customers")" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
-                <i class="fas fa-trophy"></i> أفضل العملاء
+            <a href="@Url.Action("TopCustomers", "Customers")" class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
+                <i data-lucide="trophy"></i> أفضل العملاء
             </a>
 
            
-                <button type="button" data-bs-toggle="modal" data-bs-target="#addCustomerModal" class="bg-indigo-800 hover:bg-indigo-900 text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-indigo-200 hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fas fa-plus"></i> إضافة عميل
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addCustomerModal" class="bg-[#0f1419] hover:bg-primaryHover text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-200 hover:-translate-y-0.5 flex items-center gap-2">
+                    <i data-lucide="plus"></i> إضافة عميل
                 </button>
         </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-2 self-start">
+        <div class="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-2 self-start">
             <form method="get" action="@Url.Action("Index", "Customers")" class="flex gap-2 p-2">
                 <div class="relative flex-grow">
                     <input type="text" name="searchTerm" value="@ViewBag.SearchTerm"
-                           class="w-full pl-4 pr-10 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all font-bold text-gray-700 placeholder-gray-400"
+                           class="w-full pl-4 pr-10 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all font-bold text-gray-700 placeholder-gray-400"
                            placeholder="ابحث بالاسم، الهاتف، أو العنوان...">
-                    <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+                    <i data-lucide="search" class="absolute left-3 top-3.5 text-gray-500 w-4 h-4"></i>
                 </div>
-                <button type="submit" class="bg-indigo-50 text-indigo-800 hover:bg-indigo-100 px-6 rounded-lg font-bold transition-colors border border-indigo-100">
+                <button type="submit" class="bg-gray-50 text-[#0f1419] hover:bg-gray-50 px-6 rounded-lg font-bold transition-colors border border-gray-200">
                     بحث
                 </button>
                 @if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
                 {
                     <a href="@Url.Action("Index", "Customers")" class="bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 rounded-lg font-bold transition-colors flex items-center justify-center border border-gray-200">
-                        <i class="fas fa-times"></i>
+                        <i data-lucide="x"></i>
                     </a>
                 }
             </form>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-1 px-2 flex items-center justify-between relative overflow-hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-1 px-2 flex items-center justify-between relative overflow-hidden">
             <div class="relative z-10">
                 <p class="text-sm font-bold text-gray-700 my-1 mx-2">إجمالي العملاء</p>
-                <h2 class="text-xl font-bold my-1 mx-2 text-indigo-800 ">@ViewBag.TotalCount</h2>
+                <h2 class="text-xl font-bold my-1 mx-2 text-[#0f1419] ">@ViewBag.TotalCount</h2>
             </div>
-            <div class="p-3 bg-indigo-50 rounded-xl text-indigo-800 my-1 ml-2 relative z-10">
-                <i class="fas fa-users text-lg"></i>
+            <div class="p-3 bg-gray-50 rounded-xl text-[#0f1419] my-1 ml-2 relative z-10">
+                <i data-lucide="users" class="text-lg"></i>
             </div>
-            <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-indigo-50 rounded-full opacity-50 z-0"></div>
+            <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-gray-50 rounded-full opacity-50 z-0"></div>
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+    <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h6 class="font-bold text-gray-800">قائمة العملاء المسجلين</h6>
-            <a href="#" onclick="exportToExcel(event)" class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2 text-sm">
-                <i class="fas fa-file-excel"></i> تصدير Excel
+            <a href="#" onclick="exportToExcel(event)" class="bg-accentGreen hover:bg-accentGreen text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2 text-sm">
+                <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
 
@@ -93,14 +93,14 @@
                             <tr class="hover:bg-gray-50 transition-colors group">
                                 <td class="px-6 py-4 font-bold text-gray-800">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center font-bold text-xs">
+                                        <div class="w-8 h-8 rounded-full bg-gray-100 text-[#0f1419] flex items-center justify-center font-bold text-xs">
                                             @item.FullName.Substring(0, 1)
                                         </div>
                                         @item.FullName
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="tel:@item.PhoneNumber" class="text-gray-600 hover:text-indigo-800 font-bold  justify-center transition-colors dir-ltr text-right">
+                                    <a href="tel:@item.PhoneNumber" class="text-gray-600 hover:text-[#0f1419] font-bold  justify-center transition-colors dir-ltr text-right">
                                         @item.PhoneNumber
                                     </a>
                                 </td>
@@ -108,24 +108,24 @@
                                     @(!string.IsNullOrWhiteSpace(item.Address) ? item.Address : "-")
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="inline-block px-3 py-1 bg-indigo-50 text-indigo-800 rounded-lg text-sm font-bold border border-indigo-100">
+                                    <span class="inline-block px-3 py-1 bg-gray-50 text-[#0f1419] rounded-lg text-sm font-bold border border-gray-200">
                                         @(item.Sales?.Count ?? 0)
                                     </span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center items-center gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                                        <a href="@Url.Action("Statement", "Customers", new { id = item.Id })" class="w-8 h-8 flex items-center justify-center rounded-lg text-emerald-800 hover:text-emerald-800  hover:bg-emerald-50 transition-colors" title="كشف حساب">
-                                            <i class="fas fa-eye text-sm"></i>
+                                        <a href="@Url.Action("Statement", "Customers", new { id = item.Id })" class="w-8 h-8 flex items-center justify-center rounded-lg text-accentGreen hover:text-accentGreen  hover:bg-gray-50 transition-colors" title="كشف حساب">
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
                                         </a>
 
                                     
-                                            <button onclick="editCustomer(@item.Id)" class="w-8 h-8 flex items-center justify-center rounded-lg  text-indigo-800 hover:bg-indigo-50 transition-colors" title="تعديل">
-                                                <i class="fas fa-pen text-sm"></i>
+                                            <button onclick="editCustomer(@item.Id)" class="w-8 h-8 flex items-center justify-center rounded-lg  text-[#0f1419] hover:bg-gray-50 transition-colors" title="تعديل">
+                                                <i data-lucide="edit" class="w-4 h-4"></i>
                                             </button>
 
                                      
                                             <button onclick="deleteCustomer(@item.Id)" class="w-8 h-8 flex items-center justify-center rounded-lg text-red-600 hover:bg-red-50 transition-colors" title="حذف">
-                                                <i class="fas fa-trash text-sm"></i>
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                     </div>
                                 </td>
@@ -137,7 +137,7 @@
 
             @if (ViewBag.TotalPages > 1)
             {
-                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <div class="text-sm font-bold text-gray-500">
                         عرض @(((ViewBag.CurrentPage - 1) * ViewBag.PageSize) + 1) إلى @Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalCount) من @ViewBag.TotalCount عميل
                     </div>
@@ -145,15 +145,15 @@
                         @if (ViewBag.CurrentPage > 1)
                         {
                             <a href="@Url.Action("Index", "Customers", new { page = ViewBag.CurrentPage - 1, searchTerm = ViewBag.SearchTerm })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 hover:border-indigo-200 transition-all">
-                                <i class="fas fa-chevron-right text-xs"></i>
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </a>
                         }
 
                         @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
                         {
                             <a href="@Url.Action("Index", "Customers", new { page = i, searchTerm = ViewBag.SearchTerm })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-indigo-800 text-white border-indigo-800 shadow-md" : "bg-white border-gray-300 text-gray-600 hover:bg-indigo-50 hover:text-indigo-800")">
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-[#0f1419] text-white border-gray-200 shadow-md" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419]")">
                                 @i
                             </a>
                         }
@@ -161,8 +161,8 @@
                         @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                         {
                             <a href="@Url.Action("Index", "Customers", new { page = ViewBag.CurrentPage + 1, searchTerm = ViewBag.SearchTerm })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-800 hover:border-indigo-200 transition-all">
-                                <i class="fas fa-chevron-left text-xs"></i>
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                                <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </a>
                         }
                     </div>
@@ -173,7 +173,7 @@
         {
             <div class="text-center py-12">
                 <div class="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-users text-3xl text-gray-300"></i>
+                    <i data-lucide="users" class="text-3xl text-gray-300 w-10 h-10"></i>
                 </div>
                 <h5 class="text-lg font-bold text-gray-800">لا يوجد عملاء</h5>
                 <p class="text-gray-500 mt-1">ابدأ بإضافة عميل جديد للقائمة</p>
@@ -186,30 +186,30 @@
 <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-2xl border-0 shadow-lg overflow-hidden">
-            <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h5 class="text-lg font-bold text-gray-800" id="addCustomerModalLabel">إضافة عميل جديد</h5>
-                <button type="button" class="text-gray-400 hover:text-red-500 transition-colors" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times text-xl"></i>
+                <button type="button" class="text-gray-500 hover:text-accentRed transition-colors" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-lucide="x" class="text-xl"></i>
                 </button>
             </div>
             <form id="addCustomerForm" asp-action="Create" method="post" class="p-6 space-y-4">
                 @Html.AntiForgeryToken()
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">الاسم الكامل <span class="text-red-500">*</span></label>
-                    <input type="text" name="FullName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all" placeholder="ادخل اسم العميل">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">الاسم الكامل <span class="text-accentRed">*</span></label>
+                    <input type="text" name="FullName" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all" placeholder="ادخل اسم العميل">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">رقم الهاتف <span class="text-red-500">*</span></label>
-                    <input type="tel" name="PhoneNumber" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all" placeholder="01xxxxxxxxx">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">رقم الهاتف <span class="text-accentRed">*</span></label>
+                    <input type="tel" name="PhoneNumber" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all" placeholder="01xxxxxxxxx">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">العنوان <span class="text-red-500">*</span></label>
-                    <input type="text" name="Address" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all" placeholder="ادخل العنوان بالتفصيل">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">العنوان <span class="text-accentRed">*</span></label>
+                    <input type="text" name="Address" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all" placeholder="ادخل العنوان بالتفصيل">
                 </div>
 
-                <div class="flex gap-3 pt-4 border-t border-gray-100 mt-4">
-                    <button type="button" class="flex-1 py-2.5 border border-gray-300 text-gray-700 hover:text-red-700 rounded-xl font-bold hover:bg-red-50 hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
-                    <button type="submit" id="saveBtn" class="flex-1 py-2.5 bg-indigo-800 text-white rounded-xl font-bold hover:bg-indigo-900 shadow-md hover:-translate-y-0.5 transition-all">حفظ العميل</button>
+                <div class="flex gap-3 pt-4 border-t border-gray-200 mt-4">
+                    <button type="button" class="flex-1 py-2.5 border border-gray-200 text-gray-700 hover:text-accentRed rounded-xl font-bold hover:bg-red-50 hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" id="saveBtn" class="flex-1 py-2.5 bg-[#0f1419] text-white rounded-xl font-bold hover:bg-primaryHover shadow-md hover:-translate-y-0.5 transition-all">حفظ العميل</button>
                 </div>
             </form>
         </div>
@@ -220,31 +220,31 @@
 <div class="modal fade" id="editCustomerModal" tabindex="-1" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-2xl border-0 shadow-lg overflow-hidden">
-            <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h5 class="text-lg font-bold text-gray-800" id="editCustomerModalLabel">تعديل بيانات العميل</h5>
-                <button type="button" class="text-gray-400 hover:text-red-500 transition-colors" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times text-xl"></i>
+                <button type="button" class="text-gray-500 hover:text-accentRed transition-colors" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-lucide="x" class="text-xl w-5 h-5"></i>
                 </button>
             </div>
             <form id="editCustomerForm" method="post" class="p-6 space-y-4">
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="editCustomerId" name="Id">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">الاسم الكامل <span class="text-red-500">*</span></label>
-                    <input type="text" id="editCustomerFullName" name="FullName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">الاسم الكامل <span class="text-accentRed">*</span></label>
+                    <input type="text" id="editCustomerFullName" name="FullName" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">رقم الهاتف <span class="text-red-500">*</span></label>
-                    <input type="tel" id="editCustomerPhoneNumber" name="PhoneNumber" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">رقم الهاتف <span class="text-accentRed">*</span></label>
+                    <input type="tel" id="editCustomerPhoneNumber" name="PhoneNumber" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">العنوان <span class="text-red-500">*</span></label>
-                    <input type="text" id="editCustomerAddress" name="Address" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-indigo-800 focus:border-indigo-800 outline-none transition-all">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">العنوان <span class="text-accentRed">*</span></label>
+                    <input type="text" id="editCustomerAddress" name="Address" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all">
                 </div>
 
-                <div class="flex gap-3 pt-4 border-t border-gray-100 mt-4">
-                    <button type="button" class="flex-1 py-2.5 border border-gray-300 text-gray-700 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
-                    <button type="submit" id="editSaveBtn" class="flex-1 py-2.5 bg-indigo-800 text-white rounded-xl font-bold hover:bg-indigo-900 shadow-md hover:-translate-y-0.5 transition-all">حفظ التغييرات</button>
+                <div class="flex gap-3 pt-4 border-t border-gray-200 mt-4">
+                    <button type="button" class="flex-1 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" id="editSaveBtn" class="flex-1 py-2.5 bg-[#0f1419] text-white rounded-xl font-bold hover:bg-primaryHover shadow-md hover:-translate-y-0.5 transition-all">حفظ التغييرات</button>
                 </div>
             </form>
         </div>
@@ -267,7 +267,8 @@
                 addForm.addEventListener("submit", function () {
                     if(addForm.checkValidity()){
                         saveBtn.disabled = true;
-                        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i> جارٍ الحفظ...';
+                        saveBtn.innerHTML = '<i data-lucide="loader-2" class="animate-spin ml-2 inline-block"></i> جارٍ الحفظ...';
+                        lucide.createIcons(); // Re-init for dynamic content
                         saveBtn.classList.add('opacity-75', 'cursor-not-allowed');
                     }
                 });
@@ -344,7 +345,8 @@
             console.log('Form data:', $(this).serialize());
 
             // Disable button and show loading
-            editSaveBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin ml-2"></i> جارٍ الحفظ...').addClass('opacity-75 cursor-not-allowed');
+            editSaveBtn.prop('disabled', true).html('<i data-lucide="loader-2" class="animate-spin ml-2 inline-block"></i> جارٍ الحفظ...').addClass('opacity-75 cursor-not-allowed');
+            lucide.createIcons();
 
             $.ajax({
                 url: '@Url.Action("Edit", "Customers")/' + id,

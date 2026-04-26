@@ -5,25 +5,25 @@
 
 <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
-        <i class="fas fa-trash text-red-700"></i> @ViewData["Title"]
+        <i data-lucide="trash-2" class="text-accentRed w-6 h-6"></i> @ViewData["Title"]
     </h1>
-    <a asp-action="Index" class="px-6 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-indigo-100 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
-        العودة للقائمة <i class="fas fa-arrow-left"></i>
+    <a asp-action="Index" class="px-6 py-2.5 bg-white border border-gray-200 text-gray-500 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
+        العودة للقائمة <i data-lucide="arrow-left" class="w-4 h-4"></i>
     </a>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <div class="md:col-span-2">
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
             <div class="bg-red-50 px-6 py-4 border-b border-red-100 flex items-center gap-2">
-                <i class="fas fa-exclamation-triangle text-red-700 text-xl"></i>
+                <i data-lucide="alert-triangle" class="text-accentRed w-6 h-6"></i>
                 <h5 class="text-lg font-bold text-red-800">تأكيد الحذف</h5>
             </div>
 
             <div class="p-6 space-y-6">
                 <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-4 items-start">
                     <div class="p-2 bg-amber-100 rounded-lg text-amber-600">
-                        <i class="fas fa-info-circle text-xl"></i>
+                        <i data-lucide="info" class="w-6 h-6"></i>
                     </div>
                     <div>
                         <h4 class="font-bold text-gray-800 text-lg">تحذير!</h4>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-xl border border-gray-200">
                     <div>
                         <label class="block text-sm font-bold text-gray-500 mb-1">اسم الفئة</label>
                         <p class="text-xl font-bold text-gray-800">@Model.Name</p>
@@ -39,7 +39,7 @@
 
                     <div>
                         <label class="block text-sm font-bold text-gray-500 mb-1">عدد المنتجات</label>
-                        <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-lg text-sm font-bold border border-indigo-200">
+                        <span class="inline-block px-3 py-1 bg-gray-100 text-[#0f1419] rounded-lg text-sm font-bold border border-gray-200">
                             @Model.Products.Count منتج
                         </span>
                     </div>
@@ -61,12 +61,12 @@
                 {
                     <div class="bg-red-50 border border-red-200 rounded-xl p-4">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="p-2 bg-red-100 rounded-full text-red-700">
-                                <i class="fas fa-ban"></i>
+                            <div class="p-2 bg-red-100 rounded-full text-accentRed">
+                                <i data-lucide="ban" class="w-4 h-4"></i>
                             </div>
                             <div>
                                 <h6 class="font-bold text-red-800 text-lg">لا يمكن حذف الفئة!</h6>
-                                <p class="text-red-700 text-sm font-bold">يجب نقل أو حذف المنتجات (@Model.Products.Count) المرتبطة بهذه الفئة أولاً.</p>
+                                <p class="text-accentRed text-sm font-bold">يجب نقل أو حذف المنتجات (@Model.Products.Count) المرتبطة بهذه الفئة أولاً.</p>
                             </div>
                         </div>
 
@@ -85,7 +85,7 @@
                                         <tr class="hover:bg-gray-50 transition-colors">
                                             <td class="px-4 py-3 text-sm font-bold text-gray-800">@product.Name</td>
                                             <td class="px-4 py-3 text-sm font-bold text-gray-600">@product.Quantity</td>
-                                            <td class="px-4 py-3 text-sm font-bold text-emerald-700">@product.SalePrice.ToString("C")</td>
+                                            <td class="px-4 py-3 text-sm font-bold text-accentGreen">@product.SalePrice.ToString("C")</td>
                                         </tr>
                                     }
                                     @if (Model.Products.Count > 5)
@@ -109,15 +109,15 @@
                 }
                 else
                 {
-                    <form asp-action="Delete" method="post" class="flex gap-3 pt-2 border-t border-gray-100">
+                    <form asp-action="Delete" method="post" class="flex gap-3 pt-2 border-t border-gray-200">
                         <input type="hidden" asp-for="Id" />
 
                         <button type="submit" class="bg-red-700 hover:bg-red-800 text-white px-6 py-3 rounded-xl font-bold transition duration-200 flex items-center gap-2 shadow-md hover:shadow-red-500 hover:-translate-y-0.5">
-                            <i class="fas fa-trash"></i> تأكيد الحذف
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> تأكيد الحذف
                         </button>
 
-                        <a asp-action="Index" class="border border-gray-300 text-gray-700 hover:text-indigo-800 hover:bg-indigo-50 px-6 py-3 rounded-xl font-bold transition duration-200 flex items-center gap-2 hover:-translate-y-0.5">
-                            <i class="fas fa-times"></i> إلغاء
+                        <a asp-action="Index" class="border border-gray-200 text-gray-700 hover:text-[#0f1419] hover:bg-gray-50 px-6 py-3 rounded-xl font-bold transition duration-200 flex items-center gap-2 hover:-translate-y-0.5">
+                            <i data-lucide="x" class="w-4 h-4"></i> إلغاء
                         </a>
                     </form>
                 }
@@ -126,29 +126,29 @@
     </div>
 
     <div class="md:col-span-1">
-        <div class="bg-white rounded-xl shadow-sm border border-indigo-100 overflow-hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
                 <h6 class="font-bold text-md text-gray-800">بدائل الحذف</h6>
             </div>
             <div class="p-5">
                 <ul class="space-y-4 mb-6">
                     <li class="flex items-start gap-3 text-sm text-gray-700 font-bold">
-                        <i class="fas fa-edit text-amber-500 mt-1"></i>
+                        <i data-lucide="edit" class="text-amber-500 mt-1 w-4 h-4"></i>
                         <span>يمكنك تعديل اسم أو وصف الفئة بدلاً من حذفها.</span>
                     </li>
                     <li class="flex items-start gap-3 text-sm text-gray-700 font-bold">
-                        <i class="fas fa-toggle-off text-gray-600 mt-1"></i>
+                        <i data-lucide="toggle-left" class="text-gray-600 mt-1 w-4 h-4"></i>
                         <span>يمكنك إلغاء تفعيل الفئة لإخفائها مؤقتاً.</span>
                     </li>
                     <li class="flex items-start gap-3 text-sm text-gray-700 font-bold">
-                        <i class="fas fa-exchange-alt text-indigo-800 mt-1"></i>
+                        <i data-lucide="arrow-left-right" class="text-[#0f1419] mt-1 w-4 h-4"></i>
                         <span>يجب نقل المنتجات لفئة أخرى قبل الحذف.</span>
                     </li>
                 </ul>
 
                 <div class="space-y-3">
-                    <a href="/Categories/Edit/@Model.Id" class="w-full flex justify-center items-center gap-2 px-4 py-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-800 hover:text-indigo-800 rounded-xl font-bold hover:-translate-y-0.5 transition-all">
-                        <i class="fas fa-edit"></i> تعديل الفئة
+                    <a href="/Categories/Edit/@Model.Id" class="w-full flex justify-center items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-100 text-[#0f1419] hover:text-[#0f1419] rounded-xl font-bold hover:-translate-y-0.5 transition-all">
+                        <i data-lucide="edit" class="w-4 h-4"></i> تعديل الفئة
                     </a>
                 </div>
             </div>

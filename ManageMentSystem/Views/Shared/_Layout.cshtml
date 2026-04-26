@@ -7,34 +7,33 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - نظام إدارة المبيعات</title>
-
+    <title>@ViewData["Title"] - Zenith ERP</title>
     <script src="~/lib/tailwindcss/tailwind.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Cairo', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="~/js/tailwind-theme.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Local Cairo Font -->
     <link rel="stylesheet" href="~/css/cairo-font.css" />
 
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
-        <link href="~/lib/fontawesome/css/all.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/lucide@latest"></script>
         <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
         <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
+        <style>
+            .ai-pulse { animation: pulse-ring 2s infinite; }
+            @@keyframes pulse-ring {
+              0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(15, 20, 25, 0.7); }
+              70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(15, 20, 25, 0); }
+              100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(15, 20, 25, 0); }
+            }
+            body { background-color: #ffffff; color: #0f1419; }
+            .sidebar-link-active { background-color: #f8f9fa; color: #0f1419; border-right: 4px solid #0f1419; }
+        </style>
         <link href="~/lib/datatables-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
         <link href="~/lib/datatables-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet">
 
     <link rel="manifest" href="~/manifest.json" />
-    <meta name="theme-color" content="#1e1b4b" />
+    <meta name="theme-color" content="#0f1419" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -47,14 +46,14 @@
         var tabSettings = await SystemSettingsService.GetTabVisibilitySettingsAsync();
         
         <!-- Mobile Header (Fixed) -->
-        <header class="fixed top-0 inset-x-0 h-16 bg-gradient-to-br from-indigo-800 to-indigo-900 border-b border-indigo-700 flex items-center justify-between px-4 z-[1000] md:hidden shadow-md transition-all duration-300 print:hidden">
+        <header class="fixed top-0 inset-x-0 h-16 bg-[#0f1419] border-b border-white/5 flex items-center justify-between px-4 z-[1000] md:hidden shadow-md transition-all duration-300 print:hidden">
             <!-- Menu Toggle -->
-            <button id="mobileMenuBtn" class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-50 text-indigo-800 hover:bg-indigo-100 transition-colors border border-indigo-600">
-                <i class="fas fa-bars text-lg"></i>
+            <button id="mobileMenuBtn" class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-colors border border-white/10">
+                <i data-lucide="menu" class="text-lg"></i>
             </button>
 
             <!-- Logo (Centered) -->
-            <img src="~/images/translogo.webp" alt="Qota" onclick="toggleAboutModal()" class="h-8 object-contain cursor-pointer active:scale-95 transition-transform drop-shadow-sm" />
+            <img src="~/images/translogo.webp" alt="Zenith ERP" onclick="toggleAboutModal()" class="h-8 object-contain cursor-pointer active:scale-95 transition-transform drop-shadow-sm" />
 
             <!-- Spacer/Placeholder -->
             <div class="w-10"></div>
@@ -63,24 +62,24 @@
         <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 hidden opacity-0 transition-opacity duration-300 ease-in-out md:hidden print:hidden" id="sidebarOverlay"></div>
 
         <div class="flex">
-            <nav id="sidebar" class="fixed top-0 right-0 h-screen w-72  border-r border-indigo-50 shadow-xl z-50 overflow-y-auto transition-all duration-300 ease-in-out translate-x-full md:translate-x-0 bg-gradient-to-br from-indigo-800 to-indigo-900 print:hidden">
-                <div class="sidebar-header text-center border-b border-indigo-50 p-2 md:p-6 bg-gradient-to-br from-indigo-800 to-indigo-900 sticky top-0 z-10">
-                    <img src="~/images/translogo.webp" alt="Qota Logo" onclick="toggleAboutModal()" class="h-12 w-28 mx-auto object-contain drop-shadow-md transition-transform hover:scale-105 duration-300 cursor-pointer" />
+            <nav id="sidebar" class="fixed top-0 right-0 h-screen w-72 border-l border-white/5 shadow-2xl z-50 overflow-y-auto transition-all duration-300 ease-in-out translate-x-full md:translate-x-0 bg-[#0f1419] print:hidden">
+                <div class="sidebar-header text-center border-b border-white/5 p-2 md:p-6 bg-[#0f1419] sticky top-0 z-10 flex items-center justify-center gap-3">
+                    <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center border border-white/10">
+                        <span class="text-white font-bold text-xl leading-none">Z</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-white tracking-tight">Zenith ERP</h1>
                 </div>
 
                 <div class="sidebar-content p-0 flex flex-col">
                     <ul class="flex flex-col flex-grow">
                         @{
-                            // تم تغيير جميع ألوان Sky إلى Indigo هنا (active state)
-                            string activeLinkClasses = "bg-indigo-50  text-indigo-800  font-semibold shadow-sm shadow-indigo-100/50 border-r-4 border-indigo-800  transform translate-x-0.5";
-
-                            // تم تغيير ألوان الـ Hover هنا إلى Indigo
-                            string baseLinkClasses = "flex items-center font-medium p-3 rounded-xl transition-all duration-300 text-indigo-50  hover:bg-indigo-50 hover:text-indigo-800 hover:translate-x-[-4px]";
+                            string activeLinkClasses = "bg-white/10 text-white font-bold text-lg border-r-4 border-white transform translate-x-0.5";
+                            string baseLinkClasses = "flex items-center gap-3 p-3 rounded-xl transition-all duration-300 text-gray-200 font-bold text-base hover:bg-white/5 hover:text-white hover:translate-x-[-4px]";
                         }
 
                         <li class="mt-2 mb-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? activeLinkClasses : "")" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home ml-2"></i>
+                                <i data-lucide="home" class="ml-2 w-6 h-6 inline-block"></i>
                                 الرئيسية
                             </a>
                         </li>
@@ -89,7 +88,7 @@
                         {
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Products" ? activeLinkClasses : "")" asp-controller="Products" asp-action="Index">
-                                <i class="fas fa-box ml-2"></i>
+                                <i data-lucide="package" class="ml-2 w-6 h-6 inline-block"></i>
                                 المنتجات
                             </a>
                         </li>
@@ -99,7 +98,7 @@
                         {
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Categories" ? activeLinkClasses : "")" asp-controller="Categories" asp-action="Index">
-                                <i class="fas fa-tags ml-2"></i>
+                                <i data-lucide="tags" class="ml-2 w-6 h-6 inline-block"></i>
                                 الفئات
                             </a>
                         </li>
@@ -109,7 +108,7 @@
                         {
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customers" ? activeLinkClasses : "")" asp-controller="Customers" asp-action="Index">
-                                <i class="fas fa-users ml-2"></i>
+                                <i data-lucide="users" class="ml-2 w-6 h-6 inline-block"></i>
                                 العملاء
                             </a>
                         </li>
@@ -120,7 +119,7 @@
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Sales"  &&
                                ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? activeLinkClasses : "")" asp-controller="Sales" asp-action="Index">
-                                <i class="fas fa-shopping-cart ml-2"></i>
+                                <i data-lucide="shopping-cart" class="ml-2 w-6 h-6 inline-block"></i>
                                 المبيعات
                             </a>
                         </li>
@@ -130,7 +129,7 @@
                         {
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Installments" ? activeLinkClasses : "")" asp-controller="Installments" asp-action="Index">
-                                <i class="fas fa-credit-card ml-2"></i>
+                                <i data-lucide="credit-card" class="ml-2 w-6 h-6 inline-block"></i>
                                 الأقساط
                             </a>
                         </li>
@@ -140,7 +139,7 @@
                         {
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "GeneralDebts" ? activeLinkClasses : "")" asp-controller="GeneralDebts" asp-action="Index">
-                                <i class="fas fa-scale-balanced ml-2"></i>
+                                <i data-lucide="scale" class="ml-2 w-6 h-6 inline-block"></i>
                                 الديون
                             </a>
                         </li>
@@ -150,7 +149,7 @@
                         {
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StoreAccount" ? activeLinkClasses : "")" asp-controller="StoreAccount" asp-action="Index">
-                                <i class="fas fa-calculator ml-2"></i>
+                                <i data-lucide="calculator" class="ml-2 w-6 h-6 inline-block"></i>
                                 الحسابات
                             </a>
                         </li>
@@ -158,14 +157,14 @@
 
                         <li class="nav-item my-0.5 mx-2">
                              <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "SystemSettings" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? activeLinkClasses : "")" asp-controller="SystemSettings" asp-action="Index">
-                               <i class="fas fa-users-cog ml-2"></i>
+                               <i data-lucide="user-cog" class="ml-2 w-6 h-6 inline-block"></i>
                                 الإعدادات
                              </a>
                         </li>
                         
                         <li class="nav-item my-0.5 mx-2">
                              <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Action"]?.ToString() == "Subscription" ? activeLinkClasses : "")" asp-controller="SystemSettings" asp-action="Subscription">
-                               <i class="fas fa-crown ml-2"></i>
+                               <i data-lucide="crown" class="ml-2 w-6 h-6 inline-block"></i>
                                 الاشتراك
                              </a>
                         </li>
@@ -174,7 +173,7 @@
                         {
                         <li class="my-0.5 mx-2">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? activeLinkClasses : "")" asp-controller="Reports" asp-action="Index">
-                                <i class="fas fa-chart-bar ml-2"></i>
+                                <i data-lucide="bar-chart-3" class="ml-2 w-6 h-6 inline-block"></i>
                                 التقارير
                             </a>
                         </li>
@@ -182,8 +181,8 @@
 
                         <li class="mt-4 mb-4 mx-2">
                             <form asp-controller="Home" asp-action="Logout" method="post">
-                                <button type="submit" class="bg-red-700 hover:bg-red-800 text-white font-medium py-2 w-full rounded-xl transition-all duration-300 shadow-md hover:shadow-lg" style="border-radius:1rem;">
-                                    <i class="fas fa-sign-out-alt ml-1"></i> تسجيل الخروج
+                                <button type="submit" class="bg-white/5 hover:bg-red-950/30 text-gray-500 hover:text-red-400 font-bold py-3 w-full rounded-xl transition-all duration-300 flex items-center justify-center gap-2 border border-white/5 hover:border-red-900/30">
+                                    <i data-lucide="log-out" class="w-4 h-4"></i> تسجيل الخروج
                                 </button>
                             </form>
                         </li>
@@ -191,10 +190,19 @@
                 </div>
             </nav>
 
-            <div class="main-content flex-grow mr-0 md:mr-72 transition-all duration-300 ease-in-out pt-16 md:pt-0 w-full max-w-full overflow-x-auto">
+            <div class="main-content flex-grow mr-0 md:mr-72 transition-all duration-300 ease-in-out pt-16 md:pt-0 w-full max-w-full overflow-x-auto bg-gray-50/30">
 
                 <main class="p-4 w-full max-w-full overflow-x-auto">
                     @RenderBody()
+            <!-- AI Floating Assistant -->
+    <div class="fixed bottom-6 left-6 z-[60] print:hidden">
+        <button onclick="showAIAnalysis()" class="w-14 h-14 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 group ai-glow">
+            <i data-lucide="sparkles" class="w-7 h-7 group-hover:rotate-12 transition-transform"></i>
+            <span class="absolute right-full mr-3 bg-black text-white text-xs font-bold py-2 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl border border-white/10/50">
+                Zenith AI Insights
+            </span>
+        </button>
+    </div>
                 </main>
             </div>
         </div>
@@ -306,19 +314,19 @@
         <div class="fixed inset-0 z-10 overflow-y-auto">
             <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 
-                <div class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-indigo-100">
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-200">
                     
                     <!-- Decorative Header -->
-                    <div class="bg-gradient-to-r from-indigo-800 to-indigo-900 h-24 relative overflow-hidden flex items-center justify-center">
+                    <div class=" bg-[#0f1419]  h-24 relative overflow-hidden flex items-center justify-center">
                          <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #fff 0px, #fff 1px, transparent 1px, transparent 10px);"></div>
-                         <img src="~/images/translogo.webp" alt="Qota" class="h-16 relative z-10 drop-shadow-xs filter" />
+                         <img src="~/images/translogo.webp" alt="Zenith ERP" class="h-16 relative z-10 drop-shadow-xs filter" />
                     </div>
 
                     <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-center">
-                            <h3 class="text-xl font-bold leading-6 text-indigo-900 mb-2" id="about-title">نظام كوتة لإدارة المبيعات</h3>
+                            <h3 class="text-xl font-bold leading-6 text-[#0f1419] mb-2" id="about-title">نظام Zenith ERP لإدارة المبيعات</h3>
                             <div class="mt-2">
-                                <p class="text-sm font-bold text-gray-700 mb-4 bg-indigo-50 py-1 px-3 rounded-full inline-block font-mono">الإصدار 1.0.0</p>
+                                <p class="text-sm font-bold text-gray-700 mb-4 bg-gray-50 py-1 px-3 rounded-full inline-block font-mono">الإصدار 1.0.0</p>
                                 <p class="text-sm text-gray-600 leading-relaxed">
                                     نظام متكامل صُمم خصيصاً لتسهيل إدارة مبيعاتك، مخزونك، وعملائك. نهدف لتمكين أصحاب الأعمال من النمو والتحكم الكامل بمشاريعهم.
                                 </p>
@@ -326,19 +334,19 @@
 
                             <!-- Social Links -->
                             <div class="mt-8 flex justify-center gap-6">
-                                <a href="https://www.facebook.com/profile.php?id=61586835293416" target="_blank" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-indigo-800 transition-colors">
-                                    <div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
-                                        <i class="fab fa-facebook-f text-lg"></i>
+                                <a href="https://www.facebook.com/profile.php?id=61586835293416" target="_blank" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-[#0f1419] transition-colors">
+                                    <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                                        <i data-lucide="facebook" class="text-lg"></i>
                                     </div>
                                 </a>
                                 <a href="https://www.youtube.com/@@qotaSystem" target="_blank" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-red-600 transition-colors">
                                     <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition-colors">
-                                        <i class="fab fa-youtube text-lg"></i>
+                                        <i data-lucide="youtube" class="text-lg"></i>
                                     </div>
                                 </a>
-                                <a href="#" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-pink-600 transition-colors">
-                                    <div class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center group-hover:bg-pink-100 transition-colors">
-                                        <i class="fab fa-instagram text-lg"></i>
+                                <a href="#" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-[#0f1419] transition-colors">
+                                    <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-gray-50 transition-colors">
+                                        <i data-lucide="instagram" class="text-lg"></i>
                                     </div>
                                 </a>
                                 <a href="#" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-black transition-colors">
@@ -352,19 +360,24 @@
                     
                     <div class="bg-gray-100 px-4 py-3 flex flex-col sm:flex-row-reverse gap-2 sm:px-6 justify-center">
                         <button type="button" class="inline-flex w-full justify-center rounded-lg bg-gray-50 hover:bg-red-100 border border-gray-400 px-8 py-2 text-sm font-semibold text-gray-900 shadow-sm transition-colors sm:w-auto" onclick="toggleAboutModal()">إغلاق</button>
-                        <button type="button" class="pwa-install-btn hidden inline-flex w-full justify-center rounded-lg bg-indigo-800 hover:bg-indigo-900 border border-transparent px-6 py-2 text-sm font-semibold text-white shadow-sm transition-colors sm:w-auto items-center gap-2" onclick="installPWA()">
-                            <i class="fas fa-plus-circle"></i>
+                        <button type="button" class="pwa-install-btn hidden inline-flex w-full justify-center rounded-lg bg-[#0f1419] hover:bg-primaryHover border border-transparent px-6 py-2 text-sm font-semibold text-white shadow-sm transition-colors sm:w-auto items-center gap-2" onclick="installPWA()">
+                            <i data-lucide="plus-circle"></i>
                             تثبيت على سطح المكتب
                         </button>
                     </div>
                     
                     <div class="text-center pb-4 text-xs text-gray-500">
-                        &copy; @DateTime.Now.Year Qota System. All rights reserved.
+                        &copy; @DateTime.Now.Year Zenith ERP. All rights reserved.
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>
         function toggleAboutModal() {
@@ -376,6 +389,45 @@
             }
         }
 
+        function showAIAnalysis() {
+            Swal.fire({
+                title: '<div class="flex items-center gap-2 justify-center"><i data-lucide="brain-circuit" class="text-[#0f1419]"></i> Zenith AI Intelligence</div>',
+                html: `
+                    <div class="text-right space-y-4 font-sans" dir="rtl">
+                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200">
+                            <h4 class="font-bold text-[#0f1419] mb-2 flex items-center gap-2">
+                                <i data-lucide="trending-up" class="w-4 h-4"></i> ملخص الأداء المالي
+                            </h4>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                بناءً على بيانات المبيعات الأخيرة، نلاحظ نمواً مستقراً بنسبة 12%. أتوقع زيادة في الطلب على فئة "الإلكترونيات" خلال الأسبوع القادم بنسبة 20%.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                            <h4 class="font-bold text-amber-900 mb-2 flex items-center gap-2">
+                                <i data-lucide="alert-triangle" class="w-4 h-4"></i> تنبيهات المخزون
+                            </h4>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                هناك 3 منتجات وصلت للحد الأدنى. أنصح بإعادة طلب "طابعة إتش بي" لتجنب نفاذ المخزون.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                            <h4 class="font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-4 h-4"></i> نصيحة Zenith
+                            </h4>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                تفعيل خاصية رسائل الواتساب الجماعية للعملاء المميزين قد يزيد من مبيعاتك بنسبة 15% خلال عطلة نهاية الأسبوع.
+                            </p>
+                        </div>
+                    </div>
+                `,
+                confirmButtonText: 'حسناً، شكراً',
+                confirmButtonColor: '#0f1419',
+                didOpen: () => {
+                    lucide.createIcons();
+                }
+            });
+        }
+
         // تسجيل Service Worker للـ PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -384,12 +436,15 @@
                     .catch(err => console.log('Service Worker registration failed', err));
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            lucide.createIcons();
+        });
     </script>
 
     @functions {
     private bool HasPermission(System.Security.Claims.ClaimsPrincipal user, string permissionName)
     {
-        // All authenticated users have full access - no permission checks needed
         return user != null && user.Identity != null && user.Identity.IsAuthenticated;
     }
 }

@@ -57,12 +57,24 @@
                         <label asp-for="CurrencyCode" class="block text-sm font-bold text-gray-600 mb-2">
                             <i data-lucide="coins" class="ml-1 text-amber-500"></i> العملة
                         </label>
-                        <select asp-for="CurrencyCode" class="w-full bg-gray-50 border border-gray-200 text-[#0f1419] text-sm rounded-xl focus:ring-gray-200 focus:border-blue-500 block p-4 transition-all duration-300 focus:bg-white">
-                            <option value="EGP">EGP - جنيه مصري</option>
-                            <option value="SAR">SAR - ريال سعودي</option>
-                            <option value="USD">USD - دولار أمريكي</option>
-                            <option value="AED">AED - درهم إماراتي</option>
-                            <option value="KWD">KWD - دينار كويتي</option>
+                        <select asp-for="CurrencyCode" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block p-4 transition-all duration-300 focus:bg-white">
+                            <optgroup label="العملات العربية">
+                                <option value="EGP">EGP - جنيه مصري</option>
+                                <option value="SAR">SAR - ريال سعودي</option>
+                                <option value="AED">AED - درهم إماراتي</option>
+                                <option value="KWD">KWD - دينار كويتي</option>
+                                <option value="QAR">QAR - ريال قطري</option>
+                                <option value="BHD">BHD - دينار بحريني</option>
+                                <option value="OMR">OMR - ريال عماني</option>
+                                <option value="JOD">JOD - دينار أردني</option>
+                            </optgroup>
+                            <optgroup label="العملات الأجنبية">
+                                <option value="USD">USD - دولار أمريكي</option>
+                                <option value="EUR">EUR - يورو</option>
+                                <option value="GBP">GBP - جنيه إسترليني</option>
+                                <option value="CAD">CAD - دولار كندي</option>
+                                <option value="AUD">AUD - دولار أسترالي</option>
+                            </optgroup>
                         </select>
                         <span asp-validation-for="CurrencyCode" class="text-accentRed text-sm mt-1 block"></span>
                     </div>

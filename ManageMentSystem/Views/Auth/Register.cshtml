@@ -83,8 +83,23 @@
                     <div class="relative">
                         <select asp-for="CurrencyCode" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors bg-white appearance-none cursor-pointer">
                             <option value="">اختر العملة</option>
-                            <option value="EGP">جنيه مصري (EGP)</option>
-                            <option value="SAR">ريال سعودي (SAR)</option>
+                            <optgroup label="العملات العربية">
+                                <option value="EGP">جنيه مصري (EGP)</option>
+                                <option value="SAR">ريال سعودي (SAR)</option>
+                                <option value="AED">درهم إماراتي (AED)</option>
+                                <option value="KWD">دينار كويتي (KWD)</option>
+                                <option value="QAR">ريال قطري (QAR)</option>
+                                <option value="BHD">دينار بحريني (BHD)</option>
+                                <option value="OMR">ريال عماني (OMR)</option>
+                                <option value="JOD">دينار أردني (JOD)</option>
+                            </optgroup>
+                            <optgroup label="العملات الأجنبية">
+                                <option value="USD">دولار أمريكي (USD)</option>
+                                <option value="EUR">يورو (EUR)</option>
+                                <option value="GBP">جنيه إسترليني (GBP)</option>
+                                <option value="CAD">دولار كندي (CAD)</option>
+                                <option value="AUD">دولار أسترالي (AUD)</option>
+                            </optgroup>
                         </select>
                          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
                             <i data-lucide="chevron-down" class="w-3 h-3"></i>

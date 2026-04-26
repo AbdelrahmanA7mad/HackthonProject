@@ -124,6 +124,18 @@ builder.Services.AddScoped<IUserService, UserService>();
 // Register WhatsApp Service
 builder.Services.AddScoped<ManageMentSystem.Services.WhatsAppServices.IWhatsAppService, ManageMentSystem.Services.WhatsAppServices.WhatsAppService>();
 
+// ── Gemini AI Services ─────────────────────────────────────────────────────
+builder.Services.AddSingleton(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var apiKey = config["Gemini:ApiKey"]!;
+    return new Google.GenAI.Client(apiKey: apiKey);
+});
+builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiToolExecutor,
+                           ManageMentSystem.Services.AiServices.AiToolExecutor>();
+builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiOrchestratorService,
+                           ManageMentSystem.Services.AiServices.AiOrchestratorService>();
+// ───────────────────────────────────────────────────────────────────────────
 
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddScoped<PdfService>();

@@ -155,6 +155,13 @@
                         </li>
                         }
 
+                        <li class="my-0.5 mx-2">
+                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Ai" ? activeLinkClasses : "")" asp-controller="Ai" asp-action="Index">
+                               <i class="fas fa-robot ml-2 text-indigo-300"></i>
+                                المساعد الذكي
+                             </a>
+                        </li>
+
                         <li class="nav-item my-0.5 mx-2">
                              <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "SystemSettings" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? activeLinkClasses : "")" asp-controller="SystemSettings" asp-action="Index">
                                <i data-lucide="user-cog" class="ml-2 w-6 h-6 inline-block"></i>
@@ -448,5 +455,12 @@
         return user != null && user.Identity != null && user.Identity.IsAuthenticated;
     }
 }
+    @{
+        bool isAiPage = ViewContext.RouteData.Values["Controller"]?.ToString() == "Ai" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index";
+        if (!isAiPage)
+        {
+            <partial name="_AiChatWidget" />
+        }
+    }
 </body>
 </html>

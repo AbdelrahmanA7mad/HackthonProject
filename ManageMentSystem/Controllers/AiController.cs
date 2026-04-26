@@ -10,11 +10,12 @@ namespace ManageMentSystem.Controllers
     public class AiController : Controller
     {
         private readonly IAiOrchestratorService _orchestrator;
-        private const string HistorySessionKey = "ai_chat_history";
+        private readonly IAiConversationService _conversationService;
 
-        public AiController(IAiOrchestratorService orchestrator)
+        public AiController(IAiOrchestratorService orchestrator, IAiConversationService conversationService)
         {
             _orchestrator = orchestrator;
+            _conversationService = conversationService;
         }
 
         // GET /Ai  → صفحة الـ Chat
@@ -23,32 +24,42 @@ namespace ManageMentSystem.Controllers
             return View();
         }
 
-        // POST /Ai/Chat → رد كامل JSON
-        [HttpPost]
-        public async Task<IActionResult> Chat([FromBody] ChatRequest request)
+        // GET /Ai/GetConversations → استرجاع قائمة المحادثات
+        [HttpGet]
+        public async Task<IActionResult> GetConversations()
         {
-            if (string.IsNullOrWhiteSpace(request?.Message))
-                return BadRequest(new { error = "الرسالة فارغة" });
+            var list = await _conversationService.GetUserConversationsAsync();
+            return Ok(list.Select(c => new { id = c.Id, title = c.Title, updatedAt = c.UpdatedAt }));
+        }
 
-            var history = GetOrCreateHistory();
+        // GET /Ai/GetConversation/{id} → استرجاع رسائل محادثة معينة
+        [HttpGet]
+        public async Task<IActionResult> GetConversation(int id)
+        {
+            var conv = await _conversationService.GetConversationAsync(id);
+            if (conv == null) return NotFound();
 
-            try
+            var messages = conv.Messages.OrderBy(m => m.CreatedAt).Select(m => new
             {
-                var reply = await _orchestrator.ChatAsync(history, request.Message);
-                SaveHistory(history);
-                return Ok(new { reply });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = "حدث خطأ في الاتصال بالذكاء الاصطناعي", details = ex.Message });
-            }
+                role = m.Role,
+                text = m.Content
+            });
+            return Ok(messages);
+        }
+
+        // DELETE /Ai/DeleteConversation/{id}
+        [HttpDelete]
+        public async Task<IActionResult> DeleteConversation(int id)
+        {
+            await _conversationService.DeleteConversationAsync(id);
+            return Ok(new { success = true });
         }
 
         // POST /Ai/Stream → SSE Streaming حرف بحرف
         [HttpPost]
         public async Task Stream([FromBody] ChatRequest request)
         {
-            Response.Headers["Content-Type"]  = "text/event-stream";
+            Response.Headers["Content-Type"] = "text/event-stream";
             Response.Headers["Cache-Control"] = "no-cache";
             Response.Headers["X-Accel-Buffering"] = "no";
 
@@ -58,100 +69,71 @@ namespace ManageMentSystem.Controllers
                 return;
             }
 
-            var history = GetOrCreateHistory();
+            int currentConversationId = request.ConversationId ?? 0;
+            var history = new List<Content>();
+
+            if (currentConversationId > 0)
+            {
+                var conv = await _conversationService.GetConversationAsync(currentConversationId);
+                if (conv != null)
+                {
+                    history = conv.Messages.OrderBy(m => m.CreatedAt).Select(m => new Content
+                    {
+                        Role = m.Role,
+                        Parts = new List<Part> { new Part { Text = m.Content } }
+                    }).ToList();
+                }
+            }
+            else
+            {
+                string title = request.Message.Length > 30 ? request.Message.Substring(0, 30) + "..." : request.Message;
+                var newConv = await _conversationService.CreateConversationAsync(title);
+                currentConversationId = newConv.Id;
+
+                await Response.WriteAsync($"data: [CONVERSATION_ID] {currentConversationId}\n\n");
+                await Response.Body.FlushAsync();
+            }
+
+            await _conversationService.AddMessageAsync(currentConversationId, "user", request.Message);
 
             try
             {
+                var fullModelResponse = new System.Text.StringBuilder();
+
                 await foreach (var chunk in _orchestrator.StreamAsync(history, request.Message))
                 {
-                    // Escape JSON special chars for safe SSE transport
                     var safeChunk = chunk.Replace("\n", "\\n").Replace("\r", "");
                     await Response.WriteAsync($"data: {safeChunk}\n\n");
                     await Response.Body.FlushAsync();
+
+                    if (!chunk.StartsWith("⚙️"))
+                    {
+                        fullModelResponse.Append(chunk);
+                    }
                 }
 
-                SaveHistory(history);
+                var finalText = fullModelResponse.ToString();
+                if (!string.IsNullOrWhiteSpace(finalText))
+                {
+                    await _conversationService.AddMessageAsync(currentConversationId, "model", finalText);
+                }
+
                 await Response.WriteAsync("data: [DONE]\n\n");
                 await Response.Body.FlushAsync();
             }
             catch (Exception ex)
             {
-                var errorMsg = ex.Message;
-                //if (errorMsg.Contains("quota", StringComparison.OrdinalIgnoreCase) || errorMsg.Contains("429"))
-                //{
-                //    errorMsg = "عذراً، لقد تجاوزت الحد المجاني المسموح به للطلبات. يرجى الانتظار دقيقة والمحاولة مجدداً.";
-                //}
-                
-                await Response.WriteAsync($"data: [ERROR] {errorMsg}\n\n");
+                await Response.WriteAsync($"data: [ERROR] {ex.Message}\n\n");
                 await Response.Body.FlushAsync();
             }
         }
 
-        // GET /Ai/GetHistory → استرجاع السجل الحالي
-        [HttpGet]
-        public IActionResult GetHistory()
+
+
+        public class ChatRequest
         {
-            var history = GetOrCreateHistory();
-            // تصفية السجل لبعث النصوص فقط (المستخدم والموديل) وتجاهل الـ function calls/responses للتبسيط في العرض
-            var simpleHistory = history
-                .Where(c => c.Role == "user" || c.Role == "model")
-                .Select(c => new
-                {
-                    role = c.Role,
-                    text = string.Join("\n", c.Parts.Select(p => p.Text))
-                })
-                .Where(c => !string.IsNullOrEmpty(c.text))
-                .ToList();
-
-            return Ok(simpleHistory);
+            public string? Message { get; set; }
+            public int? ConversationId { get; set; }
         }
-
-        // POST /Ai/Clear → مسح سجل المحادثة
-        [HttpPost]
-        public IActionResult Clear()
-        {
-            HttpContext.Session.Remove(HistorySessionKey);
-            return Ok(new { message = "تم مسح المحادثة" });
-        }
-
-        // ─── Helpers ──────────────────────────────────────────────────────────
-
-        private List<Content> GetOrCreateHistory()
-        {
-            var json = HttpContext.Session.GetString(HistorySessionKey);
-            if (string.IsNullOrEmpty(json))
-                return new List<Content>();
-
-            try
-            {
-                return JsonSerializer.Deserialize<List<Content>>(json) ?? new List<Content>();
-            }
-            catch
-            {
-                return new List<Content>();
-            }
-        }
-
-        private void SaveHistory(List<Content> history)
-        {
-            // احتفظ بآخر 20 رسالة فقط لتفادي session overflow
-            if (history.Count > 20)
-                history = history.Skip(history.Count - 20).ToList();
-
-            try
-            {
-                var json = JsonSerializer.Serialize(history);
-                HttpContext.Session.SetString(HistorySessionKey, json);
-            }
-            catch
-            {
-                // ignore serialization errors
-            }
-        }
-    }
-
-    public class ChatRequest
-    {
-        public string? Message { get; set; }
     }
 }

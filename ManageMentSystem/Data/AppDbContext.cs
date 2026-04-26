@@ -1,4 +1,4 @@
-﻿using ManageMentSystem.Models;
+using ManageMentSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +31,8 @@ namespace ManageMentSystem.Data
         public DbSet<InstallmentItem> InstallmentItems { get; set; }
         public DbSet<InstallmentPayment> InstallmentPayments { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
-
+        public DbSet<AiConversation> AiConversations { get; set; }
+        public DbSet<AiMessage> AiMessages { get; set; }
     // New SaaS Entities
     // Removed Employee, Role, Permissions custom entities
 
@@ -201,6 +202,18 @@ namespace ManageMentSystem.Data
                 .HasForeignKey(i => i.TenantId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<AiConversation>()
+                .HasOne(ac => ac.Tenant)
+                .WithMany()
+                .HasForeignKey(ac => ac.TenantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AiMessage>()
+                .HasOne(m => m.Conversation)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.AiConversationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
            
             // ==============================================
             // MULTI-TENANCY: PERFORMANCE INDEXES
@@ -338,6 +351,12 @@ namespace ManageMentSystem.Data
                     _httpContextAccessor.HttpContext == null || 
                     _httpContextAccessor.HttpContext.User == null ||
                     inv.TenantId == _httpContextAccessor.HttpContext.User.FindFirstValue("TenantId"));
+
+                // AiConversation
+                modelBuilder.Entity<AiConversation>().HasQueryFilter(ac => 
+                    _httpContextAccessor.HttpContext == null || 
+                    _httpContextAccessor.HttpContext.User == null ||
+                    ac.TenantId == _httpContextAccessor.HttpContext.User.FindFirstValue("TenantId"));
             }
 
             // Invoice table mapping (keep old table name for backward compatibility)

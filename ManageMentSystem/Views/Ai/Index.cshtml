@@ -6,62 +6,31 @@
 <div class="min-h-[calc(100vh-5rem)] bg-[#f8f9fa] p-4 md:p-8 flex flex-col items-center">
     
     <!-- Main Container -->
-    <div class="w-full max-w-5xl flex flex-col md:flex-row gap-6">
+    <div class="w-full max-w-7xl flex flex-col md:flex-row gap-6">
 
-        <!-- Sidebar / Suggestions -->
-        <div class="w-full md:w-64 flex-shrink-0 flex flex-col gap-4">
-            <!-- Info Card -->
-            <div class="bg-white rounded-xl shadow-sm border border-[#e5e7eb] p-5 hidden md:block">
-                <div class="flex items-center gap-3 mb-2">
-                    <div class="w-10 h-10 rounded-lg bg-[#f8f9fa] flex items-center justify-center text-[#0f1419]">
-                        <i data-lucide="bot" class="w-6 h-6"></i>
+        <!-- History Sidebar -->
+        <div class="w-full md:w-64 flex-shrink-0 flex flex-col gap-4 h-[550px] md:h-[650px]">
+            <div class="flex-1 bg-white rounded-xl shadow-sm border border-[#e5e7eb] flex flex-col overflow-hidden">
+                <div class="px-4 py-3 border-b border-[#e5e7eb] bg-gray-50 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="history" class="w-4 h-4 text-gray-500"></i>
+                        <h3 class="font-bold text-sm text-[#0f1419]">المحادثات السابقة</h3>
                     </div>
-                    <div>
-                        <h2 class="font-bold text-[#0f1419]">مساعد كوتة</h2>
-                        <div class="flex items-center gap-1.5 text-[#059669] font-medium">
-                            <span class="w-2 h-2 rounded-full bg-[#059669] animate-pulse"></span>
-                            متصل الآن
-                        </div>
-                    </div>
+                    <button onclick="startNewChat()" class="text-[#0f1419] hover:bg-gray-200 p-1 rounded-md transition-colors" title="محادثة جديدة">
+                        <i data-lucide="square-pen" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <p class="text-xs text-gray-500 leading-relaxed mt-3">
-                    مساعدك الذكي معتمد على Gemini ليقدم لك تحليلات لحظية لمتجرك ومبيعاتك.
-                </p>
-            </div>
-
-            <!-- Suggestions -->
-            <div class="bg-white rounded-xl shadow-sm border border-[#e5e7eb] p-4">
-                <h3 class="text-sm font-bold text-[#0f1419] mb-4 px-1 border-b border-[#e5e7eb] pb-2">
-                    <i data-lucide="lightbulb" class="w-4 h-4 text-[#d97706] ml-1"></i> اقتراحات سريعة
-                </h3>
-                
-                <div class="flex flex-col gap-2">
-                    <button onclick="sendSuggestion('كام إجمالي المبيعات النهارده؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-2 group">
-                        <i data-lucide="banknote" class="text-textMuted group-hover:text-[#0f1419] w-4 h-4 text-center"></i>
-                        مبيعات اليوم
-                    </button>
-                    <button onclick="sendSuggestion('أكتر 5 منتجات مبيعاً الشهر ده؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-2 group">
-                        <i data-lucide="trophy" class="text-textMuted group-hover:text-[#0f1419] w-4 h-4 text-center"></i>
-                        أفضل المنتجات
-                    </button>
-                    <button onclick="sendSuggestion('كام الربح الصافي؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-2 group">
-                        <i data-lucide="trending-up" class="text-textMuted group-hover:text-[#0f1419] w-4 h-4 text-center"></i>
-                        الربح الصافي
-                    </button>
-                    <button onclick="sendSuggestion('أيه المنتجات اللي خلصت تقريباً؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-2 group">
-                        <i data-lucide="package" class="text-textMuted group-hover:text-[#0f1419] w-4 h-4 text-center"></i>
-                        مخزون منخفض
-                    </button>
-                    <button onclick="sendSuggestion('إيه رصيد الخزينة والديون المتبقية؟')" class="text-right w-full px-3 py-2.5 rounded-lg text-sm text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-2 group">
-                        <i data-lucide="wallet" class="text-textMuted group-hover:text-[#0f1419] w-4 h-4 text-center"></i>
-                        رصيد الخزينة
-                    </button>
+                <div id="history-list" class="flex-1 overflow-y-auto p-2 space-y-1">
+                    <!-- محادثات سابقة هتتحمل هنا عبر JS -->
+                    <div class="text-center py-4 text-gray-400 text-xs hidden" id="empty-history">
+                        لا توجد محادثات سابقة
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Chat Area -->
-        <div class="flex-1 bg-white rounded-xl shadow-sm border border-[#e5e7eb] flex flex-col overflow-hidden h-[600px] md:h-[700px]">
+        <div class="flex-1 bg-white rounded-xl shadow-sm border border-[#e5e7eb] flex flex-col overflow-hidden h-[550px] md:h-[650px]">
             
             <!-- Chat Header -->
             <div class="bg-[#0f1419] px-6 py-4 flex items-center justify-between text-white">
@@ -74,10 +43,6 @@
                         <p class="text-xs text-[#0f1419]">مساعدك للإدارة والتحليل</p>
                     </div>
                 </div>
-                <button onclick="clearHistory()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-red-500/80 text-sm transition-colors border border-white/20 hover:border-red-500 flex items-center gap-2">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">مسح المحادثة</span>
-                </button>
             </div>
 
             <!-- Messages Container -->
@@ -95,30 +60,56 @@
             </div>
 
             <!-- Input Area -->
-            <div class="p-4 bg-white border-t border-gray-200">
-                <div class="relative flex items-end gap-3 max-w-4xl mx-auto">
+            <div class="p-4 bg-white border-t border-gray-200 flex flex-col gap-3">
+                <!-- Quick Suggestions (Horizontal Scroll) -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-4xl mx-auto w-full no-scrollbar">
+                    <button onclick="sendSuggestion('كام إجمالي المبيعات النهارده؟')" class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-1.5 group">
+                        <i data-lucide="banknote" class="text-textMuted group-hover:text-[#0f1419] w-3.5 h-3.5"></i> مبيعات اليوم
+                    </button>
+                    <button onclick="sendSuggestion('أكتر 5 منتجات مبيعاً الشهر ده؟')" class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-1.5 group">
+                        <i data-lucide="trophy" class="text-textMuted group-hover:text-[#0f1419] w-3.5 h-3.5"></i> أفضل المنتجات
+                    </button>
+                    <button onclick="sendSuggestion('كام الربح الصافي؟')" class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-1.5 group">
+                        <i data-lucide="trending-up" class="text-textMuted group-hover:text-[#0f1419] w-3.5 h-3.5"></i> الربح الصافي
+                    </button>
+                    <button onclick="sendSuggestion('أيه المنتجات اللي خلصت تقريباً؟')" class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-1.5 group">
+                        <i data-lucide="package" class="text-textMuted group-hover:text-[#0f1419] w-3.5 h-3.5"></i> مخزون منخفض
+                    </button>
+                    <button onclick="sendSuggestion('إيه رصيد الخزينة والديون المتبقية؟')" class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs text-gray-700 bg-[#f8f9fa] hover:bg-[#e5e7eb] hover:text-[#0f1419] transition-colors border border-transparent hover:border-[#e5e7eb] flex items-center gap-1.5 group">
+                        <i data-lucide="wallet" class="text-textMuted group-hover:text-[#0f1419] w-3.5 h-3.5"></i> الخزينة والديون
+                    </button>
+                </div>
+                
+                <div class="relative flex items-center gap-3 max-w-4xl mx-auto w-full">
+                    
                     <div class="flex-1 relative">
                         <textarea 
                             id="user-input" 
                             rows="1" 
-                            class="w-full bg-gray-50 border border-gray-200 rounded-xl pr-4 pl-12 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#0f1419] focus:border-gray-200 transition-all resize-none max-h-32 text-gray-700 shadow-sm"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 min-h-[50px] focus:outline-none focus:ring-2 focus:ring-[#0f1419] focus:border-gray-200 transition-all resize-none max-h-32 text-gray-700 shadow-sm leading-6"
                             placeholder="اكتب سؤالك هنا... (مثلاً: أرباحي الشهر ده كام؟)"
                             onkeydown="handleKey(event)"
                             oninput="autoResize(this)"
                         ></textarea>
-                        
-                        <div class="absolute left-3 bottom-3 text-gray-400 pointer-events-none hidden md:block">
-                            <span class="text-[10px] bg-white px-2 py-0.5 rounded border border-gray-200">Enter</span>
-                        </div>
                     </div>
                     
-                    <button id="send-btn" onclick="sendMessage()" class="w-12 h-12 rounded-xl bg-[#f8f9fa] hover:bg-[#e5e7eb] text-[#0f1419] flex items-center justify-center transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 flex-shrink-0">
-                        <i data-lucide="send" class="w-6 h-6 transform -translate-x-0.5"></i>
+                    <button 
+                        id="send-btn" 
+                        onclick="sendMessage()" 
+                        class="w-[50px] h-[50px] rounded-xl bg-[#f8f9fa] hover:bg-[#e5e7eb] text-[#0f1419] flex items-center justify-center transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 flex-shrink-0"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send w-6 h-6 transform -translate-x-0.5">
+                            <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path>
+                            <path d="m21.854 2.147-10.94 10.939"></path>
+                        </svg>
                     </button>
                 </div>
+
             </div>
 
         </div>
+
+
     </div>
 </div>
 
@@ -133,6 +124,10 @@
     #messages::-webkit-scrollbar-track { background: transparent; }
     #messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     #messages::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    
+    /* Hide scrollbar for horizontal suggestions */
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
 </style>
 
 <script>
@@ -140,7 +135,153 @@
     const inputEl    = document.getElementById('user-input');
     const sendBtn    = document.getElementById('send-btn');
     const welcomeEl  = document.getElementById('welcome-msg');
-    let isStreaming  = false;
+    let isStreaming = false;
+    let currentConversationId = null;
+
+    async function fetchConversations() {
+        try {
+            const res = await fetch('/Ai/GetConversations');
+            if (res.ok) {
+                const list = await res.json();
+                renderHistoryList(list);
+            }
+        } catch (err) {
+            console.error('Failed to fetch conversations', err);
+        }
+    }
+
+    function renderHistoryList(list) {
+        const listEl = document.getElementById('history-list');
+        const emptyEl = document.getElementById('empty-history');
+        
+        listEl.innerHTML = '';
+        listEl.appendChild(emptyEl);
+        
+        if (list.length === 0) {
+            emptyEl.classList.remove('hidden');
+        } else {
+            emptyEl.classList.add('hidden');
+            list.forEach(conv => {
+                const isSelected = conv.id === currentConversationId;
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex items-center w-full group relative conv-item';
+                wrapper.dataset.id = conv.id;
+                
+                const btn = document.createElement('button');
+                btn.className = isSelected 
+                    ? 'flex-1 text-right pl-10 pr-3 py-2.5 rounded-lg text-sm truncate transition-colors flex items-center gap-2 bg-[#e5e7eb] text-[#0f1419] font-bold'
+                    : 'flex-1 text-right pl-10 pr-3 py-2.5 rounded-lg text-sm truncate transition-colors flex items-center gap-2 text-gray-600 hover:bg-gray-100';
+                btn.onclick = () => loadConversation(conv.id);
+                btn.innerHTML = `<i data-lucide="message-square" class="w-4 h-4 flex-shrink-0"></i> <span class="truncate">${conv.title}</span>`;
+                
+                const delBtn = document.createElement('button');
+                delBtn.className = isSelected
+                    ? 'w-8 h-8 rounded-md flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors absolute left-1 opacity-100 group-hover:opacity-100'
+                    : 'w-8 h-8 rounded-md flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors absolute left-1 opacity-0 group-hover:opacity-100';
+                delBtn.title = 'حذف المحادثة';
+                delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
+                delBtn.innerHTML = `<i data-lucide="trash-2" class="w-4 h-4"></i>`;
+
+                wrapper.appendChild(btn);
+                wrapper.appendChild(delBtn);
+                listEl.appendChild(wrapper);
+            });
+            lucide.createIcons();
+        }
+    }
+
+    function updateSidebarSelection() {
+        const items = document.querySelectorAll('.conv-item');
+        items.forEach(wrapper => {
+            const id = parseInt(wrapper.dataset.id);
+            const isSelected = id === currentConversationId;
+            const btn = wrapper.children[0];
+            const delBtn = wrapper.children[1];
+            
+            if (isSelected) {
+                btn.className = 'flex-1 text-right pl-10 pr-3 py-2.5 rounded-lg text-sm truncate transition-colors flex items-center gap-2 bg-[#e5e7eb] text-[#0f1419] font-bold';
+                delBtn.className = 'w-8 h-8 rounded-md flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors absolute left-1 opacity-100 group-hover:opacity-100';
+            } else {
+                btn.className = 'flex-1 text-right pl-10 pr-3 py-2.5 rounded-lg text-sm truncate transition-colors flex items-center gap-2 text-gray-600 hover:bg-gray-100';
+                delBtn.className = 'w-8 h-8 rounded-md flex items-center justify-center text-red-500 hover:bg-red-100 transition-colors absolute left-1 opacity-0 group-hover:opacity-100';
+            }
+        });
+    }
+
+    async function loadConversation(id) {
+        if (isStreaming) return;
+        try {
+            const res = await fetch(`/Ai/GetConversation/${id}`);
+            if (res.ok) {
+                const messages = await res.json();
+                currentConversationId = id;
+                
+                messagesEl.innerHTML = '';
+                if (messages.length === 0) {
+                    messagesEl.appendChild(welcomeEl);
+                } else {
+                    messages.forEach(msg => {
+                        const { wrapper } = createMessageBubble(msg.role, formatText(msg.text));
+                        messagesEl.appendChild(wrapper);
+                    });
+                }
+                lucide.createIcons();
+                scrollToBottom();
+                updateSidebarSelection();
+            }
+        } catch (err) {
+            console.error('Failed to load conversation', err);
+        }
+    }
+
+    function startNewChat() {
+        if (isStreaming) return;
+        currentConversationId = null;
+        messagesEl.innerHTML = '';
+        messagesEl.appendChild(welcomeEl);
+        updateSidebarSelection();
+        inputEl.focus();
+    }
+
+    async function deleteConversation(id) {
+        if (isStreaming) return;
+        
+        const result = await Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: "سيتم حذف المحادثة نهائياً ولن تتمكن من استعادتها!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'نعم، احذفها',
+            cancelButtonText: 'إلغاء'
+        });
+
+        if (!result.isConfirmed) return;
+        
+        try {
+            const res = await fetch(`/Ai/DeleteConversation/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                if (currentConversationId === id) {
+                    startNewChat();
+                } else {
+                    fetchConversations();
+                }
+                
+                Swal.fire({
+                    title: 'تم الحذف!',
+                    text: 'تم حذف المحادثة بنجاح.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        } catch (err) {
+            console.error('Failed to delete conversation', err);
+            Swal.fire('خطأ', 'حدث خطأ أثناء حذف المحادثة.', 'error');
+        }
+    }
 
     function handleKey(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -252,7 +393,7 @@
             const response = await fetch('/Ai/Stream', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ message: text, conversationId: currentConversationId })
             });
 
             if (!response.ok) throw new Error('فشل الاتصال بالخادم.');
@@ -273,8 +414,17 @@
                     if (!line.startsWith('data: ')) continue;
                     const data = line.slice(6);
 
-                    if (data === '[DONE]') break;
+                    if (data === '[DONE]') {
+                        fetchConversations(); // Refresh list to show new chat or updated titles
+                        break;
+                    }
                     
+                    if (data.startsWith('[CONVERSATION_ID] ')) {
+                        currentConversationId = parseInt(data.replace('[CONVERSATION_ID] ', '').trim());
+                        fetchConversations(); // Refresh list to show new chat
+                        continue;
+                    }
+
                     if (data.startsWith('[ERROR]')) {
                         bubble.innerHTML = `<div class="flex items-center gap-2 text-red-600"><i data-lucide="alert-circle" class="w-4 h-4"></i> <span>${data.slice(7)}</span></div>`;
                         lucide.createIcons();
@@ -307,12 +457,11 @@
         }
     }
 
-    async function clearHistory() {
-        await fetch('/Ai/Clear', { method: 'POST' });
-        messagesEl.innerHTML = '';
-        messagesEl.appendChild(welcomeEl);
-        inputEl.value = '';
-    }
 
-    document.addEventListener('DOMContentLoaded', () => inputEl.focus());
+
+    document.addEventListener('DOMContentLoaded', () => {
+        inputEl.focus();
+        fetchConversations();
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

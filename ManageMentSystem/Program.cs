@@ -135,6 +135,8 @@ builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiToolExecutor,
                            ManageMentSystem.Services.AiServices.AiToolExecutor>();
 builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiOrchestratorService,
                            ManageMentSystem.Services.AiServices.AiOrchestratorService>();
+builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiConversationService,
+                           ManageMentSystem.Services.AiServices.AiConversationService>();
 // ───────────────────────────────────────────────────────────────────────────
 
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));

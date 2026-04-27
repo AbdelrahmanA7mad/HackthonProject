@@ -1,162 +1,174 @@
-using Google.GenAI;
-using Google.GenAI.Types;
+using OpenRouter.NET;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ManageMentSystem.Services.AiServices
 {
     /// <summary>
-    /// تعريفات كل الـ Functions التي يعرفها Gemini ويمكنه استدعاؤها
+    /// Registry يوفر الـ ScopeFactory للـ tools عشان يقدروا يوصلوا لـ scoped services
     /// </summary>
-    public static class AiToolDefinitions
+    public static class AiToolRegistry
     {
-        public static Tool BuildTools()
+        public static IServiceScopeFactory? ScopeFactory { get; set; }
+
+        internal static IAiToolExecutor GetExecutor()
         {
-            return new Tool
-            {
-                FunctionDeclarations = new List<FunctionDeclaration>
-                {
-                    // ─── المبيعات ─────────────────────────────────────────────
-                    new FunctionDeclaration
-                    {
-                        Name = "get_total_sales",
-                        Description = "يجيب إجمالي المبيعات (المبالغ) في فترة زمنية معينة. استخدمه لأسئلة مثل: كام المبيعات؟ إيه إجمالي الإيرادات؟",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["from_date"] = new Schema { Type = "string", Description = "تاريخ البداية بصيغة yyyy-MM-dd (اختياري)" },
-                                ["to_date"]   = new Schema { Type = "string", Description = "تاريخ النهاية بصيغة yyyy-MM-dd (اختياري)" }
-                            }
-                        }
-                    },
-
-                    new FunctionDeclaration
-                    {
-                        Name = "get_top_products",
-                        Description = "يجيب قائمة بأكثر المنتجات مبيعاً مرتبة تنازلياً. استخدمه لأسئلة مثل: أكتر منتج مبيعاً؟ أفضل 5 منتجات؟",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["top_n"]     = new Schema { Type = "integer", Description = "عدد المنتجات المطلوبة (افتراضي 5)" },
-                                ["from_date"] = new Schema { Type = "string",  Description = "تاريخ البداية (اختياري)" },
-                                ["to_date"]   = new Schema { Type = "string",  Description = "تاريخ النهاية (اختياري)" }
-                            },
-                            Required = new List<string> { "top_n" }
-                        }
-                    },
-
-                    new FunctionDeclaration
-                    {
-                        Name = "get_monthly_sales",
-                        Description = "يجيب مبيعات كل شهر في سنة معينة للرسم البياني والتحليل الشهري",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["year"] = new Schema { Type = "integer", Description = "السنة المطلوبة (مثال: 2024)" }
-                            },
-                            Required = new List<string> { "year" }
-                        }
-                    },
-
-                    // ─── الأرباح ──────────────────────────────────────────────
-                    new FunctionDeclaration
-                    {
-                        Name = "get_profit",
-                        Description = "يجيب الربح الصافي (إيرادات المبيعات - تكلفة البضاعة - المصروفات). استخدمه لأسئلة مثل: كام الربح؟ إيه هامش الربح؟",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["from_date"] = new Schema { Type = "string", Description = "تاريخ البداية (اختياري)" },
-                                ["to_date"]   = new Schema { Type = "string", Description = "تاريخ النهاية (اختياري)" }
-                            }
-                        }
-                    },
-
-                    // ─── المخزون ──────────────────────────────────────────────
-                    new FunctionDeclaration
-                    {
-                        Name = "get_low_stock_products",
-                        Description = "يجيب قائمة المنتجات التي مخزونها أقل من أو يساوي الحد المحدد. استخدمه لأسئلة مثل: أيه المنتجات اللي خلصت تقريباً؟ إيه اللي محتاج أشتريه؟",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["threshold"] = new Schema { Type = "integer", Description = "الحد الأدنى للمخزون (افتراضي 5)" }
-                            }
-                        }
-                    },
-
-                    // ─── العملاء ──────────────────────────────────────────────
-                    new FunctionDeclaration
-                    {
-                        Name = "get_top_customers",
-                        Description = "يجيب قائمة أفضل العملاء حسب إجمالي مشترياتهم. استخدمه لأسئلة مثل: أفضل عملائي؟ مين أكتر عميل بيشتري؟",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["top_n"] = new Schema { Type = "integer", Description = "عدد العملاء المطلوبين (افتراضي 5)" }
-                            },
-                            Required = new List<string> { "top_n" }
-                        }
-                    },
-
-                    // ─── الخزينة ──────────────────────────────────────────────
-                    new FunctionDeclaration
-                    {
-                        Name = "get_store_account_summary",
-                        Description = "يجيب ملخص الخزينة: إجمالي الإيرادات والمصروفات والرصيد الصافي. استخدمه لأسئلة مثل: إيه رصيد الخزينة؟ كام المصروفات؟",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["from_date"] = new Schema { Type = "string", Description = "تاريخ البداية (اختياري)" },
-                                ["to_date"]   = new Schema { Type = "string", Description = "تاريخ النهاية (اختياري)" }
-                            }
-                        }
-                    },
-
-                    new FunctionDeclaration
-                    {
-                        Name = "get_pending_debts",
-                        Description = "يجيب ملخص الديون والأقساط المعلقة غير المسددة. استخدمه لأسئلة مثل: كام الديون عليا؟ مين لسه مديه؟",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>()
-                        }
-                    },
-
-                    // ─── الإحصائيات العامة ────────────────────────────────────
-                    new FunctionDeclaration
-                    {
-                        Name = "get_general_statistics",
-                        Description = "يجيب لمحة عامة شاملة عن المتجر: عدد المبيعات، إجمالي الإيرادات، عدد العملاء، قيمة المخزون. استخدمه للأسئلة العامة.",
-                        Parameters = new Schema
-                        {
-                            Type = "object",
-                            Properties = new Dictionary<string, Schema>
-                            {
-                                ["period"] = new Schema
-                                {
-                                    Type = "string",
-                                    Description = "الفترة: today, week, month, year, all",
-                                    Enum = new List<string> { "today", "week", "month", "year", "all" }
-                                }
-                            }
-                        }
-                    }
-                }
-            };
+            if (ScopeFactory == null) throw new InvalidOperationException("AiToolRegistry.ScopeFactory not set.");
+            var scope = ScopeFactory.CreateScope();
+            return scope.ServiceProvider.GetRequiredService<IAiToolExecutor>();
         }
+    }
+
+    // ─── Params ───────────────────────────────────────────────────────────────
+
+    public class DateRangeParams
+    {
+        [JsonPropertyName("from_date")] public string? FromDate { get; set; }
+        [JsonPropertyName("to_date")]   public string? ToDate   { get; set; }
+    }
+
+    public class TopProductsParams
+    {
+        [JsonPropertyName("top_n")]     public int     TopN     { get; set; } = 5;
+        [JsonPropertyName("from_date")] public string? FromDate { get; set; }
+        [JsonPropertyName("to_date")]   public string? ToDate   { get; set; }
+    }
+
+    public class YearParams
+    {
+        [JsonPropertyName("year")] public int Year { get; set; }
+    }
+
+    public class ThresholdParams
+    {
+        [JsonPropertyName("threshold")] public int Threshold { get; set; } = 5;
+    }
+
+    public class TopNParams
+    {
+        [JsonPropertyName("top_n")] public int TopN { get; set; } = 5;
+    }
+
+    public class PeriodParams
+    {
+        [JsonPropertyName("period")] public string Period { get; set; } = "all";
+    }
+
+    public class EmptyParams { }
+
+    // ─── Helpers ──────────────────────────────────────────────────────────────
+
+    internal static class ToolHelper
+    {
+        internal static string Run(string name, Dictionary<string, object> args)
+        {
+            using var scope = AiToolRegistry.ScopeFactory!.CreateScope();
+            var exec = scope.ServiceProvider.GetRequiredService<IAiToolExecutor>();
+            var result = exec.ExecuteAsync(name, args).GetAwaiter().GetResult();
+            return JsonSerializer.Serialize(result);
+        }
+    }
+
+    // ─── Tools ────────────────────────────────────────────────────────────────
+
+    public class GetTotalSalesTool : Tool<DateRangeParams, string>
+    {
+        public override string Name        => "get_total_sales";
+        public override string Description => "يجيب إجمالي المبيعات في فترة زمنية. استخدمه لأسئلة: كام المبيعات؟ إيه إجمالي الإيرادات؟";
+
+        protected override string Handle(DateRangeParams p)
+        {
+            var args = new Dictionary<string, object>();
+            if (p.FromDate != null) args["from_date"] = p.FromDate;
+            if (p.ToDate   != null) args["to_date"]   = p.ToDate;
+            return ToolHelper.Run("get_total_sales", args);
+        }
+    }
+
+    public class GetTopProductsTool : Tool<TopProductsParams, string>
+    {
+        public override string Name        => "get_top_products";
+        public override string Description => "يجيب أكثر المنتجات مبيعاً. استخدمه لأسئلة: أكتر منتج مبيعاً؟ أفضل 5 منتجات؟";
+
+        protected override string Handle(TopProductsParams p)
+        {
+            var args = new Dictionary<string, object> { ["top_n"] = p.TopN };
+            if (p.FromDate != null) args["from_date"] = p.FromDate;
+            if (p.ToDate   != null) args["to_date"]   = p.ToDate;
+            return ToolHelper.Run("get_top_products", args);
+        }
+    }
+
+    public class GetMonthlySalesTool : Tool<YearParams, string>
+    {
+        public override string Name        => "get_monthly_sales";
+        public override string Description => "يجيب مبيعات كل شهر في سنة معينة للتحليل الشهري";
+
+        protected override string Handle(YearParams p) =>
+            ToolHelper.Run("get_monthly_sales", new Dictionary<string, object> { ["year"] = p.Year });
+    }
+
+    public class GetProfitTool : Tool<DateRangeParams, string>
+    {
+        public override string Name        => "get_profit";
+        public override string Description => "يجيب الربح الصافي. استخدمه لأسئلة: كام الربح؟ إيه هامش الربح؟";
+
+        protected override string Handle(DateRangeParams p)
+        {
+            var args = new Dictionary<string, object>();
+            if (p.FromDate != null) args["from_date"] = p.FromDate;
+            if (p.ToDate   != null) args["to_date"]   = p.ToDate;
+            return ToolHelper.Run("get_profit", args);
+        }
+    }
+
+    public class GetLowStockProductsTool : Tool<ThresholdParams, string>
+    {
+        public override string Name        => "get_low_stock_products";
+        public override string Description => "يجيب المنتجات اللي مخزونها أقل من الحد المحدد. استخدمه لأسئلة: إيه المنتجات اللي خلصت؟";
+
+        protected override string Handle(ThresholdParams p) =>
+            ToolHelper.Run("get_low_stock_products", new Dictionary<string, object> { ["threshold"] = p.Threshold });
+    }
+
+    public class GetTopCustomersTool : Tool<TopNParams, string>
+    {
+        public override string Name        => "get_top_customers";
+        public override string Description => "يجيب أفضل العملاء حسب مشترياتهم. استخدمه لأسئلة: أفضل عملائي؟ مين أكتر عميل؟";
+
+        protected override string Handle(TopNParams p) =>
+            ToolHelper.Run("get_top_customers", new Dictionary<string, object> { ["top_n"] = p.TopN });
+    }
+
+    public class GetStoreAccountSummaryTool : Tool<DateRangeParams, string>
+    {
+        public override string Name        => "get_store_account_summary";
+        public override string Description => "يجيب ملخص الخزينة: إيرادات ومصروفات ورصيد. استخدمه لأسئلة: إيه رصيد الخزينة؟";
+
+        protected override string Handle(DateRangeParams p)
+        {
+            var args = new Dictionary<string, object>();
+            if (p.FromDate != null) args["from_date"] = p.FromDate;
+            if (p.ToDate   != null) args["to_date"]   = p.ToDate;
+            return ToolHelper.Run("get_store_account_summary", args);
+        }
+    }
+
+    public class GetPendingDebtsTool : Tool<EmptyParams, string>
+    {
+        public override string Name        => "get_pending_debts";
+        public override string Description => "يجيب الديون والأقساط المعلقة. استخدمه لأسئلة: كام الديون عليا؟ مين لسه مديه؟";
+
+        protected override string Handle(EmptyParams p) =>
+            ToolHelper.Run("get_pending_debts", new Dictionary<string, object>());
+    }
+
+    public class GetGeneralStatisticsTool : Tool<PeriodParams, string>
+    {
+        public override string Name        => "get_general_statistics";
+        public override string Description => "يجيب لمحة عامة عن المتجر. الفترات المتاحة: today, week, month, year, all";
+
+        protected override string Handle(PeriodParams p) =>
+            ToolHelper.Run("get_general_statistics", new Dictionary<string, object> { ["period"] = p.Period });
     }
 }

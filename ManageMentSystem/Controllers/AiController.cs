@@ -1,8 +1,7 @@
-using Google.GenAI.Types;
 using ManageMentSystem.Services.AiServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using OpenRouter.NET.Models;
 
 namespace ManageMentSystem.Controllers
 {
@@ -70,18 +69,27 @@ namespace ManageMentSystem.Controllers
             }
 
             int currentConversationId = request.ConversationId ?? 0;
-            var history = new List<Content>();
+            var history = new List<Message>();
+
+            // إضافة الـ system prompt
+            history.Add(Message.FromSystem(
+                "أنت مساعد تجاري ذكي لنظام نقاط البيع \"قطة\". " +
+                "مهمتك: تجيب على أسئلة صاحب المتجر بدقة من البيانات الفعلية. " +
+                "رد بالعربية بشكل واضح ومختصر ومنظم."
+            ));
 
             if (currentConversationId > 0)
             {
                 var conv = await _conversationService.GetConversationAsync(currentConversationId);
                 if (conv != null)
                 {
-                    history = conv.Messages.OrderBy(m => m.CreatedAt).Select(m => new Content
+                    foreach (var m in conv.Messages.OrderBy(msg => msg.CreatedAt))
                     {
-                        Role = m.Role,
-                        Parts = new List<Part> { new Part { Text = m.Content } }
-                    }).ToList();
+                        if (m.Role == "user")
+                            history.Add(Message.FromUser(m.Content));
+                        else
+                            history.Add(Message.FromAssistant(m.Content));
+                    }
                 }
             }
             else
@@ -127,8 +135,6 @@ namespace ManageMentSystem.Controllers
                 await Response.Body.FlushAsync();
             }
         }
-
-
 
         public class ChatRequest
         {

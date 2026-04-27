@@ -25,7 +25,6 @@ using OfficeOpenXml;
 using System.Globalization;
 using System.Text.Json.Serialization;
 using ManageMentSystem.Services.ExcelExportServices;
-
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews(options =>
@@ -124,13 +123,16 @@ builder.Services.AddScoped<IUserService, UserService>();
 // Register WhatsApp Service
 builder.Services.AddScoped<ManageMentSystem.Services.WhatsAppServices.IWhatsAppService, ManageMentSystem.Services.WhatsAppServices.WhatsAppService>();
 
-// ── Gemini AI Services ─────────────────────────────────────────────────────
-builder.Services.AddSingleton(sp =>
+
+
+// ── OpenRouter AI Services ─────────────────────────────────────────────────
+builder.Services.AddScoped(sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
-    var apiKey = config["Gemini:ApiKey"]!;
-    return new Google.GenAI.Client(apiKey: apiKey);
+    var apiKey = config["OpenRouter:ApiKey"] ?? string.Empty;
+    return new OpenRouter.NET.OpenRouterClient(apiKey);
 });
+
 builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiToolExecutor,
                            ManageMentSystem.Services.AiServices.AiToolExecutor>();
 builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiOrchestratorService,
@@ -161,6 +163,9 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 var app = builder.Build();
+
+// Initialize AiToolRegistry for OpenRouter tools
+ManageMentSystem.Services.AiServices.AiToolRegistry.ScopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 
 
 var arEg = new CultureInfo("ar-EG");

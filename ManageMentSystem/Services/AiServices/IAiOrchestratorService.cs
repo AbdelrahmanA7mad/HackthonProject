@@ -1,4 +1,4 @@
-using Google.GenAI.Types;
+using OpenRouter.NET.Models;
 
 namespace ManageMentSystem.Services.AiServices
 {
@@ -8,9 +8,9 @@ namespace ManageMentSystem.Services.AiServices
     public interface IAiOrchestratorService
     {
         /// <summary>رد كامل بعد انتهاء المعالجة</summary>
-        Task<string> ChatAsync(List<Content> history, string userMessage);
+        Task<string> ChatAsync(List<Message> history, string userMessage);
 
         /// <summary>رد streaming حرف بحرف للـ SSE</summary>
-        IAsyncEnumerable<string> StreamAsync(List<Content> history, string userMessage, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<string> StreamAsync(List<Message> history, string userMessage, CancellationToken cancellationToken = default);
     }
 }

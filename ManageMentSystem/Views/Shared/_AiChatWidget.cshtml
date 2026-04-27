@@ -297,10 +297,18 @@
                         break;
                     }
 
-                    if (firstChunk && data.includes('⚙️')) {
-                        bubble.innerHTML = `<div class="flex items-center gap-1.5 text-[#0f1419] font-medium animate-pulse text-xs"><i data-lucide="database" class="w-3.5 h-3.5"></i> <span>جاري استخراج البيانات...</span></div>`;
+                    if (data === '[STATUS] analyzing') {
+                        bubble.innerHTML = `<div class="flex items-center gap-1.5 text-[#0f1419] font-medium animate-pulse text-xs"><i data-lucide="database" class="w-3.5 h-3.5"></i> <span>جاري تحليل الطلب...</span></div>`;
                         lucide.createIcons();
+                        continue;
+                    }
+
+                    if (data === '[STATUS] generating') {
                         firstChunk = false;
+                        continue;
+                    }
+
+                    if (data === '[STATUS] finalizing') {
                         continue;
                     }
 
@@ -331,3 +339,7 @@
         aiInputEl.value = '';
     }
 </script>
+
+
+
+

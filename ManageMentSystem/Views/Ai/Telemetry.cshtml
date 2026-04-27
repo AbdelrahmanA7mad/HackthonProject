@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "لوحة متابعة الذكاء الاصطناعي";
+    Layout = "_Layout";
+}
+
+<div class="min-h-[calc(100vh-5rem)] bg-[#f8f9fa] p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center justify-between mb-4">
+            <h1 class="text-xl font-bold text-[#0f1419]">لوحة متابعة الذكاء الاصطناعي</h1>
+            <div class="flex items-center gap-2">
+                <a href="/Ai/Index" class="px-3 py-2 rounded-lg bg-white border border-[#e5e7eb] text-sm text-[#0f1419] hover:bg-gray-50">العودة للدردشة</a>
+                <button id="refresh-btn" class="px-3 py-2 rounded-lg bg-[#0f1419] text-white text-sm hover:bg-black">تحديث</button>
+            </div>
+        </div>
+
+        <div id="telemetry-root" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white border border-[#e5e7eb] rounded-xl p-4">
+                <h2 class="font-semibold text-[#0f1419] mb-3">ملخص الجلسات</h2>
+                <div id="streams" class="text-sm text-gray-700 space-y-1"></div>
+            </div>
+
+            <div class="bg-white border border-[#e5e7eb] rounded-xl p-4">
+                <h2 class="font-semibold text-[#0f1419] mb-3">عدادات الحالات</h2>
+                <div id="statuses" class="text-sm text-gray-700 space-y-1"></div>
+            </div>
+
+            <div class="bg-white border border-[#e5e7eb] rounded-xl p-4">
+                <h2 class="font-semibold text-[#0f1419] mb-3">عدادات الأدوات</h2>
+                <div id="tools" class="text-sm text-gray-700 space-y-1 max-h-72 overflow-y-auto"></div>
+            </div>
+
+            <div class="bg-white border border-[#e5e7eb] rounded-xl p-4">
+                <h2 class="font-semibold text-[#0f1419] mb-3">عدادات الأخطاء</h2>
+                <div id="errors" class="text-sm text-gray-700 space-y-1 max-h-72 overflow-y-auto"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const streamsEl = document.getElementById('streams');
+    const statusesEl = document.getElementById('statuses');
+    const toolsEl = document.getElementById('tools');
+    const errorsEl = document.getElementById('errors');
+    const refreshBtn = document.getElementById('refresh-btn');
+
+    function localizeKey(key) {
+        if (key === 'analyzing') return 'تحليل الطلب';
+        if (key === 'generating') return 'توليد الرد';
+        if (key === 'finalizing') return 'إنهاء الاستجابة';
+        return key;
+    }
+
+    function renderKeyValue(container, mapObj) {
+        container.innerHTML = '';
+        const entries = Object.entries(mapObj || {});
+        if (entries.length === 0) {
+            container.innerHTML = '<div class="text-gray-400">لا توجد بيانات حتى الآن.</div>';
+            return;
+        }
+
+        for (const [key, value] of entries) {
+            const row = document.createElement('div');
+            row.className = 'flex items-center justify-between border-b border-gray-100 py-1';
+            row.innerHTML = `<span class="truncate pr-2">${localizeKey(key)}</span><span class="font-semibold">${value}</span>`;
+            container.appendChild(row);
+        }
+    }
+
+    async function loadTelemetry() {
+        try {
+            const res = await fetch('/Ai/TelemetrySnapshot');
+            if (!res.ok) return;
+            const data = await res.json();
+
+            streamsEl.innerHTML = `
+                <div class="flex justify-between"><span>عدد الجلسات الناجحة</span><strong>${data.streams?.success_count ?? 0}</strong></div>
+                <div class="flex justify-between"><span>عدد الجلسات الفاشلة</span><strong>${data.streams?.failure_count ?? 0}</strong></div>
+                <div class="flex justify-between"><span>إجمالي زمن المعالجة (مللي ثانية)</span><strong>${data.streams?.total_duration_ms ?? 0}</strong></div>
+                <div class="flex justify-between"><span>إجمالي أحرف المخرجات</span><strong>${data.streams?.total_output_chars ?? 0}</strong></div>
+            `;
+
+            renderKeyValue(statusesEl, data.statuses);
+            renderKeyValue(toolsEl, data.tools);
+            renderKeyValue(errorsEl, data.errors);
+        } catch (err) {
+            streamsEl.innerHTML = `<div class="text-red-600">فشل تحميل بيانات التتبع: ${err.message}</div>`;
+        }
+    }
+
+    refreshBtn.addEventListener('click', loadTelemetry);
+    document.addEventListener('DOMContentLoaded', () => {
+        loadTelemetry();
+        setInterval(loadTelemetry, 5000);
+    });
+</script>
+

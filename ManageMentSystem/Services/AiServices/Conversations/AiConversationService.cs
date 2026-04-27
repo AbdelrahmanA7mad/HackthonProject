@@ -71,6 +71,25 @@ namespace ManageMentSystem.Services.AiServices
                 .ToListAsync();
         }
 
+        public async Task<List<AiMessage>> GetRecentMessagesAsync(int count = 50)
+        {
+            var tenantId = await _userService.GetCurrentTenantIdAsync();
+            var userId = _userService.GetUserId();
+
+            if (string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(userId))
+            {
+                return new List<AiMessage>();
+            }
+
+            return await _context.AiMessages
+                .Include(m => m.Conversation)
+                .Where(m => m.Conversation.TenantId == tenantId && m.Conversation.UserId == userId)
+                .OrderByDescending(m => m.CreatedAt)
+                .Take(count)
+                .OrderBy(m => m.CreatedAt)
+                .ToListAsync();
+        }
+
         public async Task AddMessageAsync(int conversationId, string role, string content)
         {
             var tenantId = await _userService.GetCurrentTenantIdAsync();
@@ -110,6 +129,29 @@ namespace ManageMentSystem.Services.AiServices
                 _context.AiConversations.Remove(conversation);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task ClearUserConversationsAsync()
+        {
+            var tenantId = await _userService.GetCurrentTenantIdAsync();
+            var userId = _userService.GetUserId();
+
+            if (string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
+
+            var conversations = await _context.AiConversations
+                .Where(c => c.TenantId == tenantId && c.UserId == userId)
+                .ToListAsync();
+
+            if (conversations.Count == 0)
+            {
+                return;
+            }
+
+            _context.AiConversations.RemoveRange(conversations);
+            await _context.SaveChangesAsync();
         }
     }
 }

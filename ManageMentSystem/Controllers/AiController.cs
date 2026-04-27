@@ -1,7 +1,7 @@
 using ManageMentSystem.Services.AiServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OpenRouter.NET.Models;
+using System.Text;
 
 namespace ManageMentSystem.Controllers
 {
@@ -10,20 +10,33 @@ namespace ManageMentSystem.Controllers
     {
         private readonly IAiOrchestratorService _orchestrator;
         private readonly IAiConversationService _conversationService;
+        private readonly IAiContextAssembler _contextAssembler;
+        private readonly IAiTelemetryService _telemetry;
 
-        public AiController(IAiOrchestratorService orchestrator, IAiConversationService conversationService)
+        public AiController(
+            IAiOrchestratorService orchestrator,
+            IAiConversationService conversationService,
+            IAiContextAssembler contextAssembler,
+            IAiTelemetryService telemetry)
         {
             _orchestrator = orchestrator;
             _conversationService = conversationService;
+            _contextAssembler = contextAssembler;
+            _telemetry = telemetry;
         }
 
-        // GET /Ai  → صفحة الـ Chat
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-        // GET /Ai/GetConversations → استرجاع قائمة المحادثات
+        [HttpGet]
+        public IActionResult Telemetry()
+        {
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetConversations()
         {
@@ -31,22 +44,34 @@ namespace ManageMentSystem.Controllers
             return Ok(list.Select(c => new { id = c.Id, title = c.Title, updatedAt = c.UpdatedAt }));
         }
 
-        // GET /Ai/GetConversation/{id} → استرجاع رسائل محادثة معينة
         [HttpGet]
         public async Task<IActionResult> GetConversation(int id)
         {
             var conv = await _conversationService.GetConversationAsync(id);
-            if (conv == null) return NotFound();
-
-            var messages = conv.Messages.OrderBy(m => m.CreatedAt).Select(m => new
+            if (conv == null)
             {
-                role = m.Role,
-                text = m.Content
-            });
+                return NotFound();
+            }
+
+            var messages = conv.Messages
+                .OrderBy(m => m.CreatedAt)
+                .Select(m => new
+                {
+                    role = m.Role,
+                    text = m.Content
+                });
+
             return Ok(messages);
         }
 
-        // DELETE /Ai/DeleteConversation/{id}
+        // Used by the floating widget in _AiChatWidget.cshtml
+        [HttpGet]
+        public async Task<IActionResult> GetHistory()
+        {
+            var list = await _conversationService.GetRecentMessagesAsync(50);
+            return Ok(list.Select(m => new { role = m.Role, text = m.Content }));
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteConversation(int id)
         {
@@ -54,7 +79,21 @@ namespace ManageMentSystem.Controllers
             return Ok(new { success = true });
         }
 
-        // POST /Ai/Stream → SSE Streaming حرف بحرف
+        // Used by the floating widget in _AiChatWidget.cshtml
+        [HttpPost]
+        public async Task<IActionResult> Clear()
+        {
+            await _conversationService.ClearUserConversationsAsync();
+            return Ok(new { success = true });
+        }
+
+        // Diagnostic endpoint for internal AI telemetry counters
+        [HttpGet]
+        public IActionResult TelemetrySnapshot()
+        {
+            return Ok(_telemetry.GetSnapshot());
+        }
+
         [HttpPost]
         public async Task Stream([FromBody] ChatRequest request)
         {
@@ -64,37 +103,28 @@ namespace ManageMentSystem.Controllers
 
             if (string.IsNullOrWhiteSpace(request?.Message))
             {
-                await Response.WriteAsync("data: [ERROR] الرسالة فارغة\n\n");
+                await Response.WriteAsync("data: [ERROR] الرسالة فارغة.\n\n");
                 return;
             }
 
             int currentConversationId = request.ConversationId ?? 0;
-            var history = new List<Message>();
-
-            // إضافة الـ system prompt
-            history.Add(Message.FromSystem(
-                "أنت مساعد تجاري ذكي لنظام نقاط البيع \"قطة\". " +
-                "مهمتك: تجيب على أسئلة صاحب المتجر بدقة من البيانات الفعلية. " +
-                "رد بالعربية بشكل واضح ومختصر ومنظم."
-            ));
+            var history = await _contextAssembler.BuildHistoryAsync(currentConversationId);
 
             if (currentConversationId > 0)
             {
                 var conv = await _conversationService.GetConversationAsync(currentConversationId);
-                if (conv != null)
+                if (conv == null)
                 {
-                    foreach (var m in conv.Messages.OrderBy(msg => msg.CreatedAt))
-                    {
-                        if (m.Role == "user")
-                            history.Add(Message.FromUser(m.Content));
-                        else
-                            history.Add(Message.FromAssistant(m.Content));
-                    }
+                    await Response.WriteAsync("data: [ERROR] لم يتم العثور على المحادثة.\n\n");
+                    return;
                 }
             }
             else
             {
-                string title = request.Message.Length > 30 ? request.Message.Substring(0, 30) + "..." : request.Message;
+                string title = request.Message.Length > 30
+                    ? request.Message[..30] + "..."
+                    : request.Message;
+
                 var newConv = await _conversationService.CreateConversationAsync(title);
                 currentConversationId = newConv.Id;
 
@@ -106,15 +136,15 @@ namespace ManageMentSystem.Controllers
 
             try
             {
-                var fullModelResponse = new System.Text.StringBuilder();
+                var fullModelResponse = new StringBuilder();
 
                 await foreach (var chunk in _orchestrator.StreamAsync(history, request.Message))
                 {
-                    var safeChunk = chunk.Replace("\n", "\\n").Replace("\r", "");
+                    var safeChunk = chunk.Replace("\n", "\\n").Replace("\r", string.Empty);
                     await Response.WriteAsync($"data: {safeChunk}\n\n");
                     await Response.Body.FlushAsync();
 
-                    if (!chunk.StartsWith("⚙️"))
+                    if (!chunk.StartsWith("[STATUS]") && !chunk.StartsWith("[TOOL]"))
                     {
                         fullModelResponse.Append(chunk);
                     }
@@ -123,7 +153,7 @@ namespace ManageMentSystem.Controllers
                 var finalText = fullModelResponse.ToString();
                 if (!string.IsNullOrWhiteSpace(finalText))
                 {
-                    await _conversationService.AddMessageAsync(currentConversationId, "model", finalText);
+                    await _conversationService.AddMessageAsync(currentConversationId, "assistant", finalText);
                 }
 
                 await Response.WriteAsync("data: [DONE]\n\n");
@@ -131,6 +161,7 @@ namespace ManageMentSystem.Controllers
             }
             catch (Exception ex)
             {
+                _telemetry.TrackError("controller_stream", "exception");
                 await Response.WriteAsync($"data: [ERROR] {ex.Message}\n\n");
                 await Response.Body.FlushAsync();
             }
@@ -143,3 +174,4 @@ namespace ManageMentSystem.Controllers
         }
     }
 }
+

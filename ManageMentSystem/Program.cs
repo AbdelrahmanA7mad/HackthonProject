@@ -129,12 +129,28 @@ builder.Services.AddScoped<ManageMentSystem.Services.WhatsAppServices.IWhatsAppS
 builder.Services.AddScoped(sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
-    var apiKey = config["OpenRouter:ApiKey"] ?? string.Empty;
+    var apiKey = config["OpenRouter:ApiKey"];
+    if (string.IsNullOrWhiteSpace(apiKey))
+    {
+        apiKey = Environment.GetEnvironmentVariable("OPENROUTER_API_KEY");
+    }
+
+    if (string.IsNullOrWhiteSpace(apiKey))
+    {
+        throw new InvalidOperationException("OpenRouter API key is missing. Set OpenRouter:ApiKey or OPENROUTER_API_KEY.");
+    }
+
     return new OpenRouter.NET.OpenRouterClient(apiKey);
 });
 
 builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiToolExecutor,
                            ManageMentSystem.Services.AiServices.AiToolExecutor>();
+builder.Services.AddSingleton<ManageMentSystem.Services.AiServices.IAiTelemetryService,
+                              ManageMentSystem.Services.AiServices.AiTelemetryService>();
+builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiPromptBuilder,
+                           ManageMentSystem.Services.AiServices.AiPromptBuilder>();
+builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiContextAssembler,
+                           ManageMentSystem.Services.AiServices.AiContextAssembler>();
 builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiOrchestratorService,
                            ManageMentSystem.Services.AiServices.AiOrchestratorService>();
 builder.Services.AddScoped<ManageMentSystem.Services.AiServices.IAiConversationService,

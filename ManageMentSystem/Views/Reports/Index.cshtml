@@ -16,7 +16,20 @@
     <!-- Reports Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
        
+                        <!-- Comprehensive Report -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-primary/20 hover:-translate-y-1 transition-all group cursor-default">
+                <div class="w-14 h-14 rounded-xl bg-primary/5 flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i data-lucide="layout-dashboard"></i>
+                </div>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير الجرد الشامل</h3>
+                <p class="text-gray-500 text-sm mb-6 min-h-[40px]">نظرة بانورامية على المبيعات، المخزون، والعملاء في مكان واحد</p>
+                <a asp-action="Comprehensive" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-primary/5 hover:text-primary hover:border-primary/20 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-white group-hover:border-primary">
+                    عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
+                </a>
+            </div>
+
             <!-- Sales Report -->
+
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
                 <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                     <i data-lucide="bar-chart-2"></i>
@@ -123,6 +136,31 @@
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
+
+            <!-- Store Account Report -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i data-lucide="wallet"></i>
+                </div>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير حركة الخزنة</h3>
+                <p class="text-gray-500 text-sm mb-6 min-h-[40px]">متابعة دقيقة لكل الوارد والمنصرف من الخزينة</p>
+                <a asp-action="StoreAccountReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-white group-hover:border-primary">
+                    عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
+                </a>
+            </div>
+
+            <!-- Category Performance Report -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-accentAmber group-hover:text-white transition-colors">
+                    <i data-lucide="layers"></i>
+                </div>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير أداء الفئات</h3>
+                <p class="text-gray-500 text-sm mb-6 min-h-[40px]">تحليل المبيعات والربحية لكل فئة منتجات بشكل مستقل</p>
+                <a asp-action="CategoryPerformanceReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accentAmber group-hover:border-accentAmber">
+                    عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
+                </a>
+            </div>
+
 
     </div>
 </div>

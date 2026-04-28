@@ -1,4 +1,4 @@
-هذا تحديث شامل لصفحة Print / Statement (كشف الحساب).
+﻿هذا تحديث شامل لصفحة Print / Statement (كشف الحساب).
 بما أن هذه الصفحة مخصصة للطباعة (Layout = null)، فقد قمت بما يلي:
  * تضمين Tailwind CSS عبر CDN مباشرة لضمان ظهور التنسيقات.
  * تصميم هجين (Hybrid): يبدو عصرياً وجذاباً عند عرضه على الشاشة (بألوان الـ Indigo)، ويتحول تلقائياً إلى تصميم نظيف واحترافي (أبيض وأسود عالي التباين) عند الطباعة.
@@ -96,10 +96,10 @@
 <body class="bg-gray-100 text-gray-800 min-h-screen p-4 md:p-8">
 
     <div class="no-print fixed bottom-8 left-8 z-50 flex gap-2">
-        <button onclick="window.print()" class="bg-[#0f1419] hover:bg-[#0f1419] text-white px-6 py-3 rounded-full shadow-lg font-bold flex items-center gap-2 transition-transform hover:-translate-y-1">
+        <button onclick="window.print()" class="zen-btn zen-btn-primary">
             <i data-lucide="print" class="w-5 h-5"></i> طباعة الكشف
         </button>
-        <button onclick="window.history.back()" class="bg-white hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-full shadow-lg font-bold flex items-center gap-2 transition-transform hover:-translate-y-1 border border-gray-200">
+        <button onclick="window.history.back()" class="zen-btn zen-btn-neutral">
             <i data-lucide="arrow-right" class="w-5 h-5"></i> رجوع
         </button>
     </div>

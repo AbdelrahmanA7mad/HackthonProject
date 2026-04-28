@@ -4,11 +4,11 @@
     ViewData["Title"] = "التقارير";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-            <i data-lucide="trending-up" class="text-[#0f1419]"></i> لوحة تحكم التقارير الشاملة
+        <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+            <i data-lucide="trending-up" class="text-primary"></i> لوحة تحكم التقارير الشاملة
         </h1>
         <p class="text-gray-500 mt-1 font-medium">عرض وتحليلات شاملة لأداء النظام والمبيعات والمخزون</p>
     </div>
@@ -18,108 +18,108 @@
        
             <!-- Sales Report -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                     <i data-lucide="bar-chart-2"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">تقرير المبيعات</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير المبيعات</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">تحليل مفصل للمبيعات والأرباح وفترات الذروة</p>
-                <a asp-action="SalesReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-[#0f1419]  group-hover:border-[#0f1419]">
+                <a asp-action="SalesReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-primary  group-hover:border-primary">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- Inventory Report -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-emerald-100 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                     <i data-lucide="package"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">تقرير المخزون</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير المخزون</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">حالة المخزون، حركة المنتجات، والقيمة الإجمالية</p>
-                <a asp-action="InventoryReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-[#0f1419]  group-hover:border-[#0f1419]">
+                <a asp-action="InventoryReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-primary  group-hover:border-primary">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- Customer Report -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-amber-100 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:bg-accentAmber group-hover:text-white transition-colors">
                     <i data-lucide="users"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">تقرير العملاء</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير العملاء</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">تحليل العملاء، الأكثر شراءً، وسجل المعاملات</p>
-                <a asp-action="CustomerReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-amber-600  group-hover:border-amber-600">
+                <a asp-action="CustomerReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accentAmber  group-hover:border-accentAmber">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- General Debt Report -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-red-100 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center text-red-600 text-2xl mb-4 group-hover:bg-accentRed group-hover:text-white transition-colors">
                     <i data-lucide="file-text"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">تقرير الديون</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير الديون</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">إجمالي الديون العامة والمستحقات المالية</p>
-                <a asp-action="GeneralDebtReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-red-50 hover:text-accentRed hover:border-red-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-red-600  group-hover:border-red-600">
+                <a asp-action="GeneralDebtReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-red-50 hover:text-accentRed hover:border-red-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accentRed  group-hover:border-accentRed">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- Receivables (Customer Accounts) -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-violet-600 group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-accent group-hover:text-white transition-colors">
                     <i data-lucide="user-check"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">حسابات العملاء</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">حسابات العملاء</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">كشف حساب تفصيلي للعملاء ومتابعة الأرصدة</p>
-                <a asp-action="Receivables" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-violet-600  group-hover:border-violet-600">
+                <a asp-action="Receivables" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accent  group-hover:border-accent">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- Capital Summary -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-accentGreen group-hover:text-white transition-colors">
                     <i data-lucide="scale"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">ملخص رأس المال</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">ملخص رأس المال</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">المركز المالي، الأصول، والالتزامات الحالية</p>
-                <a asp-action="CapitalSummary" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-teal-600  group-hover:border-teal-600">
+                <a asp-action="CapitalSummary" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accentGreen  group-hover:border-accentGreen">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- Low Stock -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-accentAmber group-hover:text-white transition-colors">
                     <i data-lucide="alert-triangle"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">المنتجات شحيحة المخزون</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">المنتجات شحيحة المخزون</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">تنبيهات بالمنتجات التي قاربت على النفاذ</p>
-                <a asp-action="LowStock" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-orange-600  group-hover:border-orange-600">
+                <a asp-action="LowStock" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accentAmber  group-hover:border-accentAmber">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- Financial Report Report -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-green-100 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-green-50 flex items-center justify-center text-green-600 text-2xl mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-green-50 flex items-center justify-center text-green-600 text-2xl mb-4 group-hover:bg-accentGreen group-hover:text-white transition-colors">
                     <i data-lucide="pie-chart"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">التقرير المالي</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">التقرير المالي</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">تحليل الإيرادات والمصروفات وصافي الربح</p>
-                <a asp-action="FinancialReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-700 hover:border-green-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-green-600  group-hover:border-green-600">
+                <a asp-action="FinancialReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-700 hover:border-green-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accentGreen  group-hover:border-accentGreen">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>
 
             <!-- Profit & Loss Report -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-gray-200 hover:-translate-y-1 transition-all group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                <div class="w-14 h-14 rounded-xl bg-bgSubtle flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-accentRed group-hover:text-white transition-colors">
                     <i data-lucide="percent"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#0f1419] mb-2">تقرير الأرباح والخسائر</h3>
+                <h3 class="text-lg font-bold text-primary mb-2">تقرير الأرباح والخسائر</h3>
                 <p class="text-gray-500 text-sm mb-6 min-h-[40px]">تحليل الربحية، الهوامش، ومؤشرات الأداء المالي</p>
-                <a asp-action="ProfitLossReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-rose-600  group-hover:border-rose-600">
+                <a asp-action="ProfitLossReport" class="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group-hover:bg-accentRed  group-hover:border-accentRed">
                     عرض التقرير <i data-lucide="arrow-left" class="w-4 h-4 mr-1 inline-block"></i>
                 </a>
             </div>

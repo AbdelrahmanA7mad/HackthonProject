@@ -1,11 +1,11 @@
 <!-- AI Chat Floating Button -->
-<button onclick="toggleAiChat()" class="fixed bottom-6 left-6 z-[900] bg-[#0f1419] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg shadow-[#0f1419]/20 hover:scale-110 hover:rotate-12 transition-all duration-300 group print:hidden">
+<button onclick="toggleAiChat()" class="fixed bottom-6 left-6 z-[900] bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg shadow-primary/20 hover:scale-110 hover:rotate-12 transition-all duration-300 group print:hidden">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 group-hover:animate-bounce"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
-    <span class="absolute top-0 right-0 w-3.5 h-3.5 bg-[#059669] border-2 border-white rounded-full"></span>
+    <span class="absolute top-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white" style="background-color: var(--zen-theme-accent-green);"></span>
     
     <!-- Tooltip -->
-    <span class="absolute left-16 bg-white text-[#0f1419] px-3 py-1.5 rounded-lg text-sm font-bold shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-gray-200">
-        مساعد كوتة الذكي
+    <span class="absolute left-16 bg-white text-primary px-3 py-1.5 rounded-lg text-sm font-bold shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-borderSubtle">
+        مساعد زينيث الذكي
         <span class="absolute top-1/2 -left-1.5 w-3 h-3 bg-white border-l border-b border-gray-200 transform -translate-y-1/2 rotate-45"></span>
     </span>
     
@@ -17,18 +17,18 @@
 <div id="aiChatOverlay" onclick="toggleAiChat()" class="fixed inset-0 bg-gray-900/50 z-[1000] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm print:hidden"></div>
 
 <!-- AI Chat Offcanvas -->
-<div id="aiChatPanel" class="fixed top-0 left-0 h-screen w-full sm:w-[420px] bg-white z-[1001] shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col border-r border-[#e5e7eb] print:hidden">
+<div id="aiChatPanel" class="fixed top-0 left-0 h-screen w-full sm:w-[420px] bg-white z-[1001] shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col border-r border-borderSubtle print:hidden">
     
     <!-- Header -->
-    <div class="bg-[#0f1419] px-4 py-4 flex items-center justify-between text-white shadow-md z-10">
+    <div class="bg-primary px-4 py-4 flex items-center justify-between text-white shadow-md z-10">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/20 shadow-inner">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-white"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
             </div>
             <div>
-                <h2 class="font-bold text-base leading-tight">مساعد كوتة الذكي</h2>
+                <h2 class="font-bold text-base leading-tight">مساعد زينيث الذكي</h2>
                 <div class="flex items-center gap-1.5 text-[11px] text-white/70 mt-0.5">
-                    <span class="w-2 h-2 rounded-full bg-[#059669] animate-pulse"></span>
+                    <span class="w-2 h-2 rounded-full bg-accentGreen animate-pulse"></span>
                     جاهز للمساعدة
                 </div>
             </div>
@@ -37,38 +37,14 @@
             <a href="/Ai/Index" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center" title="تكبير للصفحة الكاملة">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </a>
-            <button onclick="clearAiHistory()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center" title="محادثة جديدة">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </button>
-            <button onclick="toggleAiChat()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center" title="إغلاق">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-    </div>
-
-    <!-- Quick Suggestions (Horizontal Scroll) -->
-    <div class="bg-gray-100/50 border-b border-gray-200 px-3 py-2.5">
-        <div class="flex overflow-x-auto gap-2 pb-1 hide-scrollbar" style="scrollbar-width: none;">
-            <button onclick="sendAiSuggestion('كام إجمالي المبيعات النهارده؟')" class="whitespace-nowrap px-3 py-1.5 bg-white border border-[#e5e7eb] hover:border-[#e5e7eb] text-[#0f1419] text-xs rounded-full shadow-sm hover:shadow transition-all flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#0f1419]"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg> مبيعات اليوم
-            </button>
-            <button onclick="sendAiSuggestion('أكتر 5 منتجات مبيعاً الشهر ده؟')" class="whitespace-nowrap px-3 py-1.5 bg-white border border-[#e5e7eb] hover:border-[#e5e7eb] text-[#0f1419] text-xs rounded-full shadow-sm hover:shadow transition-all flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#0f1419]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg> أفضل المنتجات
-            </button>
-            <button onclick="sendAiSuggestion('أيه المنتجات اللي خلصت تقريباً؟')" class="whitespace-nowrap px-3 py-1.5 bg-white border border-[#e5e7eb] hover:border-[#e5e7eb] text-[#0f1419] text-xs rounded-full shadow-sm hover:shadow transition-all flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#0f1419]"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg> نواقص المخزون
-            </button>
-            <button onclick="sendAiSuggestion('إيه رصيد الخزينة؟')" class="whitespace-nowrap px-3 py-1.5 bg-white border border-[#e5e7eb] hover:border-[#e5e7eb] text-[#0f1419] text-xs rounded-full shadow-sm hover:shadow transition-all flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-[#0f1419]"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg> رصيد الخزينة
-            </button>
         </div>
     </div>
 
     <!-- Messages Area -->
-    <div id="ai-messages" class="flex-1 overflow-y-auto p-4 space-y-5 bg-gray-50/50 relative">
+    <div id="ai-messages" class="flex-1 overflow-y-auto p-4 space-y-5 bg-bgSubtle relative">
         <!-- Welcome Message -->
         <div id="ai-welcome-msg" class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 opacity-70">
-            <div class="w-16 h-16 bg-[#f8f9fa] text-[#0f1419] rounded-full flex items-center justify-center mb-3 shadow-sm border border-[#e5e7eb]">
+            <div class="w-16 h-16 bg-bgSubtle text-primary rounded-full flex items-center justify-center mb-3 shadow-sm border border-borderSubtle">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
             </div>
             <h3 class="text-lg font-bold text-gray-800 mb-1">مرحباً بك!</h3>
@@ -78,21 +54,42 @@
         </div>
     </div>
 
+    <!-- Quick Suggestions (Moved above Input) -->
+    <div class="bg-white border-t border-gray-100 px-2 py-1.5">
+        <div class="flex overflow-x-auto gap-1 py-1 px-1 hide-scrollbar" style="scrollbar-width: none;">
+            <button onclick="sendAiSuggestion('كام إجمالي المبيعات النهارده؟')" class="flex items-center gap-1 px-2 py-1 bg-gray-50 border border-gray-200 rounded-lg text-[10px] font-bold text-gray-600 hover:bg-gray-100 transition-colors whitespace-nowrap relative z-10 hover:z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 text-primary"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg> مبيعات اليوم
+            </button>
+            <button onclick="sendAiSuggestion('أكتر 5 منتجات مبيعاً الشهر ده؟')" class="flex items-center gap-1 px-2 py-1 bg-gray-50 border border-gray-200 rounded-lg text-[10px] font-bold text-gray-600 hover:bg-gray-100 transition-colors whitespace-nowrap relative z-10 hover:z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 text-primary"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg> أفضل المنتجات
+            </button>
+            <button onclick="sendAiSuggestion('أيه المنتجات اللي خلصت تقريباً؟')" class="flex items-center gap-1 px-2 py-1 bg-gray-50 border border-gray-200 rounded-lg text-[10px] font-bold text-gray-600 hover:bg-gray-100 transition-colors whitespace-nowrap relative z-10 hover:z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 text-primary"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg> نواقص المخزون
+            </button>
+            <button onclick="sendAiSuggestion('إيه رصيد الخزينة؟')" class="flex items-center gap-1 px-2 py-1 bg-gray-50 border border-gray-200 rounded-lg text-[10px] font-bold text-gray-600 hover:bg-gray-100 transition-colors whitespace-nowrap relative z-10 hover:z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 text-primary"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg> رصيد الخزينة
+            </button>
+        </div>
+    </div>
+
     <!-- Input Area -->
     <div class="p-3 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
         <div class="relative flex items-end gap-2">
+            <button onclick="clearAiHistory()" class="w-11 h-11 rounded-xl bg-gray-50 border border-gray-200 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/5 flex items-center justify-center transition-all flex-shrink-0" title="محادثة جديدة">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="12" y1="7" x2="12" y2="13"/><line x1="9" y1="10" x2="15" y2="10"/></svg>
+            </button>
             <div class="flex-1 relative">
                 <textarea 
                     id="ai-user-input" 
                     rows="1" 
-                    class="w-full bg-gray-50 border border-gray-200 rounded-xl pr-3 pl-10 py-3 focus:outline-none focus:ring-2 focus:ring-[#0f1419] focus:border-gray-200 transition-all resize-none max-h-24 text-gray-700 shadow-inner text-sm"
+                    class="w-full bg-gray-50 border border-gray-200 rounded-xl pr-3 pl-10 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none max-h-24 text-gray-700 shadow-inner text-sm"
                     placeholder="اكتب رسالتك..."
                     onkeydown="handleAiKey(event)"
                     oninput="autoResizeAi(this)"
                 ></textarea>
             </div>
             
-            <button id="ai-send-btn" onclick="sendAiMessage()" class="w-11 h-11 rounded-xl bg-[#f8f9fa] hover:bg-[#e5e7eb] text-[#0f1419] flex items-center justify-center transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0">
+            <button id="ai-send-btn" onclick="sendAiMessage()" class="w-11 h-11 rounded-xl bg-bgSubtle hover:bg-borderSubtle text-primary flex items-center justify-center transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 transform -translate-x-0.5"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
             </button>
         </div>
@@ -101,14 +98,14 @@
 </div>
 
 <style>
-    .ai-bubble-bot strong { color: #0f1419; font-weight: 700; }
+    .ai-bubble-bot strong { color: var(--zen-theme-primary); font-weight: 700; }
     .ai-bubble-bot ul { list-style-type: disc; margin-right: 1.2rem; margin-top: 0.5rem; margin-bottom: 0.5rem; }
     .ai-bubble-bot li { margin-bottom: 0.25rem; }
     
     #ai-messages::-webkit-scrollbar { width: 5px; }
     #ai-messages::-webkit-scrollbar-track { background: transparent; }
-    #ai-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    #ai-messages::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    #ai-messages::-webkit-scrollbar-thumb { background: var(--zen-theme-border-subtle); border-radius: 10px; }
+    #ai-messages::-webkit-scrollbar-thumb:hover { background: var(--zen-theme-text-faint); }
 
     /* Hide scrollbar for suggestions */
     .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -209,14 +206,14 @@
         const avatar = document.createElement('div');
         avatar.className = `w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs shadow-sm ${
             role === 'user' 
-            ? 'bg-[#f8f9fa] text-[#0f1419] border border-[#e5e7eb]' 
-            : 'bg-[#0f1419] text-white'
+            ? 'bg-[#f8f9fa] text-primary border border-[#e5e7eb]' 
+            : 'bg-primary text-white'
         }`;
         avatar.innerHTML = role === 'user' ? '<i data-lucide="user" class="w-4 h-4"></i>' : '<i data-lucide="bot" class="w-4 h-4"></i>';
 
         const bubble = document.createElement('div');
         if (role === 'user') {
-            bubble.className = 'max-w-[85%] bg-[#0f1419] text-white px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm text-sm leading-relaxed';
+            bubble.className = 'max-w-[85%] bg-primary text-white px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm text-sm leading-relaxed';
             bubble.innerHTML = htmlContent;
         } else {
             bubble.className = 'ai-bubble-bot max-w-[85%] bg-white border border-[#e5e7eb] text-gray-800 px-4 py-3 rounded-2xl rounded-br-sm shadow-sm text-sm leading-relaxed';
@@ -317,7 +314,7 @@
                     }
 
                     if (data === '[STATUS] analyzing') {
-                        bubble.innerHTML = `<div class="flex items-center gap-1.5 text-[#0f1419] font-medium animate-pulse text-xs"><i data-lucide="database" class="w-3.5 h-3.5"></i> <span>جاري تحليل الطلب...</span></div>`;
+                        bubble.innerHTML = `<div class="flex items-center gap-1.5 text-primary font-medium animate-pulse text-xs"><i data-lucide="database" class="w-3.5 h-3.5"></i> <span>جاري تحليل الطلب...</span></div>`;
                         lucide.createIcons();
                         continue;
                     }
@@ -359,7 +356,3 @@
         currentConversationId = null;
     }
 </script>
-
-
-
-

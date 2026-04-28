@@ -1,20 +1,20 @@
-@model ManageMentSystem.ViewModels.InventoryReportViewModel
+﻿@model ManageMentSystem.ViewModels.InventoryReportViewModel
 @{
     ViewData["Title"] = "تقرير المخزون";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="package" class="text-[#0f1419]"></i> تقرير المخزون الشامل
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="package" class="text-primary"></i> تقرير المخزون الشامل
             </h1>
             <p class="text-gray-500 mt-1 font-medium">حالة المخزون، حركة المنتجات، والقيمة الإجمالية</p>
         </div>
         <div class="flex gap-2">
             <a href="@Url.Action("ExportInventoryReportExcel", new { categoryId = Model.CategoryId, lowStockOnly = Model.LowStockOnly })" 
-               class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+               class="zen-btn zen-btn-primary">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -25,7 +25,7 @@
         <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
             <div>
                 <label class="block text-sm font-bold text-gray-600 mb-2">الفئة</label>
-                <select name="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all bg-white cursor-pointer">
+                <select name="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
                     <option value="">جميع الفئات</option>
                     @foreach (var category in Model.Categories)
                     {
@@ -39,16 +39,16 @@
             <div class="pb-3">
                 <label class="inline-flex items-center cursor-pointer group">
                     <input type="checkbox" name="lowStockOnly" value="true" class="sr-only peer" @(Model.LowStockOnly == true ? "checked" : "")>
-                    <div class="relative w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-bgSubtle rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0f1419]"></div>
-                    <span class="ms-3 text-sm font-bold text-gray-600 group-hover:text-[#0f1419] transition-colors">عرض المنتجات شحيحة المخزون فقط</span>
+                    <div class="relative w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    <span class="ms-3 text-sm font-bold text-gray-600 group-hover:text-primary transition-colors">عرض المنتجات شحيحة المخزون فقط</span>
                 </label>
             </div>
 
             <div class="flex gap-3">
-                <button type="submit" class="bg-[#0f1419] hover:bg-[#0f1419] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 flex items-center gap-2 flex-grow justify-center">
+                <button type="submit" class="zen-btn zen-btn-primary flex-grow">
                     <i data-lucide="search"></i> تطبيق
                 </button>
-                <a href="@Url.Action("InventoryReport")" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 flex-grow justify-center">
+                <a href="@Url.Action("InventoryReport")" class="zen-btn zen-btn-neutral flex-grow">
                     <i data-lucide="x"></i> إلغاء
                 </a>
             </div>
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Zenith AI Insights Widget -->
-    <div class="mb-8 bg-[#0f1419] rounded-2xl p-6 shadow-xl border border-white/10 relative overflow-hidden group">
+    <div class="mb-8 bg-primary rounded-2xl p-6 shadow-xl border border-white/10 relative overflow-hidden group">
         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
             <i data-lucide="brain-circuit" class="w-32 h-32 text-white"></i>
         </div>
@@ -64,7 +64,7 @@
         <div class="relative z-10">
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 bg-gray-500/20 rounded-xl flex items-center justify-center border border-white/10">
-                    <i data-lucide="sparkles" class="text-[#0f1419] w-6 h-6"></i>
+                    <i data-lucide="sparkles" class="text-primary w-6 h-6"></i>
                 </div>
                 <div>
                     <h3 class="text-white font-bold text-lg">تحليلات Zenith AI للمخزون</h3>
@@ -92,7 +92,7 @@
                     </p>
                 </div>
                 <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
-                    <div class="flex items-center gap-2 mb-2 text-[#0f1419] font-bold text-sm">
+                    <div class="flex items-center gap-2 mb-2 text-primary font-bold text-sm">
                         <i data-lucide="history" class="w-4 h-4"></i>
                         معدل الدوران
                     </div>
@@ -107,11 +107,11 @@
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="package"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">إجمالي المنتجات</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalProducts</div>
+            <div class="text-2xl font-bold text-primary">@Model.TotalProducts</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-3">
@@ -128,11 +128,11 @@
             <div class="text-2xl font-bold text-red-600">@Model.OutOfStockProducts</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="dollar-sign"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">قيمة المخزون</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalInventoryValue.ToString("C")</div>
+            <div class="text-2xl font-bold text-primary">@Model.TotalInventoryValue.ToString("C")</div>
         </div>
     </div>
 
@@ -140,17 +140,17 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Additional Details -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-                <i data-lucide="info" class="text-white0"></i> تفاصيل إضافية
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="info" class="text-primary"></i> تفاصيل إضافية
             </h5>
             <div class="space-y-3">
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">متوسط قيمة المنتج</span>
-                    <span class="font-bold text-[#0f1419]">@Model.AverageProductValue.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.AverageProductValue.ToString("C")</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">عدد الفئات</span>
-                    <span class="font-bold text-[#0f1419]">@Model.TotalCategories</span>
+                    <span class="font-bold text-primary">@Model.TotalCategories</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">نسبة المنتجات الشحيحة</span>
@@ -165,8 +165,8 @@
 
         <!-- Charts Section -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-                <i data-lucide="pie-chart" class="text-white0"></i> توزيع قيمة المخزون حسب الفئات
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="pie-chart" class="text-primary"></i> توزيع قيمة المخزون حسب الفئات
             </h5>
             <div class="relative h-64 w-full flex justify-center">
                 <canvas id="inventoryChart"></canvas>
@@ -176,9 +176,9 @@
 
     <!-- Category Stats Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="layers" class="text-white0"></i> إحصائيات المخزون حسب الفئة
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle">
+            <h5 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="layers" class="text-primary"></i> إحصائيات المخزون حسب الفئة
             </h5>
         </div>
         <div class="overflow-x-auto">
@@ -199,7 +199,7 @@
                             <td class="px-6 py-4 font-bold text-gray-600">@category.CategoryName</td>
                             <td class="px-6 py-4 text-gray-500">@category.ProductCount</td>
                             <td class="px-6 py-4 text-gray-500">@category.TotalQuantity</td>
-                            <td class="px-6 py-4 font-bold text-[#0f1419]">@category.TotalValue.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-primary">@category.TotalValue.ToString("C")</td>
                             <td class="px-6 py-4">
                                 @if(category.LowStockCount > 0)
                                 {
@@ -221,9 +221,9 @@
 
     <!-- Products Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="table" class="text-white0"></i> تفاصيل المنتجات
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle">
+            <h5 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="table" class="text-primary"></i> تفاصيل المنتجات
             </h5>
         </div>
         <div class="overflow-x-auto">
@@ -255,7 +255,7 @@
                             </td>
                             <td class="px-6 py-4 text-gray-500">@product.PurchasePrice.ToString("C")</td>
                             <td class="px-6 py-4 text-gray-500">@product.SalePrice.ToString("C")</td>
-                            <td class="px-6 py-4 font-bold text-[#0f1419]">@((product.PurchasePrice * product.Quantity).ToString("C"))</td>
+                            <td class="px-6 py-4 font-bold text-primary">@((product.PurchasePrice * product.Quantity).ToString("C"))</td>
                             <td class="px-6 py-4 font-mono text-gray-500 text-sm">@(product.Barcode ?? "-")</td>
                         </tr>
                     }
@@ -270,6 +270,24 @@
     <script>
         const ctx = document.getElementById('inventoryChart').getContext('2d');
         const categoryData = @Html.Raw(Json.Serialize(Model.CategoryInventory));
+        const theme = window.THEME || window;
+        const rgbaFromColor = (color, alpha) => {
+            if (!color) return `rgba(15, 20, 25, ${alpha})`;
+            const normalized = color.trim();
+            if (normalized.startsWith('#')) {
+                const hex = normalized.slice(1);
+                const expanded = hex.length === 3 ? hex.split('').map(ch => ch + ch).join('') : hex;
+                const parts = expanded.match(/.{1,2}/g) || ['0f', '14', '19'];
+                const [r, g, b] = parts.map(part => parseInt(part, 16));
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            const rgbMatch = normalized.match(/rgba?\(([^)]+)\)/i);
+            if (rgbMatch) {
+                const values = rgbMatch[1].split(',').map(v => v.trim());
+                return `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${alpha})`;
+            }
+            return normalized;
+        };
 
         const chart = new Chart(ctx, {
             type: 'doughnut',
@@ -278,14 +296,14 @@
                 datasets: [{
                     data: categoryData.map(c => c.totalValue),
                     backgroundColor: [
-                        '#eab308', // amber-500
-                        '#f59e0b', // amber-500 different shade
-                        '#0f1419', // indigo-600
-                        '#059669', // emerald-600
-                        '#e11d48', // red-500
-                        '#8b5cf6', // violet-500
-                        '#06b6d4', // cyan-500
-                        '#ec4899'  // pink-500
+                        theme.accentAmber,
+                        rgbaFromColor(theme.accentAmber, 0.82),
+                        theme.primary,
+                        theme.accentGreen,
+                        theme.accentRed,
+                        theme.accent,
+                        rgbaFromColor(theme.primary, 0.72),
+                        rgbaFromColor(theme.accentGreen, 0.72)
                     ],
                     borderWidth: 0,
                     hoverOffset: 4
@@ -305,7 +323,7 @@
                         }
                     },
                      tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        backgroundColor: rgbaFromColor(theme.primary, 0.92),
                         titleFont: { family: 'Cairo' },
                         bodyFont: { family: 'Cairo' },
                         padding: 10,

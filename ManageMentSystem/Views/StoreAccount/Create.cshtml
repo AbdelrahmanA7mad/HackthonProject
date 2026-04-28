@@ -1,14 +1,14 @@
-@model ManageMentSystem.ViewModels.StoreAccountViewModel
+﻿@model ManageMentSystem.ViewModels.StoreAccountViewModel
 
 @{
     ViewData["Title"] = "إضافة عملية مالية جديدة";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-            <i data-lucide="plus-circle" class="text-[#0f1419]"></i> إضافة عملية مالية جديدة
+        <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+            <i data-lucide="plus-circle" class="text-primary"></i> إضافة عملية مالية جديدة
         </h1>
         <p class="text-gray-500 mt-1 font-medium">تسجيل عملية إيداع أو سحب جديدة</p>
     </div>
@@ -25,7 +25,7 @@
                 <div>
                     <label asp-for="TransactionName" class="block text-sm font-bold text-gray-600 mb-1.5"></label>
                     <div class="relative">
-                        <input asp-for="TransactionName" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all placeholder:text-gray-500" placeholder="اسم العملية" />
+                        <input asp-for="TransactionName" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-gray-500" placeholder="اسم العملية" />
                         <i data-lucide="type" class="absolute left-4 top-4 text-gray-500 w-4 h-4"></i>
                     </div>
                     <span asp-validation-for="TransactionName" class="text-sm font-bold text-accentRed mt-1 block"></span>
@@ -35,7 +35,7 @@
                 <div>
                     <label asp-for="TransactionType" class="block text-sm font-bold text-gray-600 mb-1.5"></label>
                     <div class="relative">
-                        <select asp-for="TransactionType" asp-items="ViewBag.TransactionTypes" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all bg-white appearance-none">
+                        <select asp-for="TransactionType" asp-items="ViewBag.TransactionTypes" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-primary transition-all bg-white appearance-none">
                             <option value="">اختر نوع العملية</option>
                         </select>
                         <i data-lucide="arrow-left-right" class="absolute left-4 top-4 text-gray-500 w-4 h-4"></i>
@@ -48,7 +48,7 @@
                 <div>
                     <label asp-for="Amount" class="block text-sm font-bold text-gray-600 mb-1.5"></label>
                     <div class="relative">
-                        <input asp-for="Amount" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all placeholder:text-gray-500" type="number" step="0.01" min="0.01" />
+                        <input asp-for="Amount" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-gray-500" type="number" step="0.01" min="0.01" />
                         <i data-lucide="coins" class="absolute left-4 top-4 text-gray-500 w-4 h-4"></i>
                     </div>
                     <span asp-validation-for="Amount" class="text-sm font-bold text-accentRed mt-1 block"></span>
@@ -58,7 +58,7 @@
                 <div>
                     <label asp-for="TransactionDate" class="block text-sm font-bold text-gray-600 mb-1.5"></label>
                     <div class="relative">
-                        <input asp-for="TransactionDate" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all text-right" type="date" />
+                        <input asp-for="TransactionDate" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-primary transition-all text-right" type="date" />
                         <i data-lucide="calendar" class="absolute left-4 top-4 text-gray-500 w-4 h-4"></i>
                     </div>
                     <span asp-validation-for="TransactionDate" class="text-sm font-bold text-accentRed mt-1 block"></span>
@@ -68,7 +68,7 @@
                 <div>
                     <label asp-for="Category" class="block text-sm font-bold text-gray-600 mb-1.5"></label>
                     <div class="relative">
-                        <input asp-for="Category" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all placeholder:text-gray-500" placeholder="مثال: المبيعات، الصيانة، الإيجار" />
+                        <input asp-for="Category" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-gray-500" placeholder="مثال: المبيعات، الصيانة، الإيجار" />
                         <i data-lucide="tags" class="absolute left-4 top-4 text-gray-500 w-4 h-4"></i>
                     </div>
                     <span asp-validation-for="Category" class="text-sm font-bold text-accentRed mt-1 block"></span>
@@ -78,7 +78,7 @@
                 <div>
                     <label asp-for="PaymentMethodId" class="block text-sm font-bold text-gray-600 mb-1.5"></label>
                     <div class="relative">
-                        <select asp-for="PaymentMethodId" asp-items="ViewBag.PaymentMethods" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all bg-white appearance-none">
+                        <select asp-for="PaymentMethodId" asp-items="ViewBag.PaymentMethods" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-primary transition-all bg-white appearance-none">
                             <option value="">اختر طريقة الدفع</option>
                         </select>
                         <i data-lucide="credit-card" class="absolute left-4 top-4 text-gray-500 w-4 h-4"></i>
@@ -90,16 +90,16 @@
                 <!-- Description -->
                 <div class="md:col-span-2">
                     <label asp-for="Description" class="block text-sm font-bold text-gray-600 mb-1.5"></label>
-                    <textarea asp-for="Description" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all placeholder:text-gray-500 resize-none" placeholder="وصف العملية"></textarea>
+                    <textarea asp-for="Description" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-medium text-primary transition-all placeholder:text-gray-500 resize-none" placeholder="وصف العملية"></textarea>
                     <span asp-validation-for="Description" class="text-sm font-bold text-accentRed mt-1 block"></span>
                 </div>
             </div>
 
             <div class="pt-6 border-t border-gray-200 flex items-center gap-4 mt-4">
-                <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-primary">
                     <i data-lucide="save"></i> حفظ العملية
                 </button>
-                <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                <a asp-action="Index" class="zen-btn zen-btn-neutral">
                     <i data-lucide="arrow-right"></i> العودة للقائمة
                 </a>
             </div>
@@ -120,3 +120,4 @@
         });
     </script>
 }
+

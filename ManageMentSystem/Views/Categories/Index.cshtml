@@ -1,4 +1,4 @@
-@using ManageMentSystem.Helpers
+﻿@using ManageMentSystem.Helpers
 @using ManageMentSystem.Models
 @inject ManageMentSystem.Services.UserServices.IUserService UserService
 @model IEnumerable<ManageMentSystem.Models.Category>
@@ -6,7 +6,7 @@
     ViewData["Title"] = "إدارة الفئات";
 }
 
-<div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-8" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6 md:p-8 space-y-8" dir="rtl">
 
     <div class="space-y-4">
         @if (TempData["SuccessMessage"] != null)
@@ -24,12 +24,12 @@
 
         @if (TempData["ErrorMessage"] != null)
         {
-            <div class="flex items-center p-4 mb-4 text-red-800 rounded-2xl bg-red-50 border border-red-100 shadow-sm" role="alert">
+            <div class="flex items-center p-4 mb-4 text-accentRed rounded-2xl bg-red-50 border border-red-100 shadow-sm" role="alert">
                 <i data-lucide="alert-circle" class="ml-3 text-xl"></i>
                 <div class="ml-auto font-medium">
                     @TempData["ErrorMessage"]
                 </div>
-                <button type="button" class="mr-2 text-red-600 hover:bg-red-200 rounded-lg p-1.5 inline-flex h-8 w-8 items-center justify-center transition-colors" data-bs-dismiss="alert" aria-label="Close">
+                <button type="button" class="mr-2 text-accentRed hover:bg-red-200 rounded-lg p-1.5 inline-flex h-8 w-8 items-center justify-center transition-colors" data-bs-dismiss="alert" aria-label="Close">
                     <i data-lucide="x"></i>
                 </button>
             </div>
@@ -38,8 +38,8 @@
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 m-0">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-3">
-                <span class="p-2 bg-gray-50 rounded-xl text-[#0f1419]">
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-3">
+                <span class="p-2 bg-gray-50 rounded-xl text-primary">
                     <i data-lucide="tags"></i>
                 </span>
                 @ViewData["Title"]
@@ -48,16 +48,16 @@
         </div>
 
    
-            <button onclick="openCreateModal()" class="flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover rounded-xl shadow-sm shadow-gray-200 transition-all duration-200 gap-2 whitespace-nowrap hover:-translate-y-0.5">
+            <button onclick="openCreateModal()" class="zen-btn zen-btn-primary zen-btn-sm whitespace-nowrap">
                 <i data-lucide="plus"></i>
                 <span>إضافة فئة جديدة</span>
             </button>
     </div>
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="p-5 border-b border-gray-200 bg-gray-50/50">
+        <div class="p-5 border-b border-gray-200 bg-bgSubtle">
             <h5 class="font-bold text-gray-600 flex items-center gap-2">
-                <i data-lucide="list" class="text-[#0f1419]"></i>
+                <i data-lucide="list" class="text-primary"></i>
                 قائمة الفئات
             </h5>
         </div>
@@ -85,7 +85,7 @@
                                     @(string.IsNullOrEmpty(item.Description) ? "-" : item.Description)
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="bg-gray-50 text-[#0f1419] px-2.5 py-1 rounded-full text-xs font-bold border border-gray-200">
+                                    <span class="bg-gray-50 text-primary px-2.5 py-1 rounded-full text-xs font-bold border border-gray-200">
                                         @item.Products.Count منتج
                                     </span>
                                 </td>
@@ -109,15 +109,15 @@
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-center gap-1">
                                         <a asp-controller="Products" asp-action="ByCategory" asp-route-categoryId="@item.Id"
-                                           class="p-2 text-accentGreen hover:text-accentGreen hover:bg-emerald-50 rounded-lg transition-colors" title="عرض المنتجات">
+                                           class="zen-action-btn zen-action-btn-info" title="عرض المنتجات">
                                             <i data-lucide="eye" class="w-4 h-4"></i>
                                         </a>
 
                                    
-                                            <button onclick="openEditModal(@item.Id)" class="p-2 text-[#0f1419] hover:bg-gray-50 rounded-lg transition-colors" title="تعديل">
+                                            <button onclick="openEditModal(@item.Id)" class="zen-action-btn zen-action-btn-neutral" title="تعديل">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
                                             </button>
-                                            <button onclick="deleteCategory(@item.Id)" class="p-2 text-accentRed hover:text-accentRed hover:bg-red-50 rounded-lg transition-colors" title="حذف">
+                                            <button onclick="deleteCategory(@item.Id)" class="zen-action-btn zen-action-btn-danger" title="حذف">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         
@@ -128,9 +128,9 @@
                     </tbody>
                 </table>
 
-                <div class="p-4 border-t border-gray-200 bg-gray-50/50 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="p-4 border-t border-gray-200 bg-bgSubtle flex flex-col md:flex-row justify-between items-center gap-4">
                    <p class="text-sm text-gray-500">
-                        عرض <span class="font-bold text-[#0f1419]">@((ViewBag.CurrentPage - 1) * ViewBag.PageSize + 1)</span> إلى <span class="font-bold text-[#0f1419]">@Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalItems)</span> من أصل <span class="font-bold text-[#0f1419]">@ViewBag.TotalItems</span> فئة
+                        عرض <span class="font-bold text-primary">@((ViewBag.CurrentPage - 1) * ViewBag.PageSize + 1)</span> إلى <span class="font-bold text-primary">@Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalItems)</span> من أصل <span class="font-bold text-primary">@ViewBag.TotalItems</span> فئة
                     </p>
 
                     @if (ViewBag.TotalPages > 1)
@@ -141,7 +141,7 @@
                                     @if (ViewBag.HasPreviousPage)
                                     {
                                         <a href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })"
-                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                                         </a>
                                     }
@@ -161,7 +161,7 @@
                                 @if (startPage > 1)
                                 {
                                     <li>
-                                        <a href="@Url.Action("Index", new { page = 1, pageSize = ViewBag.PageSize })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] text-sm font-medium">1</a>
+                                        <a href="@Url.Action("Index", new { page = 1, pageSize = ViewBag.PageSize })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary text-sm font-medium">1</a>
                                     </li>
                                     @if (startPage > 2)
                                     {
@@ -173,7 +173,7 @@
                                 {
                                     <li>
                                         <a href="@Url.Action("Index", new { page = i, pageSize = ViewBag.PageSize })"
-                                           class="flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-[#0f1419] border-gray-200 text-white shadow-sm shadow-gray-200" : "border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419]")">
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-primary border-gray-200 text-white shadow-sm shadow-gray-200" : "border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary")">
                                             @i
                                         </a>
                                     </li>
@@ -186,7 +186,7 @@
                                         <li class="px-1 text-gray-500">...</li>
                                     }
                                     <li>
-                                        <a href="@Url.Action("Index", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] text-sm font-medium">@ViewBag.TotalPages</a>
+                                        <a href="@Url.Action("Index", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary text-sm font-medium">@ViewBag.TotalPages</a>
                                     </li>
                                 }
 
@@ -194,7 +194,7 @@
                                     @if (ViewBag.HasNextPage)
                                     {
                                         <a href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })"
-                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                                         </a>
                                     }
@@ -240,23 +240,23 @@
                 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">اسم الفئة <span class="text-accentRed">*</span></label>
-                    <input type="text" id="categoryName" name="Name" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all" placeholder="ادخل اسم الفئة">
+                    <input type="text" id="categoryName" name="Name" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="ادخل اسم الفئة">
                 </div>
                 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">الوصف</label>
-                    <textarea id="categoryDescription" name="Description" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none transition-all" rows="3" placeholder="وصف اختياري للفئة"></textarea>
+                    <textarea id="categoryDescription" name="Description" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-primary/20 focus:border-primary outline-none transition-all" rows="3" placeholder="وصف اختياري للفئة"></textarea>
                 </div>
                 
                 <div class="flex items-center gap-2">
-                    <input type="checkbox" id="categoryIsActive" name="IsActive" value="true" class="w-5 h-5 text-[#0f1419] rounded focus:ring-[#0f1419] border-gray-200" checked>
+                    <input type="checkbox" id="categoryIsActive" name="IsActive" value="true" class="w-5 h-5 text-primary rounded focus:ring-primary/20 border-gray-200" checked>
                     <label for="categoryIsActive" class="text-sm font-bold text-gray-700 select-none">نشط</label>
                     <input type="hidden" name="IsActive" value="false" />
                 </div>
 
                 <div class="flex gap-3 pt-4 border-t border-gray-200 mt-4">
-                    <button type="button" class="flex-1 py-2.5 border border-gray-200 text-gray-700 hover:text-accentRed rounded-xl font-bold hover:bg-red-50 hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
-                    <button type="submit" id="saveBtn" class="flex-1 py-2.5 bg-[#0f1419] text-white rounded-xl font-bold hover:bg-primaryHover shadow-md hover:-translate-y-0.5 transition-all">حفظ الفئة</button>
+                    <button type="button" class="zen-btn zen-btn-neutral zen-btn-block flex-1" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" id="saveBtn" class="zen-btn zen-btn-primary zen-btn-block flex-1">حفظ الفئة</button>
                 </div>
             </form>
         </div>
@@ -372,3 +372,5 @@
         }
     </script>
 }
+
+

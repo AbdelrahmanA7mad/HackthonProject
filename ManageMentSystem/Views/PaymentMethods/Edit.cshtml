@@ -1,4 +1,4 @@
-@model ManageMentSystem.Models.PaymentMethodOption
+﻿@model ManageMentSystem.Models.PaymentMethodOption
 
 @{
     ViewData["Title"] = "تعديل طريقة دفع";
@@ -52,11 +52,11 @@
             </div>
 
             <div class="flex gap-3 pt-4 border-t border-gray-200">
-                <button type="submit" class="flex-1 bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-primary flex-1">
                     <i data-lucide="save" class="w-5 h-5"></i>
                     حفظ التعديلات
                 </button>
-                <a asp-action="Index" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
+                <a asp-action="Index" class="zen-btn zen-btn-neutral flex-1">
                     عودة
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 </a>

@@ -5,26 +5,26 @@
     ViewData["Title"] = "المبيعات";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6">
+<div class="min-h-screen bg-bgSubtle p-6">
 
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                <i data-lucide="shopping-cart" class="text-[#0f1419]"></i> إدارة المبيعات
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="shopping-cart" class="text-primary"></i> إدارة المبيعات
             </h1>
             <div class="flex items-center gap-2 mt-4">
                 <span class="text-sm font-bold text-gray-600">المستخدم الحالي:</span>
-                <span class="bg-gray-50 text-[#0f1419] px-3 py-1 rounded-lg text-sm font-bold border border-gray-200 flex items-center gap-1">
+                <span class="bg-gray-50 text-primary px-3 py-1 rounded-lg text-sm font-bold border border-gray-200 flex items-center gap-1">
                     <i data-lucide="user-circle" class="w-4 h-4"></i> @ViewBag.CurrentUser?.FullName
                 </span>
             </div>
         </div>
 
         <div class="flex gap-3">
-            <a asp-action="UnpaidSales" class="bg-amber-700 hover:bg-amber-800 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm hover:shadow-amber-500 hover:-translate-y-0.5 flex items-center gap-2">
-                <i data-lucide="clock" class="w-4 h-4 text-white me-1"></i> مبيعات غير مدفوعة
+            <a asp-action="UnpaidSales" class="zen-btn zen-btn-neutral zen-btn-sm">
+                <i data-lucide="clock" class="w-4 h-4 me-1"></i> مبيعات غير مدفوعة
             </a>
-                <a asp-action="QuickSale" class="bg-[#0f1419] hover:bg-primaryHover text-white px-6 py-3 rounded-xl font-bold transition-all shadow-sm  hover:-translate-y-0.5 flex items-center gap-2">
+                <a asp-action="QuickSale" class="zen-btn zen-btn-primary zen-btn-sm">
                     <i data-lucide="banknote" class="w-4 h-4 text-white me-1"></i> شاشة البيع
                 </a>
         </div>
@@ -54,7 +54,7 @@
                 <label class="block text-sm font-bold text-gray-700 mb-2">البحث العام</label>
                 <div class="relative">
                     <input type="text" name="searchTerm" value="@ViewBag.SearchTerm"
-                           class="w-full pl-4 pr-10 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none text-sm font-bold transition-all"
+                           class="w-full pl-4 pr-10 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary outline-none text-sm font-bold transition-all"
                            placeholder="اسم العميل أو رقم الفاتورة...">
                     <i data-lucide="search" class="absolute left-3 top-3 text-gray-500 w-4 h-4"></i>
                 </div>
@@ -62,7 +62,7 @@
 
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">نوع الفاتورة</label>
-                <select name="paymentType" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none text-sm font-bold transition-all bg-white">
+                <select name="paymentType" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary outline-none text-sm font-bold transition-all bg-white">
                     <option value="">الكل</option>
                     <option value="1" selected="@(ViewBag.PaymentType == ManageMentSystem.Models.SalePaymentType.Cash)">كاش</option>
                     <option value="2" selected="@(ViewBag.PaymentType == ManageMentSystem.Models.SalePaymentType.Partial)">جزئي</option>
@@ -72,14 +72,14 @@
 
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">تاريخ الفاتورة</label>
-                <input type="date" name="date" value="@ViewBag.date" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-[#0f1419] focus:border-[#0f1419] outline-none text-sm font-bold transition-all text-gray-600">
+                <input type="date" name="date" value="@ViewBag.date" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary outline-none text-sm font-bold transition-all text-gray-600">
             </div>
 
             <div class="flex gap-2">
-                <button type="submit" class="flex-1 bg-[#0f1419] hover:bg-primaryHover text-white py-2.5 rounded-lg font-bold transition-colors shadow-sm">
+                <button type="submit" class="zen-btn zen-btn-primary zen-btn-sm zen-btn-block flex-1">
                     <i data-lucide="filter" class="w-4 h-4 inline-block ml-1"></i> تصفية
                 </button>
-                <a href="@Url.Action("Index", "Sales")" class="px-4 py-2.5 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-red-600 rounded-lg font-bold transition-colors">
+                <a href="@Url.Action("Index", "Sales")" class="zen-btn zen-btn-neutral zen-btn-sm">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </a>
             </div>
@@ -97,7 +97,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-right" id="salesTable">
                     <thead>
-                        <tr class="bg-gray-50/50 text-[#0f1419] border-b border-gray-200 text-sm text-center">
+        <tr class="bg-bgSubtle text-primary border-b border-gray-200 text-sm text-center">
                             <th class="px-6 py-4 font-bold"># الفاتورة</th>
                             <th class="px-6 py-4 font-bold">العميل</th>
                             <th class="px-6 py-4 font-bold">التاريخ</th>
@@ -113,7 +113,7 @@
                         {
                             <tr class="hover:bg-gray-50 transition-colors group">
                                 <td class="px-6 py-4  font-mono ">
-                                    <div class="flex items-center gap-1.5 text-[#0f1419] bg-gray-50 px-2.5 py-1 font-bold rounded-full w-fit border border-gray-200">
+                                    <div class="flex items-center gap-1.5 text-primary bg-gray-50 px-2.5 py-1 font-bold rounded-full w-fit border border-gray-200">
 
                                         <span class="font-bold"># @item.Id</span>
                                     </div>
@@ -121,7 +121,7 @@
 
 
                                 <td class="px-6 py-4">
-                                    <a href="@Url.Action("Statement", "Customers", new { id = item.CustomerId })" class="flex items-center gap-2 text-gray-700 hover:text-[#0f1419] transition-colors">
+                                    <a href="@Url.Action("Statement", "Customers", new { id = item.CustomerId })" class="flex items-center gap-2 text-gray-700 hover:text-primary transition-colors">
                                         <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 ">
                                             <i data-lucide="user" class="w-4 h-4"></i>
                                         </div>
@@ -165,15 +165,15 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-center gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                                        <button type="button" onclick="viewSale(@item.Id)" class="w-8 h-8 flex items-center justify-center rounded-lg  text-accentGreen hover:bg-emerald-100 transition-colors" title="عرض">
+                                        <button type="button" onclick="viewSale(@item.Id)" class="zen-action-btn zen-action-btn-info" title="عرض">
                                             <i data-lucide="eye" class="w-4 h-4"></i>
                                         </button>
 
-                                            <a href="@Url.Action("ReceiptInvoice", new { id = item.Id })" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-700 hover:text-gray-700 hover:bg-gray-50 transition-colors" title="طباعة">
+                                            <a href="@Url.Action("ReceiptInvoice", new { id = item.Id })" target="_blank" class="zen-action-btn zen-action-btn-neutral" title="طباعة">
                                                 <i data-lucide="printer" class="w-4 h-4"></i>
                                             </a>
 
-                                            <a href="#" onclick="sendInvoiceWhatsapp(@item.Id, this); return false;" class="w-8 h-8 flex items-center justify-center rounded-lg text-emerald-600 hover:text-emerald-600 hover:bg-emerald-100 transition-colors" title="واتساب">
+                                            <a href="#" onclick="sendInvoiceWhatsapp(@item.Id, this); return false;" class="zen-action-btn zen-action-btn-info" title="واتساب">
                                                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                                                 <span class="spinner-border spinner-border-sm hidden" role="status"></span>
                                             </a>
@@ -182,10 +182,10 @@
                                                 <i data-lucide="undo-2" class="w-4 h-4"></i>
                                             </a>
 
-                                            <a asp-action="Edit" asp-route-id="@item.Id" class="w-8 h-8 flex items-center justify-center rounded-lg text-[#0f1419] hover:bg-gray-50 transition-colors" title="تعديل">
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="zen-action-btn zen-action-btn-neutral" title="تعديل">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
                                             </a>
-                                            <button type="button" onclick="deleteSale(@item.Id)" class="w-8 h-8 flex items-center justify-center rounded-lg text-accentRed hover:bg-red-100 transition-colors" title="حذف">
+                                            <button type="button" onclick="deleteSale(@item.Id)" class="zen-action-btn zen-action-btn-danger" title="حذف">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                     </div>
@@ -207,7 +207,7 @@
                         @if (ViewBag.CurrentPage > 1)
                         {
                             <a href="@Url.Action("Index", "Sales", new { page = ViewBag.CurrentPage - 1, searchTerm = ViewBag.SearchTerm, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] transition-all">
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-primary transition-all">
                                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </a>
                         }
@@ -215,7 +215,7 @@
                         @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
                         {
                             <a href="@Url.Action("Index", "Sales", new { page = i, searchTerm = ViewBag.SearchTerm, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-[#0f1419] text-white border-gray-200 shadow-sm" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419]")">
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-primary text-white border-primary shadow-sm" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary")">
                                 @i
                             </a>
                         }
@@ -223,7 +223,7 @@
                         @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                         {
                             <a href="@Url.Action("Index", "Sales", new { page = ViewBag.CurrentPage + 1, searchTerm = ViewBag.SearchTerm, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] transition-all">
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-primary transition-all">
                                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </a>
                         }
@@ -249,3 +249,5 @@
     <script src="~/js/sweetalert-sales.js"></script>
     <script src="~/js/salejs/utilities.js"></script>
 }
+
+

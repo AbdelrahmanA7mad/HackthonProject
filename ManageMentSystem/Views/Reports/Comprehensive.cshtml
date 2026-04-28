@@ -1,19 +1,19 @@
-@model ManageMentSystem.ViewModels.ComprehensiveReportViewModel
+﻿@model ManageMentSystem.ViewModels.ComprehensiveReportViewModel
 @{
     ViewData["Title"] = "تقرير الجرد الشامل";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="pie-chart" class="text-[#0f1419]"></i> تقرير الجرد الشامل
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="pie-chart" class="text-primary"></i> تقرير الجرد الشامل
             </h1>
             <p class="text-gray-500 mt-1 font-medium">نظرة عامة على الأداء والمخزون والمبيعات</p>
         </div>
         <div>
-            <a href="@Url.Action("ExportComprehensiveReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm md:text-base">
+            <a href="@Url.Action("ExportComprehensiveReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" class="zen-btn zen-btn-primary md:text-base">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -24,18 +24,18 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
                 <div class="md:col-span-3">
                     <label for="fromDate" class="block text-sm font-bold text-gray-600 mb-2">من تاريخ</label>
-                    <input type="date" id="fromDate" name="fromDate" value="@(Model.FromDate?.ToString("yyyy-MM-dd"))" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" id="fromDate" name="fromDate" value="@(Model.FromDate?.ToString("yyyy-MM-dd"))" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div class="md:col-span-3">
                     <label for="toDate" class="block text-sm font-bold text-gray-600 mb-2">إلى تاريخ</label>
-                    <input type="date" id="toDate" name="toDate" value="@(Model.ToDate?.ToString("yyyy-MM-dd"))" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" id="toDate" name="toDate" value="@(Model.ToDate?.ToString("yyyy-MM-dd"))" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div class="md:col-span-6 flex flex-wrap gap-2">
-                    <button type="submit" class="bg-[#0f1419] hover:bg-[#0f1419] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20">عرض التقرير</button>
-                    <button type="button" class="quick-filter bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 px-4 py-2.5 rounded-xl font-bold transition-all" data-period="today">اليوم</button>
-                    <button type="button" class="quick-filter bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 px-4 py-2.5 rounded-xl font-bold transition-all" data-period="month">هذا الشهر</button>
-                    <button type="button" class="quick-filter bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 px-4 py-2.5 rounded-xl font-bold transition-all" data-period="year">هذه السنة</button>
-                    <button type="button" class="quick-filter bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 px-4 py-2.5 rounded-xl font-bold transition-all" data-period="all">الكل</button>
+                    <button type="submit" class="zen-btn zen-btn-primary">عرض التقرير</button>
+                    <button type="button" class="zen-btn zen-btn-neutral quick-filter" data-period="today">اليوم</button>
+                    <button type="button" class="zen-btn zen-btn-neutral quick-filter" data-period="month">هذا الشهر</button>
+                    <button type="button" class="zen-btn zen-btn-neutral quick-filter" data-period="year">هذه السنة</button>
+                    <button type="button" class="zen-btn zen-btn-neutral quick-filter" data-period="all">الكل</button>
                 </div>
             </div>
         </form>
@@ -43,7 +43,7 @@
 
 
     <!-- Zenith AI Insights Widget -->
-    <div class="mb-8 bg-[#0f1419] rounded-2xl p-6 shadow-xl border border-white/10 relative overflow-hidden group">
+    <div class="mb-8 bg-primary rounded-2xl p-6 shadow-xl border border-white/10 relative overflow-hidden group">
         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
             <i data-lucide="brain-circuit" class="w-32 h-32 text-white"></i>
         </div>
@@ -51,7 +51,7 @@
         <div class="relative z-10">
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 bg-gray-500/20 rounded-xl flex items-center justify-center border border-white/10">
-                    <i data-lucide="sparkles" class="text-[#0f1419] w-6 h-6"></i>
+                    <i data-lucide="sparkles" class="text-primary w-6 h-6"></i>
                 </div>
                 <div>
                     <h3 class="text-white font-bold text-lg">تحليلات Zenith AI</h3>
@@ -79,7 +79,7 @@
                     </p>
                 </div>
                 <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
-                    <div class="flex items-center gap-2 mb-2 text-[#0f1419] font-bold text-sm">
+                    <div class="flex items-center gap-2 mb-2 text-primary font-bold text-sm">
                         <i data-lucide="lightbulb" class="w-4 h-4"></i>
                         تحسين التدفق المالي
                     </div>
@@ -93,8 +93,8 @@
 
     <!-- Summary Section -->
     <div class="mb-8">
-        <h2 class="text-xl font-bold text-[#0f1419] mb-4 flex items-center gap-2">
-            <i data-lucide="zap" class="text-amber-500"></i> التقارير السريعة
+        <h2 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">
+            <i data-lucide="zap" class="text-accentAmber"></i> التقارير السريعة
         </h2>
         <partial name="_ComprehensiveSummary" model="Model" />
     </div>
@@ -103,16 +103,16 @@
     <div class="mb-6 print:hidden">
         <div class="border-b border-gray-200">
             <nav class="-mb-px flex space-x-8 space-x-reverse" aria-label="Tabs">
-                <button class="tab-btn active border-gray-200 text-[#0f1419] whitespace-nowrap py-4 px-1 border-b-2 font-bold text-sm transition-colors" data-target="#products">
+                <button class="zen-btn zen-btn-neutral tab-btn active whitespace-nowrap" data-target="#products">
                     <i data-lucide="box" class="ml-2 inline-block w-4 h-4"></i> المنتجات
                 </button>
-                <button class="tab-btn border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-200 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" data-target="#sales">
+                <button class="zen-btn zen-btn-neutral tab-btn whitespace-nowrap font-medium" data-target="#sales">
                     <i data-lucide="shopping-cart" class="ml-2 inline-block w-4 h-4"></i> المبيعات
                 </button>
-                <button class="tab-btn border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-200 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" data-target="#customers">
+                <button class="zen-btn zen-btn-neutral tab-btn whitespace-nowrap font-medium" data-target="#customers">
                     <i data-lucide="users" class="ml-2 inline-block w-4 h-4"></i> العملاء
                 </button>
-                <button class="tab-btn border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-200 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" data-target="#charts">
+                <button class="zen-btn zen-btn-neutral tab-btn whitespace-nowrap font-medium" data-target="#charts">
                     <i data-lucide="bar-chart-2" class="ml-2 inline-block w-4 h-4"></i> الرسوم البيانية
                 </button>
             </nav>
@@ -142,12 +142,12 @@
             // Custom Tab Logic for Tailwind
             $('.tab-btn').click(function() {
                 // Remove active classes from all tabs
-                $('.tab-btn').removeClass('border-gray-200 text-[#0f1419] font-bold')
+                $('.tab-btn').removeClass('border-gray-200 text-primary font-bold')
                              .addClass('border-transparent text-gray-500 font-medium hover:text-gray-600 hover:border-gray-200');
                 
                 // Add active classes to clicked tab
                 $(this).removeClass('border-transparent text-gray-500 font-medium hover:text-gray-600 hover:border-gray-200')
-                       .addClass('border-gray-200 text-[#0f1419] font-bold');
+                       .addClass('border-gray-200 text-primary font-bold');
                 
                 // Hide all panes
                 $('.tab-pane').addClass('hidden').removeClass('block');

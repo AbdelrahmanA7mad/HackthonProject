@@ -1,8 +1,8 @@
 @model ManageMentSystem.ViewModels.ComprehensiveReportViewModel
 
 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-        <h3 class="font-bold text-[#0f1419]">سجل المبيعات</h3>
+    <div class="bg-bgSubtle px-6 py-4 border-b border-gray-200">
+        <h3 class="font-bold text-primary">سجل المبيعات</h3>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-right">
@@ -16,10 +16,10 @@
             <tbody class="divide-y divide-gray-100">
                 @foreach (var item in Model.Sales)
                 {
-                    <tr class="hover:bg-gray-50/50">
+                    <tr class="hover:bg-bgSubtle">
                         <td class="px-6 py-4 font-bold text-gray-600">@item.Customer.FullName</td>
                         <td class="px-6 py-4 text-gray-500">@item.SaleDate.ToShortDateString()</td>
-                        <td class="px-6 py-4 font-bold text-[#0f1419]">@item.TotalAmount.ToString("C")</td>
+                        <td class="px-6 py-4 font-bold text-primary">@item.TotalAmount.ToString("C")</td>
                     </tr>
                 }
             </tbody>

@@ -17,10 +17,17 @@
                 </div>
             </div>
           
-                <a asp-action="Create" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors">
+            <div class="flex items-center gap-3">
+
+                <a asp-action="Create" class="zen-btn zen-btn-primary">
                     <i data-lucide="plus"></i>
                     <span>إضافة طريقة جديدة</span>
                 </a>
+                <a asp-controller="SystemSettings" asp-action="Index" class="zen-btn zen-btn-neutral">
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <span>العودة للاعدادات</span>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -125,14 +132,14 @@
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center gap-2">
                                                 <a asp-action="Edit" asp-route-id="@m.Id"
-                                                   class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-lg transition-colors"
+                                                   class="zen-action-btn zen-action-btn-neutral"
                                                    title="تعديل">
                                                     <i data-lucide="edit" class="w-4 h-4"></i>
                                                 </a>
 
                                                 <form asp-action="ToggleActive" asp-route-id="@m.Id" method="post" class="inline-block">
                                                     <button type="submit"
-                                                            class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg transition-colors"
+                                                            class="zen-btn zen-btn-primary zen-btn-sm"
                                                             title="@(m.IsActive ? "تعطيل" : "تفعيل")">
                                                         <i data-lucide="@(m.IsActive ? "toggle-right" : "toggle-left")" class="w-4 h-4"></i>
                                                     </button>
@@ -142,7 +149,7 @@
                                                 {
                                                     <form asp-action="SetDefault" asp-route-id="@m.Id" method="post" class="inline-block">
                                                         <button type="submit"
-                                                                class="bg-gray-500 hover:bg-primary text-white px-3 py-2 rounded-lg transition-colors"
+                                                                class="zen-btn zen-btn-primary zen-btn-sm"
                                                                 title="تعيين كافتراضي">
                                                             <i data-lucide="star" class="w-4 h-4"></i>
                                                         </button>
@@ -150,7 +157,7 @@
                                                 }
                                            
                                                 <a asp-action="Delete" asp-route-id="@m.Id"
-                                                   class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition-colors"
+                                                   class="zen-action-btn zen-action-btn-danger"
                                                    title="حذف"
                                                    onclick="return confirm('هل أنت متأكد من حذف هذه الطريقة؟')">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -170,7 +177,7 @@
                     <h4 class="text-xl font-semibold text-gray-600 mb-2">لا توجد طرق دفع</h4>
                     <p class="text-gray-500 mb-6">قم بإضافة طريقة دفع جديدة للبدء</p>
                   
-                        <a asp-action="Create" class="inline-flex items-center gap-2 bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-lg transition-colors">
+                        <a asp-action="Create" class="zen-btn zen-btn-primary">
                             <i data-lucide="plus" class="w-5 h-5"></i>
                             <span>إضافة طريقة دفع</span>
                         </a>

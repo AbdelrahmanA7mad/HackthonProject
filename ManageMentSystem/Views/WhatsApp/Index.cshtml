@@ -1,11 +1,11 @@
-@* Views/WhatsApp/Index.cshtml - محسّن ومعدل لـ Tailwind *@
+﻿@* Views/WhatsApp/Index.cshtml - محسّن ومعدل لـ Tailwind *@
 @using ManageMentSystem.Models
 @inject ManageMentSystem.Services.UserServices.IUserService UserService
 @{
     ViewData["Title"] = "توصيل واتساب";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
@@ -14,7 +14,7 @@
             </h1>
             <p class="text-gray-500 mt-1 font-medium">إدارة اتصال واتساب لإرسال الفواتير والإشعارات</p>
         </div>
-        <a asp-controller="SystemSettings" asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+        <a asp-controller="SystemSettings" asp-action="Index" class="zen-btn zen-btn-neutral">
             العودة للإعدادات<i data-lucide="arrow-left" class="w-4 h-4 inline-block mr-1"></i>
         </a>
     </div>
@@ -67,7 +67,7 @@
                             <h3 class="text-2xl font-bold text-primary mb-2">تم الاتصال بنجاح!</h3>
                             <p class="text-gray-500 max-w-md mx-auto mb-8">حسابك متصل الآن بسيرفر واتساب. يمكنك إرسال الفواتير والرسائل مباشرة للعملاء.</p>
                        
-                                <button onclick="WhatsAppManager.disconnect()" class="bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 px-8 py-3 rounded-xl font-bold transition-all border border-red-100 hover:border-red-200">
+                                <button onclick="WhatsAppManager.disconnect()" class="zen-btn zen-btn-danger">
                                     <i data-lucide="log-out" class="w-4 h-4 inline-block mr-1"></i> قطع الاتصال
                                 </button>
                         </div>
@@ -125,7 +125,7 @@
                                         <div id="qr-error" style="display: none;" class="bg-red-50 border border-red-200 rounded-xl p-6 text-center max-w-xs">
                                             <div class="text-red-500 text-3xl mb-2"><i data-lucide="alert-circle"></i></div>
                                             <p id="qr-error-message" class="text-red-700 font-medium mb-4">حدث خطأ</p>
-                                            <button onclick="WhatsAppManager.retryQR()" class="bg-white text-red-600 border border-red-200 hover:bg-red-50 px-4 py-2 rounded-lg font-bold text-sm transition-all">
+                                            <button onclick="WhatsAppManager.retryQR()" class="zen-btn zen-btn-neutral">
                                                 <i data-lucide="rotate-ccw" class="w-4 h-4 inline-block mr-1"></i> إعادة المحاولة
                                             </button>
                                         </div>
@@ -144,7 +144,7 @@
                                 <p class="text-gray-500 max-w-sm mx-auto mb-8">قم بإنشاء جلسة جديدة للبدء في ربط حسابك واستخدام خدمة الرسائل.</p>
 
                           
-                                    <button onclick="WhatsAppManager.createSession()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-emerald-500/30 hover:-translate-y-0.5 flex items-center gap-2 mx-auto">
+                                    <button onclick="WhatsAppManager.createSession()" class="zen-btn zen-btn-success mx-auto">
                                         <i data-lucide="message-circle" class="text-xl"></i> إنشاء جلسة واتساب
                                     </button>
                             </div>
@@ -156,25 +156,25 @@
 
         <!-- Info Sidebar -->
         <div class="lg:col-span-1">
-            <div class="bg-gray-50/50 rounded-xl border border-gray-200 p-6">
+            <div class="bg-bgSubtle rounded-xl border border-gray-200 p-6">
                 <h5 class="font-bold text-primary mb-4 flex items-center gap-2">
-                    <i data-lucide="lightbulb" class="text-white0"></i> معلومات مهمة
+                    <i data-lucide="lightbulb" class="text-primary"></i> معلومات مهمة
                 </h5>
                 <ul class="space-y-4">
                     <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
-                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
+                        <i data-lucide="check" class="text-primary mt-1 w-4 h-4"></i>
                         يمكنك إرسال الفواتير بصيغة PDF مباشرة لعملائك بمجرد إصدار الفاتورة.
                     </li>
                     <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
-                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
+                        <i data-lucide="check" class="text-primary mt-1 w-4 h-4"></i>
                         ستبقى الجلسة متصلة حتى تقوم بقطع الاتصال يدوياً أو تسجيل الخروج من تطبيق واتساب.
                     </li>
                     <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
-                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
+                        <i data-lucide="check" class="text-primary mt-1 w-4 h-4"></i>
                         يمكن ربط رقم واحد فقط لكل حساب في النظام.
                     </li>
                     <li class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed">
-                        <i data-lucide="check" class="text-white0 mt-1 w-4 h-4"></i>
+                        <i data-lucide="check" class="text-primary mt-1 w-4 h-4"></i>
                         في حالة عدم استجابة السيرفر، حاول تحديث الصفحة أو إعادة تشغيل سيرفر الرسائل.
                     </li>
                 </ul>
@@ -185,6 +185,10 @@
 
 @section Scripts {
     <script>
+const accentGreen = window.accentGreen || window.THEME?.accentGreen || window.getComputedStyle(document.documentElement).getPropertyValue('--zen-theme-accent-green').trim();
+const accentRed = window.accentRed || window.THEME?.accentRed || window.getComputedStyle(document.documentElement).getPropertyValue('--zen-theme-accent-red').trim();
+        const textMuted = window.textMuted || '#64748b';
+
         const WhatsAppManager = {
             checkInterval: null,
             qrRetryCount: 0,
@@ -218,7 +222,7 @@
                     title: title,
                     text: text,
                     confirmButtonText: 'ممتاز',
-                    confirmButtonColor: '#059669'
+                    confirmButtonColor: accentGreen
                 }).then(() => {
                     if (reload) location.reload();
                 });
@@ -360,8 +364,8 @@
                     text: "لن تتمكن من إرسال رسائل تلقائية حتى تعيد الربط.",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#e11d48',
-                    cancelButtonColor: '#64748b',
+                    confirmButtonColor: accentRed,
+                    cancelButtonColor: textMuted,
                     confirmButtonText: 'نعم، افصل الآن',
                     cancelButtonText: 'تراجع'
                 });
@@ -392,3 +396,4 @@
         $(window).on('beforeunload', () => WhatsAppManager.stopStatusCheck());
     </script>
 }
+

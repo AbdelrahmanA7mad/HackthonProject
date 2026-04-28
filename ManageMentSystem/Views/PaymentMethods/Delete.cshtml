@@ -1,4 +1,4 @@
-@model ManageMentSystem.Models.PaymentMethodOption
+﻿@model ManageMentSystem.Models.PaymentMethodOption
 
 @{
     ViewData["Title"] = "حذف طريقة دفع";
@@ -69,11 +69,11 @@
         <form asp-action="Delete" method="post" class="p-6 pt-0">
             <input type="hidden" asp-for="Id" />
             <div class="flex gap-3">
-                <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-danger flex-1">
                     <i data-lucide="trash" class="w-5 h-5"></i>
                     تأكيد الحذف
                 </button>
-                <a asp-action="Index" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
+                <a asp-action="Index" class="zen-btn zen-btn-neutral flex-1">
                     إلغاء
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 </a>

@@ -1,4 +1,4 @@
-@model ManageMentSystem.Models.Tenant
+﻿@model ManageMentSystem.Models.Tenant
 @{
     ViewData["Title"] = "إدارة الاشتراك";
     
@@ -52,16 +52,16 @@
     }
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="crown" class="text-amber-500"></i> إدارة الاشتراك
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="crown" class="text-accentAmber"></i> إدارة الاشتراك
             </h1>
             <p class="text-gray-500 mt-1 font-medium">تفاصيل باقتك الحالية وموعد التجديد</p>
         </div>
-        <a asp-action="Index" class="bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 font-medium py-2.5 px-4 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2">
+        <a asp-action="Index" class="zen-btn zen-btn-neutral font-medium">
             عودة للإعدادات
             <i data-lucide="arrow-left"></i>
         </a>
@@ -73,7 +73,7 @@
         <!-- Status Card -->
         <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden mb-8 relative">
             <!-- Decorative BG -->
-            <div class="absolute top-0 left-0 w-full h-1  bg-[#0f1419]  "></div>
+            <div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
             
             <div class="p-8">
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -81,10 +81,10 @@
                     <!-- Icon & Plan Name -->
                     <div class="flex items-center gap-6 text-center lg:text-right w-full lg:w-auto justify-center lg:justify-start">
                         <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center shrink-0">
-                            <i data-lucide="rocket" class="text-4xl text-[#0f1419]"></i>
+                            <i data-lucide="rocket" class="text-4xl text-primary"></i>
                         </div>
                         <div>
-                            <h2 class="text-2xl font-bold text-[#0f1419] mb-1">
+                            <h2 class="text-2xl font-bold text-primary mb-1">
                                 الباقة @(isTrial ? "التجريبية" : "الأساسية")
                             </h2>
                             <div class="flex items-center gap-2 justify-center lg:justify-start">
@@ -98,7 +98,7 @@
                                 else
                                 {
                                     <span class="inline-flex items-center gap-1.5 bg-red-100 text-accentRed px-3 py-1 rounded-full text-sm font-bold">
-                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-accentRed"></span>
                                         منتهية الصلاحية
                                     </span>
                                 }
@@ -111,7 +111,7 @@
                         <!-- Days -->
                         <div class="text-center bg-gray-50 rounded-2xl p-3 min-w-[80px] border border-gray-200">
                             <span class="block text-gray-500 text-xs font-bold mb-1">يوم</span>
-                            <span class="block text-2xl font-black text-[#0f1419] font-sans">@remainingDays</span>
+                            <span class="block text-2xl font-black text-primary font-sans">@remainingDays</span>
                         </div>
                         
                         <span class="text-gray-500 font-bold text-xl">:</span>
@@ -119,7 +119,7 @@
                         <!-- Months -->
                         <div class="text-center bg-gray-50 rounded-2xl p-3 min-w-[80px] border border-gray-200">
                             <span class="block text-gray-500 text-xs font-bold mb-1">شهر</span>
-                            <span class="block text-2xl font-black text-[#0f1419] font-sans">@remainingMonths</span>
+                            <span class="block text-2xl font-black text-primary font-sans">@remainingMonths</span>
                         </div>
 
                         <span class="text-gray-500 font-bold text-xl">:</span>
@@ -127,7 +127,7 @@
                         <!-- Years -->
                         <div class="text-center bg-gray-50 rounded-2xl p-3 min-w-[80px] border border-gray-200">
                             <span class="block text-gray-500 text-xs font-bold mb-1">سنة</span>
-                            <span class="block text-2xl font-black text-[#0f1419] font-sans">@remainingYears</span>
+                            <span class="block text-2xl font-black text-primary font-sans">@remainingYears</span>
                         </div>
                     </div>
                 </div>
@@ -141,10 +141,10 @@
                     <div>
                         <div class="flex justify-between items-end mb-2">
                             <span class="text-gray-600 font-bold text-sm">استهلاك الفترة</span>
-                            <span class="text-[#0f1419] font-bold text-sm">%@progressPercentage</span>
+                            <span class="text-primary font-bold text-sm">%@progressPercentage</span>
                         </div>
                         <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
-                            <div class="h-full  bg-[#0f1419]  rounded-full transition-all duration-1000 ease-out" style="width: @progressPercentage%"></div>
+                            <div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: @progressPercentage%"></div>
                         </div>
                         <p class="text-gray-500 text-xs mt-2">
                             تم انقضاء @progressPercentage% من مدة الاشتراك الحالية
@@ -158,14 +158,14 @@
                                 <i data-lucide="calendar" class="text-gray-500"></i>
                                 تاريخ البداية
                             </span>
-                            <span class="text-[#0f1419] font-bold font-sans">@startDate.ToString("yyyy/MM/dd")</span>
+                            <span class="text-primary font-bold font-sans">@startDate.ToString("yyyy/MM/dd")</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-gray-500 text-sm flex items-center gap-2">
                                 <i data-lucide="calendar-check" class="text-gray-500"></i>
                                 تاريخ الانتهاء
                             </span>
-                            <span class="text-[#0f1419] font-bold font-sans bg-gray-50 px-2 py-0.5 rounded">@(endDate?.ToString("yyyy/MM/dd") ?? "غير محدد")</span>
+                            <span class="text-primary font-bold font-sans bg-gray-50 px-2 py-0.5 rounded">@(endDate?.ToString("yyyy/MM/dd") ?? "غير محدد")</span>
                         </div>
                     </div>
                 </div>
@@ -174,13 +174,13 @@
             <!-- Footer Actions -->
             <div class="bg-gray-50 p-6 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
                 <span class="text-gray-500 text-sm font-medium flex items-center gap-2">
-                    <i data-lucide="headset" class="text-[#0f1419]"></i>
+                    <i data-lucide="headset" class="text-primary"></i>
                     هل تحتاج إلى مساعدة أو ترغب في ترقية الباقة؟
                 </span>
                 
                 <a href="https://wa.me/201129452725?text=أريد%20تجديد%20الاشتراك%20أو%20الاستفسار" 
                    target="_blank" 
-                   class="inline-flex items-center justify-center gap-2 bg-accentGreen hover:bg-emerald-800 text-white font-bold py-2.5 px-6 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-200 hover:-translate-y-0.5 group w-full md:w-auto text-decoration-none">
+                   class="zen-btn zen-btn-success group w-full md:w-auto">
                     <i data-lucide="message-circle" class="text-xl group-hover:scale-110 transition-transform"></i>
                     تواصل للتجديد
                 </a>
@@ -191,26 +191,27 @@
         <div class="grid md:grid-cols-3 gap-6 opacity-75 grayscale hover:grayscale-0 transition-all duration-500">
             <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
                 <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center mb-3">
-                    <i data-lucide="users" class="text-[#0f1419]"></i>
+                    <i data-lucide="users" class="text-primary"></i>
                 </div>
-                <h3 class="font-bold text-[#0f1419] mb-1">دعم فني متميز</h3>
+                <h3 class="font-bold text-primary mb-1">دعم فني متميز</h3>
                 <p class="text-gray-500 text-xs">فريقنا جاهز للمساعدة دائماً</p>
             </div>
             <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
                 <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
                     <i data-lucide="cloud-upload" class="text-amber-700"></i>
                 </div>
-                <h3 class="font-bold text-[#0f1419] mb-1">نسخ احتياطي يومي</h3>
+                <h3 class="font-bold text-primary mb-1">نسخ احتياطي يومي</h3>
                 <p class="text-gray-500 text-xs">بياناتك في أمان تام</p>
             </div>
             <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
                 <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-3">
                     <i data-lucide="zap" class="text-accentGreen"></i>
                 </div>
-                <h3 class="font-bold text-[#0f1419] mb-1">تحديثات مستمرة</h3>
+                <h3 class="font-bold text-primary mb-1">تحديثات مستمرة</h3>
                 <p class="text-gray-500 text-xs">مزايا جديدة تضاف باستمرار</p>
             </div>
         </div>
 
     </div>
 </div>
+

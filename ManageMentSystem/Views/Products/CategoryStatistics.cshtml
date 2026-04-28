@@ -1,15 +1,15 @@
-@model ManageMentSystem.ViewModels.CategoryStatisticsViewModel
+﻿@model ManageMentSystem.ViewModels.CategoryStatisticsViewModel
 
 @{
     ViewData["Title"] = $"إحصائيات {Model.CategoryName}";
 }
 
-<div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-8" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6 md:p-8 space-y-8" dir="rtl">
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] font-cairo flex items-center gap-3">
-                <span class="p-2 bg-gray-50 rounded-xl text-[#0f1419]">
+            <h1 class="text-2xl font-bold text-primary font-cairo flex items-center gap-3">
+                <span class="p-2 bg-gray-50 rounded-xl text-primary">
                     <i data-lucide="pie-chart" class="w-5 h-5"></i>
                 </span>
                 @ViewData["Title"]
@@ -28,12 +28,12 @@
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-start mb-4">
                     <div class="p-3 bg-gray-50 rounded-xl">
-                        <i data-lucide="package" class="w-6 h-6 text-[#0f1419]"></i>
+                        <i data-lucide="package" class="w-6 h-6 text-primary"></i>
                     </div>
-                    <span class="bg-gray-50 text-[#0f1419] text-xs font-bold px-2.5 py-1 rounded-full">العدد</span>
+                    <span class="bg-gray-50 text-primary text-xs font-bold px-2.5 py-1 rounded-full">العدد</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1">@Model.TotalProducts</h3>
+                    <h3 class="text-3xl font-bold text-primary mb-1">@Model.TotalProducts</h3>
                     <p class="text-gray-500 text-sm font-medium">إجمالي المنتجات</p>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <span class="bg-emerald-100 text-accentGreen text-xs font-bold px-2.5 py-1 rounded-full">شراء</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1 font-mono truncate" title="@Model.TotalPurchaseValue.ToString("C0")">@Model.TotalPurchaseValue.ToString("C0")</h3>
+                    <h3 class="text-3xl font-bold text-primary mb-1 font-mono truncate" title="@Model.TotalPurchaseValue.ToString("C0")">@Model.TotalPurchaseValue.ToString("C0")</h3>
                     <p class="text-gray-500 text-sm font-medium">رأس المال المستثمر</p>
                 </div>
             </div>
@@ -54,12 +54,12 @@
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                 <div class="flex justify-between items-start mb-4">
                     <div class="p-3 bg-gray-50 rounded-xl">
-                        <i data-lucide="tag" class="w-6 h-6 text-[#0f1419]"></i>
+                        <i data-lucide="tag" class="w-6 h-6 text-primary"></i>
                     </div>
-                    <span class="bg-gray-50 text-[#0f1419] text-xs font-bold px-2.5 py-1 rounded-full">بيع</span>
+                    <span class="bg-gray-50 text-primary text-xs font-bold px-2.5 py-1 rounded-full">بيع</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1 font-mono truncate" title="@Model.TotalSaleValue.ToString("C0")">@Model.TotalSaleValue.ToString("C0")</h3>
+                    <h3 class="text-3xl font-bold text-primary mb-1 font-mono truncate" title="@Model.TotalSaleValue.ToString("C0")">@Model.TotalSaleValue.ToString("C0")</h3>
                     <p class="text-gray-500 text-sm font-medium">قيمة المخزون (بيع)</p>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">ربح</span>
                 </div>
                 <div>
-                    <h3 class="text-3xl font-bold text-[#0f1419] mb-1 font-mono truncate" title="@Model.PotentialProfit.ToString("C0")">@Model.PotentialProfit.ToString("C0")</h3>
+                    <h3 class="text-3xl font-bold text-primary mb-1 font-mono truncate" title="@Model.PotentialProfit.ToString("C0")">@Model.PotentialProfit.ToString("C0")</h3>
                     <p class="text-gray-500 text-sm font-medium">الربح المتوقع</p>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm font-medium">إجمالي عمليات البيع</p>
-                            <h3 class="text-3xl font-bold text-[#0f1419]">@Model.TotalSalesCount</h3>
+                            <h3 class="text-3xl font-bold text-primary">@Model.TotalSalesCount</h3>
                         </div>
                     </div>
                 </div>
@@ -104,11 +104,11 @@
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-4">
                         <div class="p-3 bg-gray-50 rounded-xl">
-                            <i data-lucide="hand-coins" class="w-6 h-6 text-[#0f1419]"></i>
+                            <i data-lucide="hand-coins" class="w-6 h-6 text-primary"></i>
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm font-medium">إجمالي قيمة المبيعات</p>
-                            <h3 class="text-3xl font-bold text-[#0f1419] font-mono" title="@Model.TotalSalesValue.ToString("C0")">@Model.TotalSalesValue.ToString("C0")</h3>
+                            <h3 class="text-3xl font-bold text-primary font-mono" title="@Model.TotalSalesValue.ToString("C0")">@Model.TotalSalesValue.ToString("C0")</h3>
                         </div>
                     </div>
                 </div>
@@ -121,13 +121,13 @@
         <div class="border-b border-gray-200 px-6 pt-4">
             <ul class="nav nav-tabs flex flex-wrap -mb-px gap-2" id="categoryTab" role="tablist" style="border-bottom: none;">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-[#0f1419] hover:bg-gray-50"
+                    <button class="nav-link active inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-primary hover:bg-gray-50"
                             id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="true">
                         <i data-lucide="package-open" class="mr-2 w-4 h-4 inline-block"></i> المنتجات المتاحة
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-[#0f1419] hover:bg-gray-50"
+                    <button class="nav-link inline-block p-4 rounded-t-lg border-b-2 font-bold text-sm transition-colors hover:text-primary hover:bg-gray-50"
                             id="sales-tab" data-bs-toggle="tab" data-bs-target="#sales" type="button" role="tab" aria-controls="sales" aria-selected="false">
                         <i data-lucide="history" class="mr-2 w-4 h-4 inline-block"></i> سجل المبيعات
                     </button>
@@ -139,12 +139,12 @@
 p-0" id="categoryTabContent">
 
             <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
-                <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-50/50">
+                <div class="p-5 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 bg-bgSubtle">
                     <h5 class="font-bold text-gray-600 flex items-center gap-2">
-                        <i data-lucide="list" class="text-[#0f1419] w-4 h-4"></i>
+                        <i data-lucide="list" class="text-primary w-4 h-4"></i>
                         قائمة المنتجات في @Model.CategoryName
                     </h5>
-                    <button type="button" class="flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover rounded-xl shadow-sm  transition-all duration-200 gap-2"
+                    <button type="button" class="zen-btn zen-btn-primary"
                             onclick="printAllBarcodes()" title="طباعة جميع الباركود">
                         <i data-lucide="print" class="w-4 h-4"></i>
                         طباعة جميع الباركود
@@ -176,19 +176,19 @@ p-0" id="categoryTabContent">
                                         }
                                         else
                                         {
-                                            <span class="flex items-center gap-1.5 text-[#0f1419] bg-gray-50 px-2.5 py-1 rounded-full w-fit border border-gray-200 font-bold">@product.Quantity</span>
+                                            <span class="flex items-center gap-1.5 text-primary bg-gray-50 px-2.5 py-1 rounded-full w-fit border border-gray-200 font-bold">@product.Quantity</span>
                                         }
                                     </td>
                                     <td class="px-6 py-4 font-mono font-bold text-gray-500">@product.PurchasePrice.ToString("C")</td>
-                                    <td class="px-6 py-4 font-mono font-bold text-[#0f1419]">@product.SalePrice.ToString("C")</td>
+                                    <td class="px-6 py-4 font-mono font-bold text-primary">@product.SalePrice.ToString("C")</td>
                                     <td class="px-6 py-4">
                                         @if (!string.IsNullOrEmpty(product.Barcode))
                                         {
                                             <span class="badge bg-info" style="display:none !important;">@product.Barcode</span>
 
                                             <div class="flex items-center gap-2">
-                                                <span class="bg-gray-50 text-[#0f1419] px-2 py-1 rounded border border-gray-200 font-mono text-xs select-all">@product.Barcode</span>
-                                                <button type="button" class="text-[#0f1419] hover:text-[#0f1419] hover:bg-gray-50 rounded-lg p-1.5 transition-colors"
+                                                <span class="bg-gray-50 text-primary px-2 py-1 rounded border border-gray-200 font-mono text-xs select-all">@product.Barcode</span>
+                                                <button type="button" class="text-primary hover:text-primary hover:bg-gray-50 rounded-lg p-1.5 transition-colors"
                                                         onclick="printBarcode('@product.Barcode', '@product.Name')" title="طباعة الباركود">
                                                     <i data-lucide="print" class="w-4 h-4"></i>
                                                 </button>
@@ -204,10 +204,10 @@ p-0" id="categoryTabContent">
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-center gap-1">
-                                            <a href="/Products/Details/@product.Id" class="p-2 text-accentGreen hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors" title="عرض">
+                                            <a href="/Products/Details/@product.Id" class="zen-action-btn zen-action-btn-info" title="عرض">
                                                 <i data-lucide="eye" class="w-4 h-4"></i>
                                             </a>
-                                            <button type="button" class="p-2 text-accentRed hover:bg-red-50 rounded-lg transition-colors"
+                                            <button type="button" class="zen-action-btn zen-action-btn-danger"
                                                     onclick="deleteProduct(@product.Id)" title="حذف">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
@@ -221,9 +221,9 @@ p-0" id="categoryTabContent">
             </div>
 
             <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
-                <div class="p-5 border-b border-gray-200 bg-gray-50/50">
+                <div class="p-5 border-b border-gray-200 bg-bgSubtle">
                     <h5 class="font-bold text-gray-600 flex items-center gap-2">
-                        <i data-lucide="history" class="text-[#0f1419] w-4 h-4"></i>
+                        <i data-lucide="history" class="text-primary w-4 h-4"></i>
                         سجل مبيعات @Model.CategoryName
                     </h5>
                 </div>
@@ -255,13 +255,13 @@ p-0" id="categoryTabContent">
                                     <td class="px-6 py-4 font-mono text-gray-500" dir="ltr">@sale.SaleDate.ToShortDateString()</td>
                                     <td class="px-6 py-4 text-gray-600">@sale.ProductName</td>
                                     <td class="px-6 py-4 font-mono text-gray-500">@sale.UnitPrice.ToString("C")</td>
-                                    <td class="px-6 py-4 font-mono font-bold text-[#0f1419]">@sale.TotalPrice.ToString("C")</td>
+                                    <td class="px-6 py-4 font-mono font-bold text-primary">@sale.TotalPrice.ToString("C")</td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-center gap-1">
-                                            <a href="/Sales/Details/@sale.SaleId" class="p-2 text-[#0f1419] hover:bg-gray-50 rounded-lg transition-colors" title="عرض">
+                                            <a href="/Sales/Details/@sale.SaleId" class="zen-action-btn zen-action-btn-neutral" title="عرض">
                                                 <i data-lucide="eye" class="w-4 h-4"></i>
                                             </a>
-                                            <button type="button" class="p-2 text-accentRed hover:bg-red-50 rounded-lg transition-colors"
+                                            <button type="button" class="zen-action-btn zen-action-btn-danger"
                                                     onclick="deleteSale(@sale.SaleId)" title="حذف">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
@@ -292,15 +292,15 @@ p-0" id="categoryTabContent">
                     <i data-lucide="trash-2" class="text-2xl text-accentRed w-8 h-8"></i>
                 </div>
                 <div>
-                    <p class="font-bold text-[#0f1419] text-lg">هل أنت متأكد من حذف هذا المنتج؟</p>
+                    <p class="font-bold text-primary text-lg">هل أنت متأكد من حذف هذا المنتج؟</p>
                     <p class="text-gray-500 mt-2 text-sm">سيتم حذف المنتج نهائياً من السجلات.</p>
                 </div>
             </div>
             <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-center">
-                <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="zen-btn zen-btn-neutral" data-bs-dismiss="modal">إلغاء</button>
                 <form id="deleteProductForm" method="post" style="display: inline;">
                     @Html.AntiForgeryToken()
-                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 transition-all">نعم، احذف المنتج</button>
+                    <button type="submit" class="zen-btn zen-btn-danger">نعم، احذف المنتج</button>
                 </form>
             </div>
         </div>
@@ -321,13 +321,13 @@ p-0" id="categoryTabContent">
                 <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
                     <i data-lucide="receipt" class="text-2xl text-accentRed w-8 h-8"></i>
                 </div>
-                <p class="font-bold text-[#0f1419] text-lg">هل أنت متأكد من حذف عملية البيع هذه؟</p>
+                <p class="font-bold text-primary text-lg">هل أنت متأكد من حذف عملية البيع هذه؟</p>
             </div>
             <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-center">
-                <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="zen-btn zen-btn-neutral" data-bs-dismiss="modal">إلغاء</button>
                 <form id="deleteSaleForm" method="post" style="display: inline;">
                     @Html.AntiForgeryToken()
-                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 transition-all">نعم، حذف</button>
+                    <button type="submit" class="zen-btn zen-btn-danger">نعم، حذف</button>
                 </form>
             </div>
         </div>
@@ -339,8 +339,8 @@ p-0" id="categoryTabContent">
 
     <style>
         .nav-tabs .nav-link.active {
-            color: #3730a3; /* indigo-800 matching your theme */
-            border-color: #3730a3;
+            color: var(--zen-theme-primary);
+            border-color: var(--zen-theme-primary);
             background-color: transparent;
         }
 
@@ -352,7 +352,9 @@ p-0" id="categoryTabContent">
 
             .nav-tabs .nav-link:hover {
                 border-color: #e2e8f0; /* slate-200 */
-                color: #3730a3;
+                color: var(--zen-theme-primary);
             }
     </style>
 }
+
+

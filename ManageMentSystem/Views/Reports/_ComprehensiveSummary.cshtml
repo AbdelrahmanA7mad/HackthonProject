@@ -3,13 +3,13 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <!-- Inventory Summary -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 font-bold text-[#0f1419] flex items-center gap-2">
-            <i data-lucide="package" class="text-white0"></i> ملخص المخزون
+        <div class="bg-bgSubtle px-6 py-4 border-b border-gray-200 font-bold text-primary flex items-center gap-2">
+            <i data-lucide="package" class="text-primary"></i> ملخص المخزون
         </div>
         <div class="p-6 space-y-3">
             <div class="flex justify-between border-b border-gray-200 pb-2">
                 <span class="text-gray-500">إجمالي عدد المنتجات</span>
-                <span class="font-bold text-[#0f1419]">@Model.TotalProducts</span>
+                <span class="font-bold text-primary">@Model.TotalProducts</span>
             </div>
             <div class="flex justify-between border-b border-gray-200 pb-2">
                 <span class="text-gray-500">منتجات على وشك النفاذ</span>
@@ -17,27 +17,27 @@
             </div>
             <div class="flex justify-between pt-2">
                 <span class="text-gray-500">قيمة المخزون (شراء)</span>
-                <span class="font-bold text-[#0f1419]">@Model.InventoryValue.ToString("C")</span>
+                <span class="font-bold text-primary">@Model.InventoryValue.ToString("C")</span>
             </div>
         </div>
     </div>
     <!-- Revenue Summary -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 font-bold text-[#0f1419] flex items-center gap-2">
-            <i data-lucide="banknote" class="text-emerald-500"></i> ملخص الإيرادات
+        <div class="bg-bgSubtle px-6 py-4 border-b border-gray-200 font-bold text-primary flex items-center gap-2">
+            <i data-lucide="banknote" class="text-accentGreen"></i> ملخص الإيرادات
         </div>
         <div class="p-6 space-y-3">
             <div class="flex justify-between border-b border-gray-200 pb-2">
                 <span class="text-gray-500">إجمالي إيرادات المبيعات</span>
-                <span class="font-bold text-[#0f1419]">@Model.TotalSalesRevenue.ToString("C")</span>
+                <span class="font-bold text-primary">@Model.TotalSalesRevenue.ToString("C")</span>
             </div>
             <div class="flex justify-between border-b border-gray-200 pb-2">
                 <span class="text-gray-500">إجمالي الإيرادات</span>
-                <span class="font-bold text-[#0f1419]">@Model.TotalRevenue.ToString("C")</span>
+                <span class="font-bold text-primary">@Model.TotalRevenue.ToString("C")</span>
             </div>
             <div class="flex justify-between pt-2">
                 <span class="text-gray-500">صافى الربح للمبيعات النقدية</span>
-                <span class="font-bold text-[#0f1419]">@Model.NetSalesProfit.ToString("C")</span>
+                <span class="font-bold text-primary">@Model.NetSalesProfit.ToString("C")</span>
             </div>
         </div>
     </div>

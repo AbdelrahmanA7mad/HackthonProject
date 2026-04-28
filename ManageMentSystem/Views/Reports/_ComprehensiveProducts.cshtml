@@ -1,9 +1,9 @@
 @model ManageMentSystem.ViewModels.ComprehensiveReportViewModel
 
 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-        <h3 class="font-bold text-[#0f1419]">تفاصيل المنتجات</h3>
-        <span class="bg-gray-100 text-[#0f1419] text-xs px-2 py-1 rounded-full font-bold">@Model.TotalProducts منتج</span>
+    <div class="bg-bgSubtle px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="font-bold text-primary">تفاصيل المنتجات</h3>
+        <span class="bg-gray-100 text-primary text-xs px-2 py-1 rounded-full font-bold">@Model.TotalProducts منتج</span>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-right">
@@ -19,14 +19,14 @@
             <tbody class="divide-y divide-gray-100">
                 @foreach (var item in Model.Products)
                 {
-                    <tr class="hover:bg-gray-50/50">
+                    <tr class="hover:bg-bgSubtle">
                         <td class="px-6 py-4 font-bold text-gray-600">@item.Name</td>
                         <td class="px-6 py-4 font-mono text-gray-500">@item.Barcode</td>
                         <td class="px-6 py-4 text-center">
                             <span class="@(item.Quantity <= 0 ? "text-red-600 font-bold" : "text-gray-600")">@item.Quantity</span>
                         </td>
                         <td class="px-6 py-4 text-gray-500">@item.PurchasePrice.ToString("C")</td>
-                        <td class="px-6 py-4 font-medium text-[#0f1419]">@item.SalePrice.ToString("C")</td>
+                        <td class="px-6 py-4 font-medium text-primary">@item.SalePrice.ToString("C")</td>
                     </tr>
                 }
             </tbody>

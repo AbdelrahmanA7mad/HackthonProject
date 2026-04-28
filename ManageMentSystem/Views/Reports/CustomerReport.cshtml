@@ -1,20 +1,20 @@
-@model ManageMentSystem.ViewModels.CustomerReportViewModel
+﻿@model ManageMentSystem.ViewModels.CustomerReportViewModel
 @{
     ViewData["Title"] = "تقرير العملاء";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="users" class="text-[#0f1419]"></i> تقرير العملاء الشامل
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="users" class="text-primary"></i> تقرير العملاء الشامل
             </h1>
             <p class="text-gray-500 mt-1 font-medium">تحليل العملاء، الأكثر شراءً، وسجل المعاملات</p>
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="@Url.Action("ExportCustomerReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" 
-               class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
+               class="zen-btn zen-btn-primary">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -26,17 +26,17 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">من تاريخ</label>
-                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">إلى تاريخ</label>
-                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div class="flex gap-3">
-                    <button type="submit" class="bg-[#0f1419] hover:bg-[#0f1419] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 flex items-center gap-2 flex-grow justify-center">
+                    <button type="submit" class="zen-btn zen-btn-primary flex-grow">
                         <i data-lucide="search"></i> تطبيق
                     </button>
-                    <a href="@Url.Action("CustomerReport")" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 flex-grow justify-center">
+                    <a href="@Url.Action("CustomerReport")" class="zen-btn zen-btn-neutral flex-grow">
                         <i data-lucide="x"></i> إلغاء
                     </a>
                 </div>
@@ -47,18 +47,18 @@
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="users"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">إجمالي العملاء</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalCustomers</div>
+            <div class="text-2xl font-bold text-primary">@Model.TotalCustomers</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="user-check"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">العملاء النشطين</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.ActiveCustomers</div>
+            <div class="text-2xl font-bold text-primary">@Model.ActiveCustomers</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-3">
@@ -68,11 +68,11 @@
             <div class="text-2xl font-bold text-amber-600">@Model.NewCustomers</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="dollar-sign"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">إجمالي الإيرادات</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalCustomerRevenue.ToString("C")</div>
+            <div class="text-2xl font-bold text-primary">@Model.TotalCustomerRevenue.ToString("C")</div>
         </div>
     </div>
 
@@ -80,13 +80,13 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Additional Details -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-                <i data-lucide="info" class="text-white0"></i> تفاصيل إضافية
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="info" class="text-primary"></i> تفاصيل إضافية
             </h5>
             <div class="space-y-3">
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">متوسط قيمة العميل</span>
-                    <span class="font-bold text-[#0f1419]">@Model.AverageCustomerValue.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.AverageCustomerValue.ToString("C")</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إجمالي ديون العملاء</span>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">نسبة العملاء النشطين</span>
-                    <span class="font-bold text-[#0f1419]">@(Model.TotalCustomers > 0 ? ((double)Model.ActiveCustomers / Model.TotalCustomers * 100).ToString("F1") : "0")%</span>
+                    <span class="font-bold text-primary">@(Model.TotalCustomers > 0 ? ((double)Model.ActiveCustomers / Model.TotalCustomers * 100).ToString("F1") : "0")%</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">نسبة العملاء الجدد</span>
@@ -105,8 +105,8 @@
 
         <!-- Charts Section -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-                <i data-lucide="bar-chart-2" class="text-white0"></i> أفضل 5 عملاء حسب المشتريات
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="bar-chart-2" class="text-primary"></i> أفضل 5 عملاء حسب المشتريات
             </h5>
             <div class="relative h-64 w-full flex justify-center">
                 <canvas id="customerChart"></canvas>
@@ -116,8 +116,8 @@
 
     <!-- Top Customers Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle">
+            <h5 class="font-bold text-primary flex items-center gap-2">
                 <i data-lucide="trophy" class="text-amber-500"></i> أفضل 10 عملاء
             </h5>
         </div>
@@ -150,7 +150,7 @@
                                 }
                                 else if (i == 2)
                                 {
-                                     <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] mx-auto border border-gray-200 shadow-sm"><span class="font-bold">3</span></div>
+                                     <div class="w-8 h-8 rounded-full bg-bgSubtle flex items-center justify-center text-primary mx-auto border border-gray-200 shadow-sm"><span class="font-bold">3</span></div>
                                 }
                                 else
                                 {
@@ -159,7 +159,7 @@
                             </td>
                             <td class="px-6 py-4 font-bold text-gray-600">@customer.CustomerName</td>
                             <td class="px-6 py-4 text-gray-500 text-center">@customer.SalesCount</td>
-                            <td class="px-6 py-4 font-bold text-[#0f1419]">@customer.TotalSpent.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-primary">@customer.TotalSpent.ToString("C")</td>
                             <td class="px-6 py-4">
                                 @if (customer.OutstandingDebt > 0)
                                 {
@@ -167,7 +167,7 @@
                                 }
                                 else
                                 {
-                                    <span class="text-[#0f1419] font-bold text-xs"><i data-lucide="check" class="w-3 h-3 inline-block"></i> خالص</span>
+                                    <span class="text-primary font-bold text-xs"><i data-lucide="check" class="w-3 h-3 inline-block"></i> خالص</span>
                                 }
                             </td>
                             <td class="px-6 py-4 text-gray-500">@averageSale.ToString("C")</td>
@@ -180,9 +180,9 @@
 
     <!-- All Customers Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="table" class="text-white0"></i> تفاصيل جميع العملاء
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle">
+            <h5 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="table" class="text-primary"></i> تفاصيل جميع العملاء
             </h5>
         </div>
         <div class="overflow-x-auto">
@@ -208,11 +208,11 @@
                             <td class="px-6 py-4 font-mono text-gray-500">@customer.PhoneNumber</td>
                             <td class="px-6 py-4 text-gray-500">@customer.Address</td>
                             <td class="px-6 py-4 text-center text-gray-500">@customer.Sales.Count</td>
-                            <td class="px-6 py-4 font-medium text-[#0f1419]">@totalSpent.ToString("C")</td>
+                            <td class="px-6 py-4 font-medium text-primary">@totalSpent.ToString("C")</td>
                             <td class="px-6 py-4 text-center">
                                 @if (isActive)
                                 {
-                                    <span class="bg-gray-100 text-[#0f1419] px-3 py-1 rounded-full text-xs font-bold">نشط</span>
+                                    <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-xs font-bold">نشط</span>
                                 }
                                 else
                                 {
@@ -232,6 +232,24 @@
     <script>
         const ctx = document.getElementById('customerChart').getContext('2d');
         const topCustomersData = @Html.Raw(Json.Serialize(Model.TopCustomers.Take(5)));
+        const theme = window.THEME || window;
+        const rgbaFromColor = (color, alpha) => {
+            if (!color) return `rgba(15, 20, 25, ${alpha})`;
+            const normalized = color.trim();
+            if (normalized.startsWith('#')) {
+                const hex = normalized.slice(1);
+                const expanded = hex.length === 3 ? hex.split('').map(ch => ch + ch).join('') : hex;
+                const parts = expanded.match(/.{1,2}/g) || ['0f', '14', '19'];
+                const [r, g, b] = parts.map(part => parseInt(part, 16));
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            const rgbMatch = normalized.match(/rgba?\(([^)]+)\)/i);
+            if (rgbMatch) {
+                const values = rgbMatch[1].split(',').map(v => v.trim());
+                return `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${alpha})`;
+            }
+            return normalized;
+        };
 
         const chart = new Chart(ctx, {
             type: 'bar',
@@ -241,11 +259,11 @@
                     label: 'إجمالي المشتريات',
                     data: topCustomersData.map(c => c.totalSpent),
                     backgroundColor: [
-                        '#0f1419', // indigo-600
-                        '#059669', // emerald-600
-                        '#eab308', // yellow-500
-                        '#e11d48', // red-500
-                        '#8b5cf6'  // violet-500
+                        theme.primary,
+                        theme.accentGreen,
+                        theme.accentAmber,
+                        theme.accentRed,
+                        theme.accent
                     ],
                     borderRadius: 6,
                     borderWidth: 0,
@@ -260,7 +278,7 @@
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        backgroundColor: rgbaFromColor(theme.primary, 0.92),
                         titleFont: { family: 'Cairo' },
                         bodyFont: { family: 'Cairo' },
                         padding: 10,
@@ -274,7 +292,7 @@
                     },
                     y: {
                         beginAtZero: true,
-                        grid: { color: '#f1f5f9' },
+                        grid: { color: theme.borderSubtle || theme.bgSubtle || '#e5e7eb' },
                         ticks: { font: { family: 'Cairo' } }
                     }
                 }

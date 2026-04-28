@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Zenith ERP</title>
     <script src="~/lib/tailwindcss/tailwind.js"></script>
-    <script src="~/js/tailwind-theme.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="~/js/tailwind-theme.js"></script>
     <!-- Local Cairo Font -->
     <link rel="stylesheet" href="~/css/cairo-font.css" />
 
@@ -19,21 +19,22 @@
         <script src="https://unpkg.com/lucide@latest"></script>
         <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
         <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
+        <link rel="stylesheet" href="~/css/zenith-ui.css" />
         <style>
             .ai-pulse { animation: pulse-ring 2s infinite; }
             @@keyframes pulse-ring {
-              0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(15, 20, 25, 0.7); }
-              70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(15, 20, 25, 0); }
-              100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(15, 20, 25, 0); }
+              0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgb(var(--zen-theme-primary-rgb) / 0.7); }
+              70% { transform: scale(1); box-shadow: 0 0 0 10px rgb(var(--zen-theme-primary-rgb) / 0); }
+              100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgb(var(--zen-theme-primary-rgb) / 0); }
             }
-            body { background-color: #ffffff; color: #0f1419; }
-            .sidebar-link-active { background-color: #f8f9fa; color: #0f1419; border-right: 4px solid #0f1419; }
+            body { background-color: var(--zen-theme-bg-base); color: var(--zen-theme-primary); }
+            .sidebar-link-active { background-color: var(--zen-theme-bg-subtle); color: var(--zen-theme-primary); border-right: 4px solid var(--zen-theme-primary); }
         </style>
         <link href="~/lib/datatables-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
         <link href="~/lib/datatables-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet">
 
     <link rel="manifest" href="~/manifest.json" />
-    <meta name="theme-color" content="#0f1419" />
+    <meta name="theme-color" content="var(--zen-theme-primary)" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -46,14 +47,14 @@
         var tabSettings = await SystemSettingsService.GetTabVisibilitySettingsAsync();
         
         <!-- Mobile Header (Fixed) -->
-        <header class="fixed top-0 inset-x-0 h-16 bg-[#0f1419] border-b border-white/5 flex items-center justify-between px-4 z-[1000] md:hidden shadow-md transition-all duration-300 print:hidden">
+        <header class="fixed top-0 inset-x-0 h-16 bg-primary border-b border-white/5 flex items-center justify-between px-4 z-[1000] md:hidden shadow-md transition-all duration-300 print:hidden">
             <!-- Menu Toggle -->
             <button id="mobileMenuBtn" class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-colors border border-white/10">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 inline-block"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
             </button>
 
             <!-- Logo (Centered) -->
-            <img src="~/images/translogo.webp" alt="Zenith ERP" onclick="toggleAboutModal()" class="h-8 object-contain cursor-pointer active:scale-95 transition-transform drop-shadow-sm" />
+            <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP" onclick="toggleAboutModal()" class="h-8 object-contain cursor-pointer active:scale-95 transition-transform drop-shadow-sm" />
 
             <!-- Spacer/Placeholder -->
             <div class="w-10"></div>
@@ -62,8 +63,8 @@
         <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 hidden opacity-0 transition-opacity duration-300 ease-in-out md:hidden print:hidden" id="sidebarOverlay"></div>
 
         <div class="flex">
-            <nav id="sidebar" class="fixed top-0 right-0 h-screen w-72 border-l border-white/5 shadow-2xl z-50 overflow-y-auto transition-all duration-300 ease-in-out translate-x-full md:translate-x-0 bg-[#0f1419] print:hidden">
-                <div class="sidebar-header text-center border-b border-white/5 p-4 md:p-6 bg-[#0f1419] sticky top-0 z-10 flex items-center justify-center gap-3">
+            <nav id="sidebar" class="fixed top-0 right-0 h-screen w-72 border-l border-white/5 shadow-2xl z-50 overflow-y-auto transition-all duration-300 ease-in-out translate-x-full md:translate-x-0 bg-primary print:hidden">
+                <div class="sidebar-header text-center border-b border-white/5 p-4 md:p-6 bg-primary sticky top-0 z-10 flex items-center justify-center gap-3">
                     <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center border border-white/10">
                         <span class="text-white font-bold text-xl leading-none">Z</span>
                     </div>
@@ -77,7 +78,7 @@
                             string baseLinkClasses = "flex items-center gap-3 p-3 rounded-xl transition-all duration-300 text-gray-200 font-bold text-base hover:bg-white/5 hover:text-white hover:translate-x-[-4px]";
                         }
 
-                        <li class="mt-2 mb-0.5 mx-2">
+                        <li class="mt-2 mb-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? activeLinkClasses : "")" asp-controller="Home" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                                 الرئيسية
@@ -86,7 +87,7 @@
 
                         @if (tabSettings.ShowProducts )
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Products" ? activeLinkClasses : "")" asp-controller="Products" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
                                 المنتجات
@@ -96,7 +97,7 @@
 
                         @if (tabSettings.ShowCategories )
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Categories" ? activeLinkClasses : "")" asp-controller="Categories" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/><path d="M9.586 5.586A2 2 0 0 0 8.172 5H3a1 1 0 0 0-1 1v5.172a2 2 0 0 0 .586 1.414l8.204 8.204a2.4 2.4 0 0 0 3.4 0l5.404-5.404a2.4 2.4 0 0 0 0-3.4L9.586 5.586z"/><circle cx="6.5" cy="9.5" r=".5" fill="currentColor"/></svg>
                                 الفئات
@@ -106,7 +107,7 @@
 
                         @if (tabSettings.ShowCustomers)
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customers" ? activeLinkClasses : "")" asp-controller="Customers" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                                 العملاء
@@ -116,7 +117,7 @@
 
                         @if (tabSettings.ShowSales )
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Sales"  &&
                                ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? activeLinkClasses : "")" asp-controller="Sales" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
@@ -127,7 +128,7 @@
 
                         @if (tabSettings.ShowInstallments )
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Installments" ? activeLinkClasses : "")" asp-controller="Installments" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
                                 الأقساط
@@ -137,7 +138,7 @@
 
                         @if (tabSettings.ShowGeneralDebts )
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "GeneralDebts" ? activeLinkClasses : "")" asp-controller="GeneralDebts" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
                                 الديون
@@ -147,7 +148,7 @@
 
                         @if (tabSettings.ShowStoreAccount )
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StoreAccount" ? activeLinkClasses : "")" asp-controller="StoreAccount" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
                                 الحسابات
@@ -155,21 +156,21 @@
                         </li>
                         }
 
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                              <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Ai" ? activeLinkClasses : "")" asp-controller="Ai" asp-action="Index">
                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
                                 المساعد الذكي
                              </a>
                         </li>
 
-                        <li class="nav-item my-0.5 mx-2">
+                        <li class="nav-item my-0.5 mx-5">
                              <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "SystemSettings" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? activeLinkClasses : "")" asp-controller="SystemSettings" asp-action="Index">
                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><circle cx="18" cy="15" r="3"/><circle cx="9" cy="7" r="4"/><path d="M10 15H6a4 4 0 0 0-4 4v2"/><path d="m21.7 16.4-.9-.3"/><path d="m15.2 13.9-.9-.3"/><path d="m16.6 18.7.3-.9"/><path d="m19.1 12.2.3-.9"/><path d="m19.6 18.7-.4-1"/><path d="m16.8 12.3-.4-1"/><path d="m14.3 16.6 1-.4"/><path d="m20.7 13.8 1-.4"/></svg>
                                 الإعدادات
                              </a>
                         </li>
                         
-                        <li class="nav-item my-0.5 mx-2">
+                        <li class="nav-item my-0.5 mx-5">
                              <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Action"]?.ToString() == "Subscription" ? activeLinkClasses : "")" asp-controller="SystemSettings" asp-action="Subscription">
                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
                                 الاشتراك
@@ -178,7 +179,7 @@
 
                         @if (tabSettings.ShowReports)
                         {
-                        <li class="my-0.5 mx-2">
+                        <li class="my-0.5 mx-5">
                             <a class="@(baseLinkClasses) @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? activeLinkClasses : "")" asp-controller="Reports" asp-action="Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
                                 التقارير
@@ -186,10 +187,11 @@
                         </li>
                         }
 
-                        <li class="mt-4 mb-4 mx-2">
+                        <li class="mt-4 mb-4 mx-5">
                             <form asp-controller="Home" asp-action="Logout" method="post">
-                                <button type="submit" class="bg-white/5 hover:bg-red-950/30 text-red-500 hover:text-red-600 font-bold py-3 w-full rounded-xl transition-all duration-300 flex items-center justify-center gap-2 border border-white/5 hover:border-red-900/30">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> تسجيل الخروج
+                                <button type="submit" class="flex items-center gap-3 p-3 w-full rounded-xl transition-all duration-300 text-red-400 font-bold text-base hover:bg-red-500/10 hover:text-red-300 hover:translate-x-[-4px] group border border-red-400/40 hover:border-red-300/60 outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 w-6 h-6 inline-block text-red-500 group-hover:text-red-400 transition-colors"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                                    <span>تسجيل الخروج</span>
                                 </button>
                             </form>
                         </li>
@@ -316,14 +318,14 @@
                 <div class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-200">
                     
                     <!-- Decorative Header -->
-                    <div class=" bg-[#0f1419]  h-24 relative overflow-hidden flex items-center justify-center">
+                    <div class=" bg-primary  h-24 relative overflow-hidden flex items-center justify-center">
                          <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #fff 0px, #fff 1px, transparent 1px, transparent 10px);"></div>
-                         <img src="~/images/translogo.webp" alt="Zenith ERP" class="h-16 relative z-10 drop-shadow-xs filter" />
+                         <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP" class="h-16 relative z-10 drop-shadow-xs filter" />
                     </div>
 
                     <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-center">
-                            <h3 class="text-xl font-bold leading-6 text-[#0f1419] mb-2" id="about-title">نظام Zenith ERP لإدارة المبيعات</h3>
+                            <h3 class="text-xl font-bold leading-6 text-primary mb-2" id="about-title">نظام Zenith ERP لإدارة المبيعات</h3>
                             <div class="mt-2">
                                 <p class="text-sm font-bold text-gray-700 mb-4 bg-gray-50 py-1 px-3 rounded-full inline-block font-mono">الإصدار 1.0.0</p>
                                 <p class="text-sm text-gray-600 leading-relaxed">
@@ -333,7 +335,7 @@
 
                             <!-- Social Links -->
                             <div class="mt-8 flex justify-center gap-6">
-                                <a href="https://www.facebook.com/profile.php?id=61586835293416" target="_blank" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-[#0f1419] transition-colors">
+                                <a href="https://www.facebook.com/profile.php?id=61586835293416" target="_blank" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-primary transition-colors">
                                     <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
                                         <i data-lucide="facebook" class="text-lg"></i>
                                     </div>
@@ -343,7 +345,7 @@
                                         <i data-lucide="youtube" class="text-lg"></i>
                                     </div>
                                 </a>
-                                <a href="#" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-[#0f1419] transition-colors">
+                                <a href="#" class="group flex flex-col items-center gap-1 text-gray-500 hover:text-primary transition-colors">
                                     <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-gray-50 transition-colors">
                                         <i data-lucide="instagram" class="text-lg"></i>
                                     </div>
@@ -358,8 +360,8 @@
                     </div>
                     
                     <div class="bg-gray-100 px-4 py-3 flex flex-col sm:flex-row-reverse gap-2 sm:px-6 justify-center">
-                        <button type="button" class="inline-flex w-full justify-center rounded-lg bg-gray-50 hover:bg-red-100 border border-gray-400 px-8 py-2 text-sm font-semibold text-gray-900 shadow-sm transition-colors sm:w-auto" onclick="toggleAboutModal()">إغلاق</button>
-                        <button type="button" class="pwa-install-btn hidden inline-flex w-full justify-center rounded-lg bg-[#0f1419] hover:bg-primaryHover border border-transparent px-6 py-2 text-sm font-semibold text-white shadow-sm transition-colors sm:w-auto items-center gap-2" onclick="installPWA()">
+                        <button type="button" class="zen-btn zen-btn-neutral w-full sm:w-auto" onclick="toggleAboutModal()">إغلاق</button>
+                        <button type="button" class="zen-btn zen-btn-primary pwa-install-btn hidden w-full sm:w-auto" onclick="installPWA()">
                             <i data-lucide="plus-circle"></i>
                             تثبيت على سطح المكتب
                         </button>
@@ -411,10 +413,12 @@
 }
     @{
         bool isAiPage = ViewContext.RouteData.Values["Controller"]?.ToString() == "Ai" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index";
-        if (!isAiPage)
+        bool isAuthenticated = User?.Identity?.IsAuthenticated == true;
+        if (!isAiPage && isAuthenticated)
         {
             <partial name="_AiChatWidget" />
         }
     }
 </body>
 </html>
+

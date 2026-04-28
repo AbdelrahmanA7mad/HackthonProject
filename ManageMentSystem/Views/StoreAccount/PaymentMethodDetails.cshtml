@@ -1,27 +1,27 @@
-@model IEnumerable<ManageMentSystem.Models.StoreAccount>
+﻿@model IEnumerable<ManageMentSystem.Models.StoreAccount>
 @using ManageMentSystem.Helpers
 
 @{
     ViewData["Title"] = "تفاصيل وسيلة الدفع";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="credit-card" class="text-[#0f1419]"></i> @ViewBag.PaymentMethodName
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="credit-card" class="text-primary"></i> @ViewBag.PaymentMethodName
             </h1>
             <p class="text-gray-500 mt-1 font-medium">عرض تفاصيل الحركات لوسيلة الدفع المحددة</p>
         </div>
         <form method="get" class="flex gap-2">
             <input type="hidden" name="id" value="@ViewBag.PaymentMethodId" />
-            <input type="date" name="fromDate" value="@ViewBag.FromDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-gray-600" />
-            <input type="date" name="toDate" value="@ViewBag.ToDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-gray-600" />
-            <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+            <input type="date" name="fromDate" value="@ViewBag.FromDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
+            <input type="date" name="toDate" value="@ViewBag.ToDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
+            <button type="submit" class="zen-btn zen-btn-primary">
                 <i data-lucide="filter"></i> تطبيق
             </button>
-            <a asp-action="PaymentMethodBalances" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-4 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 shadow-sm" title="العودة للأرصدة">
+            <a asp-action="PaymentMethodBalances" class="zen-btn zen-btn-neutral" title="العودة للأرصدة">
                 <i data-lucide="arrow-left"></i>
             </a>
         </form>
@@ -29,9 +29,9 @@
 
     <!-- Transactions Table -->
     <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-        <div class="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h6 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="list" class="text-[#0f1419] w-4 h-4"></i> سجل العمليات
+        <div class="bg-bgSubtle px-6 py-4 border-b border-gray-200">
+            <h6 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="list" class="text-primary w-4 h-4"></i> سجل العمليات
             </h6>
         </div>
 
@@ -52,7 +52,7 @@
                     {
                         <tr class="hover:bg-gray-50/80 transition-colors">
                             <td class="px-6 py-4 font-bold">@t.TransactionDate.ToString("yyyy-MM-dd")</td>
-                            <td class="px-6 py-4 font-bold text-[#0f1419]">@t.TransactionName</td>
+                            <td class="px-6 py-4 font-bold text-primary">@t.TransactionName</td>
                             <td class="px-6 py-4">
                                 <span class="px-2.5 py-1 rounded-full font-bold text-xs @(t.TransactionType == ManageMentSystem.Models.TransactionType.Income ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-red-100 text-red-800 border border-red-200")">
                                     @t.TransactionType.GetDisplayName()
@@ -82,7 +82,7 @@
                     @if (ViewBag.CurrentPage > 1)
                     {
                         <a href="@Url.Action("PaymentMethodDetails", new { id = ViewBag.PaymentMethodId, page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
-                           class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                           class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                         </a>
                     }
@@ -91,19 +91,19 @@
                     {
                         if (i == ViewBag.CurrentPage)
                         {
-                            <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0f1419] text-white border border-gray-200 text-xs font-bold shadow-sm ">@i</span>
+                            <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white border border-gray-200 text-xs font-bold shadow-sm ">@i</span>
                         }
                         else
                         {
                             <a href="@Url.Action("PaymentMethodDetails", new { id = ViewBag.PaymentMethodId, page = i, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
-                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all text-xs font-bold">@i</a>
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all text-xs font-bold">@i</a>
                         }
                     }
 
                     @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                     {
                         <a href="@Url.Action("PaymentMethodDetails", new { id = ViewBag.PaymentMethodId, page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
-                           class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                           class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                         </a>
                     }
@@ -112,3 +112,4 @@
         }
     </div>
 </div>
+

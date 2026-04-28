@@ -1,19 +1,19 @@
-@using ManageMentSystem.Helpers
+﻿@using ManageMentSystem.Helpers
 @model IEnumerable<ManageMentSystem.Models.StoreAccount>
 @{
     ViewData["Title"] = "تفاصيل الأقساط";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="credit-card" class="text-[#0f1419]"></i> تفاصيل الأقساط
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="credit-card" class="text-primary"></i> تفاصيل الأقساط
             </h1>
             <p class="text-gray-500 mt-1 font-medium">عرض وتحليلات الأقساط والدفعات</p>
         </div>
-        <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+        <a asp-action="Index" class="zen-btn zen-btn-neutral">
             العودة لحساب المحل<i data-lucide="arrow-left"></i>
         </a>
     </div>
@@ -21,34 +21,34 @@
     <!-- Filter Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
         <div class="flex items-center gap-2 mb-4 border-b border-gray-200 pb-3">
-            <i data-lucide="filter" class="text-[#0f1419] w-4 h-4"></i>
+            <i data-lucide="filter" class="text-primary w-4 h-4"></i>
             <h6 class="font-bold text-gray-600">فلترة تفاصيل الأقساط</h6>
         </div>
         <form method="get" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
             <div class="md:col-span-3">
                 <label class="block text-sm font-bold text-gray-500 mb-2">من تاريخ</label>
-                <input type="date" name="fromDate" value="@(string.IsNullOrEmpty(Context.Request.Query["fromDate"]) ? (ViewBag.FromDate != null ? ((DateTime)ViewBag.FromDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["fromDate"] )" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none text-sm font-bold transition-all text-gray-600" />
+                <input type="date" name="fromDate" value="@(string.IsNullOrEmpty(Context.Request.Query["fromDate"]) ? (ViewBag.FromDate != null ? ((DateTime)ViewBag.FromDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["fromDate"] )" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none text-sm font-bold transition-all text-gray-600" />
             </div>
             <div class="md:col-span-3">
                 <label class="block text-sm font-bold text-gray-500 mb-2">إلى تاريخ</label>
-                <input type="date" name="toDate" value="@(string.IsNullOrEmpty(Context.Request.Query["toDate"]) ? (ViewBag.ToDate != null ? ((DateTime)ViewBag.ToDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["toDate"] )" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none text-sm font-bold transition-all text-gray-600" />
+                <input type="date" name="toDate" value="@(string.IsNullOrEmpty(Context.Request.Query["toDate"]) ? (ViewBag.ToDate != null ? ((DateTime)ViewBag.ToDate).ToString("yyyy-MM-dd") : "") : Context.Request.Query["toDate"] )" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none text-sm font-bold transition-all text-gray-600" />
             </div>
             <div class="md:col-span-6">
                 <label class="block text-sm font-bold text-gray-500 mb-2">فترة سريعة</label>
                 <div class="flex flex-wrap gap-2">
-                    <button type="button" class="flex-1 bg-white border border-gray-200 text-[#0f1419] hover:bg-gray-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('today')">اليوم</button>
-                    <button type="button" class="flex-1 bg-white border border-gray-200 text-[#0f1419] hover:bg-gray-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('week')">الأسبوع</button>
-                    <button type="button" class="flex-1 bg-white border border-gray-200 text-[#0f1419] hover:bg-gray-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('month')">الشهر</button>
-                    <button type="button" class="flex-1 bg-white border border-gray-200 text-[#0f1419] hover:bg-gray-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('quarter')">الربع</button>
-                    <button type="button" class="flex-1 bg-white border border-gray-200 text-[#0f1419] hover:bg-gray-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="setDateRange('year')">السنة</button>
-                    <button type="button" class="flex-1 bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 px-3 py-2 rounded-lg text-xs font-bold transition-colors" onclick="clearDateRange()">الكل</button>
+                    <button type="button" class="zen-btn zen-btn-neutral flex-1" onclick="setDateRange('today')">اليوم</button>
+                    <button type="button" class="zen-btn zen-btn-neutral flex-1" onclick="setDateRange('week')">الأسبوع</button>
+                    <button type="button" class="zen-btn zen-btn-neutral flex-1" onclick="setDateRange('month')">الشهر</button>
+                    <button type="button" class="zen-btn zen-btn-neutral flex-1" onclick="setDateRange('quarter')">الربع</button>
+                    <button type="button" class="zen-btn zen-btn-neutral flex-1" onclick="setDateRange('year')">السنة</button>
+                    <button type="button" class="zen-btn zen-btn-neutral flex-1" onclick="clearDateRange()">الكل</button>
                 </div>
             </div>
             <div class="md:col-span-12 flex gap-2 mt-2">
-                <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-primary">
                     <i data-lucide="search"></i> فلترة
                 </button>
-                <a asp-action="InstallmentDetails" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                <a asp-action="InstallmentDetails" class="zen-btn zen-btn-neutral">
                     <i data-lucide="x"></i> إلغاء
                 </a>
             </div>
@@ -60,12 +60,12 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <!-- Down Payments -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl shadow-sm">
+            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-primary text-xl shadow-sm">
                 <i data-lucide="hand-coins"></i>
             </div>
             <div>
                 <p class="text-xs font-bold text-gray-500 mb-1">إجمالي الدفعات المقدمة</p>
-                <h3 class="text-2xl font-bold text-[#0f1419]">@ViewBag.TotalDownPayments?.ToString("C")</h3>
+                <h3 class="text-2xl font-bold text-primary">@ViewBag.TotalDownPayments?.ToString("C")</h3>
             </div>
         </div>
 
@@ -82,32 +82,32 @@
 
         <!-- Total Installments -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-700 text-xl shadow-sm">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-accent text-xl shadow-sm">
                 <i data-lucide="pie-chart"></i>
             </div>
             <div>
                 <p class="text-xs font-bold text-gray-500 mb-1">إجمالي الأقساط</p>
-                <h3 class="text-2xl font-bold text-sky-700">@ViewBag.TotalInstallments?.ToString("C")</h3>
+                <h3 class="text-2xl font-bold text-accent">@ViewBag.TotalInstallments?.ToString("C")</h3>
             </div>
         </div>
 
         <!-- Total Profit -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-700 text-xl shadow-sm">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-accentAmber text-xl shadow-sm">
                 <i data-lucide="trending-up"></i>
             </div>
             <div>
                 <p class="text-xs font-bold text-gray-500 mb-1">إجمالي الربح من الأقساط</p>
-                <h3 class="text-2xl font-bold text-amber-700">@ViewBag.TotalProfit?.ToString("C")</h3>
+                <h3 class="text-2xl font-bold text-accentAmber">@ViewBag.TotalProfit?.ToString("C")</h3>
             </div>
         </div>
     </div>
 
     <!-- Transactions Table -->
     <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-        <div class="bg-gray-50/50 px-6 py-4 border-b border-gray-200">
-            <h6 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="list" class="text-[#0f1419] w-4 h-4"></i> تفاصيل الأقساط
+        <div class="bg-bgSubtle px-6 py-4 border-b border-gray-200">
+            <h6 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="list" class="text-primary w-4 h-4"></i> تفاصيل الأقساط
             </h6>
         </div>
 
@@ -147,7 +147,7 @@
                             
                             <tr class="hover:bg-gray-50/80 transition-colors">
                                 <td class="px-6 py-4 font-bold">@item.TransactionDate.ToString("yyyy-MM-dd")</td>
-                                <td class="px-6 py-4 font-bold text-[#0f1419]">@item.TransactionName</td>
+                                <td class="px-6 py-4 font-bold text-primary">@item.TransactionName</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2.5 py-1 rounded-full font-bold text-xs @(item.TransactionType == TransactionType.Income ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-red-100 text-red-800 border border-red-200")">
                                         @item.TransactionType.GetDisplayName()
@@ -157,7 +157,7 @@
                                     @item.Amount.ToString("C")
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="px-2.5 py-1 rounded-full font-bold text-xs @(isDownPayment ? "bg-gray-100 text-[#0f1419] border border-gray-200" : "bg-emerald-100 text-emerald-800 border border-emerald-200")">
+                                    <span class="px-2.5 py-1 rounded-full font-bold text-xs @(isDownPayment ? "bg-gray-100 text-primary border border-gray-200" : "bg-emerald-100 text-emerald-800 border border-emerald-200")">
                                         @paymentType
                                     </span>
                                 </td>
@@ -193,7 +193,7 @@
                         @if (ViewBag.CurrentPage > 1)
                         {
                             <a href="@Url.Action("InstallmentDetails", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
-                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </a>
                         }
@@ -205,7 +205,7 @@
 
                         @if (startPage > 1)
                         {
-                            <a href="@Url.Action("InstallmentDetails", new { page = 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] transition-all text-xs font-bold">1</a>
+                            <a href="@Url.Action("InstallmentDetails", new { page = 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary transition-all text-xs font-bold">1</a>
                             @if (startPage > 2)
                             {
                                 <span class="w-8 h-8 flex items-center justify-center text-gray-500">...</span>
@@ -216,12 +216,12 @@
                         {
                             if (i == ViewBag.CurrentPage)
                             {
-                                <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0f1419] text-white border border-gray-200 text-xs font-bold shadow-sm ">@i</span>
+                                <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white border border-gray-200 text-xs font-bold shadow-sm ">@i</span>
                             }
                             else
                             {
                                 <a href="@Url.Action("InstallmentDetails", new { page = i, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
-                                   class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all text-xs font-bold">@i</a>
+                                   class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all text-xs font-bold">@i</a>
                             }
                         }
 
@@ -231,13 +231,13 @@
                             {
                                 <span class="w-8 h-8 flex items-center justify-center text-gray-500">...</span>
                             }
-                            <a href="@Url.Action("InstallmentDetails", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] transition-all text-xs font-bold">@ViewBag.TotalPages</a>
+                            <a href="@Url.Action("InstallmentDetails", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary transition-all text-xs font-bold">@ViewBag.TotalPages</a>
                         }
 
                         @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                         {
                             <a href="@Url.Action("InstallmentDetails", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" 
-                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </a>
                         }
@@ -251,7 +251,7 @@
                 <div class="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-200">
                     <i data-lucide="credit-card" class="text-3xl text-gray-500"></i>
                 </div>
-                <h5 class="text-lg font-bold text-[#0f1419]">لا توجد عمليات أقساط</h5>
+                <h5 class="text-lg font-bold text-primary">لا توجد عمليات أقساط</h5>
                 <p class="text-gray-500 mt-1">لم يتم العثور على أي أقساط في الفترة المح ددة</p>
             </div>
         }
@@ -309,3 +309,4 @@
         }
     });
 </script>
+

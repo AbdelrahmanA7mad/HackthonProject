@@ -1,16 +1,16 @@
-@model ManageMentSystem.ViewModels.CategoryStatisticsViewModel
+﻿@model ManageMentSystem.ViewModels.CategoryStatisticsViewModel
 @using ManageMentSystem.Helpers
 @using ManageMentSystem.Models
 @{
     ViewData["Title"] = $"المنتجات - {Model.CategoryName}";
 }
 
-<div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-8" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6 md:p-8 space-y-8" dir="rtl">
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-3">
-                <span class="p-2 bg-gray-50 rounded-xl text-[#0f1419]">
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-3">
+                <span class="p-2 bg-gray-50 rounded-xl text-primary">
                     <i data-lucide="layers" class="w-5 h-5"></i>
                 </span>
                 @Model.CategoryName
@@ -23,12 +23,12 @@
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
             <div class="flex justify-between items-start mb-4">
                 <div class="p-3 bg-gray-50 rounded-xl">
-                    <i data-lucide="package" class="text-[#0f1419]"></i>
+                    <i data-lucide="package" class="text-primary"></i>
                 </div>
-                <span class="bg-gray-50 text-[#0f1419] text-sm font-bold px-2.5 py-1 rounded-full">المخزون</span>
+                <span class="bg-gray-50 text-primary text-sm font-bold px-2.5 py-1 rounded-full">المخزون</span>
             </div>
             <div>
-                <h3 class="text-3xl font-bold text-[#0f1419] mb-1">@Model.TotalProducts</h3>
+                <h3 class="text-3xl font-bold text-primary mb-1">@Model.TotalProducts</h3>
                 <p class="text-gray-500 text-sm font-medium">إجمالي عدد القطع</p>
             </div>
         </div>
@@ -41,7 +41,7 @@
                 <span class="bg-amber-50 text-amber-700 text-sm font-bold px-2.5 py-1 rounded-full">رأس المال</span>
             </div>
             <div>
-                <h3 class="text-3xl font-bold text-[#0f1419] mb-1" title="@Model.TotalPurchaseValue.ToString("C0")">@Model.TotalPurchaseValue.ToString("C0")</h3>
+                <h3 class="text-3xl font-bold text-primary mb-1" title="@Model.TotalPurchaseValue.ToString("C0")">@Model.TotalPurchaseValue.ToString("C0")</h3>
                 <p class="text-gray-500 text-sm font-medium">تكلفة الشراء الكلية</p>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 <span class="bg-emerald-50 text-accentGreen text-sm font-bold px-2.5 py-1 rounded-full">قيمة البيع</span>
             </div>
             <div>
-                <h3 class="text-3xl font-bold text-[#0f1419] mb-1" title="@Model.TotalSaleValue.ToString("C0")">@Model.TotalSaleValue.ToString("C0")</h3>
+                <h3 class="text-3xl font-bold text-primary mb-1" title="@Model.TotalSaleValue.ToString("C0")">@Model.TotalSaleValue.ToString("C0")</h3>
                 <p class="text-gray-500 text-sm font-medium">القيمة السوقية للمخزون</p>
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <span class="bg-gray-100 text-gray-600 text-sm font-bold px-2.5 py-1 rounded-full">الربح المتوقع</span>
             </div>
             <div>
-                <h3 class="text-3xl font-bold text-[#0f1419] mb-1" title="@Model.PotentialProfit.ToString("C0")">@Model.PotentialProfit.ToString("C0")</h3>
+                <h3 class="text-3xl font-bold text-primary mb-1" title="@Model.PotentialProfit.ToString("C0")">@Model.PotentialProfit.ToString("C0")</h3>
                 <p class="text-gray-500 text-sm font-medium">صافي الربح التقديري</p>
             </div>
         </div>
@@ -75,9 +75,9 @@
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         
-        <div class="p-5 border-b border-gray-200 flex flex-col lg:flex-row justify-between items-center gap-4 bg-gray-50/50">
+        <div class="p-5 border-b border-gray-200 flex flex-col lg:flex-row justify-between items-center gap-4 bg-bgSubtle">
             <h5 class="font-bold text-gray-600 flex items-center gap-2 text-lg">
-                <i data-lucide="list" class="text-[#0f1419]"></i>
+                <i data-lucide="list" class="text-primary"></i>
                 قائمة المنتجات المتاحة
             </h5>
             
@@ -89,7 +89,7 @@
                             <i data-lucide="search" class="text-gray-500 w-4 h-4"></i>
                         </div>
                         <input type="text" 
-                               class="block w-full p-2.5 pr-10 text-sm text-[#0f1419] border border-gray-200 rounded-xl bg-white focus:ring-[#0f1419] focus:border-[#0f1419] outline-none shadow-sm transition-all" 
+                               class="block w-full p-2.5 pr-10 text-sm text-primary border border-gray-200 rounded-xl bg-white focus:ring-primary/10 focus:border-primary outline-none shadow-sm transition-all" 
                                name="q" 
                                placeholder="ابحث بالاسم أو الباركود..." 
                                value="@ViewBag.Query">
@@ -98,7 +98,7 @@
 
                 <div class="flex gap-2">
                    
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#addProductModal" class="flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover rounded-xl shadow-sm  hover:-translate-y-0.5 transition-all duration-200 gap-2 whitespace-nowrap">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#addProductModal" class="zen-btn zen-btn-primary zen-btn-sm whitespace-nowrap">
                             <i data-lucide="plus" class="w-4 h-4"></i>
                             <span>إضافة منتج</span>
                         </button>
@@ -143,7 +143,7 @@
                                     }
                                     else
                                     {
-                                        <div class="flex items-center gap-1.5 text-[#0f1419] bg-gray-50 px-2.5 py-1 rounded-full w-fit border border-gray-200">
+                                        <div class="flex items-center gap-1.5 text-primary bg-gray-50 px-2.5 py-1 rounded-full w-fit border border-gray-200">
 
                                             <span class="font-bold">@product.Quantity</span>
                                         </div>
@@ -154,7 +154,7 @@
                                     <td class="px-6 py-4 text-gray-600 font-bold ">@product.PurchasePrice.ToString("C0")</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-2 max-w-[140px]">
-                                        <span class="text-[#0f1419] font-bold">@product.SalePrice.ToString("C0")</span>
+                                        <span class="text-primary font-bold">@product.SalePrice.ToString("C0")</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
@@ -163,10 +163,10 @@
                                         <span class="badge bg-info" style="display:none !important;">@product.Barcode</span>
 
                                         <div class="flex items-center gap-2">
-                                            <span class="bg-gray-50 text-[#0f1419] px-2 py-1 rounded border border-gray-200 text-xs select-all">
+                                            <span class="bg-gray-50 text-primary px-2 py-1 rounded border border-gray-200 text-xs select-all">
                                                 @product.Barcode
                                             </span>
-                                            <button type="button" class="text-[#0f1419] hover:text-[#0f1419] hover:bg-gray-50 rounded-lg p-1.5 transition-colors"
+                                            <button type="button" class="text-primary hover:text-primary hover:bg-gray-50 rounded-lg p-1.5 transition-colors"
                                                     onclick="printBarcodeXP360B('@product.Barcode', '@Html.Raw(Html.Encode(product.Name).Replace("'", "\\'"))', @product.SalePrice)" 
                                                     title="طباعة الباركود">
                                                 <i data-lucide="printer" class="w-4 h-4"></i>
@@ -183,22 +183,22 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-center gap-1">
-                                        <a href="/Products/Details/@product.Id" class="p-2 text-accentGreen hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors" title="عرض">
+                                        <a href="/Products/Details/@product.Id" class="zen-action-btn zen-action-btn-info" title="عرض">
                                             <i data-lucide="eye" class="w-4 h-4"></i>
                                         </a>
 
                                        
-                                            <button type="button" class="p-2 text-[#0f1419] hover:bg-gray-50 rounded-lg transition-colors"
+                                            <button type="button" class="zen-action-btn zen-action-btn-neutral"
                                                     onclick="editProduct(@product.Id)" title="تعديل">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
                                             </button>
                                             
-                                            <button type="button" class="p-2 text-amber-700 hover:bg-amber-50 rounded-lg transition-colors"
+                                            <button type="button" class="zen-action-btn zen-action-btn-info"
                                                     onclick="editProductQuantity(@product.Id)" title="تعديل الكمية">
                                                 <i data-lucide="hash" class="w-4 h-4"></i>
                                             </button>
 
-                                            <button type="button" class="p-2 text-accentRed hover:bg-red-50 rounded-lg transition-colors"
+                                            <button type="button" class="zen-action-btn zen-action-btn-danger"
                                                     onclick="deleteProduct(@product.Id)" title="حذف">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
@@ -209,9 +209,9 @@
                     </tbody>
                 </table>
 
-                <div class="p-4 border-t border-gray-200 bg-gray-50/50 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="p-4 border-t border-gray-200 bg-bgSubtle flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-sm text-gray-500">
-                        عرض <span class="font-bold text-[#0f1419]">@((ViewBag.CurrentPage - 1) * ViewBag.PageSize + 1)</span> إلى <span class="font-bold text-[#0f1419]">@Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalItems)</span> من أصل <span class="font-bold text-[#0f1419]">@ViewBag.TotalItems</span> منتج
+                        عرض <span class="font-bold text-primary">@((ViewBag.CurrentPage - 1) * ViewBag.PageSize + 1)</span> إلى <span class="font-bold text-primary">@Math.Min(ViewBag.CurrentPage * ViewBag.PageSize, ViewBag.TotalItems)</span> من أصل <span class="font-bold text-primary">@ViewBag.TotalItems</span> منتج
                     </p>
 
                     @if (ViewBag.TotalPages > 1)
@@ -222,7 +222,7 @@
                                     @if (ViewBag.HasPreviousPage)
                                     {
                                         <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, q = ViewBag.Query })" 
-                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                                         </a>
                                     }
@@ -242,7 +242,7 @@
                                 @if (startPage > 1)
                                 {
                                     <li>
-                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = 1, pageSize = ViewBag.PageSize, q = ViewBag.Query })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] text-sm font-medium">1</a>
+                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = 1, pageSize = ViewBag.PageSize, q = ViewBag.Query })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary text-sm font-medium">1</a>
                                     </li>
                                     @if (startPage > 2)
                                     {
@@ -254,7 +254,7 @@
                                 {
                                     <li>
                                         <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = i, pageSize = ViewBag.PageSize, q = ViewBag.Query })" 
-                                           class="flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-[#0f1419] border-[#0f1419] text-white shadow-sm " : "border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419]")">
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-primary border-primary text-white shadow-sm " : "border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary")">
                                             @i
                                         </a>
                                     </li>
@@ -267,7 +267,7 @@
                                         <li class="px-1 text-gray-500">...</li>
                                     }
                                     <li>
-                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = ViewBag.TotalPages, pageSize = ViewBag.PageSize, q = ViewBag.Query })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] text-sm font-medium">@ViewBag.TotalPages</a>
+                                        <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = ViewBag.TotalPages, pageSize = ViewBag.PageSize, q = ViewBag.Query })" class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary text-sm font-medium">@ViewBag.TotalPages</a>
                                     </li>
                                 }
 
@@ -275,7 +275,7 @@
                                     @if (ViewBag.HasNextPage)
                                     {
                                         <a href="@Url.Action("ByCategory", new { categoryId = Model.CategoryId, page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, q = ViewBag.Query })" 
-                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                                           class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                                         </a>
                                     }
@@ -309,8 +309,8 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
             <div class="modal-header bg-gray-50 border-b border-gray-200 p-5">
-                <h5 class="modal-title font-bold text-[#0f1419] flex items-center gap-2" id="addProductModalLabel">
-                    <span class="w-8 h-8 rounded-lg bg-gray-100 text-[#0f1419] flex items-center justify-center text-sm">
+                <h5 class="modal-title font-bold text-primary flex items-center gap-2" id="addProductModalLabel">
+                    <span class="w-8 h-8 rounded-lg bg-gray-100 text-primary flex items-center justify-center text-sm">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                     </span>
                     إضافة منتج جديد
@@ -323,11 +323,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="Name" class="block mb-2 text-sm font-bold text-gray-600">اسم المنتج <span class="text-accentRed">*</span></label>
-                            <input type="text" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="Name" name="Name" required placeholder="اسم المنتج">
+                            <input type="text" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="Name" name="Name" required placeholder="اسم المنتج">
                         </div>
                         <div>
                             <label for="CategoryId" class="block mb-2 text-sm font-bold text-gray-600">الفئة <span class="text-accentRed">*</span></label>
-                            <select class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="CategoryId" name="CategoryId" required>
+                            <select class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="CategoryId" name="CategoryId" required>
                                 <option value="">اختر الفئة</option>
                                 @foreach (var category in ViewBag.Categories)
                                 {
@@ -342,24 +342,24 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="Quantity" class="block mb-2 text-sm font-bold text-gray-600">الكمية <span class="text-accentRed">*</span></label>
-                            <input type="number" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="Quantity" name="Quantity" min="0" required>
+                            <input type="number" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="Quantity" name="Quantity" min="0" required>
                         </div>
                         <div>
                                 <label for="PurchasePrice" class="block mb-2 text-sm font-bold text-gray-600">سعر الشراء <span class="text-accentRed">*</span></label>
-                                <input type="number" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="PurchasePrice" name="PurchasePrice" min="0" step="1" required>
+                            <input type="number" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="PurchasePrice" name="PurchasePrice" min="0" step="1" required>
                             </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="SalePrice" class="block mb-2 text-sm font-bold text-gray-600">سعر البيع <span class="text-accentRed">*</span></label>
-                            <input type="number" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="SalePrice" name="SalePrice" min="0" step="1" required>
+                            <input type="number" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="SalePrice" name="SalePrice" min="0" step="1" required>
                         </div>
                         <div>
                             <label for="Barcode" class="block mb-2 text-sm font-bold text-gray-600">الباركود</label>
                             <div class="flex gap-2">
-                                <input type="text" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="Barcode" name="Barcode" placeholder="أدخل الباركود أو اتركه للتوليد">
-                                <button type="button" class="px-3 py-2 text-gray-500 bg-gray-100 hover:bg-gray-50 border border-gray-200 rounded-xl transition-colors" id="generateBarcodeBtn" title="توليد باركود تلقائي">
+                                <input type="text" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="Barcode" name="Barcode" placeholder="أدخل الباركود أو اتركه للتوليد">
+                                <button type="button" class="zen-btn zen-btn-neutral" id="generateBarcodeBtn" title="توليد باركود تلقائي">
                                     <i data-lucide="barcode" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -376,12 +376,12 @@
                     </div>
                     <div>
                         <label for="Description" class="block mb-2 text-sm font-bold text-gray-600">الوصف</label>
-                        <textarea class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="Description" name="Description" rows="3"></textarea>
+                        <textarea class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="Description" name="Description" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-end">
-                    <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
-                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover rounded-xl shadow-md  hover:-translate-y-0.5 transition-all">إضافة المنتج</button>
+                    <button type="button" class="zen-btn zen-btn-neutral zen-btn-sm" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="zen-btn zen-btn-primary zen-btn-sm">إضافة المنتج</button>
                 </div>
             </form>
         </div>
@@ -393,8 +393,8 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
             <div class="modal-header bg-gray-50 border-b border-gray-200 p-5">
-                <h5 class="modal-title font-bold text-[#0f1419] flex items-center gap-2" id="editProductModalLabel">
-                    <span class="w-8 h-8 rounded-lg bg-gray-100 text-[#0f1419] flex items-center justify-center text-sm">
+                <h5 class="modal-title font-bold text-primary flex items-center gap-2" id="editProductModalLabel">
+                    <span class="w-8 h-8 rounded-lg bg-gray-100 text-primary flex items-center justify-center text-sm">
                         <i data-lucide="edit" class="w-4 h-4"></i>
                     </span>
                     تعديل بيانات المنتج
@@ -407,11 +407,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-600">اسم المنتج <span class="text-accentRed">*</span></label>
-                            <input type="text" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="editProductName" name="Name" required>
+                            <input type="text" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="editProductName" name="Name" required>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-600">الفئة <span class="text-accentRed">*</span></label>
-                            <select class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="editProductCategoryId" name="CategoryId" required>
+                            <select class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="editProductCategoryId" name="CategoryId" required>
                                 <option value="">اختر الفئة</option>
                                 @if (ViewBag.Categories != null)
                                 {
@@ -427,12 +427,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-600">الكمية <span class="text-accentRed">*</span></label>
-                            <input type="number" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="editProductQuantity" name="Quantity" required>
+                            <input type="number" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="editProductQuantity" name="Quantity" required>
                         </div>
                       
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-600">سعر الشراء <span class="text-accentRed">*</span></label>
-                                <input type="number" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="editProductPurchasePrice" name="PurchasePrice" step="0.01" required>
+                                <input type="number" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="editProductPurchasePrice" name="PurchasePrice" step="0.01" required>
                             </div>
                   
                     </div>
@@ -440,13 +440,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-600">سعر البيع <span class="text-accentRed">*</span></label>
-                            <input type="number" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="editProductSalePrice" name="SalePrice" step="0.01" required>
+                            <input type="number" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="editProductSalePrice" name="SalePrice" step="0.01" required>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-600">الباركود</label>
                             <div class="flex gap-2">
-                                <input type="text" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="editProductBarcode" name="Barcode" placeholder="أدخل الباركود أو اتركه للتوليد">
-                                <button type="button" class="px-3 py-2 text-gray-500 bg-gray-100 hover:bg-gray-50 border border-gray-200 rounded-xl transition-colors" id="editGenerateBarcodeBtn" title="توليد باركود تلقائي">
+                                <input type="text" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="editProductBarcode" name="Barcode" placeholder="أدخل الباركود أو اتركه للتوليد">
+                                <button type="button" class="zen-btn zen-btn-neutral" id="editGenerateBarcodeBtn" title="توليد باركود تلقائي">
                                     <i data-lucide="barcode" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -463,12 +463,12 @@
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-bold text-gray-600">الوصف</label>
-                        <textarea class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-[#0f1419] focus:border-[#0f1419] bg-gray-50 focus:bg-white transition-all" id="editProductDescription" name="Description" rows="3"></textarea>
+                        <textarea class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-primary/10 focus:border-primary bg-gray-50 focus:bg-white transition-all" id="editProductDescription" name="Description" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-end">
-                    <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
-                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover rounded-xl shadow-md  hover:-translate-y-0.5 transition-all">حفظ التغييرات</button>
+                    <button type="button" class="zen-btn zen-btn-neutral zen-btn-sm" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="zen-btn zen-btn-primary zen-btn-sm">حفظ التغييرات</button>
                 </div>
             </form>
         </div>
@@ -489,13 +489,13 @@
                 <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
                     <i data-lucide="trash-2" class="text-2xl text-accentRed w-8 h-8"></i>
                 </div>
-                <p class="font-bold text-[#0f1419] text-lg">هل أنت متأكد من حذف هذا المنتج؟</p>
+                <p class="font-bold text-primary text-lg">هل أنت متأكد من حذف هذا المنتج؟</p>
             </div>
             <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-center">
-                <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="zen-btn zen-btn-neutral zen-btn-sm" data-bs-dismiss="modal">إلغاء</button>
                 <form id="deleteProductForm" method="post" style="display: inline;">
                     @Html.AntiForgeryToken()
-                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 hover:-translate-y-0.5 transition-all">نعم، احذف المنتج</button>
+                    <button type="submit" class="zen-btn zen-btn-danger zen-btn-sm">نعم، احذف المنتج</button>
                 </form>
             </div>
         </div>
@@ -513,13 +513,13 @@
                 <button type="button" class="btn-close text-accentRed hover:text-accentRed transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-6 bg-white text-center space-y-4">
-                <p class="font-bold text-[#0f1419] text-lg">هل أنت متأكد من حذف عملية البيع هذه؟</p>
+                <p class="font-bold text-primary text-lg">هل أنت متأكد من حذف عملية البيع هذه؟</p>
             </div>
             <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-center">
-                <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="zen-btn zen-btn-neutral zen-btn-sm" data-bs-dismiss="modal">إلغاء</button>
                 <form id="deleteSaleForm" method="post">
                     @Html.AntiForgeryToken()
-                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-red-700 hover:bg-red-800 rounded-xl shadow-md shadow-red-200 hover:-translate-y-0.5 transition-all">حذف</button>
+                    <button type="submit" class="zen-btn zen-btn-danger">حذف</button>
                 </form>
             </div>
         </div>
@@ -530,7 +530,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 rounded-2xl shadow-xl overflow-hidden">
             <div class="modal-header bg-gray-50 border-b border-gray-200 p-5">
-                <h5 class="modal-title font-bold text-[#0f1419] flex items-center gap-2" id="editQuantityModalLabel">
+                <h5 class="modal-title font-bold text-primary flex items-center gap-2" id="editQuantityModalLabel">
                     <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm">
                         <i data-lucide="boxes" class="w-5 h-5"></i>
                     </span>
@@ -552,7 +552,7 @@
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-bold text-gray-600">الكمية الجديدة <span class="text-accentRed">*</span></label>
-                        <input type="number" class="block w-full p-2.5 text-sm text-[#0f1419] border border-gray-200 rounded-xl focus:ring-amber-500 focus:border-amber-500 bg-white transition-all" id="editQuantityNew" name="Quantity" min="0" required placeholder="أدخل الكمية الجديدة">
+                        <input type="number" class="block w-full p-2.5 text-sm text-primary border border-gray-200 rounded-xl focus:ring-accentAmber/20 focus:border-accentAmber bg-white transition-all" id="editQuantityNew" name="Quantity" min="0" required placeholder="أدخل الكمية الجديدة">
                     </div>
 
                     <input type="hidden" id="editQuantityName" name="Name">
@@ -563,8 +563,8 @@
                     <input type="hidden" id="editQuantityBarcode" name="Barcode">
                 </div>
                 <div class="modal-footer bg-gray-50 border-t border-gray-200 p-4 flex gap-2 justify-end">
-                    <button type="button" class="px-5 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-[#0f1419] rounded-xl transition-colors hover:-translate-y-0.5 transition-all" data-bs-dismiss="modal">إلغاء</button>
-                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-amber-700 hover:bg-amber-800 rounded-xl shadow-xs shadow-amber-500 hover:-translate-y-0.5 transition-all">حفظ الكمية الجديدة</button>
+                    <button type="button" class="zen-btn zen-btn-neutral zen-btn-sm" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="zen-btn zen-btn-primary zen-btn-sm">حفظ الكمية الجديدة</button>
                 </div>
             </form>
         </div>
@@ -611,3 +611,7 @@
         });
     </script>
 }
+
+
+
+

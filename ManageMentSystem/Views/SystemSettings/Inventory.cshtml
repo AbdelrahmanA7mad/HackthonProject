@@ -1,18 +1,18 @@
-@model ManageMentSystem.Models.InventorySettings
+﻿@model ManageMentSystem.Models.InventorySettings
 @{
     ViewData["Title"] = "إعدادات المخزون";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="package" class="text-[#0f1419]"></i> إعدادات المخزون
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="package" class="text-primary"></i> إعدادات المخزون
             </h1>
             <p class="text-gray-500 mt-1 font-medium">إدارة تنبيهات المخزون والحد الأدنى للكميات</p>
         </div>
-        <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+        <a asp-action="Index" class="zen-btn zen-btn-neutral">
             العودة للإعدادات<i data-lucide="arrow-left"></i>
         </a>
     </div>
@@ -47,10 +47,10 @@
             <!-- Basic Settings -->
             <div>
                 <div class="flex items-center gap-3 mb-6 border-b border-gray-200 pb-4">
-                    <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-[#0f1419] text-lg">
+                    <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-primary text-lg">
                         <i data-lucide="settings"></i>
                     </div>
-                    <h5 class="font-bold text-[#0f1419] text-lg">الإعدادات الأساسية</h5>
+                    <h5 class="font-bold text-primary text-lg">الإعدادات الأساسية</h5>
                 </div>
 
                 <div class="space-y-6">
@@ -58,7 +58,7 @@
                     <div>
                         <label asp-for="LowStockThreshold" class="block text-sm font-bold text-gray-600 mb-2"></label>
                         <div class="relative">
-                            <input asp-for="LowStockThreshold" class="w-full pr-16 pl-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-[#0f1419] transition-all placeholder:text-gray-500" type="number" min="1" max="1000" />
+                            <input asp-for="LowStockThreshold" class="w-full pr-16 pl-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-gray-500" type="number" min="1" max="1000" />
                             <div class="absolute right-0 top-0 bottom-0 px-4 bg-gray-50 border-l border-gray-200 rounded-r-xl flex items-center text-gray-500 font-bold text-sm">
                                 وحدة
                             </div>
@@ -73,10 +73,10 @@
                     <!-- Alert Message -->
                     <div>
                         <label asp-for="AlertMessage" class="block text-sm font-bold text-gray-600 mb-2"></label>
-                        <textarea asp-for="AlertMessage" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all placeholder:text-gray-500 resize-none" placeholder="رسالة التنبيه"></textarea>
+                        <textarea asp-for="AlertMessage" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-medium text-primary transition-all placeholder:text-gray-500 resize-none" placeholder="رسالة التنبيه"></textarea>
                         <span asp-validation-for="AlertMessage" class="text-sm font-bold text-accentRed mt-1 block"></span>
                         <div class="mt-2 text-xs text-gray-500 font-medium bg-gray-50 p-3 rounded-lg border border-gray-200">
-                            <strong>تعليمات:</strong> استخدم <code class="bg-white border px-1 rounded mx-1 text-[#0f1419]">{0}</code> لاسم المنتج و <code class="bg-white border px-1 rounded mx-1 text-[#0f1419]">{1}</code> للكمية الحالية.
+                            <strong>تعليمات:</strong> استخدم <code class="bg-white border px-1 rounded mx-1 text-primary">{0}</code> لاسم المنتج و <code class="bg-white border px-1 rounded mx-1 text-primary">{1}</code> للكمية الحالية.
                             <br/>
                             مثال: "تنبيه: المنتج {0} وصل إلى الحد الأدنى للمخزون ({1} وحدة)"
                         </div>
@@ -86,10 +86,10 @@
 
             <!-- Action Buttons -->
             <div class="pt-6 border-t border-gray-200 flex items-center gap-4">
-                <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-primary">
                     <i data-lucide="save"></i> حفظ الإعدادات
                 </button>
-                <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                <a asp-action="Index" class="zen-btn zen-btn-neutral">
                     <i data-lucide="x"></i> إلغاء
                 </a>
             </div>
@@ -100,3 +100,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

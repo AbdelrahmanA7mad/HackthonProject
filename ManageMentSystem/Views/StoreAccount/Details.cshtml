@@ -1,24 +1,24 @@
-@model ManageMentSystem.Models.StoreAccount
+﻿@model ManageMentSystem.Models.StoreAccount
 @using ManageMentSystem.Helpers
 
 @{
     ViewData["Title"] = "تفاصيل العملية المالية";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="file-digit" class="text-[#0f1419]"></i> تفاصيل العملية المالية
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="file-digit" class="text-primary"></i> تفاصيل العملية المالية
             </h1>
             <p class="text-gray-500 mt-1 font-medium">عرض كافة تفاصيل العملية المسجلة</p>
         </div>
         <div class="flex gap-2">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-amber-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="zen-btn zen-btn-primary">
                 <i data-lucide="edit"></i> تعديل
             </a>
-            <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+            <a asp-action="Index" class="zen-btn zen-btn-neutral">
                 العودة<i data-lucide="arrow-left"></i>
             </a>
         </div>
@@ -30,7 +30,7 @@
             <!-- Name -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">اسم العملية</label>
-                <p class="font-bold text-[#0f1419] text-lg">@Model.TransactionName</p>
+                <p class="font-bold text-primary text-lg">@Model.TransactionName</p>
             </div>
 
             <!-- Type -->
@@ -52,7 +52,7 @@
             <!-- Date -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">التاريخ</label>
-                <p class="font-bold text-[#0f1419] text-lg">
+                <p class="font-bold text-primary text-lg">
                     <i data-lucide="calendar" class="text-gray-500 ml-2"></i>
                     @Model.TransactionDate.ToString("yyyy-MM-dd")
                 </p>
@@ -61,7 +61,7 @@
             <!-- Time -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">الوقت</label>
-                <p class="font-bold text-[#0f1419] text-lg">
+                <p class="font-bold text-primary text-lg">
                     <i data-lucide="clock" class="text-gray-500 ml-2"></i>
                     @Model.TransactionDate.ToString("HH:mm:ss")
                 </p>
@@ -70,7 +70,7 @@
             <!-- Category -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">الفئة</label>
-                <p class="font-bold text-[#0f1419]">
+                <p class="font-bold text-primary">
                     <i data-lucide="tag" class="text-gray-500 ml-2"></i>
                     @(Model.Category ?? "غير محدد")
                 </p>
@@ -79,8 +79,8 @@
             <!-- Payment Method -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">طريقة الدفع</label>
-                <p class="font-bold text-[#0f1419]">
-                    <i data-lucide="credit-card" class="ml-2 text-[#0f1419]"></i>
+                <p class="font-bold text-primary">
+                    <i data-lucide="credit-card" class="ml-2 text-primary"></i>
                     @Model.PaymentMethod?.Name
                 </p>
             </div>
@@ -88,8 +88,9 @@
             <!-- Description -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 md:col-span-2">
                 <label class="block text-xs font-bold text-gray-500 mb-1">الوصف</label>
-                <p class="font-bold text-[#0f1419] leading-relaxed">@(Model.Description ?? "-")</p>
+                <p class="font-bold text-primary leading-relaxed">@(Model.Description ?? "-")</p>
             </div>
         </div>
     </div>
 </div>
+

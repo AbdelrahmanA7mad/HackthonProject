@@ -4,813 +4,237 @@
 }
 
 <style>
-    @@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
-
-    .dashboard-root * {
-        font-family: 'Cairo', sans-serif;
-    }
-
-    .dashboard-root {
-        background: #f4f6f9;
-        min-height: 100vh;
-        padding: 2rem;
-        direction: rtl;
-    }
-
-    /* ── Page Header ── */
-    .dash-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 2rem;
-    }
-
-    .dash-header-title {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: #0f1419;
-        letter-spacing: -0.5px;
-    }
-
-    .dash-header-sub {
-        font-size: 0.82rem;
-        color: #8a94a6;
-        margin-top: 2px;
-        font-weight: 500;
-    }
-
-    .dash-badge {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 999px;
-        padding: 6px 14px;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #374151;
-        box-shadow: 0 1px 3px rgba(0,0,0,.06);
-    }
-
-    .pulse-dot {
-        width: 8px;
-        height: 8px;
-        background: #22c55e;
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-    }
-
-    @@keyframes pulse {
-        0%, 100% {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        50% {
-            opacity: .5;
-            transform: scale(1.3);
-        }
-    }
-
-    /* ── Section labels ── */
-    .section-label {
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: #9ca3af;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-        .section-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e5e7eb;
-        }
-
-    /* ── KPI Cards Row ── */
-    .kpi-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    @@media (max-width: 1100px) {
-        .kpi-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @@media (max-width: 600px) {
-        .kpi-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .kpi-card {
-        background: #fff;
-        border-radius: 18px;
-        padding: 1.4rem 1.4rem 1.1rem;
-        border: 1px solid #e8eaed;
-        box-shadow: 0 1px 4px rgba(0,0,0,.04);
-        position: relative;
-        overflow: hidden;
-        transition: transform .25s ease, box-shadow .25s ease;
-    }
-
-        .kpi-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0,0,0,.09);
-        }
-
-    .kpi-icon-wrap {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-    }
-
-        .kpi-icon-wrap svg {
-            width: 22px;
-            height: 22px;
-        }
-
-    .kpi-icon-blue {
-        background: #eff6ff;
-        color: #3b82f6;
-    }
-
-    .kpi-icon-green {
-        background: #f0fdf4;
-        color: #22c55e;
-    }
-
-    .kpi-icon-red {
-        background: #fff1f2;
-        color: #e11d48;
-    }
-
-    .kpi-icon-amber {
-        background: #fffbeb;
-        color: #f59e0b;
-    }
-
-    .kpi-label {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: #8a94a6;
-        margin-bottom: 4px;
-    }
-
-    .kpi-value {
-        font-size: 1.75rem;
-        font-weight: 800;
-        color: #0f1419;
-        line-height: 1.1;
-        margin-bottom: 0.6rem;
-    }
-
-        .kpi-value.danger {
-            color: #e11d48;
-        }
-
-    .kpi-trend {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 0.76rem;
-        font-weight: 700;
-    }
-
-        .kpi-trend .trend-val {
-            padding: 2px 8px;
-            border-radius: 999px;
-        }
-
-    .trend-up {
-        color: #16a34a;
-        background: #f0fdf4;
-    }
-
-    .trend-down {
-        color: #dc2626;
-        background: #fff1f2;
-    }
-
-    .trend-good-down {
-        color: #16a34a;
-        background: #f0fdf4;
-    }
-
-    .kpi-trend .trend-caption {
-        color: #9ca3af;
-    }
-
-    .kpi-sparkline {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 40px;
-        opacity: .15;
-    }
-
-    /* ── Hero Stats Row ── */
-    .hero-grid {
-        display: grid;
-        grid-template-columns: 1.6fr 1fr 1fr;
-        gap: 1.1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    @@media (max-width: 900px) {
-        .hero-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    @@media (max-width: 600px) {
-        .hero-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    /* Cash balance hero */
-    .hero-cash {
-        background: #0f1419;
-        border-radius: 22px;
-        padding: 1.8rem;
-        color: #fff;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 180px;
-    }
-
-    .hero-cash-orb {
-        position: absolute;
-        width: 180px;
-        height: 180px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255,255,255,.12) 0%, transparent 70%);
-        top: -60px;
-        left: -40px;
-        pointer-events: none;
-    }
-
-    .hero-cash-orb2 {
-        position: absolute;
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(59,130,246,.2) 0%, transparent 70%);
-        bottom: -30px;
-        right: 30px;
-        pointer-events: none;
-    }
-
-    .hero-cash-label {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: #9ca3af;
-        margin-bottom: 4px;
-    }
-
-    .hero-cash-value {
-        font-size: 2rem;
-        font-weight: 900;
-        letter-spacing: -1px;
-    }
-
-    .hero-cash-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(255,255,255,.1);
-        backdrop-filter: blur(6px);
-        border-radius: 999px;
-        padding: 4px 12px;
-        font-size: 0.74rem;
-        font-weight: 600;
-        width: fit-content;
-        margin-top: 1rem;
-    }
-
-    /* Stat cards */
-    .stat-card {
-        background: #fff;
-        border-radius: 20px;
-        padding: 1.5rem;
-        border: 1px solid #e8eaed;
-        box-shadow: 0 1px 4px rgba(0,0,0,.04);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: box-shadow .2s;
-    }
-
-        .stat-card:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,.08);
-        }
-
-    .stat-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
-
-    .stat-label {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: #8a94a6;
-        margin-bottom: 4px;
-    }
-
-    .stat-value {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #0f1419;
-    }
-
-    .stat-unit {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #9ca3af;
-        margin-right: 4px;
-    }
-
-    .stat-icon-wrap {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-        .stat-icon-wrap svg {
-            width: 20px;
-            height: 20px;
-        }
-
-    .stat-footer {
-        margin-top: 1rem;
-        padding-top: 0.9rem;
-        border-top: 1px solid #f0f2f5;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.78rem;
-    }
-
-    .stat-footer-label {
-        font-weight: 600;
-        color: #8a94a6;
-    }
-
-    .stat-footer-val {
-        font-weight: 800;
-        color: #0f1419;
-    }
-
-    /* Donut chart inside customers card */
-    .mini-donut {
-        position: relative;
-        width: 56px;
-        height: 56px;
-    }
-
-        .mini-donut svg {
-            width: 56px;
-            height: 56px;
-            transform: rotate(-90deg);
-        }
-
-    .mini-donut-pct {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.65rem;
-        font-weight: 800;
-        color: #0f1419;
-        transform: rotate(0deg);
-    }
-
-    /* ── Revenue / Expense Charts Row ── */
-    .charts-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    @@media (max-width: 800px) {
-        .charts-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .chart-card {
-        background: #fff;
-        border-radius: 20px;
-        padding: 1.5rem;
-        border: 1px solid #e8eaed;
-        box-shadow: 0 1px 4px rgba(0,0,0,.04);
-    }
-
-    .chart-card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.2rem;
-    }
-
-    .chart-card-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #0f1419;
-    }
-
-    .chart-card-sub {
-        font-size: 0.75rem;
-        color: #9ca3af;
-        font-weight: 500;
-        margin-top: 2px;
-    }
-
-    .chart-area {
-        height: 180px;
-        position: relative;
-    }
-
-    /* ── Recent Sales Table ── */
-    .table-card {
-        background: #fff;
-        border-radius: 20px;
-        border: 1px solid #e8eaed;
-        box-shadow: 0 1px 4px rgba(0,0,0,.04);
-        overflow: hidden;
-        margin-bottom: 1.5rem;
-    }
-
-    .table-card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.3rem 1.5rem;
-        border-bottom: 1px solid #f0f2f5;
-    }
-
-    .table-card-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #0f1419;
-    }
-
-    .view-all-btn {
-        font-size: 0.78rem;
-        font-weight: 700;
-        color: #3b82f6;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        transition: opacity .2s;
-    }
-
-        .view-all-btn:hover {
-            opacity: .7;
-        }
-
-    .sales-table {
-        width: 100%;
-        border-collapse: collapse;
-        text-align: right;
-    }
-
-        .sales-table thead tr {
-            background: #f8f9fb;
-        }
-
-        .sales-table th {
-            padding: 0.8rem 1.4rem;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            color: #9ca3af;
-            text-transform: uppercase;
-            border-bottom: 1px solid #f0f2f5;
-        }
-
-        .sales-table tbody tr {
-            border-bottom: 1px solid #f8f9fb;
-            transition: background .15s;
-        }
-
-            .sales-table tbody tr:last-child {
-                border-bottom: none;
-            }
-
-            .sales-table tbody tr:hover {
-                background: #fafbfc;
-            }
-
-        .sales-table td {
-            padding: 0.9rem 1.4rem;
-            font-size: 0.84rem;
-        }
-
-    .order-id {
-        font-weight: 800;
-        color: #374151;
-    }
-
-        .order-id span {
-            color: #9ca3af;
-            font-weight: 500;
-        }
-
-    .customer-cell {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .avatar {
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.78rem;
-        font-weight: 800;
-        color: #fff;
-        flex-shrink: 0;
-    }
-
-    .customer-name {
-        font-weight: 700;
-        color: #0f1419;
-        font-size: 0.84rem;
-    }
-
-    .date-cell {
-        color: #9ca3af;
-        font-size: 0.8rem;
-        font-weight: 500;
-    }
-
-    .amount-cell {
-        font-weight: 800;
-        color: #0f1419;
-    }
-
-    .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        background: #f0fdf4;
-        color: #16a34a;
-        font-size: 0.7rem;
-        font-weight: 700;
-        padding: 3px 10px;
-        border-radius: 999px;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 3rem 1rem;
-    }
-
-    .empty-icon {
-        width: 56px;
-        height: 56px;
-        background: #f4f6f9;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1rem;
-    }
-
-    .empty-text {
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: #9ca3af;
-    }
+    * { font-family: 'Cairo', sans-serif !important; }
+    @@keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%       { opacity: .5; transform: scale(1.3); }
+    }
+    .pulse-dot { animation: pulse-dot 2s infinite; }
+    @@keyframes treasure-pulse {
+        0%, 100% { transform: scale(1); }
+        50%       { transform: scale(1.05); }
+    }
+    .hero-cash { animation: treasure-pulse 4s ease-in-out infinite; }
+    .hero-cash:hover { animation: none; }
 </style>
 
-<div class="dashboard-root">
+<div class="min-h-screen bg-gray-100 p-6 md:p-8 font-sans" dir="rtl">
 
-    <!-- Header -->
-    <div class="dash-header">
-            <div class="dash-header-title">لوحة التحكم</div>
+    
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <div class="text-2xl font-extrabold text-gray-900 tracking-tight">لوحة التحكم</div>
+
+        </div>
+
     </div>
 
-    <!-- ── Section: KPI Cards ── -->
-    <div class="section-label">نشاط الشهر الحالي</div>
-    <div class="kpi-grid">
+    
+    
+    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+        <span>نشاط الشهر الحالي</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
 
-        <!-- Invoices -->
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap kpi-icon-blue">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l2 2 4-4m-7 7h10a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+
+        
+        <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:-translate-y-0.5 transition-transform duration-200">
+            <div class="flex items-center justify-between mb-1.5">
+                <div class="text-xs font-semibold text-gray-400">عدد الفواتير</div>
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-zen-primary-light text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                </div>
             </div>
-            <div class="kpi-label">عدد الفواتير</div>
-            <div class="kpi-value">@Model.MonthlySalesCount</div>
-            <div class="kpi-trend">
-                <span class="trend-val @(Model.IsSalesCountTrendUp ? "trend-up" : "trend-down")">
+            <div class="text-2xl font-black text-gray-900 mb-3">@Model.MonthlySalesCount</div>
+            <div class="flex items-center gap-2 text-xs font-bold">
+                <span class="px-2 py-0.5 rounded-full @(Model.IsSalesCountTrendUp ? "bg-emerald-50 text-accentGreen" : "bg-red-50 text-accentRed")">
                     @(Model.IsSalesCountTrendUp ? "▲" : "▼") @Model.SalesCountTrend%
                 </span>
-                <span class="trend-caption">مقارنة بالشهر الماضي</span>
+                <span class="text-gray-400">مقارنة بالشهر الماضي</span>
             </div>
         </div>
 
-        <!-- Revenue -->
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap kpi-icon-green">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+        
+        <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:-translate-y-0.5 transition-transform duration-200">
+            <div class="flex items-center justify-between mb-1.5">
+                <div class="text-xs font-semibold text-gray-400">إيرادات الشهر</div>
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: rgb(var(--zen-theme-accent-rgb) / 0.12); color: var(--zen-theme-accent);">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                </div>
             </div>
-            <div class="kpi-label">إيرادات الشهر</div>
-            <div class="kpi-value">@Model.MonthlyRevenue.ToString("C")</div>
-            <div class="kpi-trend">
-                <span class="trend-val @(Model.IsRevenueTrendUp ? "trend-up" : "trend-down")">
+            <div class="text-2xl font-black text-gray-900 mb-3">@Model.MonthlyRevenue.ToString("C")</div>
+            <div class="flex items-center gap-2 text-xs font-bold">
+                <span class="px-2 py-0.5 rounded-full @(Model.IsRevenueTrendUp ? "bg-emerald-50 text-accentGreen" : "bg-red-50 text-accentRed")">
                     @(Model.IsRevenueTrendUp ? "▲" : "▼") @Model.RevenueTrend%
                 </span>
-                <span class="trend-caption">مقارنة بالشهر الماضي</span>
+                <span class="text-gray-400">مقارنة بالشهر الماضي</span>
             </div>
         </div>
 
-        <!-- Expenses -->
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap kpi-icon-red">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
-                </svg>
+        
+        <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:-translate-y-0.5 transition-transform duration-200">
+            <div class="flex items-center justify-between mb-1.5">
+                <div class="text-xs font-semibold text-gray-400">مصاريف الشهر</div>
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-red-50 text-accentRed">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                    </svg>
+                </div>
             </div>
-            <div class="kpi-label">مصاريف الشهر</div>
-            <div class="kpi-value danger">@Model.MonthlyExpenses.ToString("C")</div>
-            <div class="kpi-trend">
-                <span class="trend-val @(Model.IsExpensesTrendUp ? "trend-down" : "trend-good-down")">
+            <div class="text-2xl font-black text-accentRed mb-3">@Model.MonthlyExpenses.ToString("C")</div>
+            <div class="flex items-center gap-2 text-xs font-bold">
+                <span class="px-2 py-0.5 rounded-full @(Model.IsExpensesTrendUp ? "bg-red-50 text-accentRed" : "bg-emerald-50 text-accentGreen")">
                     @(Model.IsExpensesTrendUp ? "▲" : "▼") @Model.ExpensesTrend%
                 </span>
-                <span class="trend-caption">رواتب وتشغيل</span>
+                <span class="text-gray-400">رواتب وتشغيل</span>
             </div>
         </div>
 
-        <!-- Net Profit (derived) -->
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap kpi-icon-amber">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+        
+        <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:-translate-y-0.5 transition-transform duration-200">
+            <div class="flex items-center justify-between mb-1.5">
+                <div class="text-xs font-semibold text-gray-400">صافي الربح</div>
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center bg-amber-50 text-amber-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
             </div>
-            <div class="kpi-label">صافي الربح</div>
-            <div class="kpi-value">@((Model.MonthlyRevenue - Model.MonthlyExpenses).ToString("C"))</div>
-            <div class="kpi-trend">
-                <span class="trend-caption">إيرادات بعد خصم المصاريف</span>
-            </div>
+            <div class="text-2xl font-black text-gray-900 mb-3">@((Model.MonthlyRevenue - Model.MonthlyExpenses).ToString("C"))</div>
+            <div class="text-xs text-gray-400 font-medium">إيرادات بعد خصم المصاريف</div>
         </div>
 
     </div>
 
-    <!-- ── Section: Hero Stats ── -->
-    <div class="section-label">إحصائيات عامة للنظام</div>
-    <div class="hero-grid">
+    
+    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+        <span>إحصائيات عامة للنظام</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
 
-        <!-- Cash Balance Hero -->
-        <div class="hero-cash">
-            <div class="hero-cash-orb"></div>
-            <div class="hero-cash-orb2"></div>
-            <div style="position:relative;z-index:1">
-                <div class="hero-cash-label">الرصيد الكلي الحالي</div>
-                <div class="hero-cash-value" dir="ltr">@Model.CashBalance.ToString("C")</div>
-                <div class="hero-cash-pill">
-                    <div class="pulse-dot"></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+        
+        <div class="md:col-span-1 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between min-h-[180px] hero-cash" style="background: var(--zen-theme-primary); color: var(--zen-theme-bg-base);">
+            <div class="absolute w-44 h-44 rounded-full top-[-55px] left-[-40px] pointer-events-none" style="background:radial-gradient(circle,rgba(255,255,255,.12) 0%,transparent 70%)"></div>
+            <div class="absolute w-28 h-28 rounded-full bottom-[-30px] right-[30px] pointer-events-none" style="background: radial-gradient(circle, rgb(var(--zen-theme-accent-rgb) / 0.35) 0%, transparent 70%);"></div>
+            <div class="relative z-10">
+                <div class="text-xs font-semibold text-gray-400 mb-1">الرصيد الكلي الحالي</div>
+                <div class="text-3xl font-black tracking-tight" dir="ltr">@Model.CashBalance.ToString("C")</div>
+                <div class="inline-flex items-center gap-2 mt-4 bg-white/10 backdrop-blur rounded-full px-3 py-1 text-xs font-semibold w-fit">
+                    <div class="w-2 h-2 rounded-full bg-accentGreen pulse-dot"></div>
                     <span>مباشر</span>
                 </div>
             </div>
-            <!-- Inline bar chart -->
-            <svg viewBox="0 0 220 50" style="position:absolute;bottom:0;left:0;right:0;width:100%;opacity:.18" preserveAspectRatio="none">
-                <polyline points="0,40 30,32 60,36 90,20 120,28 150,12 180,18 220,8"
-                          fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                <polyline points="0,40 30,32 60,36 90,20 120,28 150,12 180,18 220,8 220,50 0,50"
-                          fill="white" stroke="none" opacity=".4" />
+            <svg viewBox="0 0 220 50" class="absolute bottom-0 left-0 right-0 w-full opacity-20" preserveAspectRatio="none">
+                <polyline points="0,40 30,32 60,36 90,20 120,28 150,12 180,18 220,8" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                <polyline points="0,40 30,32 60,36 90,20 120,28 150,12 180,18 220,8 220,50 0,50" fill="white" stroke="none" opacity=".35" />
             </svg>
         </div>
 
-        <!-- Customers -->
-        <div class="stat-card">
-            <div class="stat-top">
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start">
                 <div>
-                    <div class="stat-label">إجمالي العملاء</div>
-                    <div class="stat-value">@Model.TotalCustomers <span class="stat-unit">عميل</span></div>
+                    <div class="text-xs font-semibold text-gray-400 mb-2">إجمالي العملاء</div>
+                    <div class="text-3xl font-black text-gray-900">@Model.TotalCustomers <span class="text-base font-medium text-gray-400">عميل</span></div>
                 </div>
-                <!-- mini donut -->
-                <div class="mini-donut">
-                    @{
-                        double pct = Model.TotalCustomers > 0
-                        ? Math.Min(100, (double)Model.ActiveCustomersCount / Model.TotalCustomers * 100)
-                        : 0;
-                        double circ = 2 * Math.PI * 20; // r=20
-                        double dash = pct / 100 * circ;
-                    }
-                    <svg viewBox="0 0 56 56">
-                        <circle cx="28" cy="28" r="20" fill="none" stroke="#f0f2f5" stroke-width="6" />
-                        <circle cx="28" cy="28" r="20" fill="none" stroke="#3b82f6" stroke-width="6"
+                @{
+                    double pct = Model.TotalCustomers > 0 ? Math.Min(100, (double)Model.ActiveCustomersCount / Model.TotalCustomers * 100) : 0;
+                    double circ = 2 * Math.PI * 20;
+                    double dash = pct / 100 * circ;
+                }
+                <div class="relative w-20 h-20 flex-shrink-0">
+                    <svg viewBox="0 0 56 56" class="w-20 h-20" style="transform:rotate(-90deg)">
+                        <circle cx="28" cy="28" r="20" fill="none" stroke-width="6" style="stroke: var(--zen-theme-bg-subtle);" />
+                        <circle cx="28" cy="28" r="20" fill="none" stroke-width="6" style="stroke: var(--zen-theme-accent);"
                                 stroke-dasharray="@dash.ToString("F1") @circ.ToString("F1")"
                                 stroke-linecap="round" />
                     </svg>
-                    <div class="mini-donut-pct">@pct.ToString("F0")%</div>
+                    <div class="absolute inset-0 flex items-center justify-center text-sm font-black text-gray-900">@pct.ToString("F0")%</div>
                 </div>
             </div>
-            <div class="stat-footer">
-                <span class="stat-footer-label">نشط هذا الشهر</span>
-                <span class="stat-footer-val">@Model.ActiveCustomersCount عميل</span>
+            <div class="pt-0 border-t border-gray-100 flex justify-between items-center text-xs">
+                <span class="font-semibold text-gray-400">نشط هذا الشهر</span>
+                <span class="font-black text-gray-900">@Model.ActiveCustomersCount عميل</span>
             </div>
         </div>
 
-        <!-- Inventory -->
-        <div class="stat-card">
-            <div class="stat-top">
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start">
                 <div>
-                    <div class="stat-label">المخزون</div>
-                    <div class="stat-value">@Model.TotalProducts <span class="stat-unit">قطعة</span></div>
+                    <div class="text-xs font-semibold text-gray-400 mb-2">المخزون</div>
+                    <div class="text-3xl font-black text-gray-900">@Model.TotalProducts <span class="text-base font-medium text-gray-400">قطعة</span></div>
                 </div>
-                <div class="stat-icon-wrap kpi-icon-amber">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:22px;height:22px">
+                <div class="w-14 h-14 rounded-xl flex items-center justify-center bg-amber-50 text-amber-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-8 h-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
                 </div>
             </div>
-            <div class="stat-footer">
-                <span class="stat-footer-label">القيمة التقديرية</span>
-                <span class="stat-footer-val">@Model.StockTotalValue.ToString("C")</span>
+            <div class="pt-0 border-t border-gray-100 flex justify-between items-center text-xs">
+                <span class="font-semibold text-gray-400">القيمة التقديرية</span>
+                <span class="font-black text-gray-900">@Model.StockTotalValue.ToString("C")</span>
             </div>
         </div>
 
     </div>
 
-    <!-- ── Section: Charts ── -->
-    <div class="section-label">تحليل مالي</div>
-    <div class="charts-grid">
+    
+    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+        <span>تحليل مالي</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
 
-        <!-- Revenue vs Expenses Bar Chart -->
-        <div class="chart-card">
-            <div class="chart-card-header">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+        
+        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
                 <div>
-                    <div class="chart-card-title">الإيرادات مقابل المصاريف</div>
-                    <div class="chart-card-sub">الشهر الحالي — مقارنة بصرية</div>
+                    <div class="text-sm font-bold text-gray-900">الإيرادات مقابل المصاريف</div>
+                    <div class="text-xs text-gray-400 mt-0.5">الشهر الحالي — مقارنة بصرية</div>
                 </div>
             </div>
-            <div class="chart-area">
+            <div class="h-44 relative">
                 <canvas id="revExpChart"></canvas>
             </div>
         </div>
 
-        <!-- Activity Donut Chart -->
-        <div class="chart-card">
-            <div class="chart-card-header">
+        
+        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
                 <div>
-                    <div class="chart-card-title">توزيع النشاط المالي</div>
-                    <div class="chart-card-sub">نسبة المصاريف من الإيرادات</div>
+                    <div class="text-sm font-bold text-gray-900">توزيع النشاط المالي</div>
+                    <div class="text-xs text-gray-400 mt-0.5">نسبة المصاريف من الإيرادات</div>
                 </div>
             </div>
-            <div class="chart-area" style="display:flex;align-items:center;justify-content:center;gap:2rem">
+            <div class="h-44 flex items-center justify-center gap-8">
                 <canvas id="donutChart" style="max-height:160px;max-width:160px"></canvas>
-                <div id="donutLegend" style="font-size:.8rem;font-family:'Cairo',sans-serif"></div>
+                <div id="donutLegend" class="text-sm font-sans"></div>
             </div>
         </div>
 
     </div>
 
-    <!-- ── Section: Recent Sales ── -->
-    <div class="section-label">أحدث العمليات</div>
-    <div class="table-card">
-        <div class="table-card-header">
-            <div class="table-card-title">آخر الفواتير المُصدرة</div>
-            <a asp-controller="Sales" asp-action="Index" class="view-all-btn">
+    
+    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+        <span>أحدث العمليات</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
+        <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+            <div class="text-sm font-bold text-gray-900">آخر الفواتير المُصدرة</div>
+            <a asp-controller="Sales" asp-action="Index" class="flex items-center gap-1 text-xs font-bold transition-opacity hover:opacity-70" style="color: var(--zen-theme-accent);">
                 عرض الكل
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px;transform:rotate(180deg)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3 h-3" style="transform:rotate(180deg)">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
@@ -818,31 +242,38 @@
 
         @if (Model.RecentSales.Any())
         {
-            <div style="overflow-x:auto">
-                <table class="sales-table">
+            <div class="overflow-x-auto">
+                <table class="w-full text-right border-collapse">
                     <thead>
-                        <tr>
-                            <th>رقم الفاتورة</th>
-                            <th>العميل</th>
-                            <th>التاريخ</th>
-                            <th>المبلغ</th>
-                            <th>الحالة</th>
+                        <tr class="bg-gray-50">
+                            <th class="px-6 py-3 text-xs font-bold uppercase tracking-wide text-gray-400 border-b border-gray-100">رقم الفاتورة</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase tracking-wide text-gray-400 border-b border-gray-100">العميل</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase tracking-wide text-gray-400 border-b border-gray-100">التاريخ</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase tracking-wide text-gray-400 border-b border-gray-100">المبلغ</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase tracking-wide text-gray-400 border-b border-gray-100">الحالة</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var sale in Model.RecentSales)
                         {
-                            <tr>
-                                <td><span class="order-id"><span>#</span>@sale.Id</span></td>
-                                <td>
-                                    <div class="customer-cell">
-                                        <div class="avatar">@(sale.Customer?.FullName?.Substring(0, 1) ?? "ع")</div>
-                                        <span class="customer-name">@sale.Customer?.FullName</span>
+                            <tr class="border-b border-gray-50 hover:bg-gray-50/60 transition-colors">
+                                <td class="px-6 py-3">
+                                    <span class="font-black text-gray-700"><span class="text-gray-400 font-medium">#</span>@sale.Id</span>
+                                </td>
+                                <td class="px-6 py-3">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-black flex-shrink-0"
+                                             style="background: linear-gradient(135deg, var(--zen-theme-accent) 0%, var(--zen-success-hover) 100%);">
+                                            @(sale.Customer?.FullName?.Substring(0, 1) ?? "ع")
+                                        </div>
+                                        <span class="font-bold text-gray-900 text-sm">@sale.Customer?.FullName</span>
                                     </div>
                                 </td>
-                                <td class="date-cell" dir="ltr">@sale.SaleDate.ToString("yyyy-MM-dd")</td>
-                                <td class="amount-cell">@sale.TotalAmount.ToString("C")</td>
-                                <td><span class="status-pill">✓ مكتمل</span></td>
+                                <td class="px-6 py-3 text-gray-400 text-sm font-medium" dir="ltr">@sale.SaleDate.ToString("yyyy-MM-dd")</td>
+                                <td class="px-6 py-3 font-black text-gray-900 text-sm">@sale.TotalAmount.ToString("C")</td>
+                                <td class="px-6 py-3">
+                                    <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-accentGreen text-xs font-bold px-3 py-1 rounded-full">✓ مكتمل</span>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -851,13 +282,13 @@
         }
         else
         {
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#9ca3af" stroke-width="1.5" style="width:26px;height:26px">
+            <div class="text-center py-12">
+                <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 text-gray-400">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0H4" />
                     </svg>
                 </div>
-                <div class="empty-text">لا توجد مبيعات حديثة بعد</div>
+                <div class="text-sm font-semibold text-gray-400">لا توجد مبيعات حديثة بعد</div>
             </div>
         }
     </div>
@@ -872,6 +303,13 @@
     <script>
         (function () {
             Chart.defaults.font.family = "'Cairo', sans-serif";
+            const theme = window.THEME || {};
+const primary = window.primary || theme.primary || window.getComputedStyle(document.documentElement).getPropertyValue('--zen-theme-primary').trim();
+            const accent = window.accent || theme.accent || '#315f8f';
+const accentGreen = window.accentGreen || theme.accentGreen || window.getComputedStyle(document.documentElement).getPropertyValue('--zen-theme-accent-green').trim();
+const accentRed = window.accentRed || theme.accentRed || window.getComputedStyle(document.documentElement).getPropertyValue('--zen-theme-accent-red').trim();
+            const bgSubtle = window.bgSubtle || theme.bgSubtle || '#f8f9fa';
+            const textMuted = window.textMuted || theme.textMuted || '#6b7280';
 
             const rev  = @Model.MonthlyRevenue;
             const exp  = @Model.MonthlyExpenses;
@@ -886,7 +324,7 @@
                         labels: ['الإيرادات', 'المصاريف', 'صافي الربح'],
                         datasets: [{
                             data: [rev, exp, prof],
-                            backgroundColor: ['rgba(34,197,94,.85)', 'rgba(225,29,72,.8)', 'rgba(59,130,246,.8)'],
+                            backgroundColor: [accentGreen, accentRed, accent],
                             borderRadius: 10,
                             borderSkipped: false,
                             maxBarThickness: 55
@@ -898,7 +336,7 @@
                         plugins: { legend: { display: false } },
                         scales: {
                             x: { grid: { display: false }, ticks: { font: { size: 12, weight: '600', family: "'Cairo'" } } },
-                            y: { grid: { color: '#f0f2f5' }, ticks: { font: { size: 11, family: "'Cairo'" }, callback: v => v.toLocaleString('ar-EG') } }
+                            y: { grid: { color: bgSubtle }, ticks: { font: { size: 11, family: "'Cairo'" }, callback: v => v.toLocaleString('ar-EG') } }
                         }
                     }
                 });
@@ -913,7 +351,7 @@
                         labels: ['إيرادات صافية', 'مصاريف'],
                         datasets: [{
                             data: [prof, exp],
-                            backgroundColor: ['#3b82f6', '#e11d48'],
+                            backgroundColor: [accent, accentRed],
                             borderWidth: 0,
                             hoverOffset: 6
                         }]
@@ -928,19 +366,18 @@
                     }
                 });
 
-                // custom legend
                 const legend = document.getElementById('donutLegend');
                 if (legend) {
                     const items = [
-                        { color: '#3b82f6', label: 'إيرادات صافية', val: prof },
-                        { color: '#e11d48', label: 'مصاريف',        val: exp  },
+                        { color: accent, label: 'إيرادات صافية', val: prof },
+                        { color: accentRed, label: 'مصاريف',     val: exp  },
                     ];
                     legend.innerHTML = items.map(i => `
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
                             <div style="width:12px;height:12px;border-radius:3px;background:${i.color};flex-shrink:0"></div>
                             <div>
-                                <div style="font-weight:700;color:#0f1419;font-size:.82rem">${i.label}</div>
-                                <div style="color:#8a94a6;font-size:.75rem">${i.val.toLocaleString('ar-EG')}</div>
+                                <div style="font-weight:700;color:${primary};font-size:.82rem">${i.label}</div>
+                                <div style="color:${textMuted};font-size:.75rem">${i.val.toLocaleString('ar-EG')}</div>
                             </div>
                         </div>`).join('');
                 }

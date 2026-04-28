@@ -1,4 +1,4 @@
-@model ManageMentSystem.ViewModels.InstallmentDetailsViewModel
+﻿@model ManageMentSystem.ViewModels.InstallmentDetailsViewModel
 @{
     ViewData["Title"] = "تفاصيل التقسيط";
     var installment = Model.Installment;
@@ -24,13 +24,13 @@
 
     <div class="max-w-[1600px] mx-auto mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2 mb-4">
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2 mb-4">
                 تفاصيل عقد التقسيط
-                <span class="text-md font-bold text-[#0f1419] bg-gray-100 px-2 py-1 rounded-lg font-bold">#@Model.Installment.SequenceNumber</span>
+                <span class="text-md font-bold text-primary bg-gray-100 px-2 py-1 rounded-lg font-bold">#@Model.Installment.SequenceNumber</span>
             </h1>
             <p class="text-gray-500 text-sm mt-1 font-bold">عرض التفاصيل المالية وجدول الدفعات وحالة السداد.</p>
         </div>
-        <a href="@Url.Action("Index")" class="px-6 py-2.5 bg-white border border-gray-200 text-gray-500 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
+        <a href="@Url.Action("Index")" class="zen-btn zen-btn-neutral">
             عودة للقائمة
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
         </a>
@@ -41,17 +41,17 @@
         <div class="xl:col-span-8 space-y-6">
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="p-4 border-b border-gray-200 flex items-center gap-3 bg-gray-50/50">
-                    <div class="w-10 h-10 rounded-full bg-gray-50 text-[#0f1419] flex items-center justify-center">
+                <div class="p-4 border-b border-gray-200 flex items-center gap-3 bg-bgSubtle">
+                    <div class="w-10 h-10 rounded-full bg-gray-50 text-primary flex items-center justify-center">
                         <i data-lucide="file-text" class="text-lg w-5 h-5"></i>
                     </div>
-                    <h2 class="font-bold text-lg text-[#0f1419]">بيانات العقد والعميل</h2>
+                    <h2 class="font-bold text-lg text-primary">بيانات العقد والعميل</h2>
                     <div class="mr-auto">
                         @{
                             var statusStyle = Model.Installment.Status switch
                             {
                                 "نشط" => "bg-emerald-100 text-accentGreen border-emerald-200",
-                                "مكتمل" => "bg-gray-100 text-[#0f1419] border-gray-200",
+                                "مكتمل" => "bg-gray-100 text-primary border-gray-200",
                                 "متأخر" => "bg-red-100 text-accentRed border-red-200",
                                 _ => "bg-gray-100 text-gray-600 border-gray-200"
                             };
@@ -70,14 +70,14 @@
                                 <i data-lucide="user" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <p class="font-bold text-[#0f1419]">@Model.Installment.Customer?.FullName</p>
+                                <p class="font-bold text-primary">@Model.Installment.Customer?.FullName</p>
                             </div>
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-500 mb-2">المنتجات المباعة</label>
-                        <div class="p-3 rounded-xl border border-gray-200 bg-gray-50/50 min-h-[66px] flex flex-wrap items-center gap-2">
+                        <div class="p-3 rounded-xl border border-gray-200 bg-bgSubtle min-h-[66px] flex flex-wrap items-center gap-2">
                             @if (products.Any())
                             {
                                 foreach (var product in products)
@@ -97,7 +97,7 @@
                     @if (!string.IsNullOrEmpty(Model.Installment.GuarantorName) || !string.IsNullOrEmpty(Model.Installment.GuarantorPhone))
                     {
                         <div class="md:col-span-2 pt-4 border-t border-gray-200">
-                            <h3 class="text-sm font-bold text-[#0f1419] mb-3 flex items-center gap-2">
+                            <h3 class="text-sm font-bold text-primary mb-3 flex items-center gap-2">
                                 <i data-lucide="shield" class="text-gray-500 w-4 h-4"></i> بيانات الضامن
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -122,7 +122,7 @@
                         <div class="w-8 h-8 rounded-full bg-emerald-50 text-accentGreen flex items-center justify-center">
                             <i data-lucide="package" class="text-sm w-4 h-4"></i>
                         </div>
-                        <h2 class="font-bold text-lg text-[#0f1419]">تفاصيل المنتجات والأسعار</h2>
+                        <h2 class="font-bold text-lg text-primary">تفاصيل المنتجات والأسعار</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right text-sm">
@@ -139,12 +139,12 @@
                             <tbody class="divide-y divide-gray-100">
                                 @foreach (var item in Model.Items)
                                 {
-                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                    <tr class="hover:bg-bgSubtle transition-colors">
                                         <td class="px-5 py-4 font-bold text-gray-500">@(Model.Items.IndexOf(item) + 1)</td>
                                         <td class="px-5 py-4 font-bold text-gray-600">
                                             @if (item.ProductId.HasValue)
                                             {
-                                                <a href="@Url.Action("Details", "Products", new { id = item.ProductId.Value })" class="hover:text-[#0f1419] transition-colors">
+                                                <a href="@Url.Action("Details", "Products", new { id = item.ProductId.Value })" class="hover:text-primary transition-colors">
                                                     @(item.ProductName ?? "منتج غير محدد")
                                                 </a>
                                             }
@@ -160,7 +160,7 @@
                                     </tr>
                                 }
                             </tbody>
-                            <tfoot class="bg-gray-50 border-t border-gray-200 font-bold text-[#0f1419]">
+                            <tfoot class="bg-gray-50 border-t border-gray-200 font-bold text-primary">
                                 <tr>
                                     <td colspan="4" class="px-5 py-3 text-left pl-8">المجموع الكلي للمنتجات:</td>
                                     <td colspan="2" class="px-5 py-3 text-lg">@Model.Items.Sum(i => i.TotalPrice).ToString("N0") <small class="text-xs font-normal text-gray-500">ج.م</small></td>
@@ -173,8 +173,8 @@
 
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-bold text-[#0f1419] flex items-center gap-2">
-                        <i data-lucide="calendar" class="text-[#0f1419] w-5 h-5"></i>
+                    <h3 class="text-lg font-bold text-primary flex items-center gap-2">
+                        <i data-lucide="calendar" class="text-primary w-5 h-5"></i>
                         جدول الدفعات الشهرية
                     </h3>
 
@@ -228,7 +228,7 @@
                             </div>
 
                             <div class="text-center mb-2">
-                                <span class="block text-2xl font-bold text-[#0f1419] tracking-tight mb-2">
+                                <span class="block text-2xl font-bold text-primary tracking-tight mb-2">
                                     @monthPayment.Amount.ToString("N0")
                                     <span class="text-xs text-gray-500 font-semibold">ج.م</span>
                                 </span>
@@ -274,9 +274,9 @@
         <div class="xl:col-span-4 space-y-6">
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden top-6">
-                <div class="p-4 border-b border-gray-200 bg-gray-50/50">
-                    <h2 class="font-bold text-[#0f1419] flex items-center gap-2">
-                        <i data-lucide="calculator" class="text-[#0f1419] w-5 h-5"></i> الملخص المالي
+                <div class="p-4 border-b border-gray-200 bg-bgSubtle">
+                    <h2 class="font-bold text-primary flex items-center gap-2">
+                        <i data-lucide="calculator" class="text-primary w-5 h-5"></i> الملخص المالي
                     </h2>
                 </div>
 
@@ -301,7 +301,7 @@
                         </div>
                         <div>
                             <span class="text-xs font-bold text-gray-500 block mb-1">القسط الشهري</span>
-                            <span class="text-md font-bold text-[#0f1419]">@Model.Installment.MonthlyPayment.ToString("N0")</span>
+                            <span class="text-md font-bold text-primary">@Model.Installment.MonthlyPayment.ToString("N0")</span>
                         </div>
                     </div>
 
@@ -323,18 +323,18 @@
                         <div class="relative pt-1">
                             <div class="flex mb-2 items-center justify-between">
                                 <div>
-                                    <span class="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-[#0f1419] bg-gray-100">
+                                    <span class="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary bg-gray-100">
                                         نسبة السداد
                                     </span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-sm font-semibold inline-block text-[#0f1419]">
+                                    <span class="text-sm font-semibold inline-block text-primary">
                                         @percentage.ToString("0")%
                                     </span>
                                 </div>
                             </div>
                             <div class="overflow-hidden h-2 mb-4 text-sm flex rounded bg-gray-100">
-                                <div style="width:@percentage%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#0f1419] transition-all duration-500"></div>
+                                <div style="width:@percentage%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary transition-all duration-500"></div>
                             </div>
                         </div>
                     </div>
@@ -359,7 +359,7 @@
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="p-4 border-b border-gray-200">
-                    <h2 class="font-bold text-sm text-[#0f1419]">إجراءات سريعة</h2>
+                    <h2 class="font-bold text-sm text-primary">إجراءات سريعة</h2>
                 </div>
                 <div class="p-4 space-y-3">
                     @if (Model.Installment.Status != "مكتمل")
@@ -385,7 +385,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 rounded-2xl shadow-2xl">
             <div class="px-6 py-5 bg-white border-b border-gray-200 flex justify-between items-center rounded-t-2xl">
-                <h5 class="text-xl font-bold text-[#0f1419]">تأكيد الحذف</h5>
+                <h5 class="text-xl font-bold text-primary">تأكيد الحذف</h5>
                 <button type="button" class="text-gray-500 hover:text-accentRed transition-colors" data-bs-dismiss="modal">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -399,9 +399,9 @@
 
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-4">
                     <div class="flex items-start gap-3">
-                        <input class="w-5 h-5 text-[#0f1419] rounded focus:ring-[#0f1419] border-gray-200 mt-1" type="checkbox" id="restoreInventoryCheckbox">
+                        <input class="w-5 h-5 text-primary rounded focus:ring-primary/20 border-gray-200 mt-1" type="checkbox" id="restoreInventoryCheckbox">
                         <label class="text-sm" for="restoreInventoryCheckbox">
-                            <span class="block font-bold text-[#0f1419]">إرجاع المنتجات للمخزون</span>
+                            <span class="block font-bold text-primary">إرجاع المنتجات للمخزون</span>
                             <span class="block text-gray-500 text-xs mt-1">عند التحديد، سيتم إعادة الكميات المحجوزة للمخزون تلقائياً.</span>
                         </label>
                     </div>
@@ -411,11 +411,11 @@
             </div>
 
             <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3 rounded-b-2xl">
-                <button type="button" class="px-5 py-2.5 rounded-xl bg-white text-gray-500 font-bold border border-gray-200 hover:bg-gray-50" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="zen-btn zen-btn-neutral" data-bs-dismiss="modal">إلغاء</button>
 
                 <form id="deleteInstallmentForm" method="post" class="inline-block">
                     <input type="hidden" id="restoreInventoryHidden" name="restoreInventory" value="false">
-                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-red-700 text-white font-bold hover:bg-red-700 shadow-lg shadow-red-200">تأكيد الحذف</button>
+                    <button type="submit" class="zen-btn zen-btn-danger">تأكيد الحذف</button>
                 </form>
             </div>
         </div>
@@ -514,3 +514,4 @@
         }
     </script>
 }
+

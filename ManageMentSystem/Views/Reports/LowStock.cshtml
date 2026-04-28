@@ -1,20 +1,20 @@
-@model IEnumerable<ManageMentSystem.Models.Product>
+﻿@model IEnumerable<ManageMentSystem.Models.Product>
 @{
     ViewData["Title"] = "تقرير المخزون الناقص";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="alert-triangle" class="text-amber-600"></i> تقرير المخزون الناقص
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="alert-triangle" class="text-accentAmber"></i> تقرير المخزون الناقص
             </h1>
             <p class="text-gray-500 mt-1 font-medium">المنتجات التي وصلت للحد الأدنى أو نفدت</p>
         </div>
         <div class="flex gap-2">
-            <a href="@Url.Action("ExportLowStockReportExcel", new { categoryId = ViewBag.SelectedCategoryId })" class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm md:text-base">
+            <a href="@Url.Action("ExportLowStockReportExcel", new { categoryId = ViewBag.SelectedCategoryId })" class="zen-btn zen-btn-primary md:text-base">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -22,7 +22,7 @@
 
     <!-- Print Header -->
     <div class="hidden print:block text-center mb-6">
-        <h1 class="text-2xl font-bold text-[#0f1419] mb-2">تقرير المخزون الناقص</h1>
+        <h1 class="text-2xl font-bold text-primary mb-2">تقرير المخزون الناقص</h1>
         <p class="text-gray-500">تاريخ الطباعة: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</p>
     </div>
 
@@ -32,7 +32,7 @@
             <div class="flex flex-col md:flex-row gap-4 items-end">
                 <div class="flex-grow">
                     <label for="categoryId" class="block text-sm font-bold text-gray-600 mb-2">فلتر حسب الفئة</label>
-                    <select name="categoryId" id="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all bg-white cursor-pointer" onchange="this.form.submit()">
+                    <select name="categoryId" id="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer" onchange="this.form.submit()">
                         <option value="">جميع الفئات</option>
                         @if (ViewBag.Categories != null)
                         {
@@ -46,14 +46,14 @@
                     </select>
                 </div>
                 <div>
-                     <a href="@Url.Action("LowStock")" class="bg-gray-100 hover:bg-gray-50 text-gray-500 px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2">
+                     <a href="@Url.Action("LowStock")" class="zen-btn zen-btn-neutral">
                         <i data-lucide="x"></i> إلغاء الفلتر
                     </a>
                 </div>
             </div>
             @if (ViewBag.SelectedCategoryId != null)
             {
-                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-center gap-2 text-[#0f1419] text-sm font-bold mt-2">
+                <div class="bg-bgSubtle border border-gray-200 rounded-lg p-3 flex items-center gap-2 text-primary text-sm font-bold mt-2">
                     <i data-lucide="info" class="w-4 h-4"></i>
                     يتم عرض المنتجات منخفضة المخزون في فئة: 
                     <span class="underline">
@@ -92,9 +92,9 @@
 
     <!-- Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:shadow-none print:border-0">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50 print:hidden">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="table" class="text-white0"></i> قائمة المنتجات
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle print:hidden">
+            <h5 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="table" class="text-primary"></i> قائمة المنتجات
             </h5>
         </div>
         <div class="overflow-x-auto">
@@ -120,7 +120,7 @@
                             <td class="px-6 py-4 print:px-2 print:py-2 print:border-b print:border-gray-200">
                                 @if (p.Category != null)
                                 {
-                                    <span class="bg-gray-100 text-[#0f1419] px-2 py-1 rounded text-xs font-bold print:bg-transparent print:text-black print:p-0">@p.Category.Name</span>
+                                    <span class="bg-gray-100 text-primary px-2 py-1 rounded text-xs font-bold print:bg-transparent print:text-black print:p-0">@p.Category.Name</span>
                                 }
                                 else
                                 {

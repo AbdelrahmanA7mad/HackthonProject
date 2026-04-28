@@ -1,4 +1,4 @@
-@model ManageMentSystem.ViewModels.CreateInstallmentViewModel
+﻿@model ManageMentSystem.ViewModels.CreateInstallmentViewModel
 @{
     ViewData["Title"] = "إضافة تقسيط جديد";
 }
@@ -9,7 +9,7 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">إنشاء عقد تقسيط جديد</h1>
             
-            <a href="@Url.Action("Index")" class="px-6 py-2.5 bg-white border border-gray-200 text-gray-500 rounded-xl font-bold hover:bg-gray-50 hover:-translate-y-0.5 transition-all shadow-sm flex items-center gap-2">
+            <a href="@Url.Action("Index")" class="zen-btn zen-btn-neutral">
                 العودة للأقساط
                 <i class="mx-2" data-lucide="arrow-left"></i>
             </a>
@@ -25,14 +25,14 @@
                     <!-- Customer Section -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 relative z-30">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center">
-                            <i data-lucide="user" class="ml-2 text-[#0f1419] w-4 h-4"></i>
+                            <i data-lucide="user" class="ml-2 text-primary w-4 h-4"></i>
                             <h3 class="font-bold text-gray-700 text-sm">بيانات العميل</h3>
                         </div>
                         
                         <div class="p-4 space-y-4">
                             <div class="relative">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">العميل *</label>
-                                <input type="text" id="installmentCustomerSearch" class="block w-full border-gray-200 rounded-lg focus:ring-[#0f1419] focus:border-[#0f1419] sm:text-sm border py-2 px-3" placeholder="بحث عن عميل..." autocomplete="off">
+                                <input type="text" id="installmentCustomerSearch" class="block w-full border-gray-200 rounded-lg focus:ring-primary/20 focus:border-primary sm:text-sm border py-2 px-3" placeholder="بحث عن عميل..." autocomplete="off">
 
                                 <select name="CustomerId" id="modalCustomerSelect" class="hidden">
                                     <option value="">اختر العميل</option>
@@ -49,12 +49,12 @@
                             </div>
 
                             <div id="modalNewCustomerFields" class="hidden space-y-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                <div class="text-sm text-[#0f1419] font-bold mb-1 flex items-center">
+                                <div class="text-sm text-primary font-bold mb-1 flex items-center">
                                     <i data-lucide="plus-circle" class="ml-1 w-4 h-4"></i> عميل جديد
                                 </div>
-                                <input type="text" id="modalNewCustomerName" name="NewCustomerName" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="اسم العميل *">
-                                <input type="text" id="modalNewCustomerPhone" name="NewCustomerPhone" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="رقم الهاتف *">
-                                <input type="text" id="modalNewCustomerAddress" name="NewCustomerAddress" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="العنوان">
+                                <input type="text" id="modalNewCustomerName" name="NewCustomerName" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" placeholder="اسم العميل *">
+                                <input type="text" id="modalNewCustomerPhone" name="NewCustomerPhone" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" placeholder="رقم الهاتف *">
+                                <input type="text" id="modalNewCustomerAddress" name="NewCustomerAddress" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" placeholder="العنوان">
                             </div>
                         </div>
                     </div>
@@ -62,13 +62,13 @@
                     <!-- Products Section -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 relative z-20">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center">
-                            <i data-lucide="shopping-cart" class="ml-2 text-[#0f1419] w-4 h-4"></i>
+                            <i data-lucide="shopping-cart" class="ml-2 text-primary w-4 h-4"></i>
                             <h3 class="font-bold text-gray-700 text-sm">المنتجات</h3>
                         </div>
 
                         <div class="p-4 space-y-4">
                             <div class="relative">
-                                <input type="text" id="productSearch" class="block w-full border-gray-200 rounded-lg focus:ring-[#0f1419] focus:border-[#0f1419] sm:text-sm border py-2 px-3 pl-10" placeholder="ابحث عن منتج أو امسح الباركود..." autocomplete="off">
+                                <input type="text" id="productSearch" class="block w-full border-gray-200 rounded-lg focus:ring-primary/20 focus:border-primary sm:text-sm border py-2 px-3 pl-10" placeholder="ابحث عن منتج أو امسح الباركود..." autocomplete="off">
                                 <i data-lucide="search" class="absolute left-3 top-3 text-gray-500 w-4 h-4"></i>
 
                                 <div id="productSearchResults" class="hidden absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-20 max-h-[300px] overflow-y-auto custom-scrollbar">
@@ -113,7 +113,7 @@
                     <!-- Guarantor Section -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center">
-                            <i data-lucide="shield" class="ml-2 text-[#0f1419] w-4 h-4"></i>
+                            <i data-lucide="shield" class="ml-2 text-primary w-4 h-4"></i>
                             <h3 class="font-bold text-gray-700 text-sm">بيانات الضامن (اختياري)</h3>
                         </div>
                         
@@ -121,11 +121,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">اسم الضامن</label>
-                                    <input type="text" name="GuarantorName" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="اسم الضامن">
+                                    <input type="text" name="GuarantorName" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" placeholder="اسم الضامن">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">رقم هاتف الضامن</label>
-                                    <input type="text" name="GuarantorPhone" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" placeholder="رقم هاتف الضامن">
+                                    <input type="text" name="GuarantorPhone" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" placeholder="رقم هاتف الضامن">
                                 </div>
                             </div>
                         </div>
@@ -140,41 +140,41 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-visible">
                         <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
                             <div class="flex items-center">
-                                <i data-lucide="calculator" class="ml-2 text-[#0f1419] w-4 h-4"></i>
+                                <i data-lucide="calculator" class="ml-2 text-primary w-4 h-4"></i>
                                 <h3 class="font-bold text-gray-700 text-sm">الحسابات المالية</h3>
                             </div>
                             <div>
                                 <label class="text-xs text-gray-500">تاريخ البدء</label>
-                                <input type="date" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-xs py-1 px-2 border" required>
+                                <input type="date" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-xs py-1 px-2 border" required>
                             </div>
                         </div>
                         
                         <div class="p-4 space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">المبلغ الإجمالي *</label>
-                                <input type="number" step="0.01" min="0" name="TotalAmount" id="totalAmount" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
+                                <input type="number" step="0.01" min="0" name="TotalAmount" id="totalAmount" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" required>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">الدفعة المقدمة *</label>
-                                <input type="number" step="0.01" min="0" name="DownPayment" id="downPayment" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
+                                <input type="number" step="0.01" min="0" name="DownPayment" id="downPayment" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" required>
                             </div>
 
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">الفائدة %</label>
-                                    <input type="number" step="0.1" min="0" max="100" name="InterestRate" id="interestRate" value="0" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
+                                    <input type="number" step="0.1" min="0" max="100" name="InterestRate" id="interestRate" value="0" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">المدة (أشهر)</label>
-                                    <input type="number" min="1" name="NumberOfMonths" id="numberOfMonths" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border" required>
+                                    <input type="number" min="1" name="NumberOfMonths" id="numberOfMonths" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border" required>
                                 </div>
                             </div>
 
                             <!-- Payment Method -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">طريقة الدفع للمقدم</label>
-                                <select name="PaymentMethodId" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-[#0f1419] focus:border-[#0f1419] text-sm py-1.5 px-2 border bg-white">
+                                <select name="PaymentMethodId" class="block w-full border-gray-200 rounded-md shadow-sm focus:ring-primary/20 focus:border-primary text-sm py-1.5 px-2 border bg-white">
                                     <option value="">اختر الطريقة</option>
                                     @if (ViewBag.PaymentMethods != null)
                                     {
@@ -189,7 +189,7 @@
                     </div>
 
                     <!-- Summary Card -->
-                    <div class=" bg-[#0f1419]  rounded-xl shadow-lg border border-gray-200 p-4 text-white">
+                    <div class="bg-primary rounded-xl shadow-lg border border-gray-200 p-4 text-white">
                         <h3 class="text-sm font-bold mb-3 text-gray-500">ملخص التقسيط</h3>
                         
                         <div class="space-y-2 text-sm">
@@ -215,7 +215,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" id="saveBtn" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-[#0f1419] hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0f1419] hover:-translate-y-0.5 transition-all">
+                    <button type="submit" id="saveBtn" class="zen-btn zen-btn-primary w-full">
                         <i data-lucide="save" class="ml-2 w-4 h-4"></i> حفظ وإنشاء التقسيط
                     </button>
 

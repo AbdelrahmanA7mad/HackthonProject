@@ -1,10 +1,10 @@
-@model IEnumerable<ManageMentSystem.Models.Customer>
+﻿@model IEnumerable<ManageMentSystem.Models.Customer>
 @using ManageMentSystem.Helpers
 @{
     ViewData["Title"] = "أفضل العملاء";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6">
+<div class="min-h-screen bg-bgSubtle p-6">
 
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
@@ -18,10 +18,10 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-3">
-            <a href="@Url.Action("Index", "Customers")" class="bg-[#0f1419] hover:bg-primaryHover text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-200 hover:-translate-y-0.5 flex items-center gap-2">
+            <a href="@Url.Action("Index", "Customers")" class="zen-btn zen-btn-primary">
                 <i data-lucide="plus" class="w-4 h-4"></i> إضافة عميل
             </a>
-            <a href="@Url.Action("Index", "Customers")" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
+            <a href="@Url.Action("Index", "Customers")" class="zen-btn zen-btn-neutral">
                 العودة للعملاء<i data-lucide="arrow-left" class="w-4 h-4"></i>
             </a>
         </div>
@@ -31,9 +31,9 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex items-center justify-between hover:shadow-md transition-shadow">
             <div>
                 <p class="text-md font-bold text-gray-700 mb-1">إجمالي العملاء</p>
-                <h2 class="text-3xl font-bold text-[#0f1419]">@ViewBag.TotalCustomers</h2>
+                <h2 class="text-3xl font-bold text-primary">@ViewBag.TotalCustomers</h2>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-gray-50 text-[#0f1419] flex items-center justify-center text-xl">
+            <div class="w-12 h-12 rounded-xl bg-gray-50 text-primary flex items-center justify-center text-xl">
                 <i data-lucide="users" class="w-6 h-6"></i>
             </div>
         </div>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-        <div class=" bg-[#0f1419]  px-6 py-4 flex items-center gap-2">
+        <div class="bg-primary px-6 py-4 flex items-center gap-2">
             <i data-lucide="medal" class="text-amber-400 w-6 h-6"></i>
             <h6 class="font-bold text-white">لوحة الشرف (الترتيب العام)</h6>
             <div class="flex items-center bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm">
@@ -96,13 +96,13 @@
                             var rankBg = rank == 1 ? " from-yellow-400 to-amber-600 shadow-amber-200" :
                             rank == 2 ? " from-slate-300 to-slate-500 shadow-slate-200" :
                             rank == 3 ? " from-amber-700 to-orange-800 shadow-orange-200" :
-                            "bg-gray-50 text-[#0f1419] border border-gray-200";
+                            "bg-gray-50 text-primary border border-gray-200";
 
                             var rankIcon = rank == 1 ? "crown" :
                                            rank == 2 ? "medal" :
                                            rank == 3 ? "award" : "star";
 
-                            var rankText = rank <= 3 ? "text-white" : "text-[#0f1419]";
+                            var rankText = rank <= 3 ? "text-white" : "text-primary";
 
                             <tr class="hover:bg-gray-50/30 transition-all duration-200 group">
                                 <td class="px-6 py-4">
@@ -120,7 +120,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <h6 class="font-bold text-gray-800 text-base mb-1">@customer.FullName</h6>
-                                    <a href="tel:@customer.PhoneNumber" class="text-sm text-gray-500 font-bold hover:text-[#0f1419] transition-colors gap-1 w-fit ">
+                                    <a href="tel:@customer.PhoneNumber" class="text-sm text-gray-500 font-bold hover:text-primary transition-colors gap-1 w-fit ">
                                         @customer.PhoneNumber <i data-lucide="phone" class="w-3 h-3 inline-block"></i>
                                     </a>
                                 </td>
@@ -159,7 +159,7 @@
                         @if (ViewBag.CurrentPage > 1)
                         {
                             <a href="@Url.Action("TopCustomers", "Customers", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </a>
                         }
@@ -167,7 +167,7 @@
                         @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
                         {
                             <a href="@Url.Action("TopCustomers", "Customers", new { page = i, pageSize = ViewBag.PageSize })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-[#0f1419] text-white border-gray-200 shadow-md" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419]")">
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-bold transition-all @(i == ViewBag.CurrentPage ? "bg-primary text-white border-gray-200 shadow-md" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary")">
                                 @i
                             </a>
                         }
@@ -175,7 +175,7 @@
                         @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                         {
                             <a href="@Url.Action("TopCustomers", "Customers", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })"
-                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                               class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </a>
                         }

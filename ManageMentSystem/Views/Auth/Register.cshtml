@@ -4,150 +4,204 @@
     Layout = "_Layout";
 }
 
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" dir="rtl">
-    <div class="max-w-2xl w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl border border-gray-200 animate__animated animate__fadeIn">
-        <div>
-            <div class="mx-auto h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 border border-gray-200">
-                <i data-lucide="user-plus" class="text-4xl text-[#0f1419] w-10 h-10"></i>
-            </div>
-            <h2 class="mt-2 text-center text-3xl font-extrabold text-[#0f1419]">
-                إنشاء حساب جديد
-            </h2>
-            <p class="mt-2 text-center text-sm text-gray-500">
-                ابدأ رحلتك معنا بإعداد حسابك الشخصي
-            </p>
-        </div>
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans" dir="rtl" style="font-family: 'Cairo', sans-serif;">
 
-        <form class="mt-8 space-y-6" action="@Url.Action("Register", "Auth")" method="post">
-            @Html.AntiForgeryToken()
+    <!-- Subtle grid background -->
+    <div class="absolute inset-0 pointer-events-none select-none opacity-[0.03]" aria-hidden="true" style="background-image: linear-gradient(rgba(0,0,0,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.1) 1px, transparent 1px); background-size: 64px 64px;"></div>
 
-            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
-            {
-                <div class="bg-red-50 border-r-4 border-accentRed p-4 rounded-lg">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i data-lucide="alert-circle" class="text-accentRed w-5 h-5"></i>
+    <!-- Register Card (split layout on large screens) -->
+    <div class="relative z-10 w-full max-w-5xl">
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-xl shadow-gray-200/50 overflow-visible animate__animated animate__fadeIn">
+            <div class="flex flex-col lg:flex-row">
+
+                <!-- Left Brand Panel -->
+                <div class="hidden lg:flex lg:w-5/12 relative overflow-hidden flex-col justify-between p-10 bg-primary">
+                    <!-- Background image -->
+                    <img id="carouselImage" src="~/images/register_bg.webp" alt="" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300" />
+                    <!-- Dark overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/50"></div>
+
+                    <!-- Content -->
+                    <div class="relative z-10 flex flex-col h-full justify-between">
+                        <div class="flex items-center gap-3">
+                            <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP" class="h-8 object-contain opacity-90 filter drop-shadow-md" />
                         </div>
-                        <div class="mr-3">
-                            <h3 class="text-sm font-bold text-red-800">تنبيه</h3>
-                            <div class="mt-2 text-sm text-red-700">
-                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                                {
-                                    <p>@error.ErrorMessage</p>
-                                }
+                        <div class="mt-auto space-y-4">
+                            <h3 class="text-2xl font-extrabold text-white leading-snug">
+                                ابدأ بإدارة<br />مشروعك باحترافية
+                            </h3>
+                            <p class="text-sm text-gray-300 leading-relaxed max-w-xs">
+                                نظام متكامل لإدارة المبيعات والمخزون والعملاء، مع تقارير ذكية وتكامل فوري.
+                            </p>
+                            <!-- Carousel dots -->
+                            <div class="flex items-center gap-2 pt-4" id="carouselDots">
+                                <span class="w-8 h-1 rounded-full bg-white transition-colors cursor-pointer" data-index="0"></span>
+                                <span class="w-8 h-1 rounded-full bg-white/40 transition-colors cursor-pointer" data-index="1"></span>
+                                <span class="w-8 h-1 rounded-full bg-white/40 transition-colors cursor-pointer" data-index="2"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Full Name -->
-                <div>
-                    <label asp-for="FullName" class="block text-sm font-bold text-gray-700 mb-1">الاسم الكامل</label>
-                    <input asp-for="FullName" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors" placeholder="الاسم الكامل" />
-                    <span asp-validation-for="FullName" class="text-accentRed text-xs mt-1 font-bold"></span>
-                </div>
-
-                <!-- Username -->
-                <div>
-                    <label asp-for="Username" class="block text-sm font-bold text-gray-700 mb-1">اسم المستخدم</label>
-                    <input asp-for="Username" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors" placeholder="اسم المستخدم" />
-                    <span asp-validation-for="Username" class="text-accentRed text-xs mt-1 font-bold"></span>
-                </div>
-
-                <!-- Email -->
-                <div>
-                    <label asp-for="Email" class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
-                    <input asp-for="Email" type="email" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors" placeholder="name@example.com" />
-                    <span asp-validation-for="Email" class="text-accentRed text-xs mt-1 font-bold"></span>
-                </div>
-
-                <!-- Phone Number -->
-                <div>
-                    <label asp-for="PhoneNumber" class="block text-sm font-bold text-gray-700 mb-1">رقم الهاتف</label>
-                    <input asp-for="PhoneNumber" type="tel" id="phoneNumber" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors" placeholder="01xxxxxxxxx" />
-                    <span asp-validation-for="PhoneNumber" class="text-accentRed text-xs mt-1 font-bold"></span>
-                </div>
-
-                <!-- Store Name -->
-                <div>
-                    <label asp-for="StoreName" class="block text-sm font-bold text-gray-700 mb-1">اسم المتجر/الشركة <span class="text-gray-500 font-normal text-xs">(اختياري)</span></label>
-                    <input asp-for="StoreName" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors" placeholder="اسم المتجر" />
-                    <span asp-validation-for="StoreName" class="text-accentRed text-xs mt-1 font-bold"></span>
-                </div>
-
-                <!-- Currency Code -->
-                <div>
-                    <label asp-for="CurrencyCode" class="block text-sm font-bold text-gray-700 mb-1">العملة الافتراضية</label>
-                    <div class="relative">
-                        <select asp-for="CurrencyCode" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors bg-white appearance-none cursor-pointer">
-                            <option value="">اختر العملة</option>
-                            <optgroup label="العملات العربية">
-                                <option value="EGP">جنيه مصري (EGP)</option>
-                                <option value="SAR">ريال سعودي (SAR)</option>
-                                <option value="AED">درهم إماراتي (AED)</option>
-                                <option value="KWD">دينار كويتي (KWD)</option>
-                                <option value="QAR">ريال قطري (QAR)</option>
-                                <option value="BHD">دينار بحريني (BHD)</option>
-                                <option value="OMR">ريال عماني (OMR)</option>
-                                <option value="JOD">دينار أردني (JOD)</option>
-                            </optgroup>
-                            <optgroup label="العملات الأجنبية">
-                                <option value="USD">دولار أمريكي (USD)</option>
-                                <option value="EUR">يورو (EUR)</option>
-                                <option value="GBP">جنيه إسترليني (GBP)</option>
-                                <option value="CAD">دولار كندي (CAD)</option>
-                                <option value="AUD">دولار أسترالي (AUD)</option>
-                            </optgroup>
-                        </select>
-                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
-                            <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                <!-- Right Form Panel -->
+                <div class="w-full lg:w-7/12 p-8 sm:p-10 lg:p-12">
+                    <!-- Header -->
+                    <div class="space-y-2 mb-8">
+                        <!-- Mobile logo -->
+                        <div class="lg:hidden mx-auto w-12 h-12 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center mb-4">
+                            <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP" class="w-8 h-8 object-contain opacity-90" />
                         </div>
+                        <h2 class="text-2xl font-extrabold text-primary tracking-tight lg:text-right text-center">
+                            إنشاء حساب جديد
+                        </h2>
                     </div>
-                    <span asp-validation-for="CurrencyCode" class="text-accentRed text-xs mt-1 font-bold"></span>
-                </div>
 
-                <!-- Password -->
-                <div>
-                    <label asp-for="Password" class="block text-sm font-bold text-gray-700 mb-1">كلمة المرور</label>
-                    <input asp-for="Password" type="password" id="password" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors" placeholder="••••••••" />
-                    <span asp-validation-for="Password" class="text-accentRed text-xs mt-1 font-bold"></span>
-                    <div id="strengthMessage" class="h-1 mt-1 rounded-full bg-border-gray-200 overflow-hidden transition-all duration-300 opacity-0">
-                         <div id="strengthBar" class="h-full bg-accentRed w-0 transition-all duration-300"></div>
-                    </div>
-                    <p id="strengthText" class="text-[10px] mt-0.5 text-right hidden"></p>
-                </div>
+                    <form class="space-y-5" action="@Url.Action("Register", "Auth")" method="post">
+                        @Html.AntiForgeryToken()
 
-                <!-- Confirm Password -->
-                <div>
-                    <label asp-for="ConfirmPassword" class="block text-sm font-bold text-gray-700 mb-1">تأكيد كلمة المرور</label>
-                    <div class="relative">
-                        <input asp-for="ConfirmPassword" type="password" id="confirmPassword" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:border-[#0f1419] outline-none text-sm transition-colors" placeholder="••••••••" />
-                        <div id="matchIndicator" class="absolute inset-y-0 left-0 pl-3 flex items-center hidden transition-all">
-                             <i data-lucide="check-circle" class="text-accentGreen text-lg w-5 h-5"></i>
+                        <!-- Error Messages -->
+                        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+                        {
+                            <div class="bg-accentRed/10 border border-accentRed/20 p-4 rounded-xl">
+                                <div class="flex items-start gap-3">
+                                    <i data-lucide="alert-circle" class="text-accentRed w-5 h-5 mt-0.5 flex-shrink-0"></i>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-accentRed">تنبيه</h3>
+                                        <div class="mt-1 text-sm text-accentRed">
+                                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                            {
+                                                <p>@error.ErrorMessage</p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-4">
+                            <!-- Full Name -->
+                            <div class="space-y-1.5">
+                                <label asp-for="FullName" class="block text-sm font-bold text-primary">الاسم الكامل</label>
+                                <input asp-for="FullName"
+                                       class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-primary/20"
+                                       placeholder="الاسم الكامل" />
+                                <span asp-validation-for="FullName" class="text-accentRed text-xs font-bold block"></span>
+                            </div>
+
+                            <!-- Username -->
+                            <div class="space-y-1.5">
+                                <label asp-for="Username" class="block text-sm font-bold text-primary">اسم المستخدم</label>
+                                <input asp-for="Username"
+                                       class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-primary/20"
+                                       placeholder="اسم المستخدم" />
+                                <span asp-validation-for="Username" class="text-accentRed text-xs font-bold block"></span>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="space-y-1.5">
+                                <label asp-for="Email" class="block text-sm font-bold text-primary">البريد الإلكتروني</label>
+                                <input asp-for="Email" type="email"
+                                       class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-primary/20"
+                                       placeholder="name@example.com" />
+                                <span asp-validation-for="Email" class="text-accentRed text-xs font-bold block"></span>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="space-y-1.5">
+                                <label asp-for="PhoneNumber" class="block text-sm font-bold text-primary">رقم الهاتف</label>
+                                <input asp-for="PhoneNumber" type="tel" id="phoneNumber"
+                                       class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-primary/20"
+                                       placeholder="01xxxxxxxxx" />
+                                <span asp-validation-for="PhoneNumber" class="text-accentRed text-xs font-bold block"></span>
+                            </div>
+
+                            <!-- Store Name -->
+                            <div class="space-y-1.5">
+                                <label asp-for="StoreName" class="block text-sm font-bold text-primary">
+                                    اسم المتجر <span class="text-textMuted font-normal text-xs">(اختياري)</span>
+                                </label>
+                                <input asp-for="StoreName"
+                                       class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-primary/20"
+                                       placeholder="اسم المتجر" />
+                                <span asp-validation-for="StoreName" class="text-accentRed text-xs font-bold block"></span>
+                            </div>
+
+                            <!-- Currency Code (Custom Dropdown) -->
+                            <div class="space-y-1.5 relative">
+                                <label asp-for="CurrencyCode" class="block text-sm font-bold text-primary">العملة الافتراضية</label>
+                                <input type="hidden" asp-for="CurrencyCode" id="currencyInput" />
+                                <div id="customDropdown" class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary outline-none transition-all duration-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 cursor-pointer flex items-center justify-between relative">
+                                    <span id="selectedCurrencyText" class="truncate text-textMuted">اختر العملة</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 text-textMuted transition-transform duration-200" id="dropdownArrow"></i>
+                                    
+                                    <!-- Dropdown List -->
+                                    <div id="dropdownList" class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden z-[100] hidden animate__animated animate__fadeIn animate__faster">
+                                        <div class="max-h-60 overflow-y-auto custom-scrollbar">
+                                            <div class="px-4 py-2 text-[10px] font-bold text-textMuted uppercase tracking-wider bg-bgSubtle border-b border-borderSubtle">العملات العربية</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="EGP">جنيه مصري (EGP)</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="SAR">ريال سعودي (SAR)</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="AED">درهم إماراتي (AED)</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="KWD">دينار كويتي (KWD)</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="QAR">ريال قطري (QAR)</div>
+                                            
+                                            <div class="px-4 py-2 text-[10px] font-bold text-textMuted uppercase tracking-wider bg-bgSubtle border-b border-borderSubtle border-t">العملات الأجنبية</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="USD">دولار أمريكي (USD)</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="EUR">يورو (EUR)</div>
+                                            <div class="option px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer text-gray-700 font-medium" data-value="GBP">جنيه إسترليني (GBP)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="CurrencyCode" class="text-accentRed text-xs font-bold block"></span>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="space-y-1.5">
+                                <label asp-for="Password" class="block text-sm font-bold text-primary">كلمة المرور</label>
+                                <input asp-for="Password" type="password" id="password"
+                                       class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-primary/20"
+                                       placeholder="••••••••" />
+                                <span asp-validation-for="Password" class="text-accentRed text-xs font-bold block"></span>
+                                <div id="strengthMessage" class="h-1 rounded-full bg-gray-200 overflow-hidden transition-all duration-300 opacity-0 mt-1">
+                                    <div id="strengthBar" class="h-full w-0 transition-all duration-300" style="background-color: var(--zen-theme-accent-red);"></div>
+                                </div>
+                                <p id="strengthText" class="text-[10px] mt-0.5 text-right hidden"></p>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="space-y-1.5">
+                                <label asp-for="ConfirmPassword" class="block text-sm font-bold text-primary">تأكيد كلمة المرور</label>
+                                <div class="relative">
+                                    <input asp-for="ConfirmPassword" type="password" id="confirmPassword"
+                                           class="w-full bg-bgBase border border-borderSubtle rounded-xl px-4 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-primary/20"
+                                           placeholder="••••••••" />
+                                    <div id="matchIndicator" class="absolute inset-y-0 left-0 pl-3.5 flex items-center hidden transition-all">
+                                        <i data-lucide="check-circle" class="text-accentGreen w-5 h-5"></i>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="text-accentRed text-xs font-bold block"></span>
+                                <p id="matchText" class="text-[10px] text-accentRed font-bold hidden mt-1">كلمات المرور غير متطابقة</p>
+                            </div>
                         </div>
-                    </div>
-                    <span asp-validation-for="ConfirmPassword" class="text-accentRed text-xs mt-1 font-bold"></span>
-                    <p id="matchText" class="text-[10px] text-accentRed mt-1 font-bold hidden">كلمات المرور غير متطابقة</p>
+
+                        <!-- Submit -->
+                        <div class="pt-3">
+                            <button type="submit" id="btn-submit"
+                                    class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-white font-bold text-sm bg-primary hover:bg-primaryHover transition-all duration-200 shadow-lg shadow-black/10 hover:-translate-y-0.5 active:translate-y-0">
+                                إنشاء الحساب
+                            </button>
+                            
+                            <!-- Login link -->
+                            <p class="text-center text-sm text-gray-500 mt-6">
+                                لديك حساب بالفعل؟
+                                <a asp-action="Login" asp-controller="Auth" class="font-bold text-primary underline underline-offset-4 decoration-borderSubtle hover:decoration-textMuted transition-colors">
+                                    تسجيل الدخول
+                                </a>
+                            </p>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <div class="pt-4">
-                <button type="submit" id="btn-submit" class="w-full flex justify-center py-2.5 px-4 rounded-xl text-white bg-[#0f1419] hover:bg-primaryHover font-bold outline-none transition-colors">
-                    إنشاء الحساب
-                </button>
-            </div>
-
-            <div class="text-center">
-                <p class="text-sm text-gray-500">
-                    لديك حساب بالفعل؟
-                    <a asp-action="Login" asp-controller="Auth" class="font-bold text-[#0f1419] hover:text-primaryHover hover:underline transition-colors">
-                        تسجيل الدخول
-                    </a>
-                </p>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -155,6 +209,67 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         $(document).ready(function() {
+            // Custom Dropdown Logic
+            const dropdown = $('#customDropdown');
+            const dropdownList = $('#dropdownList');
+            const dropdownArrow = $('#dropdownArrow');
+            const currencyInput = $('#currencyInput');
+            const selectedText = $('#selectedCurrencyText');
+
+            dropdown.on('click', function(e) {
+                e.stopPropagation();
+                dropdownList.toggleClass('hidden');
+                dropdownArrow.toggleClass('rotate-180');
+            });
+
+            $(document).on('click', function() {
+                dropdownList.addClass('hidden');
+                dropdownArrow.removeClass('rotate-180');
+            });
+
+            $('.option').on('click', function() {
+                const val = $(this).data('value');
+                const text = $(this).text();
+                
+                currencyInput.val(val);
+                selectedText.text(text).removeClass('text-textMuted').addClass('text-primary');
+                
+                // Trigger validation
+                currencyInput.valid();
+            });
+
+            // Slider Logic
+            let currentImageIndex = 0;
+            const images = [
+                '/images/register_bg.webp',
+                '/images/register_slide2.webp',
+                '/images/register_slide3.webp'
+            ];
+
+            function changeImage(index) {
+                currentImageIndex = index;
+                $('#carouselImage').css('opacity', '0');
+                
+                setTimeout(() => {
+                    $('#carouselImage').attr('src', images[currentImageIndex]);
+                    $('#carouselImage').css('opacity', '1');
+                }, 300); // Wait for CSS transition fade out
+                
+                // Update dots
+                $('#carouselDots span').removeClass('bg-white').addClass('bg-white/40');
+                $('#carouselDots span').eq(currentImageIndex).removeClass('bg-white/40').addClass('bg-white');
+            }
+
+            $('#carouselDots span').click(function() {
+                changeImage($(this).data('index'));
+            });
+
+            setInterval(() => {
+                let nextIndex = (currentImageIndex + 1) % images.length;
+                changeImage(nextIndex);
+            }, 5000);
+
+            // Password Validation Logic
             const password = $('#password');
             const confirmPassword = $('#confirmPassword');
             const strengthBar = $('#strengthBar');
@@ -183,21 +298,21 @@
                 if (val.match(/[^a-zA-Z0-9]/)) strength++;
 
                 let width = '0%';
-                let color = 'bg-accentRed';
+                let color = '#b45449'; // accentRed
                 let text = 'ضعيفة';
 
                 switch(strength) {
-                    case 1: width = '25%'; color = 'bg-accentRed'; text = 'ضعيفة جداً'; break;
-                    case 2: width = '50%'; color = 'bg-accentAmber'; text = 'متوسطة'; break;
-                    case 3: width = '75%'; color = 'bg-blue-500'; text = 'جيدة'; break;
-                    case 4: width = '100%'; color = 'bg-accentGreen'; text = 'قوية'; break;
+                    case 1: width = '25%'; color = '#b45449'; text = 'ضعيفة جداً'; break;
+                    case 2: width = '50%'; color = '#4f6478'; text = 'متوسطة'; break;
+                    case 3: width = '75%'; color = '#6b7280'; text = 'جيدة'; break;
+                    case 4: width = '100%'; color = '#315f8f'; text = 'قوية'; break;
                 }
 
-                strengthBar.width(width).removeClass('bg-accentRed bg-accentAmber bg-blue-500 bg-accentGreen').addClass(color);
-                strengthText.text(text).removeClass('text-accentRed text-accentAmber text-[#0f1419] text-accentGreen');
+                strengthBar.css({ width: width, backgroundColor: color });
+                strengthText.text(text).removeClass('text-accentRed text-accentAmber text-textMuted text-accentGreen');
                 if(strength === 1) strengthText.addClass('text-accentRed');
                 else if(strength === 2) strengthText.addClass('text-accentAmber');
-                else if(strength === 3) strengthText.addClass('text-[#0f1419]');
+                else if(strength === 3) strengthText.addClass('text-textMuted');
                 else if(strength === 4) strengthText.addClass('text-accentGreen');
                 
                 checkMatch();
@@ -215,16 +330,16 @@
                          matchIndicator.removeClass('hidden');
                          lucide.createIcons();
                          matchText.addClass('hidden');
-                         confirmPassword.removeClass('border-accentRed focus:border-accentRed focus:ring-accentRed').addClass('border-accentGreen focus:border-accentGreen focus:ring-accentGreen');
+                         confirmPassword.removeClass('border-accentRed focus:border-accentRed').addClass('border-accentGreen focus:border-accentGreen');
                     } else {
                          matchIndicator.addClass('hidden');
                          matchText.removeClass('hidden');
-                         confirmPassword.removeClass('border-accentGreen focus:border-accentGreen focus:ring-accentGreen').addClass('border-accentRed focus:border-accentRed focus:ring-accentRed');
+                         confirmPassword.removeClass('border-accentGreen focus:border-accentGreen').addClass('border-accentRed focus:border-accentRed');
                     }
                 } else {
                     matchIndicator.addClass('hidden');
                     matchText.addClass('hidden');
-                    confirmPassword.removeClass('border-accentGreen focus:border-accentGreen focus:ring-accentGreen border-accentRed focus:border-accentRed focus:ring-accentRed');
+                    confirmPassword.removeClass('border-accentGreen focus:border-accentGreen border-accentRed focus:border-accentRed');
                 }
             }
 

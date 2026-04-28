@@ -1,20 +1,20 @@
-@model ManageMentSystem.ViewModels.SalesReportViewModel
+﻿@model ManageMentSystem.ViewModels.SalesReportViewModel
 @{
     ViewData["Title"] = "تقرير المبيعات";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="bar-chart-2" class="text-[#0f1419]"></i> تقرير المبيعات الشامل
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="bar-chart-2" class="text-primary"></i> تقرير المبيعات الشامل
             </h1>
             <p class="text-gray-500 mt-1 font-medium">تحليل مفصل للمبيعات والأرباح</p>
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="@Url.Action("ExportSalesReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate, customerId = Model.CustomerId, categoryId = Model.CategoryId })" 
-               class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+               class="zen-btn zen-btn-primary">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -26,15 +26,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">من تاريخ</label>
-                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">إلى تاريخ</label>
-                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">العميل</label>
-                    <select name="customerId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all bg-white cursor-pointer">
+                    <select name="customerId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
                         <option value="">جميع العملاء</option>
                         @foreach (var customer in Model.Customers)
                         {
@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">الفئة</label>
-                    <select name="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all bg-white cursor-pointer">
+                    <select name="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
                         <option value="">جميع الفئات</option>
                         @foreach (var category in Model.Categories)
                         {
@@ -58,10 +58,10 @@
                 </div>
             </div>
             <div class="flex flex-wrap gap-3 pt-2">
-                <button type="submit" class="bg-[#0f1419] hover:bg-[#0f1419] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 flex items-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-primary">
                     <i data-lucide="search"></i> تطبيق الفلاتر
                 </button>
-                <a href="@Url.Action("SalesReport")" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2">
+                <a href="@Url.Action("SalesReport")" class="zen-btn zen-btn-neutral">
                     <i data-lucide="x"></i> إلغاء الفلاتر
                 </a>
             </div>
@@ -71,32 +71,32 @@
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="shopping-cart"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">إجمالي المبيعات</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalSales</div>
+            <div class="text-2xl font-bold text-primary">@Model.TotalSales</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="dollar-sign"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">إجمالي الإيرادات</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalRevenue.ToString("C")</div>
+            <div class="text-2xl font-bold text-primary">@Model.TotalRevenue.ToString("C")</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="trending-up"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">صافي الربح</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.GrossProfit.ToString("C")</div>
+            <div class="text-2xl font-bold text-primary">@Model.GrossProfit.ToString("C")</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-3">
                 <i data-lucide="percent"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">هامش الربح</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.ProfitMargin.ToString("F1")%</div>
+            <div class="text-2xl font-bold text-primary">@Model.ProfitMargin.ToString("F1")%</div>
         </div>
     </div>
 
@@ -104,37 +104,37 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Additional Details -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-                <i data-lucide="info" class="text-white0"></i> تفاصيل إضافية
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="info" class="text-primary"></i> تفاصيل إضافية
             </h5>
             <div class="space-y-3">
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إجمالي الخصومات</span>
-                    <span class="font-bold text-[#0f1419]">@Model.TotalDiscount.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.TotalDiscount.ToString("C")</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">صافي الإيرادات</span>
-                    <span class="font-bold text-[#0f1419]">@Model.NetRevenue.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.NetRevenue.ToString("C")</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إجمالي التكلفة</span>
-                    <span class="font-bold text-[#0f1419]">@Model.TotalCost.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.TotalCost.ToString("C")</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إجمالي العناصر</span>
-                    <span class="font-bold text-[#0f1419]">@Model.TotalItems</span>
+                    <span class="font-bold text-primary">@Model.TotalItems</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">متوسط قيمة البيع</span>
-                    <span class="font-bold text-[#0f1419]">@Model.AverageSaleValue.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.AverageSaleValue.ToString("C")</span>
                 </div>
             </div>
         </div>
 
         <!-- Charts Section -->
          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-                <i data-lucide="area-chart" class="text-white0"></i> المبيعات اليومية
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="area-chart" class="text-primary"></i> المبيعات اليومية
             </h5>
             <div class="relative h-64 w-full">
                 <canvas id="dailySalesChart"></canvas>
@@ -144,9 +144,9 @@
 
     <!-- Sales Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="table" class="text-white0"></i> تفاصيل المبيعات
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle">
+            <h5 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="table" class="text-primary"></i> تفاصيل المبيعات
             </h5>
         </div>
         <div class="overflow-x-auto">
@@ -169,9 +169,9 @@
                             <td class="px-6 py-4 font-mono text-gray-600">#@sale.Id</td>
                             <td class="px-6 py-4 text-gray-500">@sale.SaleDate.ToString("dd/MM/yyyy")</td>
                             <td class="px-6 py-4 font-bold text-gray-600">@(sale.Customer?.FullName ?? "عميل غير مسجل")</td>
-                            <td class="px-6 py-4 font-medium text-[#0f1419]">@sale.TotalAmount.ToString("C")</td>
+                            <td class="px-6 py-4 font-medium text-primary">@sale.TotalAmount.ToString("C")</td>
                             <td class="px-6 py-4 text-accentRed">@sale.DiscountAmount.ToString("C")</td>
-                            <td class="px-6 py-4 font-bold text-[#0f1419]">@sale.AmountAfterDiscount.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-primary">@sale.AmountAfterDiscount.ToString("C")</td>
                             <td class="px-6 py-4 text-center text-gray-500">@sale.SaleItems.Count</td>
                         </tr>
                     }
@@ -186,6 +186,26 @@
     <script>
         const ctx = document.getElementById('dailySalesChart').getContext('2d');
         const dailySalesData = @Html.Raw(Json.Serialize(Model.DailySales));
+        const theme = window.THEME || window;
+        const rgbaFromColor = (color, alpha) => {
+            if (!color) return `rgba(15, 20, 25, ${alpha})`;
+            const normalized = color.trim();
+            if (normalized.startsWith('#')) {
+                const hex = normalized.slice(1);
+                const expanded = hex.length === 3 ? hex.split('').map(ch => ch + ch).join('') : hex;
+                const parts = expanded.match(/.{1,2}/g) || ['0f', '14', '19'];
+                const [r, g, b] = parts.map(part => parseInt(part, 16));
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            const rgbMatch = normalized.match(/rgba?\(([^)]+)\)/i);
+            if (rgbMatch) {
+                const values = rgbMatch[1].split(',').map(v => v.trim());
+                return `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${alpha})`;
+            }
+            return normalized;
+        };
+        const primaryColor = theme.primary;
+        const accentGreenColor = theme.accentGreen;
 
         const chart = new Chart(ctx, {
             type: 'line',
@@ -194,27 +214,27 @@
                 datasets: [{
                     label: 'الإيرادات',
                     data: dailySalesData.map(d => d.revenue),
-                    borderColor: '#059669', // emerald-600
-                    backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                    borderColor: accentGreenColor,
+                    backgroundColor: rgbaFromColor(accentGreenColor, 0.1),
                     borderWidth: 2,
                     tension: 0.3,
                     fill: true,
-                    pointBackgroundColor: '#059669',
+                    pointBackgroundColor: accentGreenColor,
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#059669'
+                    pointHoverBorderColor: accentGreenColor
                 }, {
                     label: 'الأرباح',
                     data: dailySalesData.map(d => d.profit),
-                    borderColor: '#0f1419', // indigo-600
-                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderColor: primaryColor,
+                    backgroundColor: rgbaFromColor(primaryColor, 0.1),
                     borderWidth: 2,
                     tension: 0.3,
                     fill: true,
-                    pointBackgroundColor: '#0f1419',
+                    pointBackgroundColor: primaryColor,
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#0f1419'
+                    pointHoverBorderColor: primaryColor
                 }]
             },
             options: {
@@ -230,7 +250,7 @@
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)', // slate-900
+                        backgroundColor: rgbaFromColor(primaryColor, 0.92),
                         titleFont: { family: 'Cairo' },
                         bodyFont: { family: 'Cairo' },
                         padding: 10,
@@ -245,7 +265,7 @@
                     },
                     y: {
                         beginAtZero: true,
-                        grid: { color: '#f1f5f9' }, // slate-100
+                        grid: { color: theme.borderSubtle || theme.bgSubtle || '#e5e7eb' },
                         ticks: { font: { family: 'Cairo' } }
                     }
                 },

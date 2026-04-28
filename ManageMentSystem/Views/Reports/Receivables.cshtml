@@ -1,21 +1,21 @@
-@model ManageMentSystem.ViewModels.ReceivablesReportViewModel
+﻿@model ManageMentSystem.ViewModels.ReceivablesReportViewModel
 @using System.Globalization
 @{
     ViewData["Title"] = "حسابات العملاء - المستحقات";
     var egp = System.Globalization.CultureInfo.CurrentCulture;
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="hand-coins" class="text-[#0f1419]"></i> حسابات العملاء
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="hand-coins" class="text-primary"></i> حسابات العملاء
             </h1>
             <p class="text-gray-500 mt-1 font-medium">ملخص المستحقات المالية وأرصدة العملاء</p>
         </div>
         <div>
-            <a href="@Url.Action("ExportReceivablesReportExcel")" class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm md:text-base">
+            <a href="@Url.Action("ExportReceivablesReportExcel")" class="zen-btn zen-btn-primary md:text-base">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -25,16 +25,16 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center justify-between">
             <div>
                 <div class="text-sm font-bold text-gray-500 mb-1">إجمالي المستحق</div>
-                <div class="text-3xl font-bold text-[#0f1419]">@Model.TotalReceivables.ToString("C", egp)</div>
+                <div class="text-3xl font-bold text-primary">@Model.TotalReceivables.ToString("C", egp)</div>
             </div>
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl">
                 <i data-lucide="wallet"></i>
             </div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center justify-between">
             <div>
                 <div class="text-sm font-bold text-gray-500 mb-1">عدد العملاء ذوي الأرصدة</div>
-                <div class="text-3xl font-bold text-[#0f1419]">@Model.Entries.Count</div>
+                <div class="text-3xl font-bold text-primary">@Model.Entries.Count</div>
             </div>
             <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 text-xl">
                 <i data-lucide="users"></i>
@@ -44,9 +44,9 @@
 
     <!-- Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="list" class="text-white0"></i> تفاصيل الأرصدة
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle">
+            <h5 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="list" class="text-primary"></i> تفاصيل الأرصدة
             </h5>
         </div>
         <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
@@ -66,12 +66,12 @@
                         <tr class="hover:bg-gray-50/80 transition-colors">
                             <td class="px-6 py-4 font-bold text-gray-600">@e.CustomerName</td>
                             <td class="px-6 py-4 text-center font-medium text-gray-500">@e.TotalSales.ToString("C", egp)</td>
-                            <td class="px-6 py-4 text-center font-bold text-[#0f1419]">@e.TotalPaid.ToString("C", egp)</td>
+                            <td class="px-6 py-4 text-center font-bold text-primary">@e.TotalPaid.ToString("C", egp)</td>
                             <td class="px-6 py-4 text-center">
                                 <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">@e.Balance.ToString("C", egp)</span>
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <a href="@Url.Action("Statement", "Customers", new { id = e.CustomerId })" class="text-[#0f1419] hover:text-[#0f1419] font-bold text-sm bg-gray-50 hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-colors inline-block">
+                                <a href="@Url.Action("Statement", "Customers", new { id = e.CustomerId })" class="zen-btn zen-btn-neutral inline-block">
                                     <i data-lucide="receipt" class="ml-1 inline-block w-4 h-4"></i> كشف الحساب
                                 </a>
                             </td>
@@ -80,10 +80,10 @@
                 </tbody>
                 <tfoot class="bg-gray-50 font-bold border-t border-gray-200 sticky bottom-0 z-10 shadow-inner">
                     <tr>
-                        <td class="px-6 py-4 text-[#0f1419]">الإجمالي</td>
-                        <td class="px-6 py-4 text-center text-[#0f1419]">@Model.Entries.Sum(x => x.TotalSales).ToString("C", egp)</td>
-                        <td class="px-6 py-4 text-center text-[#0f1419]">@Model.Entries.Sum(x => x.TotalPaid).ToString("C", egp)</td>
-                        <td class="px-6 py-4 text-center text-[#0f1419] text-lg">@Model.TotalReceivables.ToString("C", egp)</td>
+                        <td class="px-6 py-4 text-primary">الإجمالي</td>
+                        <td class="px-6 py-4 text-center text-primary">@Model.Entries.Sum(x => x.TotalSales).ToString("C", egp)</td>
+                        <td class="px-6 py-4 text-center text-primary">@Model.Entries.Sum(x => x.TotalPaid).ToString("C", egp)</td>
+                        <td class="px-6 py-4 text-center text-primary text-lg">@Model.TotalReceivables.ToString("C", egp)</td>
                         <td></td>
                     </tr>
                 </tfoot>

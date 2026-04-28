@@ -1,14 +1,14 @@
-@model ManageMentSystem.Models.StoreAccount
+﻿@model ManageMentSystem.Models.StoreAccount
 @using ManageMentSystem.Helpers
 
 @{
     ViewData["Title"] = "حذف العملية المالية";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
+        <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
             <i data-lucide="trash-2" class="text-accentRed"></i> حذف العملية المالية
         </h1>
         <p class="text-gray-500 mt-1 font-medium">هل أنت متأكد من رغبتك في حذف هذه العملية؟</p>
@@ -31,7 +31,7 @@
             <!-- Name -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">اسم العملية</label>
-                <p class="font-bold text-[#0f1419] text-lg">@Model.TransactionName</p>
+                <p class="font-bold text-primary text-lg">@Model.TransactionName</p>
             </div>
 
             <!-- Type -->
@@ -53,7 +53,7 @@
             <!-- Date -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">التاريخ</label>
-                <p class="font-bold text-[#0f1419] text-lg">
+                <p class="font-bold text-primary text-lg">
                     <i data-lucide="calendar" class="text-gray-500 ml-2"></i>
                     @Model.TransactionDate.ToString("yyyy-MM-dd")
                 </p>
@@ -62,14 +62,14 @@
             <!-- Category -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">الفئة</label>
-                <p class="font-bold text-[#0f1419]">@(Model.Category ?? "غير محدد")</p>
+                <p class="font-bold text-primary">@(Model.Category ?? "غير محدد")</p>
             </div>
 
             <!-- Payment Method -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                 <label class="block text-xs font-bold text-gray-500 mb-1">طريقة الدفع</label>
-                <p class="font-bold text-[#0f1419]">
-                    <i data-lucide="credit-card" class="ml-2 text-[#0f1419]"></i>
+                <p class="font-bold text-primary">
+                    <i data-lucide="credit-card" class="ml-2 text-primary"></i>
                     @Model.PaymentMethod?.Name
                 </p>
             </div>
@@ -77,24 +77,25 @@
             <!-- Description -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 md:col-span-2">
                 <label class="block text-xs font-bold text-gray-500 mb-1">الوصف</label>
-                <p class="font-bold text-[#0f1419] leading-relaxed">@(Model.Description ?? "-")</p>
+                <p class="font-bold text-primary leading-relaxed">@(Model.Description ?? "-")</p>
             </div>
             
              <!-- Capital -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 md:col-span-2">
                 <label class="block text-xs font-bold text-gray-500 mb-1">رأس المال</label>
-                <p class="font-bold text-amber-700 text-lg">@Model.Capital.ToString("C")</p>
+                <p class="font-bold text-accentAmber text-lg">@Model.Capital.ToString("C")</p>
             </div>
         </div>
 
         <form asp-action="Delete" method="post" class="mt-8 pt-6 border-t border-gray-200 flex items-center gap-4">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="bg-red-700 hover:bg-red-800 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-red-500/20 hover:-translate-y-0.5 flex items-center gap-2">
+            <button type="submit" class="zen-btn zen-btn-danger">
                 <i data-lucide="trash-2"></i> تأكيد الحذف
             </button>
-            <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+            <a asp-action="Index" class="zen-btn zen-btn-neutral">
                 <i data-lucide="x"></i> إلغاء
             </a>
         </form>
     </div>
 </div>
+

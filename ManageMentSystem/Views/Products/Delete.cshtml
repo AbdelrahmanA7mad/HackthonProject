@@ -1,17 +1,17 @@
-@model ManageMentSystem.Models.Product
+﻿@model ManageMentSystem.Models.Product
 @{
     ViewData["Title"] = "حذف المنتج";
 }
 
-<div class="min-h-screen bg-[#f8f9fc] p-6 md:p-8 space-y-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6 md:p-8 space-y-6" dir="rtl">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
             <div class="p-3 bg-red-100 rounded-xl">
                 <i data-lucide="trash-2" class="text-accentRed w-6 h-6"></i>
             </div>
-            <h1 class="text-2xl font-bold text-[#0f1419]">حذف المنتج</h1>
+            <h1 class="text-2xl font-bold text-primary">حذف المنتج</h1>
         </div>
-        <a asp-action="Index" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-50 text-gray-600 font-bold rounded-xl transition-colors">
+        <a asp-action="Index" class="zen-btn zen-btn-neutral">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
             العودة للقائمة
         </a>
@@ -40,7 +40,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                         <label class="block text-sm font-bold text-gray-500 mb-1">اسم المنتج:</label>
-                        <p class="text-lg text-[#0f1419] font-bold">@Model.Name</p>
+                        <p class="text-lg text-primary font-bold">@Model.Name</p>
                     </div>
 
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -76,34 +76,34 @@
                 }
 
                 <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
-                    <div class="flex items-center gap-2 mb-4 text-[#0f1419]">
-                        <i data-lucide="info" class="w-5 h-5 text-[#0f1419]"></i>
+                    <div class="flex items-center gap-2 mb-4 text-primary">
+                        <i data-lucide="info" class="w-5 h-5 text-primary"></i>
                         <h6 class="font-bold text-lg">تأثير الحذف:</h6>
                     </div>
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-2 text-[#0f1419] font-medium">
+                        <li class="flex items-start gap-2 text-primary font-medium">
                             <span class="w-1.5 h-1.5 rounded-full bg-gray-100 mt-2 flex-shrink-0"></span>
                             سيتم حذف المنتج من قائمة المنتجات المتوفرة نهائياً.
                         </li>
-                        <li class="flex items-start gap-2 text-[#0f1419] font-medium">
+                        <li class="flex items-start gap-2 text-primary font-medium">
                             <span class="w-1.5 h-1.5 rounded-full bg-gray-100 mt-2 flex-shrink-0"></span>
                             قيمة المخزون المفقودة: <strong class="text-accentRed mx-1">@((Model.SalePrice * Model.Quantity).ToString("C"))</strong>
                         </li>
-                        <li class="flex items-start gap-2 text-[#0f1419] font-bold">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#0f1419] mt-2 flex-shrink-0"></span>
+                        <li class="flex items-start gap-2 text-primary font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
                             مهم: ستبقى جميع العمليات المرتبطة (مبيعات، أقساط، ديون مؤجلة) محفوظة في السجلات والتقارير.
                         </li>
                     </ul>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end items-center gap-3 pt-4 border-t border-gray-200">
-                    <a asp-action="Index" class="w-full sm:w-auto px-8 py-3 bg-gray-100 hover:bg-gray-50 text-gray-600 font-bold rounded-xl transition-all text-center">
+                    <a asp-action="Index" class="zen-btn zen-btn-neutral w-full sm:w-auto">
                         <i data-lucide="x" class="ml-1 w-4 h-4"></i>
                         إلغاء الإجراء
                     </a>
                     <form asp-action="Delete" method="post" id="deleteConfirmForm" class="w-full sm:w-auto">
                         <input type="hidden" asp-for="Id" />
-                        <button type="submit" id="deleteConfirmBtn" class="w-full sm:w-auto px-8 py-3 bg-red-700 hover:bg-red-800 text-white font-bold rounded-xl shadow-lg shadow-red-100 transition-all text-center">
+                        <button type="submit" id="deleteConfirmBtn" class="zen-btn zen-btn-danger w-full sm:w-auto">
                             <i data-lucide="trash-2" class="ml-1 w-4 h-4 inline-block"></i>
                             تأكيد الحذف النهائي
                         </button>

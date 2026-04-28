@@ -1,4 +1,4 @@
-@model IEnumerable<ManageMentSystem.ViewModels.PaymentMethodBalanceViewModel>
+﻿@model IEnumerable<ManageMentSystem.ViewModels.PaymentMethodBalanceViewModel>
 
 @{
     ViewData["Title"] = "أرصدة طرق الدفع";
@@ -7,19 +7,19 @@
     var totalNet = totalIncome - totalExpenses;
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="wallet" class="text-[#0f1419]"></i> أرصدة طرق الدفع
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="wallet" class="text-primary"></i> أرصدة طرق الدفع
             </h1>
             <p class="text-gray-500 mt-1 font-medium">عرض الأرصدة الحالية لكل طريقة دفع</p>
         </div>
         <form method="get" class="flex gap-2">
-            <input type="date" name="fromDate" value="@ViewBag.FromDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-gray-600" />
-            <input type="date" name="toDate" value="@ViewBag.ToDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-bold text-gray-600" />
-            <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+            <input type="date" name="fromDate" value="@ViewBag.FromDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
+            <input type="date" name="toDate" value="@ViewBag.ToDate" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
+            <button type="submit" class="zen-btn zen-btn-primary">
                 <i data-lucide="filter"></i> تطبيق
             </button>
         </form>
@@ -51,12 +51,12 @@
 
         <!-- Net Balance -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl shadow-sm">
+            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-primary text-xl shadow-sm">
                 <i data-lucide="scale"></i>
             </div>
             <div>
                 <p class="text-xs font-bold text-gray-500 mb-1">الرصيد الصافي</p>
-                <h3 class="text-2xl font-bold @(totalNet >= 0 ? "text-[#0f1419]" : "text-accentRed")">@totalNet.ToString("C")</h3>
+                <h3 class="text-2xl font-bold @(totalNet >= 0 ? "text-primary" : "text-accentRed")">@totalNet.ToString("C")</h3>
             </div>
         </div>
     </div>
@@ -69,13 +69,13 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all group hover:-translate-y-1">
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-gray-50 group-hover:text-[#0f1419] transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-gray-50 group-hover:text-primary transition-colors">
                             <i data-lucide="credit-card"></i>
                         </div>
-                        <h3 class="font-bold text-[#0f1419] text-lg">@pm.Name</h3>
+                        <h3 class="font-bold text-primary text-lg">@pm.Name</h3>
                     </div>
                     <a asp-action="PaymentMethodDetails" asp-route-id="@pm.PaymentMethodId" asp-route-fromDate="@ViewBag.FromDate" asp-route-toDate="@ViewBag.ToDate" 
-                       class="w-8 h-8 flex items-center justify-center rounded-lg text-[#0f1419] hover:bg-gray-50 transition-colors" title="عرض التفاصيل">
+                       class="w-8 h-8 flex items-center justify-center rounded-lg text-primary hover:bg-gray-50 transition-colors" title="عرض التفاصيل">
                         <i data-lucide="eye" class="text-sm"></i>
                     </a>
                 </div>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="flex justify-between items-center pt-1">
                         <span class="text-gray-500 font-bold">الرصيد الحالي</span>
-                        <span class="font-bold text-xl @(netPositive ? "text-[#0f1419]" : "text-accentRed")">@pm.Net.ToString("C")</span>
+                        <span class="font-bold text-xl @(netPositive ? "text-primary" : "text-accentRed")">@pm.Net.ToString("C")</span>
                     </div>
                 </div>
             </div>
@@ -108,8 +108,9 @@
             <div class="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-200">
                 <i data-lucide="wallet" class="text-3xl text-gray-500"></i>
             </div>
-            <h5 class="text-lg font-bold text-[#0f1419]">لا توجد بيانات</h5>
+            <h5 class="text-lg font-bold text-primary">لا توجد بيانات</h5>
             <p class="text-gray-500 mt-1">لا توجد حركات مالية في الفترة المحددة</p>
         </div>
     }
 </div>
+

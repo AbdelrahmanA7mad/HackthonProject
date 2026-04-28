@@ -3,7 +3,7 @@
     ViewData["Title"] = "إعدادات الفاتورة";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
@@ -12,9 +12,8 @@
             </h1>
             <p class="text-gray-500 mt-1 font-medium">تخصيص بيانات وتصميم الفاتورة</p>
         </div>
-        <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary px-6 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
-            العودة للإعدادات<i data-lucide="arrow-left"></i>
-        </a>
+        <a asp-controller="SystemSettings" asp-action="Index" class="zen-btn zen-btn-neutral">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i> العودة للإعدادات        </a>
     </div>
 
     @if (TempData["SuccessMessage"] != null)
@@ -56,37 +55,37 @@
                     <div class="space-y-4">
                         <div>
                             <label asp-for="CompanyName" class="block text-sm font-bold text-gray-600 mb-2"></label>
-                            <input asp-for="CompanyName" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300" required />
+                            <input asp-for="CompanyName" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300" required />
                             <span asp-validation-for="CompanyName" class="text-sm font-bold text-red-500 mt-1 block"></span>
                         </div>
 
                         <div>
                             <label asp-for="CompanySubtitle" class="block text-sm font-bold text-gray-600 mb-2"></label>
-                            <input asp-for="CompanySubtitle" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300" />
+                            <input asp-for="CompanySubtitle" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300" />
                             <span asp-validation-for="CompanySubtitle" class="text-sm font-bold text-red-500 mt-1 block"></span>
                         </div>
 
                         <div>
                             <label asp-for="Address" class="block text-sm font-bold text-gray-600 mb-2"></label>
-                            <textarea asp-for="Address" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-medium text-primary transition-all placeholder:text-slate-300 resize-none"></textarea>
+                            <textarea asp-for="Address" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all placeholder:text-slate-300 resize-none"></textarea>
                             <span asp-validation-for="Address" class="text-sm font-bold text-red-500 mt-1 block"></span>
                         </div>
 
                         <div>
                             <label asp-for="Website" class="block text-sm font-bold text-gray-600 mb-2"></label>
-                            <input asp-for="Website" type="url" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300 ltr:text-left" />
+                            <input asp-for="Website" type="url" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300 ltr:text-left" />
                             <span asp-validation-for="Website" class="text-sm font-bold text-red-500 mt-1 block"></span>
                         </div>
 
                         <div>
                             <label asp-for="Email" class="block text-sm font-bold text-gray-600 mb-2"></label>
-                            <input asp-for="Email" type="email" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300 ltr:text-left" />
+                            <input asp-for="Email" type="email" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-bold text-primary transition-all placeholder:text-slate-300 ltr:text-left" />
                             <span asp-validation-for="Email" class="text-sm font-bold text-red-500 mt-1 block"></span>
                         </div>
 
                         <div>
                             <label asp-for="FooterMessage" class="block text-sm font-bold text-gray-600 mb-2"></label>
-                            <textarea asp-for="FooterMessage" rows="2" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-medium text-primary transition-all placeholder:text-slate-300 resize-none"></textarea>
+                            <textarea asp-for="FooterMessage" rows="2" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all placeholder:text-slate-300 resize-none"></textarea>
                             <span asp-validation-for="FooterMessage" class="text-sm font-bold text-red-500 mt-1 block"></span>
                         </div>
                     </div>
@@ -110,7 +109,7 @@
                                     @for (int i = 0; i < Model.PhoneNumbers.Count; i++)
                                     {
                                         <div class="phone-number-group relative">
-                                            <input asp-for="PhoneNumbers[i]" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-bold text-primary transition-all" placeholder="رقم الهاتف" />
+                                            <input asp-for="PhoneNumbers[i]" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-bold text-primary transition-all" placeholder="رقم الهاتف" />
                                             <button type="button" class="absolute left-2 top-2 bottom-2 w-10 flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all remove-phone-btn">
                                                 <i data-lucide="trash-2"></i>
                                             </button>
@@ -120,7 +119,7 @@
                                 else
                                 {
                                     <div class="phone-number-group relative">
-                                        <input name="PhoneNumbers[0]" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-bold text-primary transition-all" placeholder="رقم الهاتف" />
+                                        <input name="PhoneNumbers[0]" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-bold text-primary transition-all" placeholder="رقم الهاتف" />
                                         <button type="button" class="absolute left-2 top-2 bottom-2 w-10 flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all remove-phone-btn">
                                             <i data-lucide="trash-2"></i>
                                         </button>
@@ -190,10 +189,10 @@
 
             <!-- Action Buttons -->
             <div class="pt-6 border-t border-gray-200 flex items-center justify-center gap-4">
-                <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-12 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-gray-400/20 hover:-translate-y-0.5 flex items-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-primary">
                     <i data-lucide="save"></i> حفظ التغييرات
                 </button>
-                <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary px-8 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm">
+                <a asp-controller="SystemSettings" asp-action="Index" class="zen-btn zen-btn-neutral">
                     <i data-lucide="x"></i> إلغاء
                 </a>
             </div>
@@ -210,7 +209,7 @@
             $('#addPhoneBtn').click(function() {
                 var newPhoneGroup = `
                     <div class="phone-number-group relative hidden">
-                        <input name="PhoneNumbers[${phoneIndex}]" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-primary outline-none font-bold text-primary transition-all" placeholder="رقم الهاتف" />
+                        <input name="PhoneNumbers[${phoneIndex}]" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-bold text-primary transition-all" placeholder="رقم الهاتف" />
                         <button type="button" class="absolute left-2 top-2 bottom-2 w-10 flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all remove-phone-btn">
                             <i data-lucide="trash-2"></i>
                         </button>
@@ -302,3 +301,4 @@
         });
     </script>
 }
+

@@ -4,18 +4,17 @@
     ViewData["Title"] = "إعدادات المؤسسة";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="building" class="text-[#0f1419]"></i> إعدادات المؤسسة
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="building" class="text-primary"></i> إعدادات المؤسسة
             </h1>
             <p class="text-gray-500 mt-1 font-medium">تخصيص بيانات المؤسسة والعملة</p>
         </div>
-        <a asp-action="Index" class="bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 font-medium py-2.5 px-5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2">
-            عودة للإعدادات
-            <i data-lucide="arrow-left"></i>
+        <a asp-action="Index" class="zen-btn zen-btn-neutral zen-btn-sm">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i> العودة للإعدادات
         </a>
     </div>
 
@@ -27,8 +26,8 @@
             <!-- Basic Info Card -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
                 <div class="p-6 border-b border-gray-200  bg-gray-50 ">
-                    <h2 class="text-lg font-bold text-[#0f1419] flex items-center gap-2">
-                        <i data-lucide="info" class="text-[#0f1419]"></i>
+                    <h2 class="text-lg font-bold text-primary flex items-center gap-2">
+                        <i data-lucide="info" class="text-primary"></i>
                         البيانات الأساسية
                     </h2>
                 </div>
@@ -37,27 +36,27 @@
                     <!-- Name -->
                     <div class="md:col-span-2">
                         <label asp-for="Name" class="block text-sm font-bold text-gray-600 mb-2">
-                            <i data-lucide="building" class="ml-1 text-[#0f1419]"></i> اسم المؤسسة
+                            <i data-lucide="building" class="ml-1 text-primary"></i> اسم المؤسسة
                         </label>
-                        <input asp-for="Name" class="w-full bg-gray-50 border border-gray-200 text-[#0f1419] text-sm rounded-xl focus:ring-gray-200 focus:border-blue-500 block p-4 transition-all duration-300 focus:bg-white" placeholder="أدخل اسم المؤسسة">
+                        <input asp-for="Name" class="w-full bg-gray-50 border border-gray-200 text-primary text-sm rounded-xl focus:ring-primary/10 focus:border-primary block p-4 transition-all duration-300 focus:bg-white" placeholder="أدخل اسم المؤسسة">
                         <span asp-validation-for="Name" class="text-accentRed text-sm mt-1 block"></span>
                     </div>
 
                     <!-- Phone -->
                     <div>
                         <label asp-for="Phone" class="block text-sm font-bold text-gray-600 mb-2">
-                            <i data-lucide="phone" class="ml-1 text-green-500"></i> رقم الهاتف
+                            <i data-lucide="phone" class="ml-1 text-accentGreen"></i> رقم الهاتف
                         </label>
-                        <input asp-for="Phone" type="tel" class="w-full bg-gray-50 border border-gray-200 text-[#0f1419] text-sm rounded-xl focus:ring-gray-200 focus:border-blue-500 block p-4 transition-all duration-300 focus:bg-white" placeholder="01xxxxxxxxx" dir="ltr">
+                        <input asp-for="Phone" type="tel" class="w-full bg-gray-50 border border-gray-200 text-primary text-sm rounded-xl focus:ring-primary/10 focus:border-primary block p-4 transition-all duration-300 focus:bg-white" placeholder="01xxxxxxxxx" dir="ltr">
                         <span asp-validation-for="Phone" class="text-accentRed text-sm mt-1 block"></span>
                     </div>
 
                     <!-- Currency -->
                     <div>
                         <label asp-for="CurrencyCode" class="block text-sm font-bold text-gray-600 mb-2">
-                            <i data-lucide="coins" class="ml-1 text-amber-500"></i> العملة
+                            <i data-lucide="coins" class="ml-1 text-accentAmber"></i> العملة
                         </label>
-                        <select asp-for="CurrencyCode" class="w-full bg-gray-100 border border-gray-200 text-gray-400 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block p-4 transition-all duration-300 focus:bg-white">
+                        <select asp-for="CurrencyCode" class="w-full bg-gray-100 border border-gray-200 text-primary text-sm rounded-xl focus:ring-primary/10 focus:border-primary block p-4 transition-all duration-300 focus:bg-white">
                             <optgroup label="العملات العربية">
                                 <option value="EGP">EGP - جنيه مصري</option>
                                 <option value="SAR">SAR - ريال سعودي</option>
@@ -84,16 +83,16 @@
                         <label asp-for="Address" class="block text-sm font-bold text-gray-600 mb-2">
                             <i data-lucide="map-pin" class="ml-1 text-accentRed"></i> العنوان
                         </label>
-                        <textarea asp-for="Address" rows="2" class="w-full bg-gray-50 border border-gray-200 text-[#0f1419] text-sm rounded-xl focus:ring-gray-200 focus:border-blue-500 block p-4 transition-all duration-300 focus:bg-white resize-none" placeholder="أدخل عنوان المؤسسة"></textarea>
+                        <textarea asp-for="Address" rows="2" class="w-full bg-gray-50 border border-gray-200 text-primary text-sm rounded-xl focus:ring-primary/10 focus:border-primary block p-4 transition-all duration-300 focus:bg-white resize-none" placeholder="أدخل عنوان المؤسسة"></textarea>
                         <span asp-validation-for="Address" class="text-accentRed text-sm mt-1 block"></span>
                     </div>
 
                     <!-- Logo URL -->
                     <div class="md:col-span-2">
                         <label asp-for="LogoUrl" class="block text-sm font-bold text-gray-600 mb-2">
-                            <i data-lucide="image" class="ml-1 text-purple-500"></i> رابط الشعار (اختياري)
+                            <i data-lucide="image" class="ml-1 text-primary"></i> رابط الشعار (اختياري)
                         </label>
-                        <input asp-for="LogoUrl" type="url" class="w-full bg-gray-50 border border-gray-200 text-[#0f1419] text-sm rounded-xl focus:ring-gray-200 focus:border-blue-500 block p-4 transition-all duration-300 focus:bg-white" placeholder="https://example.com/logo.png" dir="ltr">
+                        <input asp-for="LogoUrl" type="url" class="w-full bg-gray-50 border border-gray-200 text-primary text-sm rounded-xl focus:ring-primary/10 focus:border-primary block p-4 transition-all duration-300 focus:bg-white" placeholder="https://example.com/logo.png" dir="ltr">
                         <span asp-validation-for="LogoUrl" class="text-accentRed text-sm mt-1 block"></span>
                         <p class="text-gray-500 text-xs mt-2">
                             <i data-lucide="info" class="ml-1"></i>
@@ -106,7 +105,7 @@
             <!-- Account Info Card (Read-only) -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
                 <div class="p-6 border-b border-gray-200  from-slate-50 to-gray-50">
-                    <h2 class="text-lg font-bold text-[#0f1419] flex items-center gap-2">
+                    <h2 class="text-lg font-bold text-primary flex items-center gap-2">
                         <i data-lucide="shield" class="text-gray-500"></i>
                         معلومات الحساب
                         <span class="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-1 rounded-full">للعرض فقط</span>
@@ -119,7 +118,7 @@
                         <p class="text-xs text-gray-500 mb-1">
                             <i data-lucide="calendar-plus" class="ml-1"></i> تاريخ الإنشاء
                         </p>
-                        <p class="font-bold text-[#0f1419]" dir="ltr">@Model.CreatedAt.ToString("yyyy/MM/dd")</p>
+                        <p class="font-bold text-primary" dir="ltr">@Model.CreatedAt.ToString("yyyy/MM/dd")</p>
                     </div>
 
                     <!-- Subscription Status -->
@@ -131,7 +130,7 @@
                             var statusClass = Model.SubscriptionStatus switch
                             {
                                 "Active" => "text-green-600 bg-green-100",
-                                "Trial" => "text-[#0f1419] bg-gray-50",
+                                "Trial" => "text-primary bg-bgSubtle",
                                 _ => "text-red-600 bg-red-100"
                             };
                             var statusText = Model.SubscriptionStatus switch
@@ -151,7 +150,7 @@
                             <p class="text-xs text-gray-500 mb-1">
                                 <i data-lucide="hourglass" class="ml-1"></i> انتهاء التجربة
                             </p>
-                            <p class="font-bold text-[#0f1419]" dir="ltr">@Model.TrialEndDate.Value.ToString("yyyy/MM/dd")</p>
+                            <p class="font-bold text-primary" dir="ltr">@Model.TrialEndDate.Value.ToString("yyyy/MM/dd")</p>
                         </div>
                     }
 
@@ -162,7 +161,7 @@
                             <p class="text-xs text-gray-500 mb-1">
                                 <i data-lucide="calendar-x" class="ml-1"></i> انتهاء الاشتراك
                             </p>
-                            <p class="font-bold text-[#0f1419]" dir="ltr">@Model.SubscriptionEndDate.Value.ToString("yyyy/MM/dd")</p>
+                            <p class="font-bold text-primary" dir="ltr">@Model.SubscriptionEndDate.Value.ToString("yyyy/MM/dd")</p>
                         </div>
                     }
 
@@ -185,10 +184,10 @@
 
             <!-- Submit Button -->
             <div class="flex items-center justify-end gap-3">
-                <a asp-action="Index" class="bg-white text-gray-500 hover:bg-gray-50 border border-gray-200 font-bold py-3 px-8 rounded-xl transition-all duration-300">
-                    إلغاء
+                <a asp-action="Index" class="zen-btn zen-btn-neutral">
+                     إلغاء
                 </a>
-                <button type="submit" class=" from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white font-bold py-3 px-10 rounded-xl transition-all duration-300 shadow-lg shadow-blue-200 transform hover:-translate-y-0.5 flex items-center gap-2">
+                <button type="submit" class="zen-btn zen-btn-primary zen-btn-lg">
                     <i data-lucide="save"></i>
                     حفظ التغييرات
                 </button>

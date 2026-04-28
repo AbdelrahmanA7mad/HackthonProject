@@ -1,21 +1,21 @@
-@model ManageMentSystem.ViewModels.CapitalSummaryViewModel
+﻿@model ManageMentSystem.ViewModels.CapitalSummaryViewModel
 @using System.Globalization
 @{
     ViewData["Title"] = "ملخص رأس المال";
     var egp = System.Globalization.CultureInfo.CurrentCulture;
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="coins" class="text-amber-500"></i> ملخص رأس المال
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="coins" class="text-accentAmber"></i> ملخص رأس المال
             </h1>
             <p class="text-gray-500 mt-1 font-medium">نظرة شاملة على الوضع المالي الحالي</p>
         </div>
         <div>
-            <a href="@Url.Action("ExportCapitalSummaryReportExcel")" class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm md:text-base">
+            <a href="@Url.Action("ExportCapitalSummaryReportExcel")" class="zen-btn zen-btn-primary md:text-base">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -26,9 +26,9 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between h-full">
             <div class="flex items-center justify-between mb-4">
                  <div class="text-sm font-bold text-gray-500">رصيد الخزنة</div>
-                 <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-[#0f1419]"><i data-lucide="box"></i></div>
+                 <div class="w-10 h-10 rounded-lg bg-bgSubtle flex items-center justify-center text-primary"><i data-lucide="box"></i></div>
             </div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.StoreNetBalance.ToString("C", egp)</div>
+            <div class="text-2xl font-bold text-primary">@Model.StoreNetBalance.ToString("C", egp)</div>
         </div>
 
         <!-- Customer Receivables -->
@@ -53,9 +53,9 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between h-full">
             <div class="flex items-center justify-between mb-4">
                  <div class="text-sm font-bold text-gray-500">قيمة المخزون</div>
-                 <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-[#0f1419]"><i data-lucide="package"></i></div>
+            <div class="w-10 h-10 rounded-lg bg-bgSubtle flex items-center justify-center text-primary"><i data-lucide="package"></i></div>
             </div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.InventoryValue.ToString("C", egp)</div>
+            <div class="text-2xl font-bold text-primary">@Model.InventoryValue.ToString("C", egp)</div>
         </div>
     </div>
 
@@ -81,7 +81,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6  from-white to-blue-50/50">
              <div class="text-sm font-bold text-gray-500 mb-2">إجمالي المبالغ المستحقة (الأصول)</div>
-             <div class="text-3xl font-bold text-[#0f1419]">@Model.TotalReceivables.ToString("C", egp)</div>
+            <div class="text-3xl font-bold text-primary">@Model.TotalReceivables.ToString("C", egp)</div>
          </div>
          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6  from-white to-red-50/50">
              <div class="text-sm font-bold text-gray-500 mb-2">إجمالي الالتزامات (الخصوم)</div>
@@ -93,10 +93,10 @@
     <div class="bg-white rounded-xl shadow-md border border-gray-200 p-8">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-right">
             <div>
-                <h2 class="text-2xl font-bold text-[#0f1419] mb-2">صافي رأس المال</h2>
+                <h2 class="text-2xl font-bold text-primary mb-2">صافي رأس المال</h2>
                 <p class="text-gray-500 text-sm font-medium bg-gray-100 px-3 py-1 rounded-lg inline-block">(رصيد الخزنة + المستحقات + قيمة المخزون) − الالتزامات</p>
             </div>
-            <div class="text-4xl font-bold @(Model.NetCapital >= 0 ? "text-[#0f1419]" : "text-red-600")">
+            <div class="text-4xl font-bold @(Model.NetCapital >= 0 ? "text-primary" : "text-red-600")">
                 @Model.NetCapital.ToString("C", egp)
             </div>
         </div>

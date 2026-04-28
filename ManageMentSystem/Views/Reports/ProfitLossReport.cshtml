@@ -1,20 +1,20 @@
-@model ManageMentSystem.ViewModels.ProfitLossReportViewModel
+﻿@model ManageMentSystem.ViewModels.ProfitLossReportViewModel
 @{
     ViewData["Title"] = "تقرير الأرباح والخسائر";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="trending-up" class="text-[#0f1419]"></i> تقرير الأرباح والخسائر
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="trending-up" class="text-primary"></i> تقرير الأرباح والخسائر
             </h1>
             <p class="text-gray-500 mt-1 font-medium">تحليل شامل للإيرادات والتكاليف وصافي الربح</p>
         </div>
         <div class="flex flex-wrap gap-2">
             <a href="@Url.Action("ExportProfitLossReportExcel", new { fromDate = Model.FromDate, toDate = Model.ToDate })" 
-               class="bg-[#0f1419] hover:bg-[#1a1f24] text-white px-4 py-2 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
+               class="zen-btn zen-btn-primary">
                 <i data-lucide="file-spreadsheet"></i> تصدير Excel
             </a>
         </div>
@@ -26,17 +26,17 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">من تاريخ</label>
-                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">إلى تاريخ</label>
-                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none font-medium text-[#0f1419] transition-all" />
+                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div class="flex gap-3">
-                    <button type="submit" class="bg-[#0f1419] hover:bg-[#0f1419] text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-gray-400/20 flex items-center gap-2 flex-grow justify-center">
+                    <button type="submit" class="zen-btn zen-btn-primary flex-grow">
                         <i data-lucide="search"></i> تطبيق
                     </button>
-                    <a href="@Url.Action("ProfitLossReport")" class="bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 flex-grow justify-center">
+                    <a href="@Url.Action("ProfitLossReport")" class="zen-btn zen-btn-neutral flex-grow">
                         <i data-lucide="x"></i> إلغاء
                     </a>
                 </div>
@@ -47,11 +47,11 @@
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl mb-3">
+            <div class="w-12 h-12 rounded-full bg-bgSubtle flex items-center justify-center text-primary text-xl mb-3">
                 <i data-lucide="arrow-up"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">إجمالي الإيرادات</div>
-            <div class="text-2xl font-bold text-[#0f1419]">@Model.TotalRevenue.ToString("C")</div>
+            <div class="text-2xl font-bold text-primary">@Model.TotalRevenue.ToString("C")</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
             <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-600 text-xl mb-3">
@@ -61,18 +61,18 @@
             <div class="text-2xl font-bold text-red-600">@Model.TotalExpenses.ToString("C")</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full @(Model.NetProfit >= 0 ? "bg-gray-50 text-[#0f1419]" : "bg-red-50 text-red-600") flex items-center justify-center text-xl mb-3">
+            <div class="w-12 h-12 rounded-full @(Model.NetProfit >= 0 ? "bg-bgSubtle text-primary" : "bg-red-50 text-red-600") flex items-center justify-center text-xl mb-3">
                 <i data-lucide="coins"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">صافي الربح</div>
-            <div class="text-2xl font-bold @(Model.NetProfit >= 0 ? "text-[#0f1419]" : "text-red-600")">@Model.NetProfit.ToString("C")</div>
+            <div class="text-2xl font-bold @(Model.NetProfit >= 0 ? "text-primary" : "text-red-600")">@Model.NetProfit.ToString("C")</div>
         </div>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-full @(Model.ProfitMargin >= 0 ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600") flex items-center justify-center text-xl mb-3">
+            <div class="w-12 h-12 rounded-full @(Model.ProfitMargin >= 0 ? "bg-amber-50 text-accentAmber" : "bg-red-50 text-red-600") flex items-center justify-center text-xl mb-3">
                 <i data-lucide="percent"></i>
             </div>
             <div class="text-sm font-bold text-gray-500 mb-1">هامش الربح</div>
-            <div class="text-2xl font-bold @(Model.ProfitMargin >= 0 ? "text-amber-600" : "text-red-600")">@Model.ProfitMargin.ToString("F1")%</div>
+            <div class="text-2xl font-bold @(Model.ProfitMargin >= 0 ? "text-accentAmber" : "text-red-600")">@Model.ProfitMargin.ToString("F1")%</div>
         </div>
     </div>
 
@@ -81,29 +81,29 @@
         
         <!-- Revenue Breakdown -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-                <i data-lucide="plus-circle" class="text-emerald-500"></i> الإيرادات
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+                <i data-lucide="plus-circle" class="text-accentGreen"></i> الإيرادات
             </h5>
             <div class="space-y-3">
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إيرادات المبيعات</span>
-                    <span class="font-bold text-[#0f1419]">@Model.SalesRevenue.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.SalesRevenue.ToString("C")</span>
                 </div>
                 <!-- Assuming OtherIncome exists, adding based on original file context, though not explicitly in VM snippets it was there before -->
                 <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
                     <span class="text-gray-500 font-medium">إيرادات أخرى</span>
-                    <span class="font-bold text-[#0f1419]">@Model.OtherIncome.ToString("C")</span>
+                    <span class="font-bold text-primary">@Model.OtherIncome.ToString("C")</span>
                 </div>
                 <div class="flex justify-between items-center py-3 bg-gray-50 px-4 rounded-lg mt-2">
-                    <span class="text-emerald-800 font-bold">إجمالي الإيرادات</span>
-                    <span class="text-emerald-800 font-bold text-lg">@Model.TotalRevenue.ToString("C")</span>
+                    <span class="text-accentGreen font-bold">إجمالي الإيرادات</span>
+                    <span class="text-accentGreen font-bold text-lg">@Model.TotalRevenue.ToString("C")</span>
                 </div>
             </div>
         </div>
 
         <!-- Expenses Breakdown -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
                 <i data-lucide="minus-circle" class="text-accentRed"></i> التكاليف والمصروفات
             </h5>
             <div class="space-y-3">
@@ -125,38 +125,38 @@
 
     <!-- Profitability Analysis (Full Width) -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
-            <h5 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="calculator" class="text-white0"></i> تحليل الربحية التفصيلي
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-bgSubtle">
+            <h5 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="calculator" class="text-primary"></i> تحليل الربحية التفصيلي
             </h5>
         </div>
         <div class="p-6">
             <div class="overflow-x-auto">
                 <table class="w-full text-right">
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="bg-gray-50/50">
-                            <td class="px-6 py-4 font-bold text-[#0f1419] w-1/2">إجمالي الإيرادات</td>
-                            <td class="px-6 py-4 font-bold text-[#0f1419] text-lg">@Model.TotalRevenue.ToString("C")</td>
+                        <tr class="bg-bgSubtle">
+                            <td class="px-6 py-4 font-bold text-primary w-1/2">إجمالي الإيرادات</td>
+                            <td class="px-6 py-4 font-bold text-primary text-lg">@Model.TotalRevenue.ToString("C")</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 text-gray-500 w-1/2">(-) تكلفة البضائع المباعة</td>
                             <td class="px-6 py-4 text-accentRed">@Model.CostOfGoodsSold.ToString("C")</td>
                         </tr>
                         <tr class="bg-amber-50/50 border-t border-b border-amber-100">
-                            <td class="px-6 py-4 font-bold text-[#0f1419] w-1/2">(=) إجمالي الربح</td>
-                            <td class="px-6 py-4 font-bold @(Model.GrossProfit >= 0 ? "text-[#0f1419]" : "text-red-600") text-lg">@Model.GrossProfit.ToString("C")</td>
+                            <td class="px-6 py-4 font-bold text-primary w-1/2">(=) إجمالي الربح</td>
+                            <td class="px-6 py-4 font-bold @(Model.GrossProfit >= 0 ? "text-primary" : "text-red-600") text-lg">@Model.GrossProfit.ToString("C")</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 text-gray-500 w-1/2">(-) المصروفات التشغيلية</td>
                             <td class="px-6 py-4 text-accentRed">@Model.OperatingExpenses.ToString("C")</td>
                         </tr>
-                        <tr class="bg-gray-50/50 border-t border-gray-200">
-                            <td class="px-6 py-4 font-bold text-[#0f1419] w-1/2">(=) صافي الربح</td>
-                            <td class="px-6 py-4 font-bold @(Model.NetProfit >= 0 ? "text-[#0f1419]" : "text-red-600") text-xl">@Model.NetProfit.ToString("C")</td>
+                        <tr class="bg-bgSubtle border-t border-gray-200">
+                            <td class="px-6 py-4 font-bold text-primary w-1/2">(=) صافي الربح</td>
+                            <td class="px-6 py-4 font-bold @(Model.NetProfit >= 0 ? "text-primary" : "text-red-600") text-xl">@Model.NetProfit.ToString("C")</td>
                         </tr>
                         <tr class="bg-gray-50">
                             <td class="px-6 py-4 font-bold text-gray-500 w-1/2">هامش الربح</td>
-                            <td class="px-6 py-4 font-bold @(Model.ProfitMargin >= 0 ? "text-[#0f1419]" : "text-red-600")">@Model.ProfitMargin.ToString("F1")%</td>
+                            <td class="px-6 py-4 font-bold @(Model.ProfitMargin >= 0 ? "text-primary" : "text-red-600")">@Model.ProfitMargin.ToString("F1")%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -166,8 +166,8 @@
 
     <!-- Chart Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h5 class="font-bold text-[#0f1419] mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
-            <i data-lucide="bar-chart-2" class="text-white0"></i> الرسم البياني للتحليل المالي
+            <h5 class="font-bold text-primary mb-4 flex items-center gap-2 pb-3 border-b border-gray-200">
+            <i data-lucide="bar-chart-2" class="text-primary"></i> الرسم البياني للتحليل المالي
         </h5>
         <div class="relative h-72 w-full flex justify-center">
             <canvas id="profitLossChart"></canvas>
@@ -180,7 +180,25 @@
     <script>
         const ctx = document.getElementById('profitLossChart').getContext('2d');
         const netProfit = @Model.NetProfit;
-        const profitColor = netProfit >= 0 ? '#059669' : '#e11d48'; // emerald-600 or red-500
+        const theme = window.THEME || window;
+        const rgbaFromColor = (color, alpha) => {
+            if (!color) return `rgba(15, 20, 25, ${alpha})`;
+            const normalized = color.trim();
+            if (normalized.startsWith('#')) {
+                const hex = normalized.slice(1);
+                const expanded = hex.length === 3 ? hex.split('').map(ch => ch + ch).join('') : hex;
+                const parts = expanded.match(/.{1,2}/g) || ['0f', '14', '19'];
+                const [r, g, b] = parts.map(part => parseInt(part, 16));
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            const rgbMatch = normalized.match(/rgba?\(([^)]+)\)/i);
+            if (rgbMatch) {
+                const values = rgbMatch[1].split(',').map(v => v.trim());
+                return `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${alpha})`;
+            }
+            return normalized;
+        };
+        const profitColor = netProfit >= 0 ? theme.accentGreen : theme.accentRed;
 
         const chart = new Chart(ctx, {
             type: 'bar',
@@ -190,8 +208,8 @@
                     label: 'التحليل المالي',
                     data: [@Model.TotalRevenue, @Model.TotalExpenses, netProfit],
                     backgroundColor: [
-                        '#059669', // emerald-600
-                        '#e11d48', // red-500
+                        theme.accentGreen,
+                        theme.accentRed,
                         profitColor
                     ],
                     borderRadius: 8,
@@ -207,7 +225,7 @@
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        backgroundColor: rgbaFromColor(theme.primary, 0.92),
                         titleFont: { family: 'Cairo' },
                         bodyFont: { family: 'Cairo' },
                         padding: 10,
@@ -233,7 +251,7 @@
                     },
                     y: {
                         beginAtZero: true,
-                        grid: { color: '#f1f5f9' },
+                        grid: { color: theme.borderSubtle || theme.bgSubtle || '#e5e7eb' },
                         ticks: { font: { family: 'Cairo' } }
                     }
                 }

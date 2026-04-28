@@ -1,4 +1,4 @@
-@model IEnumerable<ManageMentSystem.Models.StoreAccount>
+﻿@model IEnumerable<ManageMentSystem.Models.StoreAccount>
 @using ManageMentSystem.ViewModels
 @using ManageMentSystem.Helpers
 
@@ -6,7 +6,7 @@
     ViewData["Title"] = "الحسابات";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6">
+<div class="min-h-screen bg-bgSubtle p-6">
     <!-- Hidden Delete Form -->
     <form id="deleteForm" method="post" action="">
         @Html.AntiForgeryToken()
@@ -15,18 +15,18 @@
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="calculator" class="text-[#0f1419]"></i> الحسابات
+            <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i data-lucide="calculator" class="text-primary"></i> الحسابات
             </h1>
         </div>
         <div class="flex flex-wrap gap-2 items-center justify-end">
-                    <button type="button" onclick="openDepositModal()" class="bg-accentGreen hover:bg-emerald-800 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-emerald-500/30 hover:-translate-y-0.5 flex items-center gap-2">
+                    <button type="button" onclick="openDepositModal()" class="zen-btn zen-btn-success zen-btn-sm">
                         <i data-lucide="plus-circle"></i> إيداع رصيد
                     </button>
-                    <button type="button" onclick="openWithdrawModal()" class="bg-red-700 hover:bg-red-800 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-red-500/30 hover:-translate-y-0.5 flex items-center gap-2">
+                    <button type="button" onclick="openWithdrawModal()" class="zen-btn zen-btn-danger zen-btn-sm">
                         <i data-lucide="minus-circle"></i> سحب رصيد
                     </button>
-                <a asp-controller="StoreAccount" asp-action="PaymentMethodBalances" class="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#0f1419] px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:-translate-y-0.5 flex items-center gap-2">
+                <a asp-controller="StoreAccount" asp-action="PaymentMethodBalances" class="zen-btn zen-btn-neutral zen-btn-sm">
                     <i data-lucide="wallet"></i> أرصدة طرق الدفع
                 </a>
         </div>
@@ -58,23 +58,23 @@
 
         <!-- Balance -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-[#0f1419] text-xl shadow-sm">
+            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-primary text-xl shadow-sm">
                 <i data-lucide="trending-up"></i>
             </div>
             <div>
                 <p class="text-xs font-bold text-gray-500 mb-1">مجموع الارصدة</p>
-                <h3 class="text-2xl font-bold text-[#0f1419]">@(ViewBag.CashBalance.ToString("C"))</h3>
+                <h3 class="text-2xl font-bold text-primary">@(ViewBag.CashBalance.ToString("C"))</h3>
             </div>
         </div>
 
         <!-- Capital -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-700 text-xl shadow-sm">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-accentAmber text-xl shadow-sm">
                 <i data-lucide="coins"></i>
             </div>
             <div>
                 <p class="text-xs font-bold text-gray-500 mb-1">رأس المال</p>
-                <h3 class="text-2xl font-bold text-amber-700">@ViewBag.TotalCapital?.ToString("C")</h3>
+                <h3 class="text-2xl font-bold text-accentAmber">@ViewBag.TotalCapital?.ToString("C")</h3>
             </div>
         </div>
 
@@ -99,13 +99,13 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 border-r-4 border-r-emerald-500 relative overflow-hidden group">
             <div class="absolute top-0 left-0 w-24 h-24 bg-emerald-50 rounded-full -translate-x-8 -translate-y-8 opacity-50 group-hover:scale-110 transition-transform"></div>
             <div class="flex items-center gap-4 mb-4 relative z-10">
-                <i data-lucide="shopping-cart" class="text-4xl text-emerald-500 w-10 h-10"></i>
+                <i data-lucide="shopping-cart" class="text-4xl text-accentGreen w-10 h-10"></i>
                 <div>
-                    <h4 class="text-xl font-bold text-emerald-800">المبيعات</h4>
+                    <h4 class="text-xl font-bold text-accentGreen">المبيعات</h4>
                     <p class="text-sm font-bold text-gray-500">الربح من المبيعات</p>
                 </div>
             </div>
-            <a asp-action="RealizedProfit" class="inline-flex items-center gap-2 text-accentGreen font-bold hover:text-emerald-800 hover:translate-x-1 transition-all">
+            <a asp-action="RealizedProfit" class="inline-flex items-center gap-2 text-accentGreen font-bold hover:text-accentGreen hover:translate-x-1 transition-all">
                 عرض ربح المبيعات <i data-lucide="arrow-left" class="w-4 h-4 inline-block"></i>
             </a>
         </div>
@@ -113,13 +113,13 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 relative overflow-hidden group">
             <div class="absolute top-0 left-0 w-24 h-24 bg-gray-50 rounded-full -translate-x-8 -translate-y-8 opacity-50 group-hover:scale-110 transition-transform"></div>
             <div class="flex items-center gap-4 mb-4 relative z-10">
-                <i data-lucide="credit-card" class="text-4xl text-[#0f1419] w-10 h-10"></i>
+                <i data-lucide="credit-card" class="text-4xl text-primary w-10 h-10"></i>
                 <div>
-                    <h3 class="text-xl font-bold text-[#0f1419]">الأقساط</h3>
+                    <h3 class="text-xl font-bold text-primary">الأقساط</h3>
                     <p class="text-sm font-bold text-gray-500">تفاصيل الأقساط والدفعات</p>
                 </div>
             </div>
-            <a asp-action="InstallmentDetails" class="inline-flex items-center gap-2 text-[#0f1419] font-bold hover:text-[#0f1419] hover:translate-x-1 transition-all">
+            <a asp-action="InstallmentDetails" class="inline-flex items-center gap-2 text-primary font-bold hover:text-primary hover:translate-x-1 transition-all">
                 عرض ربح الاقساط <i data-lucide="arrow-left" class="w-4 h-4 inline-block"></i>
             </a>
         </div>
@@ -128,14 +128,14 @@
     <!-- Filters -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
         <div class="flex items-center gap-2 mb-4 border-b border-gray-200 pb-3">
-            <i data-lucide="filter" class="text-[#0f1419]"></i>
+            <i data-lucide="filter" class="text-primary"></i>
             <h6 class="font-bold text-gray-600">فلترة العمليات</h6>
         </div>
 
         <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
             <div>
                 <label class="block text-sm font-bold text-gray-500 mb-2">نوع العملية</label>
-                <select name="TransactionType" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none text-sm font-bold transition-all bg-white text-gray-600">
+                <select name="TransactionType" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none text-sm font-bold transition-all bg-white text-gray-600">
                     <option value="">الكل</option>
                     @foreach (var item in ViewBag.TransactionTypes)
                     {
@@ -145,7 +145,7 @@
             </div>
             <div>
                 <label class="block text-sm font-bold text-gray-500 mb-2">طريقة الدفع</label>
-                <select name="PaymentMethodId" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none text-sm font-bold transition-all bg-white text-gray-600">
+                <select name="PaymentMethodId" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none text-sm font-bold transition-all bg-white text-gray-600">
                     <option value="">الكل</option>
                     @foreach (var item in ViewBag.PaymentMethods)
                     {
@@ -155,16 +155,16 @@
             </div>
             <div>
                 <label class="block text-sm font-bold text-gray-500 mb-2">من تاريخ</label>
-                <input type="date" name="FromDate" value="@ViewBag.Filter?.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none text-sm font-bold transition-all text-gray-600" />
+                <input type="date" name="FromDate" value="@ViewBag.Filter?.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none text-sm font-bold transition-all text-gray-600" />
             </div>
             <div>
                 <label class="block text-sm font-bold text-gray-500 mb-2">إلى تاريخ</label>
                 <div class="flex gap-2">
-                    <input type="date" name="ToDate" value="@ViewBag.Filter?.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-bgSubtle focus:border-[#0f1419] outline-none text-sm font-bold transition-all text-gray-600" />
-                    <button type="submit" class="bg-[#0f1419] hover:bg-primaryHover text-white p-2.5 rounded-lg transition-colors shadow-sm">
+                    <input type="date" name="ToDate" value="@ViewBag.Filter?.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none text-sm font-bold transition-all text-gray-600" />
+                    <button type="submit" class="zen-btn zen-btn-primary zen-btn-icon zen-btn-sm">
                         <i data-lucide="search"></i>
                     </button>
-                    <a asp-action="Index" class="bg-white border border-gray-200 text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 p-2.5 rounded-lg transition-all shadow-sm">
+                    <a asp-action="Index" class="zen-action-btn zen-action-btn-neutral">
                         <i data-lucide="x"></i>
                     </a>
                 </div>
@@ -175,11 +175,11 @@
 
     <!-- Transactions Table -->
     <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-        <div class="bg-gray-50/50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h6 class="font-bold text-[#0f1419] flex items-center gap-2">
-                <i data-lucide="list" class="text-[#0f1419]"></i> العمليات المالية
+        <div class="bg-bgSubtle px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+            <h6 class="font-bold text-primary flex items-center gap-2">
+                <i data-lucide="list" class="text-primary"></i> العمليات المالية
             </h6>
-                <a asp-action="Export" class="text-xs font-bold text-accentGreen bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                <a asp-action="Export" class="zen-btn zen-btn-success zen-btn-sm">
                     <i data-lucide="download"></i> تصدير
                 </a>
         </div>
@@ -204,7 +204,7 @@
                         {
                             <tr class="hover:bg-gray-50/80 transition-colors group">
                                 <td class="px-6 py-4 font-bold">@item.TransactionDate.ToString("yyyy-MM-dd")</td>
-                                <td class="px-6 py-4 font-bold text-[#0f1419]">@item.TransactionName</td>
+                                <td class="px-6 py-4 font-bold text-primary">@item.TransactionName</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2.5 py-1 rounded-full font-bold text-xs @(item.TransactionType == TransactionType.Income ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-red-100 text-red-800 border border-red-200")">
                                         @item.TransactionType.GetDisplayName()
@@ -217,19 +217,19 @@
                                     <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-bold border border-gray-200">@item.Category</span>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="bg-gray-50 text-[#0f1419] px-2 py-1 rounded text-xs font-bold border border-gray-200">@item.PaymentMethod?.Name</span>
+                                    <span class="bg-gray-50 text-primary px-2 py-1 rounded text-xs font-bold border border-gray-200">@item.PaymentMethod?.Name</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-center gap-2 opacity-100 sm:opacity-60 sm:group-hover:opacity-100 transition-all">
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="w-8 h-8 flex items-center justify-center rounded-lg text-[#0f1419] hover:bg-gray-50 transition-colors" title="تفاصيل">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="zen-action-btn zen-action-btn-neutral" title="تفاصيل">
                                             <i data-lucide="eye" class="w-4 h-4"></i>
                                         </a>
                                        
-                                            <a asp-action="Edit" asp-route-id="@item.Id" class="w-8 h-8 flex items-center justify-center rounded-lg text-amber-700 hover:bg-amber-100 transition-colors" title="تعديل">
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="zen-action-btn zen-action-btn-neutral" title="تعديل">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
                                             </a>
                                        
-                                            <button type="button" onclick="confirmDeleteTransaction(@item.Id)" class="w-8 h-8 flex items-center justify-center rounded-lg text-accentRed hover:bg-red-100 transition-colors" title="حذف">
+                                            <button type="button" onclick="confirmDeleteTransaction(@item.Id)" class="zen-action-btn zen-action-btn-danger" title="حذف">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                     </div>
@@ -252,7 +252,7 @@
                         @if (ViewBag.CurrentPage > 1)
                         {
                             <a href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize, TransactionType = ViewBag.Filter?.TransactionType, PaymentMethodId = ViewBag.Filter?.PaymentMethodId, FromDate = ViewBag.Filter?.FromDate?.ToString("yyyy-MM-dd"), ToDate = ViewBag.Filter?.ToDate?.ToString("yyyy-MM-dd") })"
-                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </a>
                         }
@@ -264,7 +264,7 @@
 
                         @if (startPage > 1)
                         {
-                            <a href="@Url.Action("Index", new { page = 1, pageSize = ViewBag.PageSize })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] transition-all text-xs font-bold">1</a>
+                            <a href="@Url.Action("Index", new { page = 1, pageSize = ViewBag.PageSize })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary transition-all text-xs font-bold">1</a>
                             @if (startPage > 2)
                             {
                                 <span class="w-8 h-8 flex items-center justify-center text-gray-500">...</span>
@@ -275,12 +275,12 @@
                         {
                             if (i == ViewBag.CurrentPage)
                             {
-                                <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0f1419] text-white border border-gray-200 text-xs font-bold shadow-sm ">@i</span>
+                                <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white border border-gray-200 text-xs font-bold shadow-sm ">@i</span>
                             }
                             else
                             {
                                 <a href="@Url.Action("Index", new { page = i, pageSize = ViewBag.PageSize, TransactionType = ViewBag.Filter?.TransactionType, PaymentMethodId = ViewBag.Filter?.PaymentMethodId, FromDate = ViewBag.Filter?.FromDate?.ToString("yyyy-MM-dd"), ToDate = ViewBag.Filter?.ToDate?.ToString("yyyy-MM-dd") })"
-                                   class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all text-xs font-bold">@i</a>
+                                   class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all text-xs font-bold">@i</a>
                             }
                         }
 
@@ -290,13 +290,13 @@
                             {
                                 <span class="w-8 h-8 flex items-center justify-center text-gray-500">...</span>
                             }
-                            <a href="@Url.Action("Index", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] transition-all text-xs font-bold">@ViewBag.TotalPages</a>
+                            <a href="@Url.Action("Index", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize })" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary transition-all text-xs font-bold">@ViewBag.TotalPages</a>
                         }
 
                         @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                         {
                             <a href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize, TransactionType = ViewBag.Filter?.TransactionType, PaymentMethodId = ViewBag.Filter?.PaymentMethodId, FromDate = ViewBag.Filter?.FromDate?.ToString("yyyy-MM-dd"), ToDate = ViewBag.Filter?.ToDate?.ToString("yyyy-MM-dd") })"
-                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-[#0f1419] hover:border-gray-200 transition-all">
+                               class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-primary hover:border-gray-200 transition-all">
                                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </a>
                         }
@@ -310,7 +310,7 @@
                 <div class="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-200">
                     <i data-lucide="inbox" class="text-3xl text-gray-500 w-10 h-10"></i>
                 </div>
-                <h5 class="text-lg font-bold text-[#0f1419]">لا توجد عمليات مالية</h5>
+                <h5 class="text-lg font-bold text-primary">لا توجد عمليات مالية</h5>
                 <p class="text-gray-500 mt-1">ابدأ بإضافة عملية جديدة</p>
             </div>
         }
@@ -337,15 +337,15 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">اسم العملية</label>
-                        <input type="text" name="TransactionName" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none font-bold text-[#0f1419]" required />
+                        <input type="text" name="TransactionName" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentGreen/20 focus:border-accentGreen outline-none font-bold text-primary" required />
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">المبلغ</label>
-                        <input type="number" name="Amount" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none font-bold text-[#0f1419]" required min="0.01" step="0.01" />
+                        <input type="number" name="Amount" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentGreen/20 focus:border-accentGreen outline-none font-bold text-primary" required min="0.01" step="0.01" />
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">طريقة الدفع</label>
-                        <select name="PaymentMethodId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none font-bold text-gray-600 bg-white" required>
+                        <select name="PaymentMethodId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentGreen/20 focus:border-accentGreen outline-none font-bold text-gray-600 bg-white" required>
                             @foreach (var item in ViewBag.PaymentMethods)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -354,15 +354,15 @@
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">ملاحظات</label>
-                        <textarea name="Notes" rows="2" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none font-medium text-gray-600"></textarea>
+                        <textarea name="Notes" rows="2" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentGreen/20 focus:border-accentGreen outline-none font-medium text-gray-600"></textarea>
                     </div>
                 </div>
 
                 <div class="mt-8 flex gap-3">
-                    <button type="submit" class="flex-1 bg-accentGreen hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold hover:-translate-y-0.5 transition-all shadow-sm flex items-center justify-center gap-2">
+                    <button type="submit" class="zen-btn zen-btn-success flex-1">
                         <i data-lucide="check"></i> إيداع
                     </button>
-                    <button type="button" onclick="closeDepositModal()" class="px-6 py-2.5 rounded-xl font-bold text-gray-500 hover:bg-red-50 hover:text-accentRed transition-colors border border-transparent hover:border-red-200">
+                    <button type="button" onclick="closeDepositModal()" class="zen-btn zen-btn-neutral">
                         إلغاء
                     </button>
                 </div>
@@ -375,7 +375,7 @@
     <div class="fixed inset-0 bg-gray-100/50 backdrop-blur-sm transition-opacity opacity-0" id="withdrawModalBackdrop" onclick="closeWithdrawModal()"></div>
     <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
         <div class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" id="withdrawModalPanel">
-            <div class="bg-red-700 px-6 py-4 flex justify-between items-center">
+            <div class="bg-accentRed px-6 py-4 flex justify-between items-center">
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <i data-lucide="minus-circle"></i> سحب رصيد
                 </h3>
@@ -390,15 +390,15 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">اسم العملية</label>
-                        <input type="text" name="TransactionName" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none font-bold text-[#0f1419]" required />
+                        <input type="text" name="TransactionName" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentRed/20 focus:border-accentRed outline-none font-bold text-primary" required />
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">المبلغ</label>
-                        <input type="number" name="Amount" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none font-bold text-[#0f1419]" required min="0.01" step="0.01" />
+                        <input type="number" name="Amount" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentRed/20 focus:border-accentRed outline-none font-bold text-primary" required min="0.01" step="0.01" />
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">طريقة الدفع</label>
-                        <select name="PaymentMethodId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none font-bold text-gray-600 bg-white" required>
+                        <select name="PaymentMethodId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentRed/20 focus:border-accentRed outline-none font-bold text-gray-600 bg-white" required>
                             @foreach (var item in ViewBag.PaymentMethods)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -407,15 +407,15 @@
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1.5">ملاحظات</label>
-                        <textarea name="Notes" rows="2" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none font-medium text-gray-600"></textarea>
+                        <textarea name="Notes" rows="2" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accentRed/20 focus:border-accentRed outline-none font-medium text-gray-600"></textarea>
                     </div>
                 </div>
 
                 <div class="mt-8 flex gap-3">
-                    <button type="submit" id="withdrawSubmitBtn" class="flex-1 bg-red-700 hover:bg-red-800 text-white px-4 py-2.5 rounded-xl font-bold hover:-translate-y-0.5 transition-all shadow-sm flex items-center justify-center gap-2">
+                    <button type="submit" id="withdrawSubmitBtn" class="zen-btn zen-btn-danger flex-1">
                         <i data-lucide="check"></i> سحب
                     </button>
-                    <button type="button" onclick="closeWithdrawModal()" class="px-6 py-2.5 rounded-xl font-bold text-gray-500 hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200">
+                    <button type="button" onclick="closeWithdrawModal()" class="zen-btn zen-btn-neutral">
                         إلغاء
                     </button>
                 </div>
@@ -544,3 +544,6 @@
         });
     </script>
 }
+
+
+

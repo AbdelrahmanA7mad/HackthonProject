@@ -1,4 +1,4 @@
-@model ManageMentSystem.ViewModels.CustomerStatementViewModel
+﻿@model ManageMentSystem.ViewModels.CustomerStatementViewModel
 @{
     ViewData["Title"] = "كشف حساب العميل";
 }
@@ -11,16 +11,16 @@
         <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
 
             <div class="flex items-center gap-5">
-                <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-sm shrink-0 text-[#0f1419]">
+                <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-sm shrink-0 text-primary">
                     <i data-lucide="user" class="w-8 h-8"></i>
                 </div>
 
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 mb-2">@ViewBag.CustomerName</h1>
+                    <h1 class="text-2xl font-bold text-primary mb-2">@ViewBag.CustomerName</h1>
                     <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500">
                         <span class="flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-lg border border-gray-200">
                             <i data-lucide="phone" class="text-accentGreen w-4 h-4"></i>
-                            <span dir="ltr" class="font-mono font-bold text-gray-700">@ViewBag.CustomerPhone</span>
+                            <span dir="ltr" class="font-mono font-bold text-primary">@ViewBag.CustomerPhone</span>
                         </span>
                     </div>
                 </div>
@@ -28,26 +28,26 @@
 
             <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
                 <button onclick="toggleModal('paymentModal')"
-                        class="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 bg-[#0f1419] hover:bg-primaryHover text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-gray-200 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+                        class="zen-btn zen-btn-primary flex-1 lg:flex-none cursor-pointer">
                     <i data-lucide="hand-coins" class="w-5 h-5"></i>
                     <span>سداد دفعة</span>
                 </button>
 
                 <button id="sendWhatsappStatementBtn"
-                        class="inline-flex items-center justify-center gap-2 bg-bg-gray-50 border border-gray-200 text-accentGreen hover:bg-gray-50 px-5 py-3 rounded-xl font-medium transition-colors cursor-pointer hover:-translate-y-0.5">
+                        class="zen-btn zen-btn-neutral font-medium cursor-pointer">
                     <i data-lucide="message-circle" class="w-5 h-5"></i>
                     <span class="hidden sm:inline">إرسال كشف</span>
                 </button>
 
                 <a href="@Url.Action("FullAccount", "Customers", new { id = Model.CustomerId })"
-                   class="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:text-gray-600  hover:bg-gray-50 px-5 py-3 rounded-xl font-medium transition-colors hover:-translate-y-0.5"
+                   class="zen-btn zen-btn-neutral font-medium"
                    title="كل العمليات">
                     <i data-lucide="list" class="w-5 h-5"></i>
                     <span class="hidden sm:inline">التفاصيل</span>
                 </a>
 
                 <a href="@Url.Action("Index", "Customers")"
-                   class="inline-flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-600 px-5 py-3 rounded-xl font-medium transition-colors hover:-translate-y-0.5">
+                   class="zen-btn zen-btn-neutral font-medium">
                     <span class="hidden sm:inline">رجوع</span>
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                     
@@ -61,9 +61,9 @@
         <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between group hover:border-gray-200 transition-all">
             <div>
                 <p class="text-sm font-semibold text-gray-500 mb-1">إجمالي المبيعات</p>
-                <h3 class="text-2xl font-bold text-gray-800">@Model.TotalSalesAmount.ToString("C0")</h3>
+                <h3 class="text-2xl font-bold text-primary">@Model.TotalSalesAmount.ToString("C0")</h3>
             </div>
-            <div class="w-14 h-14 bg-gray-50 text-[#0f1419] rounded-2xl flex items-center justify-center text-xl m-1">
+            <div class="w-14 h-14 bg-gray-50 text-primary rounded-2xl flex items-center justify-center text-xl m-1">
                 <i data-lucide="trending-up" class="w-6 h-6"></i>
             </div>
         </div>
@@ -71,7 +71,7 @@
         <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between group hover:border-gray-200 transition-all">
             <div>
                 <p class="text-sm font-bold text-gray-500 mb-1">إجمالي المرتجعات</p>
-                <h3 class="text-2xl font-bold text-gray-800">@Model.TotalReturnsAmount.ToString("C0")</h3>
+                <h3 class="text-2xl font-bold text-primary">@Model.TotalReturnsAmount.ToString("C0")</h3>
             </div>
             <div class="w-14 h-14 bg-red-50 text-accentRed rounded-2xl flex items-center justify-center text-xl m-1">
                 <i data-lucide="rotate-ccw" class="w-6 h-6"></i>
@@ -81,7 +81,7 @@
         <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between group hover:border-gray-200 transition-all">
             <div>
                 <p class="text-sm font-bold text-gray-500 mb-1">صافي المبيعات</p>
-                <h3 class="text-2xl font-bold text-gray-800">@Model.NetSalesAmount.ToString("C0")</h3>
+                <h3 class="text-2xl font-bold text-primary">@Model.NetSalesAmount.ToString("C0")</h3>
             </div>
             <div class="w-14 h-14 bg-gray-50 text-accentGreen rounded-2xl flex items-center justify-center text-xl m-1">
                 <i data-lucide="calculator" class="w-6 h-6"></i>
@@ -91,7 +91,7 @@
         <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between group hover:shadow-md transition-all">
             <div>
                 <p class="text-sm font-bold text-gray-500 mb-1">إجمالي المستحق (الآجل)</p>
-                <h3 class="text-2xl font-bold text-gray-800">@Model.Balance.ToString("C0")</h3>
+                <h3 class="text-2xl font-bold text-primary">@Model.Balance.ToString("C0")</h3>
             </div>
             <div class="w-14 h-14 bg-gray-50 text-accentAmber rounded-2xl flex items-center justify-center text-xl m-1 ">
                 <i data-lucide="coins" class="w-6 h-6"></i>
@@ -101,7 +101,7 @@
         <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between group hover:border-gray-200 transition-all col-span-1 md:col-span-1">
             <div>
                 <p class="text-sm font-bold text-gray-500 mb-1">عدد الفواتير</p>
-                <h3 class="text-2xl font-bold text-gray-800">@Model.Sales.Count</h3>
+                <h3 class="text-2xl font-bold text-primary">@Model.Sales.Count</h3>
             </div>
             <div class="w-14 h-14 bg-gray-50 text-gray-600 rounded-2xl flex items-center justify-center text-xl m-1">
                 <i data-lucide="file-text" class="w-6 h-6"></i>
@@ -111,9 +111,9 @@
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50/50">
+<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-bgSubtle">
             <h5 class="font-bold text-gray-800 flex items-center gap-2">
-                <i data-lucide="list" class="text-[#0f1419] w-5 h-5"></i>
+                <i data-lucide="list" class="text-primary w-5 h-5"></i>
                 فواتير العميل
             </h5>
         </div>
@@ -135,8 +135,8 @@
                     @foreach (var s in Model.Sales)
                     {
                         var remaining = s.RemainingAmount;
-                        <tr class="hover:bg-gray-50/50 transition-colors group">
-                            <td class="px-6 py-4 font-bold text-center"> <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-gray-100 text-[#0f1419]"> #@s.Id</span> </td>
+                        <tr class="hover:bg-bgSubtle transition-colors group">
+                            <td class="px-6 py-4 font-bold text-center"> <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-gray-100 text-primary"> #@s.Id</span> </td>
                             <td class="px-6 py-4 font-bold text-gray-800">@s.SaleDate.ToString("yyyy-MM-dd")</td>
                             <td class="px-6 py-4 font-bold text-gray-800">@s.TotalAmount.ToString("C")</td>
                             <td class="px-6 py-4 font-bold text-accentGreen">@s.PaidAmount.ToString("C")</td>
@@ -148,7 +148,7 @@
                             <td class="px-6 py-4 text-sm font-bold text-accentAmber">@s.PaymentType</td>
                             <td class="px-6 py-4">
                                 <a href="@Url.Action("Details", "Sales", new { id = s.Id })"
-                                   class="text-accentGreen hover:text-accentGreen  hover:bg-gray-50 px-3 py-1.5 rounded-lg text-sm transition-colors font-medium">
+                                   class="zen-btn zen-btn-neutral font-medium">
                                     <i data-lucide="eye" class="ml-1 w-4 h-4 inline-block"></i>
                                 </a>
                             </td>
@@ -177,7 +177,7 @@
                 @for (int i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.TotalPages, Model.CurrentPage + 2); i++)
                 {
                     <a href="@Url.Action("Statement", "Customers", new { id = Model.CustomerId, page = i, pageSize = Model.PageSize, fromDate = Model.FromDate, toDate = Model.ToDate })"
-                       class="w-9 h-9 flex items-center justify-center rounded-lg border @(i == Model.CurrentPage ? "bg-[#0f1419] text-white border-gray-200" : "border-gray-200 text-gray-600 hover:bg-gray-50") transition-colors font-bold text-sm">
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border @(i == Model.CurrentPage ? "bg-primary text-white border-primary" : "border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-primary") transition-colors font-bold text-sm">
                         @i
                     </a>
                 }
@@ -200,7 +200,7 @@
             <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <div class="relative transform overflow-hidden rounded-2xl bg-white text-right shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg scale-95 opacity-0 pointer-events-none" id="modalPanel">
 
-                    <div class="bg-[#0f1419] px-4 py-4 sm:px-6 flex justify-between items-center">
+                    <div class="bg-primary px-4 py-4 sm:px-6 flex justify-between items-center">
                         <h3 class="text-lg font-bold leading-6 text-white flex items-center">
                             <i data-lucide="hand-coins" class="ml-2 w-5 h-5"></i>
                             سداد دفعة جديدة
@@ -221,7 +221,7 @@
                                         <span class="text-gray-500 font-bold">$</span>
                                     </div>
                                     <input type="number" step="1" min="0" name="Amount" required
-                                           class="block w-full rounded-xl border-gray-200 pr-8 p-3 focus:border-[#0f1419] focus:ring-[#0f1419] font-bold text-gray-800 bg-gray-50 placeholder-gray-300 transition-all"
+                                           class="block w-full rounded-xl border-gray-200 pr-8 p-3 focus:border-primary focus:ring-primary font-bold text-primary bg-gray-50 placeholder-gray-300 transition-all"
                                            placeholder="0.00">
                                 </div>
                             </div>
@@ -231,14 +231,14 @@
                                     خصم إضافي <span class="text-xs font-normal text-gray-500">(اختياري)</span>
                                 </label>
                                 <input type="number" step="0.01" min="0" name="DiscountAmount"
-                                       class="block w-full rounded-xl border-gray-200 p-3 focus:border-[#0f1419] focus:ring-[#0f1419] bg-gray-50 transition-all"
+                                       class="block w-full rounded-xl border-gray-200 p-3 focus:border-primary focus:ring-primary bg-gray-50 transition-all"
                                        placeholder="أدخل مبلغ الخصم">
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">طريقة الدفع</label>
-                                    <select name="PaymentMethodId" class="block w-full rounded-xl border-gray-200 p-3 focus:border-[#0f1419] focus:ring-[#0f1419] bg-gray-50">
+                                    <select name="PaymentMethodId" class="block w-full rounded-xl border-gray-200 p-3 focus:border-primary focus:ring-primary bg-gray-50">
                                         @foreach (var pm in (IEnumerable<ManageMentSystem.Models.PaymentMethodOption>)(ViewBag.PaymentMethods ?? new List<ManageMentSystem.Models.PaymentMethodOption>()))
                                         {
                                             <option value="@pm.Id">@pm.Name</option>
@@ -248,22 +248,22 @@
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">التاريخ</label>
                                     <input type="date" name="PaymentDate" value="@DateTime.Today.ToString("yyyy-MM-dd")"
-                                           class="block w-full rounded-xl border-gray-200 p-3 focus:border-[#0f1419] focus:ring-[#0f1419] bg-gray-50 text-center">
+                                           class="block w-full rounded-xl border-gray-200 p-3 focus:border-primary focus:ring-primary bg-gray-50 text-center">
                                 </div>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">ملاحظات</label>
-                                <textarea name="Notes" rows="2" class="block w-full rounded-xl border-gray-200 p-3 focus:border-[#0f1419] focus:ring-[#0f1419] bg-gray-50" placeholder="أضف أي تفاصيل هنا..."></textarea>
+                                <textarea name="Notes" rows="2" class="block w-full rounded-xl border-gray-200 p-3 focus:border-primary focus:ring-primary bg-gray-50" placeholder="أضف أي تفاصيل هنا..."></textarea>
                             </div>
                         </div>
 
                         <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse gap-3">
-                            <button type="submit" id="submitPaymentBtn" class="flex-1 bg-[#0f1419] text-white px-4 py-3 rounded-xl font-bold hover:bg-primaryHover focus:ring-4 focus:ring-[#0f1419]/20 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer ">
+                            <button type="submit" id="submitPaymentBtn" class="zen-btn zen-btn-primary flex-1 cursor-pointer">
                                 <i data-lucide="check" class="w-5 h-5"></i>
                                 <span>تأكيد العملية</span>
                             </button>
-                            <button type="button" onclick="closeModal()" class="flex-1  text-gray-700 hover:text-accentRed px-4 py-3 rounded-xl font-bold border border-gray-200 hover:bg-red-100 hover:-translate-y-0.5 transition-all cursor-pointer">
+                            <button type="button" onclick="closeModal()" class="zen-btn zen-btn-neutral flex-1 cursor-pointer">
                                 إلغاء
                             </button>
                         </div>
@@ -321,7 +321,7 @@
                         text: 'يرجى إدخال مبلغ صحيح أكبر من صفر',
                         icon: 'warning',
                         confirmButtonText: 'حسناً',
-                        confirmButtonColor: '#0f1419'
+                        confirmButtonColor: primary
                     });
                     return;
                 }
@@ -329,11 +329,11 @@
                 // Confirmation
                 Swal.fire({
                     title: 'تأكيد السداد',
-                    html: `هل أنت متأكد من تسجيل دفعة بقيمة <b style="color:#0f1419; font-size:1.2em">${amountVal.toFixed(2)}</b> ؟`,
+                    html: `هل أنت متأكد من تسجيل دفعة بقيمة <b style="color:${primary}; font-size:1.2em">${amountVal.toFixed(2)}</b> ؟`,
                     icon: 'question',
                     showCancelButton: true,
-                    confirmButtonColor: '#0f1419',
-                    cancelButtonColor: '#e11d48',
+                    confirmButtonColor: primary,
+                    cancelButtonColor: accentRed,
                     confirmButtonText: 'نعم، اعتمد العملية',
                     cancelButtonText: 'تراجع',
                     focusConfirm: false
@@ -405,14 +405,14 @@
                                 title: 'تم الإرسال',
                                 text: res.message || 'تم إرسال كشف الحساب بنجاح',
                                 icon: 'success',
-                                confirmButtonColor: '#059669'
+                                confirmButtonColor: accentGreen
                             });
                         } else {
                             Swal.fire({
                                 title: 'تنبيه',
                                 text: res.message || 'لم يتم الإرسال',
                                 icon: 'info',
-                                confirmButtonColor: '#0f1419'
+                                confirmButtonColor: primary
                             });
                         }
                     },
@@ -434,3 +434,4 @@
         });
     </script>
 }
+

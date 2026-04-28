@@ -1,4 +1,4 @@
-@model ManageMentSystem.Models.Tenant
+﻿@model ManageMentSystem.Models.Tenant
 @{
     // Calculate expiry date for JS
     var expiryDate = Model.IsSubscriptionActive && Model.SubscriptionStatus == "Trial" 
@@ -12,7 +12,7 @@
 @if (expiryDate.HasValue && expiryDate.Value > DateTime.Now)
 {
     <div id="subscriptionWarningBanner" class="fixed top-0 inset-x-0 z-[9000] hidden transform transition-transform duration-500 -translate-y-full shadow-md" dir="rtl">
-        <div class="bg-[#0f1419] text-white px-4 py-3 border-b border-gray-800">
+        <div class="bg-primary text-white px-4 py-3 border-b border-gray-800">
             <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-8">
                 
                 <!-- Warning Message -->
@@ -61,7 +61,7 @@
                 <div class="flex items-center gap-3 w-full sm:w-auto justify-center">
                     <a href="https://wa.me/201129452725?text=تجديد%20الاشتراك%20(تنبيه%20قرب%20الانتهاء)" 
                        target="_blank"
-                       class="bg-white text-[#0f1419] hover:bg-gray-50 font-bold py-2 px-4 rounded-lg text-sm transition-all shadow-sm flex items-center gap-2 whitespace-nowrap">
+                       class="zen-btn zen-btn-neutral whitespace-nowrap">
                         <i data-lucide="message-circle" class="w-4 h-4"></i>
                         تجديد الآن
                     </a>
@@ -142,3 +142,4 @@
         }
     </script>
 }
+

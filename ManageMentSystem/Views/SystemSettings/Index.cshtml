@@ -1,14 +1,14 @@
-@using ManageMentSystem.Services.UserServices
+﻿@using ManageMentSystem.Services.UserServices
 @inject IUserService UserService
 @{
     ViewBag.Title = "إعدادات النظام";
 }
 
-<div class="min-h-screen bg-gray-50/50 p-6" dir="rtl">
+<div class="min-h-screen bg-bgSubtle p-6" dir="rtl">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-[#0f1419] flex items-center gap-2">
-            <i data-lucide="settings" class="text-[#0f1419]"></i> إعدادات النظام
+        <h1 class="text-2xl font-bold text-primary flex items-center gap-2">
+            <i data-lucide="settings" class="text-primary"></i> إعدادات النظام
         </h1>
         <p class="text-gray-500 mt-1 font-medium">التحكم في إعدادات وخصائص النظام</p>
     </div>
@@ -17,10 +17,10 @@
             <!-- Invoice Design -->
             <a asp-controller="UserInvoice" asp-action="Index" class="group block">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-full hover:shadow-md transition-all hover:-translate-y-1 group-hover:border-gray-200">
-                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                         <i data-lucide="file-text"></i>
                     </div>
-                    <h5 class="text-lg font-bold text-[#0f1419] mb-2 group-hover:text-[#0f1419] transition-colors">تصميم الفاتورة</h5>
+                    <h5 class="text-lg font-bold text-primary mb-2 group-hover:text-primary transition-colors">تصميم الفاتورة</h5>
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">تخصيص شكل الفاتورة، التسلسل، والرسائل الترحيبية.</p>
                 </div>
             </a>
@@ -28,10 +28,10 @@
             <!-- WhatsApp Settings -->
             <a asp-controller="WhatsApp" asp-action="Index" class="group block">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-full hover:shadow-md transition-all hover:-translate-y-1 group-hover:border-emerald-200">
-                    <div class="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-accentGreen text-2xl mb-4 group-hover:bg-accentGreen group-hover:text-white transition-colors">
                         <i data-lucide="message-circle"></i>
                     </div>
-                    <h5 class="text-lg font-bold text-[#0f1419] mb-2 group-hover:text-accentGreen transition-colors">اعدادات الواتساب</h5>
+                    <h5 class="text-lg font-bold text-primary mb-2 group-hover:text-accentGreen transition-colors">اعدادات الواتساب</h5>
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">إعدادات إرسال الفواتير والإشعارات عبر الواتساب.</p>
                 </div>
             </a>
@@ -39,10 +39,10 @@
             <!-- Payment Methods -->
             <a asp-controller="PaymentMethods" asp-action="Index" class="group block">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-full hover:shadow-md transition-all hover:-translate-y-1 group-hover:border-amber-200">
-                    <div class="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-accentAmber text-2xl mb-4 group-hover:bg-accentAmber group-hover:text-white transition-colors">
                         <i data-lucide="wallet"></i>
                     </div>
-                    <h5 class="text-lg font-bold text-[#0f1419] mb-2 group-hover:text-amber-700 transition-colors">طرق الدفع</h5>
+                    <h5 class="text-lg font-bold text-primary mb-2 group-hover:text-accentAmber transition-colors">طرق الدفع</h5>
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">إعدادات طرق الدفع (فودافون كاش، إنستاباي، نقدي).</p>
                 </div>
             </a>
@@ -50,10 +50,10 @@
             <!-- Tenant Settings -->
             <a asp-controller="SystemSettings" asp-action="TenantSettings" class="group block">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-full hover:shadow-md transition-all hover:-translate-y-1 group-hover:border-gray-200">
-                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-blue-800 group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                         <i data-lucide="building"></i>
                     </div>
-                    <h5 class="text-lg font-bold text-[#0f1419] mb-2 group-hover:text-[#0f1419] transition-colors">إعدادات المؤسسة</h5>
+                    <h5 class="text-lg font-bold text-primary mb-2 group-hover:text-primary transition-colors">إعدادات المؤسسة</h5>
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">تخصيص بيانات المؤسسة، العملة، وغيرها.</p>
                 </div>
             </a>
@@ -61,10 +61,10 @@
             <!-- Inventory Settings -->
             <a asp-controller="SystemSettings" asp-action="Inventory" class="group block">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-full hover:shadow-md transition-all hover:-translate-y-1 group-hover:border-gray-200">
-                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                         <i data-lucide="package"></i>
                     </div>
-                    <h5 class="text-lg font-bold text-[#0f1419] mb-2 group-hover:text-[#0f1419] transition-colors">إعدادات المخزون</h5>
+                    <h5 class="text-lg font-bold text-primary mb-2 group-hover:text-primary transition-colors">إعدادات المخزون</h5>
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">إدارة تنبيهات نقص المخزون والحد الأدنى للكميات.</p>
                 </div>
             </a>
@@ -72,10 +72,10 @@
             <!-- Tab Visibility -->
             <a asp-controller="SystemSettings" asp-action="TabVisibility" class="group block">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-full hover:shadow-md transition-all hover:-translate-y-1 group-hover:border-gray-200">
-                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-[#0f1419] text-2xl mb-4 group-hover:bg-[#0f1419] group-hover:text-white transition-colors">
+                    <div class="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center text-primary text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                         <i data-lucide="layout"></i>
                     </div>
-                    <h5 class="text-lg font-bold text-[#0f1419] mb-2 group-hover:text-[#0f1419] transition-colors">ظهور القوائم</h5>
+                    <h5 class="text-lg font-bold text-primary mb-2 group-hover:text-primary transition-colors">ظهور القوائم</h5>
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">التحكم في القوائم المرئية في الشريط الجانبي للنظام.</p>
                 </div>
             </a>
@@ -83,3 +83,4 @@
         </div>
     </div>
 </div>
+

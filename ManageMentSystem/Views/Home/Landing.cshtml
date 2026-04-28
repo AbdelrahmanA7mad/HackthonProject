@@ -6,966 +6,326 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zenith ERP - نظام إدارة المبيعات والأقساط الذكي</title>
-    <meta name="description" content="نظام شامل لإدارة المبيعات والأقساط والمخزون مع تكامل WhatsApp وتقارير تفصيلية" />
-    
-    <!-- Tailwind & Fonts -->
+    <title>Zenith ERP | تجربة تشغيل مستقبلية</title>
+    <meta name="description" content="تصميم حديث جدًا لإدارة المتجر والمبيعات والمخزون والعملاء من لوحة واحدة واضحة." />
+
     <script src="~/lib/tailwindcss/tailwind.js"></script>
     <script src="~/js/tailwind-theme.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="~/css/cairo-font.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/zenith-ui.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
+    <link href="~/css/cairo-font.css" rel="stylesheet">
 
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: var(--zen-theme-bg-base); color: var(--zen-theme-primary); }
-        html { scroll-behavior: smooth; }
-        .text-zen-success { color: var(--zen-theme-accent); }
-        .bg-zen-success { background-color: var(--zen-theme-accent); }
-        .border-zen-success { border-color: var(--zen-theme-accent); }
+        :root{
+            --ink:#0a1024;
+            --ink-soft:#2d3753;
+            --line:#d8e1f3;
+            --glass:rgba(255,255,255,.64);
+        }
+        *{box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{
+            margin:0;
+            font-family:"Cairo",sans-serif;
+            color:var(--ink);
+            background:
+                radial-gradient(1200px 700px at 15% -15%, #dbeafe 0%, transparent 65%),
+                radial-gradient(980px 620px at 95% 5%, #e2e8f0 0%, transparent 60%),
+                linear-gradient(170deg,#f8fafc 0%,#f1f5f9 52%,#f8fafc 100%);
+            overflow-x:hidden;
+        }
+
+        .nav-shell{
+            background:var(--glass);
+            backdrop-filter:blur(12px);
+            border:1px solid rgba(148,163,184,.28);
+        }
+
+        .hero{
+            min-height:calc(100vh - 5rem);
+            position:relative;
+            display:flex;
+            align-items:center;
+            overflow:hidden;
+            isolation:isolate;
+        }
+        .hero-grid{
+            position:absolute;inset:0;z-index:-3;pointer-events:none;
+            background-image:
+                linear-gradient(rgba(15,23,42,.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,23,42,.07) 1px, transparent 1px);
+            background-size:42px 42px;
+            mask-image:radial-gradient(ellipse 70% 60% at 50% 42%, #000 48%, transparent 100%);
+            animation:gridDrift 22s linear infinite, gridTint 10s ease-in-out infinite alternate;
+        }
+        .hero-noise{
+            position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.17;
+            background-image:radial-gradient(rgba(15,23,42,.3) .5px, transparent .5px);
+            background-size:3px 3px;
+        }
+        .blob{
+            position:absolute;z-index:-1;pointer-events:none;border-radius:999px;filter:blur(70px);
+            animation:floaty 14s ease-in-out infinite;
+        }
+        .b1{width:560px;height:560px;top:-170px;right:-160px;background:radial-gradient(circle,#cbd5e1 0%,#94a3b8 58%,transparent 74%)}
+        .b2{width:520px;height:520px;bottom:-220px;left:-130px;background:radial-gradient(circle,#e2e8f0 0%,#cbd5e1 56%,transparent 75%);animation-delay:2.5s}
+        .b3{width:360px;height:360px;top:42%;left:48%;background:radial-gradient(circle,#cbd5e1 0%,transparent 70%);animation-delay:1.2s}
+
+        .headline{letter-spacing:-.03em;text-wrap:balance}
+        .gradient-word{
+            background:linear-gradient(135deg,#0f172a 0%,#1e293b 55%,#334155 100%);
+            -webkit-background-clip:text;background-clip:text;color:transparent;
+        }
+
+        .btn-main{
+            background:linear-gradient(135deg,#0f172a 0%,#1e293b 56%,#334155 100%);
+            color:#fff;
+            box-shadow:0 18px 36px rgba(15,23,42,.24);
+            transition:.28s ease;
+        }
+        .btn-main:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 22px 42px rgba(15,23,42,.32)}
+
+        .orbit-shell{
+            position:relative;
+            border-radius:28px;
+            background:rgba(255,255,255,.62);
+            border:1px solid rgba(148,163,184,.35);
+            backdrop-filter:blur(10px);
+            box-shadow:0 20px 44px rgba(15,23,42,.11);
+        }
+        .ring{
+            position:absolute;inset:-34px;pointer-events:none;z-index:-1;
+            background:conic-gradient(from 120deg, rgba(148,163,184,.18), rgba(100,116,139,.12), rgba(203,213,225,.18), rgba(148,163,184,.18));
+            filter:blur(26px);
+            border-radius:999px;
+        }
+
+        .chip{
+            border:1px solid var(--line);
+            background:rgba(255,255,255,.78);
+            transition:.22s ease;
+        }
+        .chip:hover{transform:translateY(-2px);border-color:#b8c7e8}
+
+        .feature-card{
+            position:relative;overflow:hidden;
+            border:1px solid #d8e1f3;background:rgba(255,255,255,.86);
+            border-radius:26px;transition:.28s ease;
+        }
+        .feature-card::before{
+            content:"";position:absolute;inset:-30% -20% auto auto;width:170px;height:170px;border-radius:999px;
+            background:radial-gradient(circle,rgba(148,163,184,.24) 0%,transparent 70%);
+            pointer-events:none;
+        }
+        .feature-card:hover{transform:translateY(-6px);border-color:#bcd0f2;box-shadow:0 18px 34px rgba(15,23,42,.1)}
+
+        .section-title{letter-spacing:-.02em;text-wrap:balance}
+        .fade-up{opacity:0;transform:translateY(14px);transition:.55s ease}
+        .fade-up.show{opacity:1;transform:translateY(0)}
+
+        @@keyframes floaty{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(14px,-18px,0)}}
+        @@keyframes gridDrift{
+            0%{background-position:0 0,0 0}
+            100%{background-position:42px 42px,42px 42px}
+        }
+        @@keyframes gridTint{
+            0%{
+                opacity:.75;
+                filter:hue-rotate(0deg) saturate(100%);
+            }
+            50%{
+                opacity:.95;
+                filter:hue-rotate(-8deg) saturate(115%);
+            }
+            100%{
+                opacity:.8;
+                filter:hue-rotate(6deg) saturate(95%);
+            }
+        }
     </style>
 </head>
-
-<body class="bg-gray-50 pt-20">
-    <!-- Custom Navbar -->
-    <!-- Custom Navbar -->
-    <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <!-- Brand -->
-            <a href="/" class="flex items-center group">
-                <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP Logo" class="w-28 h-12 object-contain group-hover:scale-105 transition-transform duration-300" />
+<body>
+    <nav class="sticky top-0 z-50 border-b border-slate-200/70 nav-shell">
+        <div class="max-w-6xl mx-auto px-5 md:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center">
+                <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP" class="w-28 h-12 object-contain" />
             </a>
-
-            <!-- Navigation Links -->
-            <div class="hidden md:flex items-center gap-10 px-8 py-3">
-                <a href="#" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
-                    <span>الرئيسية</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
-                </a>
-                <a href="#why-zenith" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
-                    <span>لماذا Zenith ERP</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
-                </a>
-                <a href="#how-it-works" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
-                    <span>طريقة العمل</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
-                </a>
-                <a href="#detailed-features" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
-                    <span>المزايا</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
-                </a>
-
-                <a href="#testimonials" class="text-md font-bold text-gray-600 hover:text-gray-600 transition-colors duration-300 relative group">
-                    <span>قصص نجاح</span>
-                    <span class="absolute bottom-[-4px] left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
-                </a>
+            <div class="hidden md:flex items-center gap-8 text-[15px] font-bold text-slate-700">
+                <a href="#features" class="hover:text-slate-950 transition">المزايا</a>
+                <a href="#flow" class="hover:text-slate-950 transition">تجربة التشغيل</a>
+                <a href="#cta" class="hover:text-slate-950 transition">ابدأ الآن</a>
             </div>
-
-            <!-- Action Buttons -->
-            <div class="flex items-center gap-4">
-                <a asp-controller="Auth" asp-action="Login" 
-                   class="hidden md:inline-flex border border-gray-400 text-sm font-bold text-gray-600 hover:text-gray-600 px-5 py-2.5 hover:bg-gray-50 rounded-xl transition-all duration-300">
+            <div class="flex items-center gap-3">
+                <a asp-controller="Auth" asp-action="Login" class="hidden sm:inline-flex px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold hover:bg-white/80 transition">
                     تسجيل الدخول
                 </a>
-                <a asp-controller="Auth" asp-action="Register" 
-                   class="inline-flex items-center justify-center px-8 py-3 bg-primary hover:bg-primaryHover text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-xs shadow-gray-200 hover:-translate-y-0.5 hover:shadow-gray-200">
-                    <span>ابدأ الآن مجانا</span>
-                    <i data-lucide="arrow-left" class="mr-2 group-hover:-translate-x-1 transition-transform w-4 h-4"></i>
+                <a asp-controller="Auth" asp-action="Register" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-main font-bold">
+                    إنشاء حساب
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class=" bg-white hero-section relative pt-16 pb-8 overflow-hidden bg-white" id="homeBanner">
-        <div class="hero-container max-w-7xl mx-auto px-6 text-center">
-            
-            <div class="hero-content relative z-10">
-                <div class="hero-text mb-4">
-                    <h1 class="hero-title text-5xl md:text-7xl font-black text-primary leading-tight tracking-tight">
-                        <div class="mb-4">نظام يضم كل ما تحتاجه</div>
-                        <div>
-                            لإدارة
-                            <span id="typingText" class="text-zen-success relative inline-block min-w-[150px] text-left">مبيعاتك</span><span class="cursor animate-pulse text-zen-success">|</span>
-                        </div>
+    <main>
+        <section class="hero">
+            <div class="hero-grid"></div>
+            <div class="hero-noise"></div>
+            <div class="blob b1"></div>
+            <div class="blob b2"></div>
+            <div class="blob b3"></div>
+
+            <div class="max-w-6xl mx-auto px-5 md:px-8 w-full py-12">
+                <div class="text-center fade-up">
+                    <p class="inline-flex px-4 py-1.5 rounded-full text-sm font-bold bg-white/70 border border-slate-200 text-slate-700">
+                        تصميم مختلف. تجربة أسرع. نتائج أوضح.
+                    </p>
+                    <h1 class="headline mt-5 text-3xl md:text-5xl font-black leading-tight">
+                        شغّل مشروعك
+                        <span class="gradient-word">بذكاء بصري</span>
+                        من أول نظرة
                     </h1>
-                </div>
-                
-                <div class="hero-buttons flex justify-center mb-8">
-                    <a asp-controller="Auth" asp-action="Register" class="hero-btn-primary inline-flex items-center justify-center px-10 py-5 bg-primary hover:bg-primaryHover text-white text-xl font-bold rounded-xl transition-all duration-300 shadow-xs hover:shadow-gray-200 hover:-translate-y-1 transform group">
-                        احصل على تجربة مجانية
-                        <i data-lucide="arrow-left" class="mr-2 w-5 h-5"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="hero-background relative max-w-[80%] mx-auto">
-                <div class="relative">
-                    <img src="~/images/hero.webp" class="hero-banner rounded-xl w-full h-auto object-cover" alt="Dashboard Banner" />
-                </div>
-            </div>
-        </div> 
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const words = ["مبيعاتك", "أقساطك", "مخزونك", "عملائك"];
-                const textElement = document.getElementById("typingText");
-                const cursorElement = document.querySelector(".cursor");
-                
-                let wordIndex = 0;
-                let charIndex = 0;
-                let isDeleting = false;
-                let typeSpeed = 100;
-
-                function type() {
-                    const currentWord = words[wordIndex];
-                    
-                    if (isDeleting) {
-                        textElement.textContent = currentWord.substring(0, charIndex - 1);
-                        charIndex--;
-                        typeSpeed = 50; // Deleting speed
-                    } else {
-                        textElement.textContent = currentWord.substring(0, charIndex + 1);
-                        charIndex++;
-                        typeSpeed = 150; // Typing speed
-                    }
-
-                    if (!isDeleting && charIndex === currentWord.length) {
-                        isDeleting = true;
-                        typeSpeed = 2000; // Pause at end of word
-                    } else if (isDeleting && charIndex === 0) {
-                        isDeleting = false;
-                        wordIndex = (wordIndex + 1) % words.length;
-                        typeSpeed = 500; // Pause before new word
-                    }
-
-                    setTimeout(type, typeSpeed);
-                }
-
-                if(textElement) type();
-            });
-        </script>
-    </section>
-
-    <!-- Features Grid Section (Clean List Style) -->
-    <section id="why-zenith" class="py-24 bg-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-20">
-                <span class="inline-block px-6 py-2 rounded-full bg-gray-50 text-zen-success font-bold">
-                    لماذا Zenith ERP ؟
-                </span>
-                <h2 class="text-4xl md:text-5xl font-black text-primary mb-8 leading-tight">
-                    كل ما تحتاجه لإدارة مشروعك <br />
-                    <span class="text-zen-success"> في مكان واحد بتجربة مجانية</span>
-                </h2>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
-                <!-- 1. Dashboard -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="trending-up" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">داش بورد</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        يمتلك Zenith ERP  داش بورد هي الاسهل والاسرع في الحصول على إحصائيات شهرية فورية، مقارنات ، عدد الفواتير، الإيرادات، المصاريف، والرصيد الكلي في شاشة واحدة.
+                    <p class="mt-4 text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                        Zenith ERP يربط المبيعات والمخزون والعملاء والتقارير في تجربة حديثة
+                        تعطيك وضوح كامل واتخاذ قرار أسرع كل يوم.
                     </p>
-                </div>
-
-                <!-- 2. WhatsApp -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="message-circle" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">واتساب مدمج</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        ينفرد Zenith ERP بهذة الخدمة التي تتيح إرسال الفواتير للعملاء، رسائل جماعية دعائية للترويج لعملك و تنبيهات الأقساط المتأخرة.
-                    </p>
-                </div>
-
-
-                <!-- 3. Installments -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="hand-coins" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">الأقساط والتحصيل</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        يتميز Zenith ERP باسهل وافضل نظام ادارة لاقساطك حيث يقوم بحساب تلقائي للقسط والفائدة، جدول دفعات شهري، عقود قانونية، وتنبيهات واتساب بضغطة زر للمتأخرين.
-                    </p>
-                </div>
-
-                <!-- 4. Sales & Invoices -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="receipt" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">المبيعات والفواتير</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        يوفر Zenith ERP فواتير ضريبية، نقاط بيع (POS)،  3 انواع للدفع (كاش/آجل/جزئي)، خصومايت ذكية، وإرسال مباشر عبر واتساب.
-                    </p>
-                </div>
-
-
-                <!-- 5. Inventory -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="package" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">المخزون والمستودعات</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        يوفر Zenith ERP اسهل تجربة اضافة وتعديل وتتبع دقيق مخزون المنتجات، باركود (توليد تلقائي)، تنبيهات النقص (أقل من عدد معين قطع)، وحساب الربح المتوقع.
-                    </p>
-                </div>
-
-                <!-- 6. CRM -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="users" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">إدارة العملاء</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        يسهل Zenith ERP من تواصلك مع عملائك ويوفر لهم تجربة مميزة قريبة منك حيث يوفر كشف حساب كامل، قائمة أفضل العملاء (Top Customers)، ورسائل جماعية عبر واتساب.
-                    </p>
-                </div>
-
-
-                <!-- 7. Reports -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="pie-chart" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">التقارير والتحليلات</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        يوفر Zenith ERP أكثر من 10 أنواع من التقارير (مبيعات، أرباح، مديونيات، مخزون)، تصدير Excel، ورسوم بيانية تفاعلية.
-                    </p>
-                </div>
-
-                <!-- 8. Printing -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="printer" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">الطباعة والباركود</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        يوفر Zenith ERP أسرع وأسهل طباعة للباركود والأسعار يمكنك طباعة أي عدد بضغطة واحدة (price tags)، طباعة عقود الأقساط، ودعم الطابعات الحرارية الشائعة.
-                    </p>
-                </div>
-
-                <!-- 9. AI Assistant -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="bot" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">مساعد الذكاء الاصطناعي</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        ميزة تنافسية حصرية! مساعد ذكي يجيب على أسئلتك ويحلل بيانات المبيعات والمخزون مباشرة من داخل النظام بدقة وسرعة.
-                    </p>
-                </div>
-
-                <!-- 10. Store Accounts -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="wallet" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">حسابات المتجر</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        تتبع دقيق للربح المحقق الفعلي، إدارة طرق الدفع المتعددة (كاش، فيزا، محافظ)، وعمليات الإيداع والسحب.
-                    </p>
-                </div>
-
-                <!-- 11. General Debts -->
-                <div class="feature-item">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i data-lucide="scale" class="text-2xl text-zen-success w-8 h-8"></i>
-                        <h3 class="text-xl font-bold text-primary">الديون والمصاريف</h3>
-                    </div>
-                    <p class="text-primary font-medium">
-                        تسجيل وتتبع كافة المصاريف التشغيلية والإيرادات الخارجية، لضمان دقة كاملة في الحسابات الختامية للنظام.
-                    </p>
-                </div>
-
-
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works - Treasure Map Style -->
-    <section id="how-it-works" class="py-20  from-gray-100 via-gray-50 to-gray-100 relative overflow-hidden">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #3730a3 0px, #3730a3 1px, transparent 1px, transparent 20px);"></div>
-        
-        <div class="max-w-6xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <span class="inline-block px-6 py-2 rounded-full bg-gray-50 text-zen-success font-bold">
-                    🗺️ خارطة طريق
-                </span>
-                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 flex items-center justify-center gap-3">
-                    خطوات بسيطة تقدم كبير
-                </h2>
-                <p class="text-xl text-gray-700 font-medium">
-                    رحلتك لتطوير مشروعك في 4 خطوات بسيطة
-                </p>
-            </div>
-
-            <!-- Treasure Map Path -->
-            <div class="treasure-map relative">
-                <!-- SVG Path -->
-                <svg class="treasure-path" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#3730a3;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M 100 200 Q 250 100, 350 200 T 700 200" 
-                          stroke="url(#pathGradient)" 
-                          stroke-width="4" 
-                          stroke-dasharray="8,8"
-                          fill="none"
-                          class="animate-path"/>
-                </svg>
-
-                <!-- Step 1 -->
-                <div class="treasure-step" style="left: 8%; top: 50%;">
-                    <div class="step-marker bg-[#0f1419]">
-                        <i data-lucide="user-plus" class="text-3xl text-white w-10 h-10"></i>
-                        <span class="step-number">1</span>
-                    </div>
-                    <div class="step-content">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">إنشاء حساب</h3>
-                        <p class="text-gray-600 text-sm font-bold">سجل في ثوانٍ وابدأ رحلتك</p>
-                    </div>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="treasure-step" style="left: 32%; top: 25%;">
-                    <div class="step-marker bg-[#0f1419]">
-                        <i data-lucide="package" class="text-3xl text-white w-10 h-10"></i>
-                        <span class="step-number">2</span>
-                    </div>
-                    <div class="step-content">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">إضافة منتجاتك</h3>
-                        <p class="text-gray-600 text-sm font-bold">سجل مخزونك بسهولة</p>
-                    </div>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="treasure-step" style="left: 56%; top: 50%;">
-                    <div class="step-marker bg-[#0f1419]">
-                        <i data-lucide="shopping-cart" class="text-3xl text-white w-10 h-10"></i>
-                        <span class="step-number">3</span>
-                    </div>
-                    <div class="step-content">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">إدارة المبيعات</h3>
-                        <p class="text-gray-600 text-sm font-bold">سجل معاملاتك بسرعة</p>
-                    </div>
-                </div>
-
-                <!-- Step 4 - Treasure! -->
-                <div class="treasure-step treasure-final" style="left: 85%; top: 50%;">
-                    <div class="step-marker bg-[#0f1419] treasure-glow">
-                        <i data-lucide="trophy" class="text-4xl text-white w-12 h-12"></i>
-                        <span class="step-number">4</span>
-                        <div class="treasure-shine"></div>
-                    </div>
-                    <div class="step-content">
-                        <h3 class="text-lg font-bold text-primary mb-2 flex items-center gap-2">
-                            <i data-lucide="trending-up" class="text-gray-600 w-5 h-5"></i>  تقارير شاملة
-                        </h3>
-                        <p class="text-gray-700 text-sm font-bold">راقب نمو عملك بالتقارير</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <style>
-            .treasure-map {
-                position: relative;
-                min-height: 500px;
-                margin-top: 3rem;
-            }
-
-            .treasure-path {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-            }
-
-            .animate-path {
-                animation: dash 3s linear infinite;
-            }
-
-            @@keyframes dash {
-                to { stroke-dashoffset: -16; }
-            }
-
-            .treasure-step {
-                position: absolute;
-                transform: translate(-50%, -50%);
-                z-index: 10;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .step-marker {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                border: 4px solid white;
-                position: relative;
-                transition: all 0.3s ease;
-                cursor: pointer;
-            }
-
-            .step-marker:hover {
-                transform: scale(1.15) rotate(5deg);
-                box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            }
-
-            .step-number {
-                position: absolute;
-                top: -10px;
-                right: -10px;
-                width: 35px;
-                height: 35px;
-                background: white;
-                color: #1f2937;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-                font-size: 1.1rem;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                border: 3px solid #1e3a8a;
-            }
-
-            .step-content {
-                background: white;
-                padding: 1rem 1.5rem;
-                border-radius: 1rem;
-                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-                text-align: center;
-                border: 2px solid #1e3a8a;
-                max-width: 200px;
-            }
-
-            .treasure-final .step-marker {
-                animation: treasure-pulse 2s ease-in-out infinite;
-            }
-
-            .treasure-glow {
-                box-shadow: 0 0 30px rgba(55, 48, 163, 0.6), 0 
-                
-                
-                px 40px rgba(0,0,0,0.3);
-            }
-
-            .treasure-shine {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-                animation: shine 2s linear infinite;
-            }
-
-            @@keyframes treasure-pulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.1); }
-            }
-
-            @@keyframes shine {
-                0% { transform: translateX(-100%) rotate(45deg); }
-                100% { transform: translateX(100%) rotate(45deg); }
-            }
-
-            @@media (max-width: 768px) {
-                .treasure-map { 
-                    min-height: auto;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 3rem;
-                    padding-bottom: 3rem;
-                }
-                .treasure-step { 
-                    position: relative !important; 
-                    left: auto !important; 
-                    top: auto !important; 
-                    transform: none !important; 
-                    margin-bottom: 0; 
-                }
-                
-                /* Reset individual positioning for mobile */
-                .treasure-step:nth-child(2), 
-                .treasure-step:nth-child(3), 
-                .treasure-step:nth-child(4), 
-                .treasure-step:nth-child(5) { 
-                    top: auto !important; 
-                }
-
-                .treasure-path { display: none; }
-                .step-marker { width: 80px; height: 80px; }
-                .step-marker i { font-size: 1.5rem !important; }
-            }
-        </style>
-    </section>
-
-    <!-- Detailed Features -->
-    <section id="detailed-features" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20">
-                <span class="inline-block px-6 py-2 rounded-full bg-gray-50 text-zen-success font-bold text-sm mb-6 border border-gray-200 shadow-sm">
-                    ✨ مميزات شاملة
-                </span>
-                <h2 class="text-4xl md:text-5xl font-black text-primary mb-8 leading-tight">
-                    كل ما تحتاجه لإدارة <br class="hidden md:block" /> <span class="text-zen-success relative inline-block">
-                        مشروعك بنجاح
-                        <svg class="absolute w-full h-3 -bottom-2 right-0 text-zen-success -z-10 opacity-60" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99992C25.0003 4.49993 100.001 -1.49397 198.001 2.99992" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg>
-                    </span>
-                </h2>
-                <p class="text-xl text-zen-success max-w-2xl mx-auto leading-relaxed">
-                    منظومة متكاملة تجمع بين سهولة الاستخدام وقوة الأداء لتلبية احتياجات نمو عملك
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Installments Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_installments_new.webp" alt="نظام الأقساط الذكي" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">نظام الأقساط الذكي</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">عقود تقسيط متكاملة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">حسابات تلقائية للقسط والفائدة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">جدول دفعات شهري تفصيلي</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تنبيهات واتساب للمتأخرين</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- WhatsApp Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_whatsapp_new.webp" alt="تكامل WhatsApp" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">تكامل WhatsApp</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">إرسال فواتير مباشرة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">رسائل جماعية لجميع العملاء</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تنبيهات أقساط تلقائية</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">رسائل مخصصة حسب الحاجة</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- AI Assistant Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5 relative">
-                    <div class="absolute top-4 left-4 bg-zen-success text-white text-xs font-bold px-3 py-1 rounded-full z-10 animate-pulse">جديد حصرى!</div>
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_ai_assistant_new.webp" alt="مساعد الذكاء الاصطناعي" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">مساعد الذكاء الاصطناعي</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">شات ذكي مع استجابة سريعة جداً</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تحليل بيانات المبيعات والمخزون الحقيقية</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">إجابات فورية وتقارير مخصصة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تاريخ محادثات محفوظة لكل عميل</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Store Account Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_store_account_new.webp" alt="حسابات المتجر" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">حسابات المتجر المتقدمة</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">الربح المحقق الفعلي للأنشطة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">إدارة ومتابعة طرق الدفع المتعددة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">سجل الإيداع والسحب بالتفصيل</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تسجيل الديون والإيرادات الخارجية</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Sales Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_sales_new.webp" alt="المبيعات والفواتير" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">المبيعات والفواتير</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">أنواع دفع متعددة (كاش/آجل/جزئي)</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">خصومات ذكية (نسبة أو مبلغ)</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">نظام مرتجعات متصل بالمخزون</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">إرسال واتساب مباشر وطباعة فورية</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Inventory Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_inventory_new.webp" alt="المخزون والمنتجات" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">المخزون والمنتجات</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تتبع الكميات بدقة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تنبيهات النقص التلقائية</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">حساب الأرباح المتوقعة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">إدارة الباركود</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Customers Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_customers_new.webp" alt="إدارة العملاء" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">إدارة العملاء</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">كشف حساب كامل لكل عميل</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">قائمة Top Customers</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تتبع الديون والمدفوعات للعملاء</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">فاتورة العميل عبر رابط مباشر</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Reports Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_reports_new.webp" alt="التقارير والإحصائيات" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">التقارير والإحصائيات</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">أكثر من 10 أنواع تقارير</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">رسوم بيانية تفاعلية</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">تصدير Excel بنقرة واحدة</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">فلاتر متقدمة ومرنة</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Printing Details -->
-                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden hover:-translate-y-0.5">
-                    <div class="h-56 bg-gray-50 relative overflow-hidden">
-                        <img src="~/images/detail_printing_new.webp" alt="الطباعة والباركود" class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-500" />
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-primary mb-4">الطباعة والباركود</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">طباعة باركود للمنتجات</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">طباعة Price Tags (الأسعار)</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">طباعة عقود الأقساط</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="text-zen-success mt-1 w-5 h-5"></i>
-                                <span class="text-gray-700 font-medium">دعم الطابعات الحرارية الشائعة</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Customer Stories Section -->
-    <section id="testimonials" class="py-24 bg-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 animate-fade-in-up">
-                <span class="inline-block px-6 py-2 rounded-full bg-gray-100 text-zen-success font-bold text-sm mb-6 border border-gray-200">
-                    حالات استخدام
-                </span>
-                <h2 class="text-4xl md:text-5xl font-black text-primary mb-6">
-                    كيف يمكن ان يساعد <span class="text-zen-success font-bold">Zenith ERP</span> مشروعك
-                </h2>
-                <p class="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">
-                    اكتشف سيناريوهات يساعد <span class="text-zen-success font-bold">Zenith ERP</span> فيها الشركات والمتاجر في تنظيم أعمالهم، زيادة مبيعاتهم، وتحقيق نمو مستدام من خلال حلول ذكية ومتكاملة.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Story 1 -->
-                <div class="bg-bgSubtle rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-200 flex flex-col group">
-                    <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
-                        <img src="~/images/story_electronics.webp" alt="متجر إلكترونيات" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                        <div class="absolute inset-0  from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <div class="flex-grow">
-                        <span class="text-gray-600 font-bold text-sm uppercase mb-2 block tracking-wider">المدينة للإلكترونيات</span>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-zen-success transition-colors">
-                            كيف تضاعفت مبيعاتنا 3 مرات مع Zenith ERP
-                        </h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed text-sm">
-                            "كنا نعاني من الفوضى في المخزون والحسابات. مع Zenith ERP، أصبح كل شيء منظماً. تقارير المبيعات اليومية ساعدتنا على اتخاذ قرارات صائبة وزيادة أرباحنا بشكل ملحوظ."
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Story 2 -->
-                <div class="bg-bgSubtle rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-200 flex flex-col group">
-                    <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
-                        <img src="~/images/story_warehouse.webp" alt="مستودع جملة" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                         <div class="absolute inset-0  from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <div class="flex-grow">
-                        <span class="text-gray-600 font-bold text-sm uppercase mb-2 block tracking-wider">مؤسسة التوريد الحديثة</span>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-zen-success transition-colors">
-                            إدارة مخزون الجملة أصبحت أسهل
-                        </h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed text-sm">
-                            "إدارة آلاف الأصناف كانت كابوساً. نظام Zenith ERP للمخزون والباركود جعل الجرد عملية ممتعة وسريعة. وفرنا مئات الساعات من العمل اليدوي."
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Story 3 -->
-                <div class="bg-bgSubtle rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-200 flex flex-col group">
-                    <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
-                        <img src="~/images/story_mobile.webp" alt="متجر جوالات" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                         <div class="absolute inset-0  from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <div class="flex-grow">
-                        <span class="text-gray-600 font-bold text-sm uppercase mb-2 block tracking-wider">تكنو فون</span>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-zen-success transition-colors">
-                            تجربة عملاء استثنائية وسرعة في البيع
-                        </h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed text-sm">
-                            "السرعة هي كل شيء في متجرنا. واجهة البيع في Zenith ERP سريعة جداً، وإرسال الفواتير عبر واتساب أبهر عملائنا وجعلهم يعودون إلينا دائماً."
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black text-white py-8 border-t border-gray-200">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">Zenith ERP</h3>
-                    <p class="leading-relaxed font-medium opacity-90 mb-6">
-                        نظام شامل لإدارة المبيعات والمخزون والعملاء بسهولة واحترافية.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-white hover:text-primary transition-all duration-300 transform hover:-translate-y-1">
-                            <i data-lucide="facebook" class="text-lg w-5 h-5"></i>
+                    <div class="mt-8 flex flex-wrap justify-center gap-3">
+                        <a asp-controller="Auth" asp-action="Register" class="btn-main inline-flex items-center gap-2 px-6 py-3 rounded-xl text-base font-bold">
+                            جرّب مجانًا الآن
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
                         </a>
-                        <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-white hover:text-red-600 transition-all duration-300 transform hover:-translate-y-1">
-                            <i data-lucide="youtube" class="text-lg w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-white hover:text-primary transition-all duration-300 transform hover:-translate-y-1">
-                            <i data-lucide="instagram" class="text-lg w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
+                        <a href="#features" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 bg-white/70 text-slate-800 text-base font-bold hover:bg-white transition">
+                            استكشف التجربة
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
-                <div>
-                    <h4 class="text-lg font-bold mb-4">روابط سريعة</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#features" class="hover:text-white transition-colors duration-300">المزايا</a></li>
-                        <li><a asp-controller="Auth" asp-action="Login" class="hover:text-white transition-colors duration-300">تسجيل الدخول</a></li>
-                        <li><a asp-controller="Auth" asp-action="Register" class="hover:text-white transition-colors duration-300">إنشاء حساب</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4">الدعم</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                                <i data-lucide="headset" class="w-5 h-5"></i>
-                            </div>
-                            <span>دعم فني 24/7</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
-                            </div>
-                            <span>تحديثات مستمرة</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                                <i data-lucide="shield" class="w-5 h-5"></i>
-                            </div>
-                            <span>أمان متقدم</span>
-                        </li>
-                    </ul>
+                <div class="mt-8 max-w-3xl mx-auto orbit-shell p-3 md:p-4 fade-up">
+                    <div class="ring"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="chip rounded-xl px-4 py-3">
+                            <p class="text-xs text-slate-500">مبيعات اليوم</p>
+                            <p class="text-2xl font-black text-slate-900">+38 طلب</p>
+                        </div>
+                        <div class="chip rounded-xl px-4 py-3">
+                            <p class="text-xs text-slate-500">تنبيهات المخزون</p>
+                            <p class="text-2xl font-black text-slate-900">07 عناصر</p>
+                        </div>
+                        <div class="chip rounded-xl px-4 py-3">
+                            <p class="text-xs text-slate-500">عملاء نشطين</p>
+                            <p class="text-2xl font-black text-slate-900">342 عميل</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="border-t border-gray-200 pt-6 text-center opacity-75">
-                <p id="footer-year"></p>
+        <section id="features" class="py-20">
+            <div class="max-w-6xl mx-auto px-5 md:px-8">
+                <div class="text-center mb-12 fade-up">
+                    <h2 class="section-title text-3xl md:text-5xl font-black">مزايا بروح تصميم غير تقليدية</h2>
+                    <p class="mt-4 text-slate-600 text-lg">واجهة مبنية لتخدم سرعة التشغيل مش مجرد شكل.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <article class="feature-card p-7 fade-up">
+                        <i data-lucide="shopping-cart" class="w-7 h-7"></i>
+                        <h3 class="mt-4 text-xl font-extrabold">إدارة المبيعات</h3>
+                        <p class="mt-2 text-slate-600">فواتير سريعة، خصومات مرنة، وتجربة بيع عملية.</p>
+                    </article>
+                    <article class="feature-card p-7 fade-up">
+                        <i data-lucide="boxes" class="w-7 h-7"></i>
+                        <h3 class="mt-4 text-xl font-extrabold">مخزون لحظي</h3>
+                        <p class="mt-2 text-slate-600">تنبيهات قبل النفاد وتتبع واضح للحركة اليومية.</p>
+                    </article>
+                    <article class="feature-card p-7 fade-up">
+                        <i data-lucide="users-round" class="w-7 h-7"></i>
+                        <h3 class="mt-4 text-xl font-extrabold">رحلة عميل أفضل</h3>
+                        <p class="mt-2 text-slate-600">بيانات موحدة لكل عميل تساعدك تبيع أكثر.</p>
+                    </article>
+                    <article class="feature-card p-7 fade-up">
+                        <i data-lucide="message-circle-more" class="w-7 h-7"></i>
+                        <h3 class="mt-4 text-xl font-extrabold">تكامل واتساب</h3>
+                        <p class="mt-2 text-slate-600">إرسال فواتير ورسائل مباشرة من داخل النظام.</p>
+                    </article>
+                    <article class="feature-card p-7 fade-up">
+                        <i data-lucide="bar-chart-3" class="w-7 h-7"></i>
+                        <h3 class="mt-4 text-xl font-extrabold">تقارير تفاعلية</h3>
+                        <p class="mt-2 text-slate-600">لقطات أداء واضحة تسهّل القرار اليومي.</p>
+                    </article>
+                    <article class="feature-card p-7 fade-up">
+                        <i data-lucide="brain-circuit" class="w-7 h-7"></i>
+                        <h3 class="mt-4 text-xl font-extrabold">مساعد ذكي</h3>
+                        <p class="mt-2 text-slate-600">فهم أسرع للأرقام المهمة في لحظتها.</p>
+                    </article>
+                </div>
             </div>
+        </section>
+
+        <section id="flow" class="py-10 pb-20">
+            <div class="max-w-6xl mx-auto px-5 md:px-8">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="p-8 md:p-10 rounded-[28px] text-white relative overflow-hidden fade-up"
+                         style="background:linear-gradient(145deg,#0f172a 0%,#1e293b 58%,#334155 100%)">
+                        <div class="absolute -top-16 -left-14 w-52 h-52 rounded-full bg-white/10 blur-2xl"></div>
+                        <p class="text-slate-200 font-bold">تجربة التشغيل</p>
+                        <h2 class="section-title mt-3 text-3xl md:text-4xl font-black leading-tight">من الصفر للتشغيل خلال دقائق</h2>
+                        <p class="mt-4 text-slate-100/90 leading-relaxed">مسار واضح وبسيط يخلّي الفريق يبدأ بسرعة وبدون تعقيد.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="feature-card p-6 fade-up">
+                            <p class="text-sm text-slate-500 font-bold">01</p>
+                            <h3 class="text-xl font-extrabold">أنشئ حسابك</h3>
+                            <p class="text-slate-600 mt-1">خطوة سريعة لبدء إعداد متجرك.</p>
+                        </div>
+                        <div class="feature-card p-6 fade-up">
+                            <p class="text-sm text-slate-500 font-bold">02</p>
+                            <h3 class="text-xl font-extrabold">أضف البيانات الأساسية</h3>
+                            <p class="text-slate-600 mt-1">المنتجات، العملاء، وسياسات التشغيل.</p>
+                        </div>
+                        <div class="feature-card p-6 fade-up">
+                            <p class="text-sm text-slate-500 font-bold">03</p>
+                            <h3 class="text-xl font-extrabold">ابدأ البيع وتابع الأداء</h3>
+                            <p class="text-slate-600 mt-1">من لوحة واحدة بمؤشرات واضحة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="pb-20">
+            <div class="max-w-4xl mx-auto px-5 md:px-8">
+                <div class="orbit-shell rounded-[34px] p-8 md:p-12 text-center fade-up">
+                    <h2 class="section-title text-3xl md:text-5xl font-black">جاهز تشوف تصميم يوصل شغلك لمستوى تاني؟</h2>
+                    <p class="mt-4 text-slate-600 text-lg">ابدأ مجانًا وخلّي إدارتك أسرع، أوضح، وأجمل.</p>
+                    <div class="mt-8 flex flex-wrap justify-center gap-3">
+                        <a asp-controller="Auth" asp-action="Register" class="btn-main inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold">
+                            ابدأ الآن
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+                        <a asp-controller="Auth" asp-action="Login" class="inline-flex items-center px-8 py-4 rounded-xl border border-slate-300 text-slate-700 font-bold hover:bg-white transition">
+                            تسجيل الدخول
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200/80 bg-white/65 backdrop-blur">
+        <div class="max-w-6xl mx-auto px-5 md:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-3">
+            <p class="text-slate-700 font-bold" id="footer-year"></p>
+            <p class="text-slate-500 text-sm">Zenith ERP - تصميم حديث لتشغيل أذكى</p>
         </div>
     </footer>
 
-    <script src="~/js/landing.js" asp-append-version="true"></script>
     <script>
-        // Set footer year
-        document.getElementById('footer-year').textContent = `© ${new Date().getFullYear()} Zenith ERP. جميع الحقوق محفوظة.`;
+        document.getElementById("footer-year").textContent = `© ${new Date().getFullYear()} Zenith ERP. جميع الحقوق محفوظة.`;
         lucide.createIcons();
-    </script>
 
-    <style>
-        @@keyframes blob {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        .animate-blob { animation: blob 7s infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-        @@keyframes fade-in {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in { animation: fade-in 1s ease-out; }
-        @@keyframes pulse-slow {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
-    </style>
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach((e)=>{ if(e.isIntersecting){ e.target.classList.add("show"); observer.unobserve(e.target);} });
+        }, { threshold:.2 });
+        document.querySelectorAll(".fade-up").forEach((el)=>observer.observe(el));
+    </script>
 </body>
 </html>
-

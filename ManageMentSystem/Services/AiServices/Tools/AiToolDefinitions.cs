@@ -73,6 +73,36 @@ namespace ManageMentSystem.Services.AiServices
         [JsonPropertyName("product_name")] public string Name { get; set; } = "";
     }
 
+    public class CustomerAccountStatementParams
+    {
+        [JsonPropertyName("customer_name")] public string CustomerName { get; set; } = "";
+        [JsonPropertyName("from_date")] public string? FromDate { get; set; }
+        [JsonPropertyName("to_date")] public string? ToDate { get; set; }
+        [JsonPropertyName("include_entries")] public bool? IncludeEntries { get; set; }
+        [JsonPropertyName("max_entries")] public int? MaxEntries { get; set; }
+    }
+
+    public class StoreTransactionsParams
+    {
+        [JsonPropertyName("from_date")] public string? FromDate { get; set; }
+        [JsonPropertyName("to_date")] public string? ToDate { get; set; }
+        [JsonPropertyName("transaction_type")] public string? TransactionType { get; set; }
+        [JsonPropertyName("category")] public string? Category { get; set; }
+        [JsonPropertyName("payment_method_name")] public string? PaymentMethodName { get; set; }
+        [JsonPropertyName("min_amount")] public decimal? MinAmount { get; set; }
+        [JsonPropertyName("max_amount")] public decimal? MaxAmount { get; set; }
+        [JsonPropertyName("limit")] public int? Limit { get; set; }
+    }
+
+    public class SalesDetailsParams
+    {
+        [JsonPropertyName("from_date")] public string? FromDate { get; set; }
+        [JsonPropertyName("to_date")] public string? ToDate { get; set; }
+        [JsonPropertyName("customer_name")] public string? CustomerName { get; set; }
+        [JsonPropertyName("payment_type")] public string? PaymentType { get; set; }
+        [JsonPropertyName("limit")] public int? Limit { get; set; }
+    }
+
     internal static class ToolHelper
     {
         internal static string Run(string name, Dictionary<string, object> args)
@@ -327,6 +357,59 @@ namespace ManageMentSystem.Services.AiServices
             if (p.FromDate != null) args["from_date"] = p.FromDate;
             if (p.ToDate != null) args["to_date"] = p.ToDate;
             return ToolHelper.Run("get_expense_details", args);
+        }
+    }
+
+    public class GetCustomerAccountStatementTool : Tool<CustomerAccountStatementParams, string>
+    {
+        public override string Name => "get_customer_account_statement";
+        public override string Description => "كشف حساب عميل تفصيلي (فواتير/مدفوعات/متبقي) مع فلترة تاريخية.";
+
+        protected override string Handle(CustomerAccountStatementParams p)
+        {
+            var args = new Dictionary<string, object> { ["customer_name"] = p.CustomerName };
+            if (!string.IsNullOrWhiteSpace(p.FromDate)) args["from_date"] = p.FromDate!;
+            if (!string.IsNullOrWhiteSpace(p.ToDate)) args["to_date"] = p.ToDate!;
+            if (p.IncludeEntries.HasValue) args["include_entries"] = p.IncludeEntries.Value;
+            if (p.MaxEntries.HasValue) args["max_entries"] = p.MaxEntries.Value;
+            return ToolHelper.Run("get_customer_account_statement", args);
+        }
+    }
+
+    public class GetStoreTransactionsTool : Tool<StoreTransactionsParams, string>
+    {
+        public override string Name => "get_store_transactions";
+        public override string Description => "قيود الخزنة التفصيلية مع فلاتر التاريخ والنوع والفئة وطريقة الدفع والمبلغ.";
+
+        protected override string Handle(StoreTransactionsParams p)
+        {
+            var args = new Dictionary<string, object>();
+            if (!string.IsNullOrWhiteSpace(p.FromDate)) args["from_date"] = p.FromDate!;
+            if (!string.IsNullOrWhiteSpace(p.ToDate)) args["to_date"] = p.ToDate!;
+            if (!string.IsNullOrWhiteSpace(p.TransactionType)) args["transaction_type"] = p.TransactionType!;
+            if (!string.IsNullOrWhiteSpace(p.Category)) args["category"] = p.Category!;
+            if (!string.IsNullOrWhiteSpace(p.PaymentMethodName)) args["payment_method_name"] = p.PaymentMethodName!;
+            if (p.MinAmount.HasValue) args["min_amount"] = p.MinAmount.Value;
+            if (p.MaxAmount.HasValue) args["max_amount"] = p.MaxAmount.Value;
+            if (p.Limit.HasValue) args["limit"] = p.Limit.Value;
+            return ToolHelper.Run("get_store_transactions", args);
+        }
+    }
+
+    public class GetSalesDetailsTool : Tool<SalesDetailsParams, string>
+    {
+        public override string Name => "get_sales_details";
+        public override string Description => "فواتير المبيعات التفصيلية مع المتحصل والمتبقي والمرتجع.";
+
+        protected override string Handle(SalesDetailsParams p)
+        {
+            var args = new Dictionary<string, object>();
+            if (!string.IsNullOrWhiteSpace(p.FromDate)) args["from_date"] = p.FromDate!;
+            if (!string.IsNullOrWhiteSpace(p.ToDate)) args["to_date"] = p.ToDate!;
+            if (!string.IsNullOrWhiteSpace(p.CustomerName)) args["customer_name"] = p.CustomerName!;
+            if (!string.IsNullOrWhiteSpace(p.PaymentType)) args["payment_type"] = p.PaymentType!;
+            if (p.Limit.HasValue) args["limit"] = p.Limit.Value;
+            return ToolHelper.Run("get_sales_details", args);
         }
     }
 }

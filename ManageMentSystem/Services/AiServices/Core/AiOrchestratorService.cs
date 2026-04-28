@@ -41,6 +41,9 @@ namespace ManageMentSystem.Services.AiServices
             _client.RegisterTool<GetCustomerInfoTool>();
             _client.RegisterTool<SearchProductTool>();
             _client.RegisterTool<GetExpenseDetailsTool>();
+            _client.RegisterTool<GetCustomerAccountStatementTool>();
+            _client.RegisterTool<GetStoreTransactionsTool>();
+            _client.RegisterTool<GetSalesDetailsTool>();
         }
 
         public async Task<string> ChatAsync(List<Message> history, string userMessage)

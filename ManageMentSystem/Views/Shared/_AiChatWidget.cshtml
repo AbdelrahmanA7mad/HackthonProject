@@ -37,8 +37,8 @@
             <a href="/Ai/Index" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center" title="تكبير للصفحة الكاملة">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </a>
-            <button onclick="clearAiHistory()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-colors flex items-center justify-center" title="مسح المحادثة">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+            <button onclick="clearAiHistory()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center" title="محادثة جديدة">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </button>
             <button onclick="toggleAiChat()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center" title="إغلاق">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -121,14 +121,25 @@
     const aiWelcomeEl  = document.getElementById('ai-welcome-msg');
     const aiPanel      = document.getElementById('aiChatPanel');
     const aiOverlay    = document.getElementById('aiChatOverlay');
-    let isAiStreaming  = false;
+    let isAiStreaming         = false;
+    let currentConversationId = null;
 
     // Load History on Page Load
     document.addEventListener('DOMContentLoaded', loadAiHistory);
 
     async function loadAiHistory() {
         try {
-            const response = await fetch('/Ai/GetHistory');
+            // Fetch the latest conversation instead of global history
+            const convResponse = await fetch('/Ai/GetConversations');
+            if (!convResponse.ok) return;
+            const conversations = await convResponse.json();
+            
+            if (conversations.length === 0) return;
+            
+            const latest = conversations[0]; // Conversations are sorted by date
+            currentConversationId = latest.id;
+            
+            const response = await fetch(`/Ai/GetConversation?id=${latest.id}`);
             if (!response.ok) return;
             const history = await response.json();
             
@@ -268,7 +279,10 @@
             const response = await fetch('/Ai/Stream', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ 
+                    message: text,
+                    conversationId: currentConversationId 
+                })
             });
 
             if (!response.ok) throw new Error('فشل الاتصال بالخادم.');
@@ -290,6 +304,11 @@
                     const data = line.slice(6);
 
                     if (data === '[DONE]') break;
+
+                    if (data.startsWith('[CONVERSATION_ID]')) {
+                        currentConversationId = parseInt(data.split(' ')[1]);
+                        continue;
+                    }
                     
                     if (data.startsWith('[ERROR]')) {
                         bubble.innerHTML = `<div class="flex items-center gap-1.5 text-red-600 text-xs"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> <span>${data.slice(7)}</span></div>`;
@@ -331,12 +350,13 @@
         }
     }
 
-    async function clearAiHistory() {
-        await fetch('/Ai/Clear', { method: 'POST' });
+    function clearAiHistory() {
+        // Just clear the UI and ID to start fresh, don't delete from DB
         aiMessagesEl.innerHTML = '';
         aiMessagesEl.classList.add('relative');
         aiMessagesEl.appendChild(aiWelcomeEl);
         aiInputEl.value = '';
+        currentConversationId = null;
     }
 </script>
 

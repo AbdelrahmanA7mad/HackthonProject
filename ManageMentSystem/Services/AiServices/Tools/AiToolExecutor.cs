@@ -7,6 +7,7 @@ namespace ManageMentSystem.Services.AiServices
 {
     public class AiToolExecutor : IAiToolExecutor
     {
+        private const int NormalizedSearchCandidateLimit = 400;
         private static readonly HashSet<string> AllowedPeriods = new(StringComparer.OrdinalIgnoreCase)
         {
             "today", "week", "month", "year", "all"
@@ -116,6 +117,9 @@ namespace ManageMentSystem.Services.AiServices
                 "get_customer_info" => await GetCustomerInfoAsync(args),
                 "search_product" => await SearchProductAsync(args),
                 "get_expense_details" => await GetExpenseDetailsAsync(args),
+                "get_customer_account_statement" => await GetCustomerAccountStatementAsync(args),
+                "get_store_transactions" => await GetStoreTransactionsAsync(args),
+                "get_sales_details" => await GetSalesDetailsAsync(args),
                 _ => throw new ArgumentException($"Unknown function '{functionName}'.")
             };
         }
@@ -211,16 +215,19 @@ namespace ManageMentSystem.Services.AiServices
 
             var salesQuery = _context.Sales
                 .AsNoTracking()
-                .Include(s => s.SaleItems)
-                .ThenInclude(si => si.Product)
                 .Where(s => s.TenantId == tenantId);
 
             if (fromDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= fromDate.Value);
             if (toDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate <= toDate.Value);
 
-            var sales = await salesQuery.ToListAsync();
-            var salesRevenue = sales.Sum(s => s.TotalAmount);
-            var costOfGoods = sales.SelectMany(s => s.SaleItems).Sum(si => (si.Product?.PurchasePrice ?? 0m) * si.Quantity);
+            var salesRevenue = await salesQuery.SumAsync(s => (decimal?)s.TotalAmount) ?? 0m;
+            var costOfGoodsQuery = _context.SaleItems
+                .AsNoTracking()
+                .Where(si => si.Sale.TenantId == tenantId);
+            if (fromDate.HasValue) costOfGoodsQuery = costOfGoodsQuery.Where(si => si.Sale.SaleDate >= fromDate.Value);
+            if (toDate.HasValue) costOfGoodsQuery = costOfGoodsQuery.Where(si => si.Sale.SaleDate <= toDate.Value);
+            var costOfGoods = await costOfGoodsQuery
+                .SumAsync(si => (decimal?)((si.Product != null ? si.Product.PurchasePrice : 0m) * si.Quantity)) ?? 0m;
             var grossProfit = salesRevenue - costOfGoods;
 
             var expenseQuery = _context.StoreAccounts
@@ -358,13 +365,15 @@ namespace ManageMentSystem.Services.AiServices
             if (periodStart.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= periodStart.Value);
             if (periodEnd.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate <= periodEnd.Value);
 
-            var sales = await salesQuery
-                .Include(s => s.SaleItems)
-                .ThenInclude(si => si.Product)
-                .ToListAsync();
-
-            var totalRevenue = sales.Sum(s => s.TotalAmount);
-            var costOfGoods = sales.SelectMany(s => s.SaleItems).Sum(si => (si.Product?.PurchasePrice ?? 0m) * si.Quantity);
+            var salesCount = await salesQuery.CountAsync();
+            var totalRevenue = await salesQuery.SumAsync(s => (decimal?)s.TotalAmount) ?? 0m;
+            var costOfGoodsQuery = _context.SaleItems
+                .AsNoTracking()
+                .Where(si => si.Sale.TenantId == tenantId);
+            if (periodStart.HasValue) costOfGoodsQuery = costOfGoodsQuery.Where(si => si.Sale.SaleDate >= periodStart.Value);
+            if (periodEnd.HasValue) costOfGoodsQuery = costOfGoodsQuery.Where(si => si.Sale.SaleDate <= periodEnd.Value);
+            var costOfGoods = await costOfGoodsQuery
+                .SumAsync(si => (decimal?)((si.Product != null ? si.Product.PurchasePrice : 0m) * si.Quantity)) ?? 0m;
             var expensesQuery = _context.StoreAccounts
                 .AsNoTracking()
                 .Where(sa => sa.TenantId == tenantId && sa.TransactionType == Models.TransactionType.Expense);
@@ -378,7 +387,7 @@ namespace ManageMentSystem.Services.AiServices
 
             return new
             {
-                total_sales_count = sales.Count,
+                total_sales_count = salesCount,
                 total_revenue = Math.Round(totalRevenue, 2),
                 total_customers = totalCustomers,
                 total_inventory = totalInventory,
@@ -401,8 +410,6 @@ namespace ManageMentSystem.Services.AiServices
 
             var salesQuery = _context.Sales
                 .AsNoTracking()
-                .Include(s => s.SaleItems)
-                .ThenInclude(si => si.Product)
                 .Where(s => s.TenantId == tenantId);
 
             if (fromDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= fromDate.Value);
@@ -410,30 +417,41 @@ namespace ManageMentSystem.Services.AiServices
             if (customerId.HasValue) salesQuery = salesQuery.Where(s => s.CustomerId == customerId.Value);
             if (categoryId.HasValue) salesQuery = salesQuery.Where(s => s.SaleItems.Any(si => si.Product != null && si.Product.CategoryId == categoryId.Value));
 
-            var sales = await salesQuery.ToListAsync();
-            var totalRevenue = sales.Sum(s => s.TotalAmount);
-            var totalDiscount = sales.Sum(s => s.DiscountAmount);
+            var totalSales = await salesQuery.CountAsync();
+            var totalRevenue = await salesQuery.SumAsync(s => (decimal?)s.TotalAmount) ?? 0m;
+            var totalDiscount = await salesQuery.SumAsync(s => (decimal?)s.DiscountAmount) ?? 0m;
             var netRevenue = totalRevenue - totalDiscount;
-            var totalCost = sales.SelectMany(s => s.SaleItems).Sum(si => (si.Product?.PurchasePrice ?? 0m) * si.Quantity);
+
+            var saleItemsQuery = _context.SaleItems
+                .AsNoTracking()
+                .Where(si => si.Sale.TenantId == tenantId);
+            if (fromDate.HasValue) saleItemsQuery = saleItemsQuery.Where(si => si.Sale.SaleDate >= fromDate.Value);
+            if (toDate.HasValue) saleItemsQuery = saleItemsQuery.Where(si => si.Sale.SaleDate <= toDate.Value);
+            if (customerId.HasValue) saleItemsQuery = saleItemsQuery.Where(si => si.Sale.CustomerId == customerId.Value);
+            if (categoryId.HasValue) saleItemsQuery = saleItemsQuery.Where(si => si.Product != null && si.Product.CategoryId == categoryId.Value);
+
+            var totalCost = await saleItemsQuery
+                .SumAsync(si => (decimal?)((si.Product != null ? si.Product.PurchasePrice : 0m) * si.Quantity)) ?? 0m;
             var grossProfit = netRevenue - totalCost;
             var profitMargin = netRevenue > 0 ? (grossProfit / netRevenue) * 100m : 0m;
-            var dailySales = sales
+
+            var dailySales = await salesQuery
                 .GroupBy(s => s.SaleDate.Date)
                 .Select(g => new { date = g.Key, count = g.Count(), revenue = g.Sum(x => x.TotalAmount) })
                 .OrderByDescending(x => x.revenue)
                 .Take(5)
-                .ToList();
+                .ToListAsync();
 
             return new
             {
-                total_sales = sales.Count,
+                total_sales = totalSales,
                 total_revenue = Math.Round(totalRevenue, 2),
                 total_discount = Math.Round(totalDiscount, 2),
                 net_revenue = Math.Round(netRevenue, 2),
                 total_cost = Math.Round(totalCost, 2),
                 gross_profit = Math.Round(grossProfit, 2),
                 profit_margin = Math.Round(profitMargin, 2),
-                average_sale_value = Math.Round(sales.Count > 0 ? totalRevenue / sales.Count : 0m, 2),
+                average_sale_value = Math.Round(totalSales > 0 ? totalRevenue / totalSales : 0m, 2),
                 top_days = dailySales
                     .Select(d => new { date = d.date.ToString("yyyy-MM-dd"), sales_count = d.count, revenue = Math.Round(d.revenue, 2) })
                     .ToList(),
@@ -495,32 +513,41 @@ namespace ManageMentSystem.Services.AiServices
 
             EnsureDateRangeIsValid(fromDate, toDate);
 
-            var customers = await _context.Customers
+            var customersQuery = _context.Customers
                 .AsNoTracking()
-                .Include(c => c.Sales)
-                .Where(c => c.TenantId == tenantId)
-                .ToListAsync();
+                .Where(c => c.TenantId == tenantId);
 
             var salesQuery = _context.Sales.AsNoTracking().Where(s => s.TenantId == tenantId);
             if (fromDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= fromDate.Value);
             if (toDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate <= toDate.Value);
-            var sales = await salesQuery.Include(s => s.Customer).ToListAsync();
+            var totalCustomers = await customersQuery.CountAsync();
+            var activeCustomers = await _context.Sales
+                .AsNoTracking()
+                .Where(s => s.TenantId == tenantId && s.CustomerId != null)
+                .Select(s => s.CustomerId)
+                .Distinct()
+                .CountAsync();
+            var newCustomersQuery = customersQuery;
+            if (fromDate.HasValue) newCustomersQuery = newCustomersQuery.Where(c => c.CreatedAt >= fromDate.Value);
+            if (toDate.HasValue) newCustomersQuery = newCustomersQuery.Where(c => c.CreatedAt <= toDate.Value);
+            var newCustomers = await newCustomersQuery.CountAsync();
+            var totalCustomerRevenue = await salesQuery.SumAsync(s => (decimal?)s.TotalAmount) ?? 0m;
 
-            var topCustomers = sales
-                .Where(s => s.Customer != null)
+            var topCustomers = await salesQuery
+                .Where(s => s.CustomerId != null && s.Customer != null)
                 .GroupBy(s => s.Customer!.FullName)
                 .Select(g => new { customer_name = g.Key, sales_count = g.Count(), total_spent = g.Sum(x => x.TotalAmount) })
                 .OrderByDescending(x => x.total_spent)
                 .Take(10)
-                .ToList();
+                .ToListAsync();
 
             return new
             {
-                total_customers = customers.Count,
-                active_customers = customers.Count(c => c.Sales.Any()),
-                new_customers = customers.Count(c => (!fromDate.HasValue || c.CreatedAt >= fromDate.Value) && (!toDate.HasValue || c.CreatedAt <= toDate.Value)),
-                total_customer_revenue = Math.Round(sales.Sum(s => s.TotalAmount), 2),
-                average_customer_value = Math.Round(customers.Count > 0 ? sales.Sum(s => s.TotalAmount) / customers.Count : 0m, 2),
+                total_customers = totalCustomers,
+                active_customers = activeCustomers,
+                new_customers = newCustomers,
+                total_customer_revenue = Math.Round(totalCustomerRevenue, 2),
+                average_customer_value = Math.Round(totalCustomers > 0 ? totalCustomerRevenue / totalCustomers : 0m, 2),
                 top_customers = topCustomers.Select(c => new { c.customer_name, c.sales_count, total_spent = Math.Round(c.total_spent, 2) }).ToList(),
                 currency = "EGP"
             };
@@ -617,19 +644,21 @@ namespace ManageMentSystem.Services.AiServices
 
             EnsureDateRangeIsValid(fromDate, toDate);
 
-            var salesQuery = _context.Sales
-                .AsNoTracking()
-                .Include(s => s.SaleItems)
-                .ThenInclude(si => si.Product)
-                .ThenInclude(p => p.Category)
-                .Where(s => s.TenantId == tenantId);
-
+            var salesQuery = _context.Sales.AsNoTracking().Where(s => s.TenantId == tenantId);
             if (fromDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= fromDate.Value);
             if (toDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate <= toDate.Value);
+            var totalSales = await salesQuery.CountAsync();
 
-            var sales = await salesQuery.ToListAsync();
-            var categoryPerformance = sales
-                .SelectMany(s => s.SaleItems)
+            var saleItems = await _context.SaleItems
+                .AsNoTracking()
+                .Include(si => si.Product)
+                .ThenInclude(p => p.Category)
+                .Where(si => si.Sale.TenantId == tenantId)
+                .Where(si => !fromDate.HasValue || si.Sale.SaleDate >= fromDate.Value)
+                .Where(si => !toDate.HasValue || si.Sale.SaleDate <= toDate.Value)
+                .ToListAsync();
+
+            var categoryPerformance = saleItems
                 .Where(si => si.Product?.Category != null)
                 .GroupBy(si => si.Product!.Category!.Name)
                 .Select(g => new
@@ -644,7 +673,7 @@ namespace ManageMentSystem.Services.AiServices
             return new
             {
                 total_categories = categoryPerformance.Count,
-                total_sales = sales.Count,
+                total_sales = totalSales,
                 total_revenue = Math.Round(categoryPerformance.Sum(c => c.revenue), 2),
                 total_profit = Math.Round(categoryPerformance.Sum(c => c.profit), 2),
                 top_categories = categoryPerformance
@@ -773,11 +802,15 @@ namespace ManageMentSystem.Services.AiServices
             if (customers.Count == 0)
             {
                 var normalizedName = NormalizeArabicText(name);
+                var searchTokens = BuildSearchTokens(name);
                 customers = await _context.Customers
                     .AsNoTracking()
                     .Include(c => c.Sales)
                     .Where(c => c.TenantId == tenantId)
-                    .ToListAsync(); // نحملهم في الذاكرة للفلترة المعقدة لضمان الدقة في العربي
+                    .Where(c => searchTokens.Count == 0 || searchTokens.Any(token => c.FullName.Contains(token)))
+                    .OrderBy(c => c.FullName)
+                    .Take(NormalizedSearchCandidateLimit)
+                    .ToListAsync();
                 
                 customers = customers
                     .Where(c => NormalizeArabicText(c.FullName).Contains(normalizedName))
@@ -843,10 +876,14 @@ namespace ManageMentSystem.Services.AiServices
             if (products.Count == 0)
             {
                 var normalizedName = NormalizeArabicText(name);
+                var searchTokens = BuildSearchTokens(name);
                 products = await _context.Products
                     .AsNoTracking()
                     .Include(p => p.Category)
                     .Where(p => p.TenantId == tenantId)
+                    .Where(p => searchTokens.Count == 0 || searchTokens.Any(token => p.Name.Contains(token)))
+                    .OrderBy(p => p.Name)
+                    .Take(NormalizedSearchCandidateLimit)
                     .ToListAsync();
 
                 products = products
@@ -916,6 +953,267 @@ namespace ManageMentSystem.Services.AiServices
             };
         }
 
+        private async Task<object> GetCustomerAccountStatementAsync(IDictionary<string, object> args)
+        {
+            var tenantId = await RequireTenantIdAsync();
+            var customerName = args.TryGetValue("customer_name", out var nameVal) ? nameVal?.ToString()?.Trim() : null;
+            var fromDate = ParseDate(args, "from_date");
+            var toDate = ParseDate(args, "to_date");
+            var includeEntries = ParseNullableBool(args, "include_entries") ?? true;
+            var maxEntries = Clamp(ParseInt(args, "max_entries", 30), 1, 200);
+
+            EnsureDateRangeIsValid(fromDate, toDate);
+
+            if (string.IsNullOrWhiteSpace(customerName))
+                throw new ArgumentException("customer_name is required.");
+
+            var normalizedName = NormalizeArabicText(customerName);
+            var searchTokens = BuildSearchTokens(customerName);
+
+            var customerCandidates = await _context.Customers
+                .AsNoTracking()
+                .Where(c => c.TenantId == tenantId)
+                .Where(c => c.FullName.Contains(customerName) || searchTokens.Any(token => c.FullName.Contains(token)))
+                .OrderBy(c => c.FullName)
+                .Take(NormalizedSearchCandidateLimit)
+                .ToListAsync();
+
+            var selectedCustomer = customerCandidates
+                .OrderBy(c => NormalizeArabicText(c.FullName) == normalizedName ? 0 : 1)
+                .ThenBy(c => c.FullName.Length)
+                .FirstOrDefault();
+
+            if (selectedCustomer == null)
+            {
+                return new { found = false, message = $"No customer found close to '{customerName}'." };
+            }
+
+            var salesQuery = _context.Sales
+                .AsNoTracking()
+                .Where(s => s.TenantId == tenantId && s.CustomerId == selectedCustomer.Id);
+            if (fromDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= fromDate.Value);
+            if (toDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate <= toDate.Value);
+
+            var paymentsQuery = _context.CustomerPayments
+                .AsNoTracking()
+                .Include(p => p.PaymentMethod)
+                .Where(p => p.TenantId == tenantId && p.CustomerId == selectedCustomer.Id);
+            if (fromDate.HasValue) paymentsQuery = paymentsQuery.Where(p => p.PaymentDate >= fromDate.Value);
+            if (toDate.HasValue) paymentsQuery = paymentsQuery.Where(p => p.PaymentDate <= toDate.Value);
+
+            var sales = await salesQuery
+                .OrderByDescending(s => s.SaleDate)
+                .Take(1000)
+                .ToListAsync();
+            var payments = await paymentsQuery
+                .OrderByDescending(p => p.PaymentDate)
+                .Take(1000)
+                .ToListAsync();
+
+            var totalSales = sales.Sum(s => s.TotalAmount);
+            var totalReturns = sales.Sum(s => s.ReturnedAmount);
+            var totalPaidOnSales = sales.Sum(s => s.PaidAmount);
+            var totalPayments = payments.Sum(p => p.Amount);
+            var netSales = Math.Max(0m, totalSales - totalReturns);
+            var remaining = Math.Max(0m, netSales - totalPaidOnSales);
+            var unpaidInvoices = sales.Count(s => (s.TotalAmount - s.ReturnedAmount - s.PaidAmount) > 0);
+
+            object? entries = null;
+            if (includeEntries)
+            {
+                var merged = sales.Select(s => new
+                {
+                    date = s.SaleDate,
+                    type = "sale",
+                    reference = $"SALE-{s.Id}",
+                    debit = Math.Round(Math.Max(0m, s.TotalAmount - s.ReturnedAmount), 2),
+                    credit = 0m,
+                    note = $"paid={Math.Round(s.PaidAmount, 2)}"
+                })
+                .Concat(payments.Select(p => new
+                {
+                    date = p.PaymentDate,
+                    type = "payment",
+                    reference = $"CPAY-{p.Id}",
+                    debit = 0m,
+                    credit = Math.Round(p.Amount, 2),
+                    note = p.PaymentMethod != null ? p.PaymentMethod.Name : "unknown"
+                }))
+                .OrderByDescending(x => x.date)
+                .Take(maxEntries)
+                .ToList();
+
+                entries = merged;
+            }
+
+            return new
+            {
+                found = true,
+                customer_id = selectedCustomer.Id,
+                customer_name = selectedCustomer.FullName,
+                phone = selectedCustomer.PhoneNumber,
+                address = selectedCustomer.Address,
+                period = new
+                {
+                    from_date = fromDate?.ToString("yyyy-MM-dd"),
+                    to_date = toDate?.ToString("yyyy-MM-dd")
+                },
+                totals = new
+                {
+                    invoices_count = sales.Count,
+                    unpaid_invoices = unpaidInvoices,
+                    total_sales = Math.Round(totalSales, 2),
+                    total_returns = Math.Round(totalReturns, 2),
+                    net_sales = Math.Round(netSales, 2),
+                    paid_on_invoices = Math.Round(totalPaidOnSales, 2),
+                    customer_payments = Math.Round(totalPayments, 2),
+                    remaining_balance = Math.Round(remaining, 2)
+                },
+                entries,
+                currency = "EGP"
+            };
+        }
+
+        private async Task<object> GetStoreTransactionsAsync(IDictionary<string, object> args)
+        {
+            var tenantId = await RequireTenantIdAsync();
+            var fromDate = ParseDate(args, "from_date");
+            var toDate = ParseDate(args, "to_date");
+            var type = args.TryGetValue("transaction_type", out var typeVal) ? typeVal?.ToString()?.Trim() : null;
+            var category = args.TryGetValue("category", out var catVal) ? catVal?.ToString()?.Trim() : null;
+            var paymentMethodName = args.TryGetValue("payment_method_name", out var pmVal) ? pmVal?.ToString()?.Trim() : null;
+            var minAmount = ParseNullableDecimal(args, "min_amount");
+            var maxAmount = ParseNullableDecimal(args, "max_amount");
+            var limit = Clamp(ParseInt(args, "limit", 50), 1, 300);
+
+            EnsureDateRangeIsValid(fromDate, toDate);
+            if (minAmount.HasValue && maxAmount.HasValue && minAmount > maxAmount)
+                throw new ArgumentException("min_amount must be less than or equal to max_amount.");
+
+            var query = _context.StoreAccounts
+                .AsNoTracking()
+                .Include(sa => sa.PaymentMethod)
+                .Where(sa => sa.TenantId == tenantId);
+
+            if (fromDate.HasValue) query = query.Where(sa => sa.TransactionDate >= fromDate.Value);
+            if (toDate.HasValue) query = query.Where(sa => sa.TransactionDate <= toDate.Value);
+            if (!string.IsNullOrWhiteSpace(category)) query = query.Where(sa => sa.Category != null && sa.Category.Contains(category));
+            if (minAmount.HasValue) query = query.Where(sa => sa.Amount >= minAmount.Value);
+            if (maxAmount.HasValue) query = query.Where(sa => sa.Amount <= maxAmount.Value);
+            if (!string.IsNullOrWhiteSpace(paymentMethodName)) query = query.Where(sa => sa.PaymentMethod != null && sa.PaymentMethod.Name.Contains(paymentMethodName));
+
+            if (!string.IsNullOrWhiteSpace(type))
+            {
+                if (type.Equals("income", StringComparison.OrdinalIgnoreCase) || type.Equals("ايراد", StringComparison.OrdinalIgnoreCase) || type.Equals("إيراد", StringComparison.OrdinalIgnoreCase))
+                    query = query.Where(sa => sa.TransactionType == Models.TransactionType.Income);
+                else if (type.Equals("expense", StringComparison.OrdinalIgnoreCase) || type.Equals("مصروف", StringComparison.OrdinalIgnoreCase) || type.Equals("مصاريف", StringComparison.OrdinalIgnoreCase))
+                    query = query.Where(sa => sa.TransactionType == Models.TransactionType.Expense);
+                else
+                    throw new ArgumentException("transaction_type must be income/expense or إيراد/مصروف.");
+            }
+
+            var rows = await query
+                .OrderByDescending(sa => sa.TransactionDate)
+                .Take(limit)
+                .ToListAsync();
+
+            var income = rows.Where(x => x.TransactionType == Models.TransactionType.Income).Sum(x => x.Amount);
+            var expenses = rows.Where(x => x.TransactionType == Models.TransactionType.Expense).Sum(x => x.Amount);
+
+            return new
+            {
+                count = rows.Count,
+                totals = new
+                {
+                    income = Math.Round(income, 2),
+                    expenses = Math.Round(expenses, 2),
+                    net = Math.Round(income - expenses, 2)
+                },
+                transactions = rows.Select(r => new
+                {
+                    id = r.Id,
+                    date = r.TransactionDate.ToString("yyyy-MM-dd"),
+                    name = r.TransactionName,
+                    type = r.TransactionType.ToString(),
+                    amount = Math.Round(r.Amount, 2),
+                    category = r.Category,
+                    payment_method = r.PaymentMethod != null ? r.PaymentMethod.Name : "unknown",
+                    reference = r.ReferenceNumber,
+                    notes = r.Notes
+                }).ToList(),
+                currency = "EGP"
+            };
+        }
+
+        private async Task<object> GetSalesDetailsAsync(IDictionary<string, object> args)
+        {
+            var tenantId = await RequireTenantIdAsync();
+            var fromDate = ParseDate(args, "from_date");
+            var toDate = ParseDate(args, "to_date");
+            var customerName = args.TryGetValue("customer_name", out var cVal) ? cVal?.ToString()?.Trim() : null;
+            var paymentType = args.TryGetValue("payment_type", out var ptVal) ? ptVal?.ToString()?.Trim() : null;
+            var limit = Clamp(ParseInt(args, "limit", 30), 1, 200);
+
+            EnsureDateRangeIsValid(fromDate, toDate);
+
+            var query = _context.Sales
+                .AsNoTracking()
+                .Include(s => s.Customer)
+                .Where(s => s.TenantId == tenantId);
+
+            if (fromDate.HasValue) query = query.Where(s => s.SaleDate >= fromDate.Value);
+            if (toDate.HasValue) query = query.Where(s => s.SaleDate <= toDate.Value);
+            if (!string.IsNullOrWhiteSpace(customerName)) query = query.Where(s => s.Customer != null && s.Customer.FullName.Contains(customerName));
+
+            if (!string.IsNullOrWhiteSpace(paymentType))
+            {
+                Models.SalePaymentType parsed;
+                if (paymentType.Equals("نقدي", StringComparison.OrdinalIgnoreCase))
+                    parsed = Models.SalePaymentType.Cash;
+                else if (paymentType.Equals("جزئي", StringComparison.OrdinalIgnoreCase))
+                    parsed = Models.SalePaymentType.Partial;
+                else if (paymentType.Equals("آجل", StringComparison.OrdinalIgnoreCase) || paymentType.Equals("اجل", StringComparison.OrdinalIgnoreCase))
+                    parsed = Models.SalePaymentType.Credit;
+                else if (!Enum.TryParse<Models.SalePaymentType>(paymentType, true, out parsed))
+                    throw new ArgumentException("Invalid payment_type. Allowed: Cash/Partial/Credit or نقدي/جزئي/آجل.");
+                query = query.Where(s => s.PaymentType == parsed);
+            }
+
+            var sales = await query
+                .OrderByDescending(s => s.SaleDate)
+                .Take(limit)
+                .ToListAsync();
+
+            var totalSales = sales.Sum(s => s.TotalAmount);
+            var totalPaid = sales.Sum(s => s.PaidAmount);
+            var totalReturned = sales.Sum(s => s.ReturnedAmount);
+            var remaining = sales.Sum(s => Math.Max(0m, s.TotalAmount - s.ReturnedAmount - s.PaidAmount));
+
+            return new
+            {
+                count = sales.Count,
+                totals = new
+                {
+                    gross_sales = Math.Round(totalSales, 2),
+                    paid = Math.Round(totalPaid, 2),
+                    returns = Math.Round(totalReturned, 2),
+                    remaining = Math.Round(remaining, 2)
+                },
+                invoices = sales.Select(s => new
+                {
+                    sale_id = s.Id,
+                    date = s.SaleDate.ToString("yyyy-MM-dd"),
+                    customer = s.Customer != null ? s.Customer.FullName : "walk-in",
+                    total = Math.Round(s.TotalAmount, 2),
+                    paid = Math.Round(s.PaidAmount, 2),
+                    returned = Math.Round(s.ReturnedAmount, 2),
+                    remaining = Math.Round(Math.Max(0m, s.TotalAmount - s.ReturnedAmount - s.PaidAmount), 2),
+                    payment_type = s.PaymentType.ToString()
+                }).ToList(),
+                currency = "EGP"
+            };
+        }
+
         private async Task<string> RequireTenantIdAsync()
         {
             if (_cachedTenantId != null) return _cachedTenantId;
@@ -976,6 +1274,16 @@ namespace ManageMentSystem.Services.AiServices
             }
 
             return bool.TryParse(val.ToString(), out var result) ? result : throw new ArgumentException($"Invalid boolean for '{key}'.");
+        }
+
+        private static decimal? ParseNullableDecimal(IDictionary<string, object> args, string key)
+        {
+            if (!args.TryGetValue(key, out var val) || val == null || string.IsNullOrWhiteSpace(val.ToString()))
+            {
+                return null;
+            }
+
+            return decimal.TryParse(val.ToString(), out var result) ? result : throw new ArgumentException($"Invalid decimal for '{key}'.");
         }
 
         private static int Clamp(int value, int min, int max) => Math.Min(max, Math.Max(min, value));
@@ -1062,5 +1370,23 @@ namespace ManageMentSystem.Services.AiServices
                 .ToLower()
                 .Trim();
         }
+
+        private static List<string> BuildSearchTokens(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return new List<string>();
+            }
+
+            return text
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Where(token => token.Length >= 2)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .Take(4)
+                .ToList();
+
+
+        }
+
     }
 }

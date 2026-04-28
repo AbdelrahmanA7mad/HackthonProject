@@ -117,7 +117,7 @@
                                     <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
                                         <i data-lucide="user" class="w-4 h-4"></i>
                                     </div>
-                                    @s.Customer?.FullName ?? "غير محدد"
+                                    @s.Customer?.FullName
                                 </td>
                                 <td class="px-6 py-4 text-gray-600 text-center">@s.SaleDate.ToString("yyyy-MM-dd")</td>
                                 <td class="px-6 py-4 text-center font-bold">@s.TotalAmount.ToString("C")</td>

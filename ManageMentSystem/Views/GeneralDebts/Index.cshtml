@@ -21,9 +21,9 @@
         </div>
 
      
-            <a href="@Url.Action("Create")" class="zen-btn zen-btn-primary zen-btn-sm">
+            <button type="button" class="zen-btn zen-btn-primary zen-btn-sm" onclick="openCreateDebtModal()">
                 <i data-lucide="plus"></i> إضافة دين جديد
-            </a>
+            </button>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -178,9 +178,20 @@
                                     }
 
                                     <div class="flex gap-2">
-                                            <a href="@Url.Action("Edit", new { id = d.Id })" class="zen-action-btn zen-action-btn-neutral" title="تعديل">
+                                            <button type="button"
+                                                    class="zen-action-btn zen-action-btn-neutral"
+                                                    title="تعديل"
+                                                    data-id="@d.Id"
+                                                    data-title="@d.Title"
+                                                    data-party-name="@(d.PartyName ?? "")"
+                                                    data-debt-type="@((int)d.DebtType)"
+                                                    data-amount="@d.Amount"
+                                                    data-paid-amount="@d.PaidAmount"
+                                                    data-due-date="@(d.DueDate?.ToString("yyyy-MM-dd") ?? "")"
+                                                    data-description="@(d.Description ?? "")"
+                                                    onclick="openEditDebtModal(this)">
                                                 <i data-lucide="edit" class="w-4 h-4"></i>
-                                            </a>
+                                            </button>
 
                                        
                                             <button onclick="confirmDeleteDebt(@d.Id, '@d.Title', '@(d.PartyName ?? "")', '@d.Amount.ToString("F2")', '@d.DebtType')"
@@ -224,6 +235,63 @@
                 </div>
             </div>
         }
+    </div>
+</div>
+
+<!-- Create Debt Modal -->
+<div id="createDebtModal" class="fixed inset-0 z-[1050] hidden" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="closeCreateDebtModal()"></div>
+    <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl border border-gray-200">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0">
+                <h5 class="text-lg font-bold text-gray-800">إضافة دين جديد</h5>
+                <button type="button" class="text-gray-500 hover:text-accentRed" onclick="closeCreateDebtModal()">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form asp-action="Create" method="post" class="p-6">
+                @Html.AntiForgeryToken()
+                @{
+                    ViewData["IsEdit"] = false;
+                }
+                <partial name="_GeneralDebtForm" model="new ManageMentSystem.ViewModels.CreateGeneralDebtViewModel()" />
+                <div class="bg-gray-50 px-6 py-4 mt-6 border border-gray-200 rounded-xl flex items-center gap-3">
+                    <button type="submit" class="zen-btn zen-btn-primary">
+                        <i data-lucide="save" class="w-4 h-4"></i> حفظ البيانات
+                    </button>
+                    <button type="button" class="zen-btn zen-btn-neutral" onclick="closeCreateDebtModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Debt Modal -->
+<div id="editDebtModal" class="fixed inset-0 z-[1050] hidden" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="closeEditDebtModal()"></div>
+    <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl border border-gray-200">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0">
+                <h5 class="text-lg font-bold text-gray-800">تعديل بيانات الدين</h5>
+                <button type="button" class="text-gray-500 hover:text-accentRed" onclick="closeEditDebtModal()">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form asp-action="Edit" method="post" class="p-6" id="editDebtForm">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Id" id="editDebtId" />
+                @{
+                    ViewData["IsEdit"] = true;
+                }
+                <partial name="_GeneralDebtForm" model="new ManageMentSystem.ViewModels.CreateGeneralDebtViewModel()" />
+                <div class="bg-gray-50 px-6 py-4 mt-6 border border-gray-200 rounded-xl flex items-center gap-3">
+                    <button type="submit" class="zen-btn zen-btn-primary">
+                        <i data-lucide="save" class="w-4 h-4"></i> حفظ التغييرات
+                    </button>
+                    <button type="button" class="zen-btn zen-btn-neutral" onclick="closeEditDebtModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -345,6 +413,40 @@ const accentRed = window.accentRed || theme.accentRed || window.getComputedStyle
             });
 
             return false; // منع الإرسال التقليدي
+        }
+
+        function openCreateDebtModal() {
+            document.getElementById('createDebtModal').classList.remove('hidden');
+        }
+
+        function closeCreateDebtModal() {
+            document.getElementById('createDebtModal').classList.add('hidden');
+        }
+
+        function openEditDebtModal(button) {
+            const modal = document.getElementById('editDebtModal');
+            const form = document.getElementById('editDebtForm');
+            const id = button.getAttribute('data-id');
+
+            document.getElementById('editDebtId').value = id;
+
+            form.querySelector('input[name="Title"]').value = button.getAttribute('data-title') || '';
+            form.querySelector('input[name="PartyName"]').value = button.getAttribute('data-party-name') || '';
+            form.querySelector('select[name="DebtType"]').value = button.getAttribute('data-debt-type') || '0';
+            form.querySelector('input[name="Amount"]').value = button.getAttribute('data-amount') || '0';
+            const paidInput = form.querySelector('input[name="PaidAmount"]');
+            if (paidInput) {
+                paidInput.value = button.getAttribute('data-paid-amount') || '0';
+            }
+            form.querySelector('input[name="DueDate"]').value = button.getAttribute('data-due-date') || '';
+            form.querySelector('textarea[name="Description"]').value = button.getAttribute('data-description') || '';
+
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeEditDebtModal() {
+            document.getElementById('editDebtModal').classList.add('hidden');
         }
     </script>
 }

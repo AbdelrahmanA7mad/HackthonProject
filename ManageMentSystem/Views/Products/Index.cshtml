@@ -82,7 +82,7 @@
             </h5>
             
             <div class="flex flex-col md:flex-row gap-3 w-full lg:w-auto">
-                <form method="get" action="@Url.Action("ByCategory", "Products")" class="relative flex-grow md:w-80">
+            <form method="get" action="@Url.Action("ByCategory", "Products")" class="relative flex-grow md:w-80" data-live-search="true" data-live-search-delay="350">
                     <input type="hidden" name="categoryId" value="@Model.CategoryId" />
                     <div class="relative">
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">

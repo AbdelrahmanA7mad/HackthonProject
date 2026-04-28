@@ -35,16 +35,13 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-2 self-start">
-            <form method="get" action="@Url.Action("Index", "Customers")" class="flex gap-2 p-2">
+            <form method="get" action="@Url.Action("Index", "Customers")" class="flex gap-2 p-2" data-live-search="true" data-live-search-delay="350">
                 <div class="relative flex-grow">
                     <input type="text" name="searchTerm" value="@ViewBag.SearchTerm"
                            class="w-full pl-4 pr-10 py-2.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-primary/20 focus:border-primary outline-none transition-all font-bold text-gray-700 placeholder-gray-400"
                            placeholder="ابحث بالاسم، الهاتف، أو العنوان...">
                     <i data-lucide="search" class="absolute left-3 top-3.5 text-gray-500 w-4 h-4"></i>
                 </div>
-                <button type="submit" class="zen-btn zen-btn-neutral zen-btn-sm">
-                    بحث
-                </button>
                 @if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
                 {
                     <a href="@Url.Action("Index", "Customers")" class="zen-btn zen-btn-neutral zen-btn-icon zen-btn-sm">

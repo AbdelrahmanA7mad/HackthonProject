@@ -26,15 +26,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">من تاريخ</label>
-                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
+                    <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" onchange="this.form.submit()" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">إلى تاريخ</label>
-                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
+                    <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" onchange="this.form.submit()" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">العميل</label>
-                    <select name="customerId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
+                    <select name="customerId" onchange="this.form.submit()" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
                         <option value="">جميع العملاء</option>
                         @foreach (var customer in Model.Customers)
                         {
@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-600 mb-2">الفئة</label>
-                    <select name="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
+                    <select name="categoryId" onchange="this.form.submit()" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
                         <option value="">جميع الفئات</option>
                         @foreach (var category in Model.Categories)
                         {
@@ -58,9 +58,6 @@
                 </div>
             </div>
             <div class="flex flex-wrap gap-3 pt-2">
-                <button type="submit" class="zen-btn zen-btn-primary">
-                    <i data-lucide="search"></i> تطبيق الفلاتر
-                </button>
                 <a href="@Url.Action("SalesReport")" class="zen-btn zen-btn-neutral">
                     <i data-lucide="x"></i> إلغاء الفلاتر
                 </a>

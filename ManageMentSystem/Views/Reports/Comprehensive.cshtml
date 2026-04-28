@@ -24,14 +24,13 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
                 <div class="md:col-span-3">
                     <label for="fromDate" class="block text-sm font-bold text-gray-600 mb-2">من تاريخ</label>
-                    <input type="date" id="fromDate" name="fromDate" value="@(Model.FromDate?.ToString("yyyy-MM-dd"))" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
+                    <input type="date" id="fromDate" name="fromDate" value="@(Model.FromDate?.ToString("yyyy-MM-dd"))" onchange="this.form.submit()" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div class="md:col-span-3">
                     <label for="toDate" class="block text-sm font-bold text-gray-600 mb-2">إلى تاريخ</label>
-                    <input type="date" id="toDate" name="toDate" value="@(Model.ToDate?.ToString("yyyy-MM-dd"))" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
+                    <input type="date" id="toDate" name="toDate" value="@(Model.ToDate?.ToString("yyyy-MM-dd"))" onchange="this.form.submit()" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all" />
                 </div>
                 <div class="md:col-span-6 flex flex-wrap gap-2">
-                    <button type="submit" class="zen-btn zen-btn-primary">عرض التقرير</button>
                     <button type="button" class="zen-btn zen-btn-neutral quick-filter" data-period="today">اليوم</button>
                     <button type="button" class="zen-btn zen-btn-neutral quick-filter" data-period="month">هذا الشهر</button>
                     <button type="button" class="zen-btn zen-btn-neutral quick-filter" data-period="year">هذه السنة</button>

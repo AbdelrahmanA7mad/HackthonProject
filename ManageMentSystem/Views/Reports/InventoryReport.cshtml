@@ -25,7 +25,7 @@
         <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
             <div>
                 <label class="block text-sm font-bold text-gray-600 mb-2">الفئة</label>
-                <select name="categoryId" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
+                <select name="categoryId" onchange="this.form.submit()" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none font-medium text-primary transition-all bg-white cursor-pointer">
                     <option value="">جميع الفئات</option>
                     @foreach (var category in Model.Categories)
                     {
@@ -38,16 +38,13 @@
             
             <div class="pb-3">
                 <label class="inline-flex items-center cursor-pointer group">
-                    <input type="checkbox" name="lowStockOnly" value="true" class="sr-only peer" @(Model.LowStockOnly == true ? "checked" : "")>
+                    <input type="checkbox" name="lowStockOnly" value="true" onchange="this.form.submit()" class="sr-only peer" @(Model.LowStockOnly == true ? "checked" : "")>
                     <div class="relative w-11 h-6 bg-gray-100 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     <span class="ms-3 text-sm font-bold text-gray-600 group-hover:text-primary transition-colors">عرض المنتجات شحيحة المخزون فقط</span>
                 </label>
             </div>
 
             <div class="flex gap-3">
-                <button type="submit" class="zen-btn zen-btn-primary flex-grow">
-                    <i data-lucide="search"></i> تطبيق
-                </button>
                 <a href="@Url.Action("InventoryReport")" class="zen-btn zen-btn-neutral flex-grow">
                     <i data-lucide="x"></i> إلغاء
                 </a>

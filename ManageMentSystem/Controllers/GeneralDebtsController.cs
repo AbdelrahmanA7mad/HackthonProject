@@ -61,8 +61,7 @@ namespace ManageMentSystem.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.PaymentMethods = _service.GetPaymentMethodsAsync().Result;
-            return View(new CreateGeneralDebtViewModel());
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -71,8 +70,8 @@ namespace ManageMentSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.PaymentMethods = await _service.GetPaymentMethodsAsync();
-                return View(model);
+                TempData["Error"] = "يرجى مراجعة بيانات النموذج ثم المحاولة مرة أخرى";
+                return RedirectToAction(nameof(Index));
             }
 
             try
@@ -90,10 +89,8 @@ namespace ManageMentSystem.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                // خطأ رصيد غير كافٍ لوسيلة الدفع
-                ModelState.AddModelError(string.Empty, ex.Message);
-                ViewBag.PaymentMethods = await _service.GetPaymentMethodsAsync();
-                return View(model);
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
@@ -105,28 +102,18 @@ namespace ManageMentSystem.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var debt = await _service.GetByIdAsync(id);
-            if (debt == null) return NotFound();
-            var vm = new CreateGeneralDebtViewModel
-            {
-                Id = debt.Id,
-                Title = debt.Title,
-                PartyName = debt.PartyName,
-                DebtType = debt.DebtType,
-                Amount = debt.Amount,
-                PaidAmount = debt.PaidAmount,
-                DueDate = debt.DueDate,
-                Description = debt.Description
-            };
-            ViewBag.PaymentMethods = await _service.GetPaymentMethodsAsync();
-            return View(vm);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CreateGeneralDebtViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "يرجى مراجعة بيانات النموذج ثم المحاولة مرة أخرى";
+                return RedirectToAction(nameof(Index));
+            }
             await _service.UpdateAsync(id, model);
             return RedirectToAction(nameof(Index));
         }

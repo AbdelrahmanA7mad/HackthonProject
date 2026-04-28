@@ -1,0 +1,98 @@
+@model ManageMentSystem.ViewModels.CreateGeneralDebtViewModel
+@{
+    var isEdit = (bool?)ViewData["IsEdit"] == true;
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div asp-validation-summary="All" class="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm font-bold shadow-sm" role="alert"></div>
+}
+
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+    <div class="md:col-span-6">
+        <label asp-for="Title" class="block text-md font-bold text-gray-700 mb-2">اسم الدين <span class="text-accentRed">*</span></label>
+        <div class="relative">
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-primary">
+                <i data-lucide="tag" class="w-4 h-4"></i>
+            </div>
+            <input asp-for="Title" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-gray-700 placeholder-gray-400" placeholder="مثال: سلفة، بضاعة آجلة..." />
+        </div>
+        <span asp-validation-for="Title" class="text-accentRed text-xs mt-1 block font-bold"></span>
+    </div>
+
+    <div class="md:col-span-6">
+        <label asp-for="PartyName" class="block text-md font-bold text-gray-700 mb-2">اسم صاحب الدين (الطرف الآخر)</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-primary">
+                <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <input asp-for="PartyName" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-gray-700 placeholder-gray-400" placeholder="اسم الشخص أو الجهة" />
+        </div>
+    </div>
+
+    <div class="md:col-span-4">
+        <label asp-for="DebtType" class="block text-md font-bold text-gray-700 mb-2">نوع الدين</label>
+        <div class="relative">
+            <select asp-for="DebtType" asp-items="Html.GetEnumSelectList<ManageMentSystem.Models.GeneralDebtType>()"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-gray-700 bg-white appearance-none"></select>
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                <i data-lucide="chevron-down" class="w-3 h-3"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="md:col-span-4">
+        <label asp-for="Amount" class="block text-md font-bold text-gray-700 mb-2">المبلغ <span class="text-accentRed">*</span></label>
+        <div class="relative">
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-primary">
+                <i data-lucide="coins" class="w-4 h-4"></i>
+            </div>
+            <input asp-for="Amount" type="number" step="1" min="0" class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-gray-700 placeholder-gray-400" placeholder="0.00" />
+        </div>
+        <span asp-validation-for="Amount" class="text-accentRed text-xs mt-1 block font-bold"></span>
+    </div>
+
+    @if (isEdit)
+    {
+        <div class="md:col-span-4">
+            <label class="block text-sm font-bold text-gray-500 mb-2">مدفوع/محصّل (للعرض فقط)</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-500">
+                    <i data-lucide="check-circle" class="text-accentGreen w-4 h-4"></i>
+                </div>
+                <input asp-for="PaidAmount" type="number" step="1" min="0" disabled
+                       class="w-full pr-10 pl-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 font-bold cursor-not-allowed select-none" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="md:col-span-4">
+            <label class="block text-md font-bold text-gray-700 mb-2">طريقة الدفع (اختياري)</label>
+            <div class="relative">
+                <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-gray-700 bg-white appearance-none" asp-for="PaymentMethodId">
+                    <option value="">-- اختر طريقة الدفع --</option>
+                    @foreach (var pm in (IEnumerable<ManageMentSystem.Models.PaymentMethodOption>)(ViewBag.PaymentMethods ?? new List<ManageMentSystem.Models.PaymentMethodOption>()))
+                    {
+                        <option value="@pm.Id">@pm.Name</option>
+                    }
+                </select>
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                    <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="md:col-span-6">
+        <label asp-for="DueDate" class="block text-md font-bold text-gray-700 mb-2">تاريخ الاستحقاق</label>
+        <div class="relative">
+            <input asp-for="DueDate" type="date" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-gray-600" />
+        </div>
+    </div>
+
+    <div class="md:col-span-12">
+        <label asp-for="Description" class="block text-sm font-bold text-gray-700 mb-2">ملاحظات / وصف</label>
+        <textarea asp-for="Description" rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-gray-700 placeholder-gray-400 resize-none" placeholder="أي تفاصيل إضافية حول الدين..."></textarea>
+    </div>
+</div>

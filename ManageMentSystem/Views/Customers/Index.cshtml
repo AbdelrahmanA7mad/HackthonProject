@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ManageMentSystem.Models.Customer>
+@model IEnumerable<ManageMentSystem.Models.Customer>
 @using ManageMentSystem.Helpers
 @using ManageMentSystem.Models
 @inject ManageMentSystem.Services.UserServices.IUserService UserService
@@ -113,7 +113,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center items-center gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                    <div class="flex justify-center items-center gap-2">
                                         <a href="@Url.Action("Statement", "Customers", new { id = item.Id })" class="zen-action-btn zen-action-btn-info" title="كشف حساب">
                                             <i data-lucide="eye" class="w-4 h-4"></i>
                                         </a>

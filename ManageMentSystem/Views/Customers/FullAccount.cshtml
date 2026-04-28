@@ -1,4 +1,4 @@
-﻿@model ManageMentSystem.ViewModels.CustomerFullAccountViewModel
+@model ManageMentSystem.ViewModels.CustomerFullAccountViewModel
 @{
     ViewData["Title"] = "حساب العميل بالكامل";
 }
@@ -156,7 +156,7 @@
                                 }
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <div class="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
+                                <div class="">
                                     @if (e.SaleId.HasValue)
                                     {
  <button type="button" onclick="deleteSaleEntry(@e.SaleId.Value)" class="zen-action-btn zen-action-btn-danger" title="حذف الفاتورة">

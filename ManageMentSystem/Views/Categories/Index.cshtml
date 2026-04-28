@@ -1,4 +1,4 @@
-﻿@using ManageMentSystem.Helpers
+@using ManageMentSystem.Helpers
 @using ManageMentSystem.Models
 @inject ManageMentSystem.Services.UserServices.IUserService UserService
 @model IEnumerable<ManageMentSystem.Models.Category>
@@ -8,33 +8,35 @@
 
 <div class="min-h-screen bg-bgSubtle p-6 md:p-8 space-y-8" dir="rtl">
 
-    <div class="space-y-4">
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="flex items-center p-4 mb-4 text-accentGreen rounded-2xl bg-emerald-50 border border-emerald-100 shadow-sm" role="alert">
-                <i data-lucide="check-circle" class="ml-3 text-xl"></i>
-                <div class="ml-auto font-medium">
-                    @TempData["SuccessMessage"]
+    @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+    {
+        <div class="space-y-4">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="flex items-center p-4 mb-4 text-accentGreen rounded-2xl bg-emerald-50 border border-emerald-100 shadow-sm" role="alert">
+                    <i data-lucide="check-circle" class="ml-3 text-xl"></i>
+                    <div class="ml-auto font-medium">
+                        @TempData["SuccessMessage"]
+                    </div>
+                    <button type="button" class="mr-2 text-accentGreen hover:bg-emerald-200 rounded-lg p-1.5 inline-flex h-8 w-8 items-center justify-center transition-colors" data-bs-dismiss="alert" aria-label="Close">
+                        <i data-lucide="x"></i>
+                    </button>
                 </div>
-                <button type="button" class="mr-2 text-accentGreen hover:bg-emerald-200 rounded-lg p-1.5 inline-flex h-8 w-8 items-center justify-center transition-colors" data-bs-dismiss="alert" aria-label="Close">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-        }
-
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <div class="flex items-center p-4 mb-4 text-accentRed rounded-2xl bg-red-50 border border-red-100 shadow-sm" role="alert">
-                <i data-lucide="alert-circle" class="ml-3 text-xl"></i>
-                <div class="ml-auto font-medium">
-                    @TempData["ErrorMessage"]
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="flex items-center p-4 mb-4 text-accentRed rounded-2xl bg-red-50 border border-red-100 shadow-sm" role="alert">
+                    <i data-lucide="alert-circle" class="ml-3 text-xl"></i>
+                    <div class="ml-auto font-medium">
+                        @TempData["ErrorMessage"]
+                    </div>
+                    <button type="button" class="mr-2 text-accentRed hover:bg-red-200 rounded-lg p-1.5 inline-flex h-8 w-8 items-center justify-center transition-colors" data-bs-dismiss="alert" aria-label="Close">
+                        <i data-lucide="x"></i>
+                    </button>
                 </div>
-                <button type="button" class="mr-2 text-accentRed hover:bg-red-200 rounded-lg p-1.5 inline-flex h-8 w-8 items-center justify-center transition-colors" data-bs-dismiss="alert" aria-label="Close">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 m-0">
         <div>

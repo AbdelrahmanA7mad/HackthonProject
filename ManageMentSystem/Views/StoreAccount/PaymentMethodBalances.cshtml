@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ManageMentSystem.ViewModels.PaymentMethodBalanceViewModel>
+@model IEnumerable<ManageMentSystem.ViewModels.PaymentMethodBalanceViewModel>
 
 @{
     ViewData["Title"] = "أرصدة طرق الدفع";
@@ -16,9 +16,18 @@
             </h1>
             <p class="text-gray-500 mt-1 font-medium">عرض الأرصدة الحالية لكل طريقة دفع</p>
         </div>
-        <form method="get" class="flex gap-2">
-            <input type="date" name="fromDate" value="@ViewBag.FromDate" onchange="this.form.submit()" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
-            <input type="date" name="toDate" value="@ViewBag.ToDate" onchange="this.form.submit()" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
+    </div>
+
+    <div class="mb-8 print:hidden">
+        <form method="get" class="flex flex-col md:flex-row items-end gap-4">
+            <div class="flex-grow">
+                <partial name="_PremiumDateFilter" model='new { FromDate = (DateTime?)ViewBag.FromDate, ToDate = (DateTime?)ViewBag.ToDate }' />
+            </div>
+            <div>
+                <a asp-action="PaymentMethodBalances" class="zen-btn zen-btn-neutral h-[42px] flex items-center justify-center" title="إعادة تعيين">
+                    <i data-lucide="rotate-ccw"></i>
+                </a>
+            </div>
         </form>
     </div>
 

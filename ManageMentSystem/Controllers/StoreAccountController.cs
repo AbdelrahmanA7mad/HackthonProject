@@ -566,8 +566,8 @@ namespace ManageMentSystem.Controllers
                 TransactionCount = g.Count
             }).ToList();
 
-            ViewBag.FromDate = fromDate?.ToString("yyyy-MM-dd");
-            ViewBag.ToDate = toDate?.ToString("yyyy-MM-dd");
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
 
             return View(model);
         }
@@ -619,8 +619,8 @@ namespace ManageMentSystem.Controllers
 
             ViewBag.PaymentMethodId = id.Value;
             ViewBag.PaymentMethodName = methodName;
-            ViewBag.FromDate = fromDate?.ToString("yyyy-MM-dd");
-            ViewBag.ToDate = toDate?.ToString("yyyy-MM-dd");
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.PageSize = pageSize;

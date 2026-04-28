@@ -1,4 +1,4 @@
-﻿@model ManageMentSystem.ViewModels.UnpaidSalesViewModel
+@model ManageMentSystem.ViewModels.UnpaidSalesViewModel
 @{
     ViewData["Title"] = "مبيعات لم تسدد بالكامل";
 }
@@ -52,29 +52,17 @@
         </div>
     </div>
 
-    <!-- Filter Section -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-        <form method="get" action="@Url.Action("UnpaidSales", "Sales")" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-2">من تاريخ</label>
-                <div class="relative">
-                    <input type="date" name="fromDate" value="@(Model.FromDate?.ToString("yyyy-MM-dd") ?? "")"
-                           onchange="this.form.submit()"
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm font-bold" />
+    <div class="mb-6 print:hidden">
+        <form method="get" class="space-y-4">
+            <div class="flex flex-col md:flex-row items-end gap-4">
+                <div class="flex-grow">
+                    <partial name="_PremiumDateFilter" model="Model" />
                 </div>
-            </div>
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-2">إلى تاريخ</label>
-                <div class="relative">
-                    <input type="date" name="toDate" value="@(Model.ToDate?.ToString("yyyy-MM-dd") ?? "")"
-                           onchange="this.form.submit()"
-                           class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm font-bold" />
+                <div>
+                    <a href="@Url.Action("UnpaidSales", "Sales")" class="zen-btn zen-btn-neutral h-[42px] flex items-center justify-center" title="إلغاء الفلاتر">
+                        <i data-lucide="rotate-ccw"></i>
+                    </a>
                 </div>
-            </div>
-            <div class="flex gap-3">
-                <a href="@Url.Action("UnpaidSales", "Sales")" class="zen-btn zen-btn-neutral zen-btn-icon zen-btn-sm">
-                    <i data-lucide="rotate-ccw" class="w-4 h-4 inline-block"></i>
-                </a>
             </div>
         </form>
     </div>

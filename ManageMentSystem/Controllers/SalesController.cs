@@ -46,17 +46,18 @@ namespace ManageMentSystem.Controllers
         }
 
         // GET: Sales
-        public async Task<IActionResult> Index(int page = 1, string searchTerm = "", DateTime? date = null,ManageMentSystem.Models.SalePaymentType? paymentType = null)
+        public async Task<IActionResult> Index(int page = 1, string searchTerm = "", DateTime? fromDate = null, DateTime? toDate = null, ManageMentSystem.Models.SalePaymentType? paymentType = null)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var pageSize = 20;
-            var (sales, totalCount, totalPages) = await _salesService.GetSalesPaginatedAsync(page, pageSize, searchTerm, paymentType, date);
+            var (sales, totalCount, totalPages) = await _salesService.GetSalesPaginatedAsync(page, pageSize, searchTerm, paymentType, fromDate, toDate);
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.TotalCount = totalCount;
             ViewBag.PageSize = pageSize;
             ViewBag.SearchTerm = searchTerm;
-            ViewBag.date = date?.ToString("yyyy-MM-dd");
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
             ViewBag.PaymentType = paymentType;
             ViewBag.CurrentUser = currentUser;
             return View(sales);

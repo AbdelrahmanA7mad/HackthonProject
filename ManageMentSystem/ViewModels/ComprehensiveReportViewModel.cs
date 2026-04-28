@@ -42,6 +42,7 @@ namespace ManageMentSystem.ViewModels
         public DateTime? ToDate { get; set; }
         public int? CustomerId { get; set; }
         public int? CategoryId { get; set; }
+        public string? CustomerSearch { get; set; }
         public string? CustomerName { get; set; }
         public string? CategoryName { get; set; }
         

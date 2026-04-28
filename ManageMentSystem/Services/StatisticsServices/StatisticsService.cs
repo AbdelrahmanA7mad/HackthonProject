@@ -310,7 +310,7 @@ namespace ManageMentSystem.Services.StatisticsServices
 
 
         // تنفيذ التقارير الجديدة
-        public async Task<SalesReportViewModel> GetSalesReportAsync(DateTime? fromDate, DateTime? toDate, int? customerId, int? categoryId)
+        public async Task<SalesReportViewModel> GetSalesReportAsync(DateTime? fromDate, DateTime? toDate, string? customerSearch, int? categoryId)
         {
             var tenantId = await _userService.GetCurrentTenantIdAsync();
 
@@ -318,8 +318,9 @@ namespace ManageMentSystem.Services.StatisticsServices
             {
                 FromDate = fromDate,
                 ToDate = toDate,
-                CustomerId = customerId,
-                CategoryId = categoryId
+                CustomerId = null,
+                CategoryId = categoryId,
+                CustomerSearch = customerSearch
             };
 
             // ✅ فلترة المبيعات حسب المستأجر الحالي
@@ -337,9 +338,9 @@ namespace ManageMentSystem.Services.StatisticsServices
             if (toDate.HasValue)
                 salesQuery = salesQuery.Where(s => s.SaleDate <= toDate.Value);
 
-            // ✅ فلترة بالعميل
-            if (customerId.HasValue)
-                salesQuery = salesQuery.Where(s => s.CustomerId == customerId.Value);
+            // ✅ فلترة بالعميل (بحث بالاسم)
+            if (!string.IsNullOrEmpty(customerSearch))
+                salesQuery = salesQuery.Where(s => s.Customer.FullName.Contains(customerSearch));
 
             // ✅ فلترة بالفئة (المنتجات داخل المبيعات)
             if (categoryId.HasValue)
@@ -378,10 +379,9 @@ namespace ManageMentSystem.Services.StatisticsServices
                 .ToListAsync();
 
             // ✅ تعيين أسماء العميل والفئة
-            if (customerId.HasValue)
+            if (!string.IsNullOrEmpty(customerSearch))
             {
-                var customer = report.Customers.FirstOrDefault(c => c.Id == customerId.Value);
-                report.CustomerName = customer?.FullName;
+                report.CustomerName = customerSearch;
             }
 
             if (categoryId.HasValue)

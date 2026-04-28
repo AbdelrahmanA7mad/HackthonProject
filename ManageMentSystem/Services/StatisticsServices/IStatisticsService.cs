@@ -16,7 +16,7 @@ namespace ManageMentSystem.Services.StatisticsServices
         Task<ComprehensiveReportViewModel> GetComprehensiveReportAsync(DateTime? fromDate, DateTime? toDate);
         
         // تقارير جديدة شاملة
-        Task<SalesReportViewModel> GetSalesReportAsync(DateTime? fromDate, DateTime? toDate, int? customerId, int? categoryId);
+        Task<SalesReportViewModel> GetSalesReportAsync(DateTime? fromDate, DateTime? toDate, string? customerSearch, int? categoryId);
         Task<InventoryReportViewModel> GetInventoryReportAsync(int? categoryId, bool? lowStockOnly);
         Task<CustomerReportViewModel> GetCustomerReportAsync(DateTime? fromDate, DateTime? toDate);
         Task<FinancialReportViewModel> GetFinancialReportAsync(DateTime? fromDate, DateTime? toDate);

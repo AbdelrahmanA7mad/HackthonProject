@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ManageMentSystem.Models.StoreAccount>
+@model IEnumerable<ManageMentSystem.Models.StoreAccount>
 @using ManageMentSystem.Helpers
 
 @{
@@ -14,13 +14,22 @@
             </h1>
             <p class="text-gray-500 mt-1 font-medium">عرض تفاصيل الحركات لوسيلة الدفع المحددة</p>
         </div>
-        <form method="get" class="flex gap-2">
+    </div>
+
+    <div class="mb-8 print:hidden">
+        <form method="get" class="flex flex-col md:flex-row items-end gap-4">
             <input type="hidden" name="id" value="@ViewBag.PaymentMethodId" />
-            <input type="date" name="fromDate" value="@ViewBag.FromDate" onchange="this.form.submit()" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
-            <input type="date" name="toDate" value="@ViewBag.ToDate" onchange="this.form.submit()" class="px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none font-bold text-gray-600" />
-            <a asp-action="PaymentMethodBalances" class="zen-btn zen-btn-neutral" title="العودة للأرصدة">
-                <i data-lucide="arrow-left"></i>
-            </a>
+            <div class="flex-grow">
+                <partial name="_PremiumDateFilter" model='new { FromDate = (DateTime?)ViewBag.FromDate, ToDate = (DateTime?)ViewBag.ToDate }' />
+            </div>
+            <div class="flex gap-2">
+                <a asp-action="PaymentMethodDetails" asp-route-id="@ViewBag.PaymentMethodId" class="zen-btn zen-btn-neutral h-[42px] flex items-center justify-center" title="إعادة تعيين">
+                    <i data-lucide="rotate-ccw"></i>
+                </a>
+                <a asp-action="PaymentMethodBalances" class="zen-btn zen-btn-neutral h-[42px] flex items-center justify-center" title="العودة للأرصدة">
+                    <i data-lucide="arrow-left"></i>
+                </a>
+            </div>
         </form>
     </div>
 

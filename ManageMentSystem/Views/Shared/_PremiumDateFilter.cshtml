@@ -1,0 +1,329 @@
+@model dynamic
+@{
+    DateTime? fromDate = null;
+    DateTime? toDate = null;
+    try { fromDate = Model.FromDate; } catch { }
+    try { toDate = Model.ToDate; } catch { }
+
+    string fromDateValue = fromDate != null ? fromDate.Value.ToString("yyyy-MM-dd") : "";
+    string toDateValue = toDate != null ? toDate.Value.ToString("yyyy-MM-dd") : "";
+
+    string dateRangeText = (fromDate != null && toDate != null) 
+        ? $"{fromDate.Value.ToString("dd/MM/yyyy")} - {toDate.Value.ToString("dd/MM/yyyy")}"
+        : (fromDate != null ? fromDate.Value.ToString("dd/MM/yyyy") : "تصفية بالتاريخ");
+}
+
+<style>
+    /* Range Highlight Styling - Premium Layered Approach */
+    .calendar-day {
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.2s ease;
+        font-weight: 700;
+        border-radius: 0;
+        z-index: 5;
+    }
+
+    /* Light gray background for the entire period */
+    .calendar-day.in-range, 
+    .calendar-day.range-start, 
+    .calendar-day.range-end,
+    .calendar-day.hover-range { 
+        background-color: #f3f4f6 !important; 
+    }
+    
+    /* Rounded edges for the range background (RTL) */
+    .calendar-day.range-start { 
+        border-top-right-radius: 21px !important; 
+        border-bottom-right-radius: 21px !important; 
+    }
+    .calendar-day.range-end { 
+        border-top-left-radius: 21px !important; 
+        border-bottom-left-radius: 21px !important; 
+    }
+    
+    /* Hover range style (Ghost range) */
+    .calendar-day.hover-range {
+        opacity: 0.7;
+    }
+    .calendar-day.hover-range-end {
+        border-top-left-radius: 21px !important; 
+        border-bottom-left-radius: 21px !important; 
+    }
+
+    /* Hint when only start is selected: Partial background extending left */
+    .calendar-day.range-start:not(.range-end)::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 30%;
+        height: 100%;
+        background: linear-gradient(to left, #f3f4f6, transparent);
+        z-index: -1;
+    }
+    
+    /* Circle highlight for endpoints */
+    .calendar-day.selected::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 36px;
+        height: 36px;
+        background-color: var(--zen-theme-primary);
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    /* Selection text style */
+    .calendar-day.selected span {
+        color: white !important;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Standard hover for non-range days */
+    .calendar-day:not(.in-range):not(.range-start):not(.range-end):hover {
+        background-color: #f9fafb;
+        border-radius: 50%;
+    }
+
+    .filter-dropdown { transition: all 0.2s ease-in-out; transform-origin: top left; }
+    .filter-dropdown.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
+</style>
+
+<div class="relative inline-block text-right" dir="rtl" id="date-filter-wrapper">
+    <!-- Trigger Button -->
+    <button type="button" onclick="toggleDateFilter()" class="zen-btn zen-btn-neutral flex items-center justify-between gap-3 px-5 h-[46px] w-fit border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm">
+        <div class="flex items-center gap-3">
+            <i data-lucide="calendar" class="text-primary w-5 h-5"></i>
+            <span id="date-range-display" class="font-bold text-gray-700 text-sm">@dateRangeText</span>
+        </div>
+        <i data-lucide="chevron-down" class="text-gray-400 w-4 h-4 transition-transform" id="dropdown-icon"></i>
+    </button>
+
+    <!-- Dropdown Content -->
+    <div id="date-filter-container" onclick="event.stopPropagation()" class="filter-dropdown hidden absolute top-full right-0 mt-3 w-[350px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden z-[100] animate__animated animate__fadeInUp">
+        <div class="bg-primary px-5 py-4 flex justify-between items-center">
+            <h3 class="text-white text-lg font-bold flex items-center gap-2">
+                <i data-lucide="filter" class="w-5 h-5"></i>
+                تصفية النتائج
+            </h3>
+            <button type="button" onclick="toggleDateFilter()" class="text-white/80 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-6 px-2">
+                <button type="button" onclick="event.stopPropagation(); changeMonth(-1)" class="text-gray-400 hover:text-primary transition-colors p-1">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+                <span id="current-month-display" class="text-primary font-bold text-lg"></span>
+                <button type="button" onclick="event.stopPropagation(); changeMonth(1)" class="text-gray-400 hover:text-primary transition-colors p-1">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-7 text-center text-gray-400 text-xs font-bold mb-4">
+                <div>ح</div><div>ن</div><div>ث</div><div>ر</div><div>خ</div><div>ج</div><div>س</div>
+            </div>
+
+            <div id="calendar-grid" class="grid grid-cols-7 text-center text-sm gap-y-1">
+            </div>
+        </div>
+
+        <input type="hidden" id="fromDate" name="fromDate" value="@fromDateValue" />
+        <input type="hidden" id="toDate" name="toDate" value="@toDateValue" />
+
+        <div class="px-5 py-4 flex justify-between items-center border-t border-gray-50 bg-gray-50/50">
+            <button type="button" onclick="resetSelection()" class="text-gray-500 font-bold text-sm hover:text-red-600 transition-all uppercase flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 shadow-sm">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                إعادة تعيين
+            </button>
+            <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-8 rounded-xl shadow-lg transition-all active:scale-95 text-sm uppercase">تطبيق</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentViewDate = new Date();
+    currentViewDate.setDate(1); 
+
+    let selectedStart = document.getElementById('fromDate').value ? new Date(document.getElementById('fromDate').value) : null;
+    let selectedEnd = document.getElementById('toDate').value ? new Date(document.getElementById('toDate').value) : null;
+    let hoverDate = null;
+
+    const arabicMonths = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+
+    function toggleDateFilter() {
+        const dropdown = document.getElementById('date-filter-container');
+        const icon = document.getElementById('dropdown-icon');
+        dropdown.classList.toggle('hidden');
+        if (!dropdown.classList.contains('hidden')) {
+            icon.style.transform = 'rotate(180deg)';
+        } else {
+            icon.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    // Close on click outside
+    document.addEventListener('click', function(event) {
+        const wrapper = document.getElementById('date-filter-wrapper');
+        const dropdown = document.getElementById('date-filter-container');
+        if (wrapper && !wrapper.contains(event.target)) {
+            dropdown.classList.add('hidden');
+            const icon = document.getElementById('dropdown-icon');
+            if(icon) icon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    function renderCalendar() {
+        const grid = document.getElementById('calendar-grid');
+        const monthDisplay = document.getElementById('current-month-display');
+        const rangeDisplay = document.getElementById('date-range-display');
+        if (!grid || !monthDisplay) return;
+        grid.innerHTML = '';
+
+        const year = currentViewDate.getFullYear();
+        const month = currentViewDate.getMonth();
+        
+        monthDisplay.innerText = `${arabicMonths[month]} ${year}`;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        // Days from previous month
+        const prevMonthLastDay = new Date(year, month, 0).getDate();
+        for (let i = firstDay; i > 0; i--) {
+            createDayElement(prevMonthLastDay - i + 1, true);
+        }
+
+        // Days from current month
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dateObj = new Date(year, month, i);
+            createDayElement(i, false, dateObj);
+        }
+
+        // Update range display
+        if (selectedStart && selectedEnd) {
+            rangeDisplay.innerText = `${selectedStart.toLocaleDateString('ar-EG')} - ${selectedEnd.toLocaleDateString('ar-EG')}`;
+        } else if (selectedStart) {
+            rangeDisplay.innerText = selectedStart.toLocaleDateString('ar-EG');
+        } else {
+            rangeDisplay.innerText = "تصفية بالتاريخ";
+        }
+
+        lucide.createIcons();
+    }
+
+    function createDayElement(day, isPadding, dateObj = null) {
+        const div = document.createElement('div');
+        div.className = `calendar-day relative cursor-pointer ${isPadding ? 'text-gray-300 pointer-events-none' : 'text-gray-700'}`;
+        
+        const span = document.createElement('span');
+        span.innerText = day;
+        div.appendChild(span);
+
+        const isRangeActive = selectedStart && selectedEnd;
+
+        if (!isPadding && dateObj) {
+            const dateStr = dateObj.toDateString();
+            
+            // Check for selected start/end
+            if (selectedStart && dateStr === selectedStart.toDateString()) {
+                div.classList.add('selected');
+                div.classList.add('range-start');
+            }
+            if (selectedEnd && dateStr === selectedEnd.toDateString()) {
+                div.classList.add('selected');
+                div.classList.add('range-end');
+            }
+            
+            // Check for finalized range
+            if (isRangeActive && dateObj > selectedStart && dateObj < selectedEnd) {
+                div.classList.add('in-range');
+            }
+            
+            // Smart Hover range preview (bidirectional)
+            if (!isRangeActive && selectedStart && hoverDate) {
+                const start = selectedStart < hoverDate ? selectedStart : hoverDate;
+                const end = selectedStart < hoverDate ? hoverDate : selectedStart;
+                
+                if (dateObj >= start && dateObj <= end) {
+                    div.classList.add('hover-range');
+                    if (dateStr === start.toDateString()) div.classList.add('range-start');
+                    if (dateStr === end.toDateString()) div.classList.add('hover-range-end');
+                }
+            }
+
+            div.onmousedown = (e) => {
+                e.stopPropagation();
+                handleDateClick(dateObj);
+            };
+            
+            div.onmouseenter = () => {
+                if (selectedStart && !selectedEnd) {
+                    if (!hoverDate || hoverDate.toDateString() !== dateStr) {
+                        hoverDate = dateObj;
+                        renderCalendar();
+                    }
+                }
+            };
+        }
+        document.getElementById('calendar-grid').appendChild(div);
+    }
+
+    function formatDateToLocalISO(date) {
+        if (!date) return '';
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function handleDateClick(date) {
+        const clickedDate = new Date(date);
+        clickedDate.setHours(0,0,0,0);
+
+        if (!selectedStart || (selectedStart && selectedEnd)) {
+            selectedStart = clickedDate;
+            selectedEnd = null;
+        } else {
+            if (clickedDate < selectedStart) {
+                // Smart Swap: If user picks an earlier date, make it the start
+                selectedEnd = selectedStart;
+                selectedStart = clickedDate;
+            } else {
+                selectedEnd = clickedDate;
+            }
+        }
+        
+        hoverDate = null;
+        document.getElementById('fromDate').value = formatDateToLocalISO(selectedStart);
+        document.getElementById('toDate').value = formatDateToLocalISO(selectedEnd);
+        renderCalendar();
+    }
+
+    function changeMonth(offset) {
+        currentViewDate.setDate(1); 
+        currentViewDate.setMonth(currentViewDate.getMonth() + offset);
+        renderCalendar();
+    }
+
+    function resetSelection() {
+        selectedStart = null;
+        selectedEnd = null;
+        hoverDate = null;
+        document.getElementById('fromDate').value = '';
+        document.getElementById('toDate').value = '';
+        renderCalendar();
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCalendar);
+</script>

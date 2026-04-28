@@ -93,9 +93,9 @@ namespace ManageMentSystem.Controllers
             return View(products);
         }
 
-        public async Task<IActionResult> SalesReport(DateTime? fromDate, DateTime? toDate, int? customerId, int? categoryId)
+        public async Task<IActionResult> SalesReport(DateTime? fromDate, DateTime? toDate, string? customerSearch, int? categoryId)
         {
-            var report = await _statisticsService.GetSalesReportAsync(fromDate, toDate, customerId, categoryId);
+            var report = await _statisticsService.GetSalesReportAsync(fromDate, toDate, customerSearch, categoryId);
             return View(report);
         }
 
@@ -146,9 +146,9 @@ namespace ManageMentSystem.Controllers
 
         // Excel Export Actions
         
-        public async Task<IActionResult> ExportSalesReportExcel(DateTime? fromDate, DateTime? toDate, int? customerId, int? categoryId)
+        public async Task<IActionResult> ExportSalesReportExcel(DateTime? fromDate, DateTime? toDate, string? customerSearch, int? categoryId)
         {
-            var report = await _statisticsService.GetSalesReportAsync(fromDate, toDate, customerId, categoryId);
+            var report = await _statisticsService.GetSalesReportAsync(fromDate, toDate, customerSearch, categoryId);
             var fileContent = _excelExportService.ExportSalesReport(report);
             return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"SalesReport_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx");
         }
@@ -196,26 +196,37 @@ namespace ManageMentSystem.Controllers
 
 
         
-        public async Task<IActionResult> ExportReceivablesReportExcel()
+        public async Task<IActionResult> ExportReceivablesReportExcel(DateTime? fromDate, DateTime? toDate, string? customerSearch)
         {
             var tenantId = await _userService.GetCurrentTenantIdAsync();
             if (string.IsNullOrEmpty(tenantId)) return NotFound();
 
-            var customers = await _context.Customers
+            var query = _context.Customers
                 .Where(c => c.TenantId == tenantId)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(customerSearch))
+            {
+                query = query.Where(c => c.FullName.Contains(customerSearch));
+            }
+
+            var customersData = await query
                 .Select(c => new
                 {
                     c.Id,
                     c.FullName,
-                    TotalSales = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId).Sum(s => (decimal?)s.TotalAmount) ?? 0m,
-                    TotalPaid = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId).Sum(s => (decimal?)s.PaidAmount) ?? 0m
+                    TotalSales = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId && (!fromDate.HasValue || s.SaleDate >= fromDate) && (!toDate.HasValue || s.SaleDate <= toDate)).Sum(s => (decimal?)s.TotalAmount) ?? 0m,
+                    TotalPaid = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId && (!fromDate.HasValue || s.SaleDate >= fromDate) && (!toDate.HasValue || s.SaleDate <= toDate)).Sum(s => (decimal?)s.PaidAmount) ?? 0m
                 })
                 .OrderByDescending(x => (x.TotalSales - x.TotalPaid))
                 .ToListAsync();
 
             var vm = new ViewModels.ReceivablesReportViewModel
             {
-                Entries = customers.Select(x => new ViewModels.CustomerReceivableEntry
+                FromDate = fromDate,
+                ToDate = toDate,
+                CustomerSearch = customerSearch,
+                Entries = customersData.Select(x => new ViewModels.CustomerReceivableEntry
                 {
                     CustomerId = x.Id,
                     CustomerName = x.FullName,
@@ -308,30 +319,48 @@ namespace ManageMentSystem.Controllers
              return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"ComprehensiveReport_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx");
         }
 
+        public async Task<IActionResult> ExportCategoryPerformanceReportExcel(DateTime? fromDate, DateTime? toDate)
+        {
+            var report = await _statisticsService.GetCategoryPerformanceReportAsync(fromDate, toDate);
+            var fileContent = _excelExportService.ExportCategoryPerformanceReport(report);
+            return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"CategoryPerformanceReport_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx");
+        }
+
 
 
         // حسابات العملاء
         
-        public async Task<IActionResult> Receivables()
+        public async Task<IActionResult> Receivables(DateTime? fromDate, DateTime? toDate, string? customerSearch)
         {
             var tenantId = await _userService.GetCurrentTenantIdAsync();
             if (string.IsNullOrEmpty(tenantId)) return NotFound();
 
-            var customers = await _context.Customers
+            var query = _context.Customers
                 .Where(c => c.TenantId == tenantId)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(customerSearch))
+            {
+                query = query.Where(c => c.FullName.Contains(customerSearch));
+            }
+
+            var customersData = await query
                 .Select(c => new
                 {
                     c.Id,
                     c.FullName,
-                    TotalSales = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId).Sum(s => (decimal?)s.TotalAmount) ?? 0m,
-                    TotalPaid = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId).Sum(s => (decimal?)s.PaidAmount) ?? 0m
+                    TotalSales = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId && (!fromDate.HasValue || s.SaleDate >= fromDate) && (!toDate.HasValue || s.SaleDate <= toDate)).Sum(s => (decimal?)s.TotalAmount) ?? 0m,
+                    TotalPaid = _context.Sales.Where(s => s.CustomerId == c.Id && s.TenantId == tenantId && (!fromDate.HasValue || s.SaleDate >= fromDate) && (!toDate.HasValue || s.SaleDate <= toDate)).Sum(s => (decimal?)s.PaidAmount) ?? 0m
                 })
                 .OrderByDescending(x => (x.TotalSales - x.TotalPaid))
                 .ToListAsync();
 
             var vm = new ViewModels.ReceivablesReportViewModel
             {
-                Entries = customers.Select(x => new ViewModels.CustomerReceivableEntry
+                FromDate = fromDate,
+                ToDate = toDate,
+                CustomerSearch = customerSearch,
+                Entries = customersData.Select(x => new ViewModels.CustomerReceivableEntry
                 {
                     CustomerId = x.Id,
                     CustomerName = x.FullName,

@@ -39,7 +39,8 @@ namespace ManageMentSystem.Services.SalesServices
             int pageSize,
             string? searchTerm,
             ManageMentSystem.Models.SalePaymentType? paymentType,
-             DateTime? Date
+            DateTime? fromDate,
+            DateTime? toDate
             )
         {
             var tenantId = await _user.GetCurrentTenantIdAsync();
@@ -60,10 +61,14 @@ namespace ManageMentSystem.Services.SalesServices
                 );
             }
 
-            // تطبيق فلتر التاريخ
-            if (Date.HasValue)
+            // تطبيق فلتر التاريخ (Range)
+            if (fromDate.HasValue)
             {
-                query = query.Where(s => s.SaleDate.Date == Date.Value.Date);
+                query = query.Where(s => s.SaleDate.Date >= fromDate.Value.Date);
+            }
+            if (toDate.HasValue)
+            {
+                query = query.Where(s => s.SaleDate.Date <= toDate.Value.Date);
             }
 
             if (paymentType.HasValue)

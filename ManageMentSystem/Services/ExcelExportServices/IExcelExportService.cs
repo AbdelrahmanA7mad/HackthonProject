@@ -17,6 +17,7 @@ namespace ManageMentSystem.Services.ExcelExportServices
         byte[] ExportCapitalSummaryReport(CapitalSummaryViewModel model);
         byte[] ExportLowStockReport(IEnumerable<ManageMentSystem.Models.Product> model);
         byte[] ExportComprehensiveReport(ComprehensiveReportViewModel model);
+        byte[] ExportCategoryPerformanceReport(CategoryPerformanceReportViewModel model);
         byte[] ExportGeneric<T>(IEnumerable<T> data, string sheetName, Dictionary<string, Func<T, object>> columns, string title = "");
     }
 }

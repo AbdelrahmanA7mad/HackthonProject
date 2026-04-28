@@ -1081,6 +1081,114 @@ namespace ManageMentSystem.Services.ExcelExportServices
         }
 
 
+        public byte[] ExportCategoryPerformanceReport(CategoryPerformanceReportViewModel model)
+        {
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("أداء الفئات");
+                worksheet.View.RightToLeft = true;
+
+                // Title
+                worksheet.Cells[1, 1, 1, 5].Merge = true;
+                worksheet.Cells[1, 1].Value = "تقرير أداء الفئات";
+                worksheet.Cells[1, 1].Style.Font.Size = 20;
+                worksheet.Cells[1, 1].Style.Font.Bold = true;
+                worksheet.Cells[1, 1].Style.Font.Name = "Segoe UI";
+                worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(30, 58, 138));
+                worksheet.Cells[1, 1].Style.Font.Color.SetColor(Color.White);
+                worksheet.Row(1).Height = 45;
+
+                // Subtitle
+                worksheet.Cells[2, 1, 2, 5].Merge = true;
+                worksheet.Cells[2, 1].Value = GetPeriodText(model.FromDate, model.ToDate);
+                worksheet.Cells[2, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[2, 1].Style.Font.Size = 12;
+                worksheet.Cells[2, 1].Style.Font.Color.SetColor(Color.Gray);
+                worksheet.Row(2).Height = 25;
+
+                // Stats row
+                int statsRow = 4;
+                
+                worksheet.Cells[statsRow, 1].Value = "إجمالي الفئات";
+                worksheet.Cells[statsRow, 1].Style.Font.Bold = true;
+                worksheet.Cells[statsRow, 2].Value = model.TotalCategories;
+                
+                worksheet.Cells[statsRow, 3].Value = "إجمالي المبيعات";
+                worksheet.Cells[statsRow, 3].Style.Font.Bold = true;
+                worksheet.Cells[statsRow, 4].Value = model.TotalRevenue;
+                worksheet.Cells[statsRow, 4].Style.Numberformat.Format = "#,##0.00";
+                
+                worksheet.Cells[statsRow + 1, 1].Value = "إجمالي الأرباح";
+                worksheet.Cells[statsRow + 1, 1].Style.Font.Bold = true;
+                worksheet.Cells[statsRow + 1, 2].Value = model.TotalProfit;
+                worksheet.Cells[statsRow + 1, 2].Style.Numberformat.Format = "#,##0.00";
+                
+                worksheet.Cells[statsRow + 1, 3].Value = "عدد العمليات";
+                worksheet.Cells[statsRow + 1, 3].Style.Font.Bold = true;
+                worksheet.Cells[statsRow + 1, 4].Value = model.TotalSales;
+
+                worksheet.Cells[statsRow, 1, statsRow + 1, 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.LightGray);
+
+                // Table Header
+                int row = 7;
+                string[] headers = { "اسم الفئة", "عدد المبيعات", "الإيرادات", "الأرباح", "هامش الربح" };
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    var cell = worksheet.Cells[row, i + 1];
+                    cell.Value = headers[i];
+                    cell.Style.Font.Bold = true;
+                    cell.Style.Font.Name = "Segoe UI";
+                    cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    cell.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(55, 65, 81));
+                    cell.Style.Font.Color.SetColor(Color.White);
+                    cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    cell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                }
+                worksheet.Row(row).Height = 25;
+
+                // Data
+                row++;
+                foreach (var cat in model.CategoryPerformance.OrderByDescending(x => x.Revenue))
+                {
+                    worksheet.Cells[row, 1].Value = cat.CategoryName;
+                    worksheet.Cells[row, 2].Value = cat.SalesCount;
+                    worksheet.Cells[row, 3].Value = cat.Revenue;
+                    worksheet.Cells[row, 3].Style.Numberformat.Format = "#,##0.00";
+                    worksheet.Cells[row, 4].Value = cat.Profit;
+                    worksheet.Cells[row, 4].Style.Numberformat.Format = "#,##0.00";
+                    
+                    var margin = cat.Revenue > 0 ? (cat.Profit / cat.Revenue) : 0;
+                    worksheet.Cells[row, 5].Value = margin;
+                    worksheet.Cells[row, 5].Style.Numberformat.Format = "0.0%";
+
+                    if (row % 2 == 0)
+                    {
+                        worksheet.Cells[row, 1, row, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        worksheet.Cells[row, 1, row, 5].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(249, 250, 251));
+                    }
+                    row++;
+                }
+
+                // Borders
+                var tableRange = worksheet.Cells[7, 1, row - 1, 5];
+                tableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                tableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                tableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                tableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                tableRange.Style.Border.Top.Color.SetColor(Color.Gray);
+                tableRange.Style.Border.Bottom.Color.SetColor(Color.Gray);
+                tableRange.Style.Border.Left.Color.SetColor(Color.Gray);
+                tableRange.Style.Border.Right.Color.SetColor(Color.Gray);
+
+                worksheet.Cells.AutoFitColumns(15);
+                worksheet.Column(1).Width = 30;
+
+                return package.GetAsByteArray();
+            }
+        }
+
         private string GetPeriodText(DateTime? fromDate, DateTime? toDate) {
             if (fromDate == null && toDate == null) return "الفترة: كل الفترات";
             if (fromDate == null) return $"الفترة: حتى {toDate.Value:dd/MM/yyyy}";

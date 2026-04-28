@@ -13,6 +13,9 @@ namespace ManageMentSystem.ViewModels
 
     public class ReceivablesReportViewModel
     {
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+        public string? CustomerSearch { get; set; }
         [Display(Name = "إجمالي مستحقات العملاء")] public decimal TotalReceivables { get; set; }
         public List<CustomerReceivableEntry> Entries { get; set; } = new();
     }

@@ -3,13 +3,13 @@
     Layout = "_Layout";
 }
 
-<div class="min-h-[calc(100vh-5rem)] bg-bgSubtle p-4 md:p-8 flex flex-col items-center">
+<div class="h-[calc(100vh-2rem)] -m-4 w-full bg-bgSubtle p-4 md:p-6" dir="rtl">
     
     <!-- Main Container -->
-    <div class="w-full max-w-7xl flex flex-col md:flex-row gap-6">
+    <div class="w-full h-full flex flex-col md:flex-row gap-4 md:gap-6">
 
         <!-- History Sidebar -->
-        <div class="w-full md:w-64 flex-shrink-0 flex flex-col gap-4 h-[550px] md:h-[650px]">
+        <div class="w-full md:w-72 flex-shrink-0 flex flex-col gap-4 h-[300px] md:h-full">
             <div class="flex-1 bg-bgBase rounded-xl shadow-sm border border-borderSubtle flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-borderSubtle bg-bgSubtle flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Chat Area -->
-        <div class="flex-1 bg-bgBase rounded-xl shadow-sm border border-borderSubtle flex flex-col overflow-hidden h-[550px] md:h-[650px]">
+        <div class="flex-1 bg-bgBase rounded-xl shadow-sm border border-borderSubtle flex flex-col overflow-hidden h-[500px] md:h-full">
             
             <!-- Chat Header -->
             <div class="bg-primary px-6 py-4 flex items-center justify-between text-bgBase">
@@ -117,6 +117,9 @@
 </div>
 
 <style>
+    /* Prevent layout shift (navbar jump) by forcing the scrollbar */
+    html, body { overflow-y: scroll !important; }
+
     /* Formatting for Markdown output inside bubbles */
     .ai-bubble-bot strong { color: var(--zen-theme-primary); font-weight: 700; }
     .ai-bubble-bot ul { list-style-type: disc; margin-right: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem; }

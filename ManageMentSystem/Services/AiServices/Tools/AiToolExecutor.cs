@@ -16,6 +16,7 @@ namespace ManageMentSystem.Services.AiServices
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
         private readonly IAiTelemetryService _telemetry;
+        private string? _cachedTenantId;
 
         public AiToolExecutor(
             AppDbContext context,
@@ -112,6 +113,9 @@ namespace ManageMentSystem.Services.AiServices
                 "get_category_performance_report" => await GetCategoryPerformanceReportAsync(args),
                 "get_installments_summary" => await GetInstallmentsSummaryAsync(args),
                 "get_payment_methods_summary" => await GetPaymentMethodsSummaryAsync(args),
+                "get_customer_info" => await GetCustomerInfoAsync(args),
+                "search_product" => await SearchProductAsync(args),
+                "get_expense_details" => await GetExpenseDetailsAsync(args),
                 _ => throw new ArgumentException($"Unknown function '{functionName}'.")
             };
         }
@@ -206,6 +210,7 @@ namespace ManageMentSystem.Services.AiServices
             EnsureDateRangeIsValid(fromDate, toDate);
 
             var salesQuery = _context.Sales
+                .AsNoTracking()
                 .Include(s => s.SaleItems)
                 .ThenInclude(si => si.Product)
                 .Where(s => s.TenantId == tenantId);
@@ -219,6 +224,7 @@ namespace ManageMentSystem.Services.AiServices
             var grossProfit = salesRevenue - costOfGoods;
 
             var expenseQuery = _context.StoreAccounts
+                .AsNoTracking()
                 .Where(sa => sa.TenantId == tenantId && sa.TransactionType == Models.TransactionType.Expense);
 
             if (fromDate.HasValue) expenseQuery = expenseQuery.Where(sa => sa.TransactionDate >= fromDate.Value);
@@ -290,7 +296,7 @@ namespace ManageMentSystem.Services.AiServices
 
             EnsureDateRangeIsValid(fromDate, toDate);
 
-            var query = _context.StoreAccounts.Where(sa => sa.TenantId == tenantId);
+            var query = _context.StoreAccounts.AsNoTracking().Where(sa => sa.TenantId == tenantId);
             if (fromDate.HasValue) query = query.Where(sa => sa.TransactionDate >= fromDate.Value);
             if (toDate.HasValue) query = query.Where(sa => sa.TransactionDate <= toDate.Value);
 
@@ -348,7 +354,7 @@ namespace ManageMentSystem.Services.AiServices
 
             var (periodStart, periodEnd) = GetPeriodRange(period);
 
-            var salesQuery = _context.Sales.Where(s => s.TenantId == tenantId);
+            var salesQuery = _context.Sales.AsNoTracking().Where(s => s.TenantId == tenantId);
             if (periodStart.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= periodStart.Value);
             if (periodEnd.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate <= periodEnd.Value);
 
@@ -360,6 +366,7 @@ namespace ManageMentSystem.Services.AiServices
             var totalRevenue = sales.Sum(s => s.TotalAmount);
             var costOfGoods = sales.SelectMany(s => s.SaleItems).Sum(si => (si.Product?.PurchasePrice ?? 0m) * si.Quantity);
             var expensesQuery = _context.StoreAccounts
+                .AsNoTracking()
                 .Where(sa => sa.TenantId == tenantId && sa.TransactionType == Models.TransactionType.Expense);
             if (periodStart.HasValue) expensesQuery = expensesQuery.Where(sa => sa.TransactionDate >= periodStart.Value);
             if (periodEnd.HasValue) expensesQuery = expensesQuery.Where(sa => sa.TransactionDate <= periodEnd.Value);
@@ -393,6 +400,7 @@ namespace ManageMentSystem.Services.AiServices
             EnsureDateRangeIsValid(fromDate, toDate);
 
             var salesQuery = _context.Sales
+                .AsNoTracking()
                 .Include(s => s.SaleItems)
                 .ThenInclude(si => si.Product)
                 .Where(s => s.TenantId == tenantId);
@@ -440,6 +448,7 @@ namespace ManageMentSystem.Services.AiServices
             var lowStockOnly = ParseNullableBool(args, "low_stock_only");
 
             var productsQuery = _context.Products
+                .AsNoTracking()
                 .Include(p => p.Category)
                 .Where(p => p.TenantId == tenantId);
 
@@ -487,11 +496,12 @@ namespace ManageMentSystem.Services.AiServices
             EnsureDateRangeIsValid(fromDate, toDate);
 
             var customers = await _context.Customers
+                .AsNoTracking()
                 .Include(c => c.Sales)
                 .Where(c => c.TenantId == tenantId)
                 .ToListAsync();
 
-            var salesQuery = _context.Sales.Where(s => s.TenantId == tenantId);
+            var salesQuery = _context.Sales.AsNoTracking().Where(s => s.TenantId == tenantId);
             if (fromDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate >= fromDate.Value);
             if (toDate.HasValue) salesQuery = salesQuery.Where(s => s.SaleDate <= toDate.Value);
             var sales = await salesQuery.Include(s => s.Customer).ToListAsync();
@@ -524,7 +534,7 @@ namespace ManageMentSystem.Services.AiServices
 
             EnsureDateRangeIsValid(fromDate, toDate);
 
-            var transactionsQuery = _context.StoreAccounts.Where(sa => sa.TenantId == tenantId);
+            var transactionsQuery = _context.StoreAccounts.AsNoTracking().Where(sa => sa.TenantId == tenantId);
             if (fromDate.HasValue) transactionsQuery = transactionsQuery.Where(sa => sa.TransactionDate >= fromDate.Value);
             if (toDate.HasValue) transactionsQuery = transactionsQuery.Where(sa => sa.TransactionDate <= toDate.Value);
             var transactions = await transactionsQuery.ToListAsync();
@@ -557,7 +567,7 @@ namespace ManageMentSystem.Services.AiServices
 
             EnsureDateRangeIsValid(fromDate, toDate);
 
-            var query = _context.GeneralDebts.Where(gd => gd.TenantId == tenantId);
+            var query = _context.GeneralDebts.AsNoTracking().Where(gd => gd.TenantId == tenantId);
             if (fromDate.HasValue) query = query.Where(gd => gd.CreatedAt >= fromDate.Value);
             if (toDate.HasValue) query = query.Where(gd => gd.CreatedAt <= toDate.Value);
             var debts = await query.ToListAsync();
@@ -608,6 +618,7 @@ namespace ManageMentSystem.Services.AiServices
             EnsureDateRangeIsValid(fromDate, toDate);
 
             var salesQuery = _context.Sales
+                .AsNoTracking()
                 .Include(s => s.SaleItems)
                 .ThenInclude(si => si.Product)
                 .ThenInclude(p => p.Category)
@@ -657,6 +668,7 @@ namespace ManageMentSystem.Services.AiServices
             var status = args.TryGetValue("status", out var statusVal) ? statusVal?.ToString() : null;
 
             var query = _context.Installments
+                .AsNoTracking()
                 .Include(i => i.Customer)
                 .Where(i => i.TenantId == tenantId);
 
@@ -710,6 +722,7 @@ namespace ManageMentSystem.Services.AiServices
             EnsureDateRangeIsValid(fromDate, toDate);
 
             var query = _context.StoreAccounts
+                .AsNoTracking()
                 .Include(s => s.PaymentMethod)
                 .Where(s => s.TenantId == tenantId);
 
@@ -740,15 +753,181 @@ namespace ManageMentSystem.Services.AiServices
             };
         }
 
+        private async Task<object> GetCustomerInfoAsync(IDictionary<string, object> args)
+        {
+            var tenantId = await RequireTenantIdAsync();
+            var name = args.TryGetValue("customer_name", out var val) ? val?.ToString()?.Trim() : null;
+
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("customer_name is required.");
+
+            // 1. محاولة البحث المباشر
+            var customers = await _context.Customers
+                .AsNoTracking()
+                .Include(c => c.Sales)
+                .Where(c => c.TenantId == tenantId && c.FullName.Contains(name))
+                .OrderBy(c => c.FullName)
+                .ToListAsync();
+
+            // 2. إذا لم يجد نتائج، نجرب البحث الموحد (Normalization)
+            if (customers.Count == 0)
+            {
+                var normalizedName = NormalizeArabicText(name);
+                customers = await _context.Customers
+                    .AsNoTracking()
+                    .Include(c => c.Sales)
+                    .Where(c => c.TenantId == tenantId)
+                    .ToListAsync(); // نحملهم في الذاكرة للفلترة المعقدة لضمان الدقة في العربي
+                
+                customers = customers
+                    .Where(c => NormalizeArabicText(c.FullName).Contains(normalizedName))
+                    .OrderBy(c => c.FullName)
+                    .ToList();
+            }
+
+            if (customers.Count == 0)
+                return new { found = false, message = $"لم يتم العثور على عميل باسم قريب من '{name}'." };
+
+            var customer = customers.First();
+            var totalPurchases = customer.Sales.Sum(s => s.TotalAmount);
+            var totalPaid = customer.Sales.Sum(s => s.PaidAmount);
+            var totalDebt = totalPurchases - totalPaid;
+
+            var recentSales = customer.Sales
+                .OrderByDescending(s => s.SaleDate)
+                .Take(5)
+                .Select(s => new
+                {
+                    date = s.SaleDate.ToString("yyyy-MM-dd"),
+                    amount = Math.Round(s.TotalAmount, 2),
+                    paid = Math.Round(s.PaidAmount, 2),
+                    remaining = Math.Round(s.TotalAmount - s.PaidAmount, 2)
+                })
+                .ToList();
+
+            return new
+            {
+                found = true,
+                customer_name = customer.FullName,
+                phone = customer.PhoneNumber,
+                address = customer.Address,
+                total_purchases = Math.Round(totalPurchases, 2),
+                total_paid = Math.Round(totalPaid, 2),
+                total_debt = Math.Round(totalDebt, 2),
+                purchases_count = customer.Sales.Count,
+                recent_sales = recentSales,
+                similar_customers = customers.Count > 1
+                    ? customers.Skip(1).Select(c => c.FullName).ToList()
+                    : null,
+                currency = "EGP"
+            };
+        }
+
+        private async Task<object> SearchProductAsync(IDictionary<string, object> args)
+        {
+            var tenantId = await RequireTenantIdAsync();
+            var name = args.TryGetValue("product_name", out var val) ? val?.ToString()?.Trim() : null;
+
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("product_name is required.");
+
+            // 1. محاولة البحث المباشر
+            var products = await _context.Products
+                .AsNoTracking()
+                .Include(p => p.Category)
+                .Where(p => p.TenantId == tenantId && p.Name.Contains(name))
+                .OrderBy(p => p.Name)
+                .ToListAsync();
+
+            // 2. إذا لم يجد نتائج، نجرب البحث الموحد (Normalization)
+            if (products.Count == 0)
+            {
+                var normalizedName = NormalizeArabicText(name);
+                products = await _context.Products
+                    .AsNoTracking()
+                    .Include(p => p.Category)
+                    .Where(p => p.TenantId == tenantId)
+                    .ToListAsync();
+
+                products = products
+                    .Where(p => NormalizeArabicText(p.Name).Contains(normalizedName))
+                    .OrderBy(p => p.Name)
+                    .ToList();
+            }
+
+            if (products.Count == 0)
+                return new { found = false, message = $"لم يتم العثور على منتج باسم قريب من '{name}'." };
+
+            return new
+            {
+                found = true,
+                count = products.Count,
+                products = products.Select(p => new
+                {
+                    name = p.Name,
+                    sale_price = Math.Round(p.SalePrice, 2),
+                    purchase_price = Math.Round(p.PurchasePrice, 2),
+                    quantity = p.Quantity,
+                    category = p.Category != null ? p.Category.Name : "بدون فئة",
+                    barcode = p.Barcode,
+                    description = p.Description,
+                    low_stock = p.Quantity <= 5
+                }).ToList(),
+                currency = "EGP"
+            };
+        }
+
+        private async Task<object> GetExpenseDetailsAsync(IDictionary<string, object> args)
+        {
+            var tenantId = await RequireTenantIdAsync();
+            var fromDate = ParseDate(args, "from_date");
+            var toDate = ParseDate(args, "to_date");
+
+            EnsureDateRangeIsValid(fromDate, toDate);
+
+            var query = _context.StoreAccounts
+                .AsNoTracking()
+                .Include(sa => sa.PaymentMethod)
+                .Where(sa => sa.TenantId == tenantId && sa.TransactionType == Models.TransactionType.Expense);
+
+            if (fromDate.HasValue) query = query.Where(sa => sa.TransactionDate >= fromDate.Value);
+            if (toDate.HasValue) query = query.Where(sa => sa.TransactionDate <= toDate.Value);
+
+            var expenses = await query
+                .OrderByDescending(sa => sa.TransactionDate)
+                .Take(50)
+                .ToListAsync();
+
+            return new
+            {
+                count = expenses.Count,
+                total_amount = Math.Round(expenses.Sum(e => e.Amount), 2),
+                expenses = expenses.Select(e => new
+                {
+                    date = e.TransactionDate.ToString("yyyy-MM-dd"),
+                    name = e.TransactionName,
+                    description = e.Description,
+                    category = e.Category,
+                    amount = Math.Round(e.Amount, 2),
+                    payment_method = e.PaymentMethod != null ? e.PaymentMethod.Name : "غير محدد",
+                    notes = e.Notes
+                }).ToList(),
+                currency = "EGP"
+            };
+        }
+
         private async Task<string> RequireTenantIdAsync()
         {
+            if (_cachedTenantId != null) return _cachedTenantId;
+
             var tenantId = await _userService.GetCurrentTenantIdAsync();
             if (string.IsNullOrWhiteSpace(tenantId))
             {
                 throw new ArgumentException("Tenant context is missing for tool execution.");
             }
 
-            return tenantId;
+            _cachedTenantId = tenantId;
+            return _cachedTenantId;
         }
 
         private static void EnsureDateRangeIsValid(DateTime? fromDate, DateTime? toDate)
@@ -869,6 +1048,19 @@ namespace ManageMentSystem.Services.AiServices
                     finished_at_utc = DateTime.UtcNow
                 }
             };
+        }
+        private static string NormalizeArabicText(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return string.Empty;
+
+            return text
+                .Replace("أ", "ا")
+                .Replace("إ", "ا")
+                .Replace("آ", "ا")
+                .Replace("ة", "ه")
+                .Replace("ى", "ي")
+                .ToLower()
+                .Trim();
         }
     }
 }

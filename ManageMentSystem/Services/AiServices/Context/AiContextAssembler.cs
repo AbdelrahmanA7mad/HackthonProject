@@ -20,7 +20,7 @@ namespace ManageMentSystem.Services.AiServices
 
         public async Task<List<Message>> BuildHistoryAsync(int? conversationId, CancellationToken cancellationToken = default)
         {
-            var maxHistoryMessages = ParsePositiveInt(_configuration["AI:Context:MaxHistoryMessages"], 24);
+            var maxHistoryMessages = ParsePositiveInt(_configuration["AI:Context:MaxHistoryMessages"], 10);
 
             var history = new List<Message>
             {

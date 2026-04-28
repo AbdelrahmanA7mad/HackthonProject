@@ -63,6 +63,16 @@ namespace ManageMentSystem.Services.AiServices
 
     public class EmptyParams { }
 
+    public class CustomerSearchParams
+    {
+        [JsonPropertyName("customer_name")] public string Name { get; set; } = "";
+    }
+
+    public class ProductSearchParams
+    {
+        [JsonPropertyName("product_name")] public string Name { get; set; } = "";
+    }
+
     internal static class ToolHelper
     {
         internal static string Run(string name, Dictionary<string, object> args)
@@ -285,6 +295,38 @@ namespace ManageMentSystem.Services.AiServices
             if (p.FromDate != null) args["from_date"] = p.FromDate;
             if (p.ToDate != null) args["to_date"] = p.ToDate;
             return ToolHelper.Run("get_payment_methods_summary", args);
+        }
+    }
+
+    public class GetCustomerInfoTool : Tool<CustomerSearchParams, string>
+    {
+        public override string Name => "get_customer_info";
+        public override string Description => "تفاصيل عميل محدد بالاسم: إجمالي مشترياته، ديونه، وآخر 5 معاملات له.";
+
+        protected override string Handle(CustomerSearchParams p) =>
+            ToolHelper.Run("get_customer_info", new Dictionary<string, object> { ["customer_name"] = p.Name });
+    }
+
+    public class SearchProductTool : Tool<ProductSearchParams, string>
+    {
+        public override string Name => "search_product";
+        public override string Description => "البحث عن منتج بالاسم: سعر البيع، الكمية في المخزون، الفئة، والباركود.";
+
+        protected override string Handle(ProductSearchParams p) =>
+            ToolHelper.Run("search_product", new Dictionary<string, object> { ["product_name"] = p.Name });
+    }
+
+    public class GetExpenseDetailsTool : Tool<DateRangeParams, string>
+    {
+        public override string Name => "get_expense_details";
+        public override string Description => "قائمة تفصيلية بالمصروفات المسجلة: اسم العملية، المبلغ، الفئة، وطريقة الدفع.";
+
+        protected override string Handle(DateRangeParams p)
+        {
+            var args = new Dictionary<string, object>();
+            if (p.FromDate != null) args["from_date"] = p.FromDate;
+            if (p.ToDate != null) args["to_date"] = p.ToDate;
+            return ToolHelper.Run("get_expense_details", args);
         }
     }
 }

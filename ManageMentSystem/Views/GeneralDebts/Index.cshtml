@@ -1,4 +1,4 @@
-﻿@model ManageMentSystem.ViewModels.GeneralDebtIndexViewModel
+@model ManageMentSystem.ViewModels.GeneralDebtIndexViewModel
 @using ManageMentSystem.Helpers
 @using ManageMentSystem.Models
 @inject ManageMentSystem.Services.UserServices.IUserService UserService
@@ -156,7 +156,7 @@
                                 <div class="flex items-center justify-center gap-2">
                                     @if (!isComplete)
                                     {
-                                        <form asp-action="AddPayment" method="post" class="flex gap-1 items-center bg-gray-50 p-1 rounded-lg border border-gray-200 shadow-sm opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200" onsubmit="return confirmAddPayment(this);">
+                                        <form asp-action="AddPayment" method="post" class="flex gap-1 items-center bg-gray-50 p-1 rounded-lg border border-gray-200 shadow-sm" onsubmit="return confirmAddPayment(this);">
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" name="id" value="@d.Id" />
 

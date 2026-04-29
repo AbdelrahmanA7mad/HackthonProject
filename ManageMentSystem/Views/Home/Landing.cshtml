@@ -20,7 +20,7 @@
         <div class="loader-stage">
             <div class="loader-icon-wrap">
                 <div class="loader-core"></div>
-                <img src="~/logo.png" alt="Cropped Circle Image" class="loader-icon">
+                <img src="~/logo.webp" alt="Cropped Circle Image" class="loader-icon">
             </div>
             <div class="loader-wordmark-wrap">
                 <div class="loader-wordmark">ZENITH</div>
@@ -31,7 +31,7 @@
     <nav class="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-24px)] md:w-[calc(100%-80px)] max-w-[1200px]">
         <div class="bg-white/85 backdrop-blur-xl border border-black/5 px-4 md:px-8 py-3 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.05)] flex items-center justify-between">
             <a href="#home" class="flex items-center gap-2.5 group">
-                <img src="~/logo.png" alt="Zenith Logo" class="w-9 h-9 object-contain transition-transform group-hover:scale-110">
+                <img src="~/logo.webp" alt="Zenith Logo" class="w-9 h-9 object-contain transition-transform group-hover:scale-110">
                 <span class="font-bold text-lg tracking-tight">ZENITH</span>
             </a>
             <button id="menuBtn" aria-label="فتح القائمة" class="md:hidden px-3 py-2 rounded-full border border-black/10 inline-flex items-center justify-center">
@@ -41,22 +41,22 @@
             </button>
             <div id="menu" class="hidden md:flex items-center gap-6 lg:gap-10">
                 <a href="#home" class="nav-link">الرئيسية</a>
-                <a href="#services" class="nav-link">الخدمات</a>
-                <a href="#benefits" class="nav-link">المزايا</a>
+                <a href="#services" class="nav-link">المزايا</a>
+                <a href="#benefits" class="nav-link">الخدمات</a>
                 <a href="#pricing" class="nav-link">الاسعار</a>
-                <a href="#integrations" class="nav-link">التكاملات</a>
+                <a href="#success-stories" class="nav-link">قصص النجاح</a>
             </div>
             <a asp-controller="Auth" asp-action="Register" class="hidden md:flex bg-black text-white px-7 py-2.5 rounded-full font-bold text-[13px] items-center gap-2 hover:scale-105 transition-all">
-                ابدأ الآن <span>↗</span>
+                ابدأ الآن <span>↖</span>
             </a>
         </div>
         <div id="mobileMenu" class="hidden mt-3 bg-white rounded-2xl p-4 border border-black/5 shadow-lg md:hidden">
             <div class="flex flex-col gap-3">
                 <a href="#home" class="nav-link">الرئيسية</a>
-                <a href="#services" class="nav-link">الخدمات</a>
-                <a href="#benefits" class="nav-link">المزايا</a>
+                <a href="#services" class="nav-link">المزايا</a>
+                <a href="#benefits" class="nav-link">الخدمات</a>
                 <a href="#pricing" class="nav-link">الاسعار</a>
-                <a href="#integrations" class="nav-link">التكاملات</a>
+                <a href="#success-stories" class="nav-link">قصص النجاح</a>
                 <a asp-controller="Auth" asp-action="Login" class="nav-link">تسجيل الدخول</a>
                 <a asp-controller="Auth" asp-action="Register" class="nav-link">إنشاء حساب</a>
             </div>
@@ -65,61 +65,134 @@
 
     <main>
         <section id="home" class="relative pt-36 pb-20 md:pb-32 px-5 md:px-10 max-w-[1440px] mx-auto min-h-screen overflow-hidden">
+            <!-- Decorative Background Elements -->
             <div class="absolute top-60 left-20 w-[600px] h-[600px] bg-[#e4e4e7]/20 blur-[150px] rounded-full -z-10"></div>
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
+
+            <!-- Floating Icons - Left -->
+            <div class="absolute left-[14%] top-[36%] bg-[#315f8f] p-2 rounded-full shadow-xl hidden lg:block z-20 floating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e4e4e7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <div class="absolute left-[10%] top-[39%] bg-white border border-gray-100 p-2 rounded-full shadow-lg hidden lg:block z-20 floating-delayed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="m13 13 6 6"></path></svg>
+            </div>
+            <div class="absolute left-[14%] top-[42%] bg-[#e4e4e7] p-2 rounded-full shadow-md hidden lg:block z-20 floating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            </div>
+ 
+            <!-- Floating Icons - Right -->
+            <div class="absolute right-[14%] top-[40%] bg-white border border-gray-100 p-2.5 rounded-full shadow-xl hidden lg:block z-20 floating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#315f8f]"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path></svg>
+            </div>
+            <div class="absolute right-[10%] top-[37%] bg-[#e4e4e7] p-2 rounded-full shadow-lg hidden lg:block z-20 floating-reverse">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+            </div>
+
             <div class="flex flex-col items-center text-center mb-12 relative z-10 reveal">
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 bg-white/60 text-sm font-bold mb-5 micro-pill">Zenith ERP AI - منصة مالية ذكية لادارة العمليات والمدفوعات</span>
                 <h1 class="text-4xl md:text-[65px] font-bold leading-[1.1] tracking-tight max-w-[900px]">
-                    نظام واحد لادارة كل العمليات المالية لمشروعك .
+                    نظام واحد لادارة كل العمليات المالية <span class="text-[#315f8f]">لمشروعك</span> .
                 </h1>
                 <p class="text-black/60 text-base md:text-lg font-medium max-w-[700px] leading-relaxed mt-6">
-                    يجمع Zenith ERP بين التشغيل التجاري والانضباط المالي مع AI مدمج يحلل بياناتك تلقائيا، يبني تقارير ذكية، ويقترح قرارات اسرع لزيادة الربحية وتقليل المخاطر.
+                    يجمع Zenith ERP بين التشغيل التجاري والانضباط المالي مع AI مدمج يحلل بياناتك تلقائيا، يبني تقارير ذكية، ويقترح قرارات اسرع <span class="text-[#315f8f]">لزيادة الربحية وتقليل المخاطر</span>.
                 </p>
                 <div class="flex flex-wrap justify-center gap-4 mt-8">
-                    <a asp-controller="Auth" asp-action="Register" class="bg-black text-white px-9 py-3 rounded-full font-bold text-base hover:scale-105 transition-all">إنشاء حساب</a>
-                    <a asp-controller="Auth" asp-action="Login" class="bg-white text-black border-2 border-black/5 px-9 py-3 rounded-full font-bold text-base">تسجيل الدخول</a>
+                    <a asp-controller="Auth" asp-action="Register" class="bg-[#0f1419] text-[#f6f7f8] px-9 py-3 rounded-full font-bold text-base hover:scale-105 transition-all shadow-xl shadow-black/10">ابدأ الآن</a>
+                    <a href="#services" class="bg-[#f6f7f8] text-[#0f1419] border-2 border-[#0f1419]/5 px-9 py-3 rounded-full font-bold text-base hover:bg-[#e4e4e7] transition-all">اعرف أكتر</a>
+                </div>
+                <div class="mt-10 flex flex-col items-center gap-2 opacity-90 reveal">
+                    <div class="flex gap-1.5 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span class="mr-2 font-extrabold text-lg text-[#0f1419]">5.0</span>
+                    </div>
+                    <p class="font-bold text-[11px] uppercase tracking-[0.2em] text-[#0f1419]/40">من أكثر من 2500 عميل سعيد</p>
                 </div>
             </div>
-            <div class="max-w-[1000px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
-                <article class="metric-card reveal">
-                    <p class="metric-number" data-target="99.9">0</p>
-                    <p class="metric-label">استقرار النظام %</p>
-                </article>
-                <article class="metric-card reveal">
-                    <p class="metric-number" data-target="1800">0</p>
-                    <p class="metric-label">معاملة بيع يوميا</p>
-                </article>
-                <article class="metric-card reveal">
-                    <p class="metric-number" data-target="120">0</p>
-                    <p class="metric-label">تقرير ذكي تلقائي</p>
-                </article>
-                <article class="metric-card reveal">
-                    <p class="metric-number" data-target="24">0</p>
-                    <p class="metric-label">تنبيهات ومتابعة لحظية</p>
-                </article>
-            </div>
-            <div class="data-strip reveal">
-                <div class="ticker-card">
-                    <p class="ticker-label">تحليل AI لحظي</p>
-                    <p class="ticker-value">+<span class="live-value" data-live-min="12" data-live-max="38">12</span>%</p>
-                    <p class="ticker-note">توقعات نمو الارباح اليوم</p>
-                </div>
-                <div class="bars-card" aria-label="مؤشر اداء مالي متحرك">
-                    <div class="bars-grid">
-                        <span class="bar bar-1"></span>
-                        <span class="bar bar-2"></span>
-                        <span class="bar bar-3"></span>
-                        <span class="bar bar-4"></span>
-                        <span class="bar bar-5"></span>
-                        <span class="bar bar-6"></span>
+
+            <!-- Dynamic Grid Layout -->
+            <div class="max-w-[1200px] mx-auto hero-cards-grid items-end -mt-32 relative z-10">
+                <!-- Card 1: Edge -->
+                <div class="md:col-span-5 h-[350px] bg-[#0f1419] rounded-2xl overflow-hidden relative shadow-xl reveal">
+                    <img src="~/img/governance_dark.webp" alt="حوكمة ذكية" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                        <p class="text-white font-bold text-lg">حوكمة مالية</p>
+                        <p class="text-white/90 text-[13px] leading-relaxed font-bold">
+                            تحكم كامل في تفاصيل <span class="text-[#315f8f]">مشروعك</span> <br/>
+                            متابعة دقيقة للسيولة <br/>
+                            تقارير ذكية لقراراتك
+                        </p>
                     </div>
                 </div>
-                <div class="ticker-card money-glow">
-                    <p class="ticker-label">تدفق نقدي</p>
-                    <p class="ticker-value">$<span class="live-value" data-live-min="420" data-live-max="980">420</span>K</p>
-                    <p class="ticker-note">صافي المبيعات الشهري</p>
+
+                <!-- Card 2: Narrow -->
+                <div class="md:col-span-4 h-[280px] bg-[#315f8f] rounded-xl p-6 flex flex-col justify-center items-center text-center text-white shadow-xl shadow-[#315f8f]/20 reveal">
+                    <h3 class="text-4xl font-bold mb-2 tracking-tighter text-white">99.9%</h3>
+                    <p class="text-white/60 text-[12px] font-bold uppercase tracking-widest leading-tight">استقرار النظام <br/> والمزامنة</p>
+                </div>
+
+                <!-- Card 3: Middle (Total Projects) - Sync with Reference Image -->
+                <div class="md:col-span-6 h-[210px] bg-white border border-black/10 rounded-xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.03)] flex flex-col justify-between reveal">
+                    <div class="flex items-center justify-between">
+                        <div class="bg-[#315f8f]/10 p-2.5 rounded-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#315f8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </div>
+                        <div class="text-black/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <p class="text-black/40 font-bold text-[10px] uppercase tracking-widest">إجمالي العمليات</p>
+                            <div class="flex items-center gap-1.5">
+                                <div class="bg-[#315f8f] w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                                </div>
+                                <span class="text-[13px] font-bold text-[#315f8f]">8%</span>
+                            </div>
+                        </div>
+                        <h3 class="text-4xl font-bold text-black mb-3 tracking-tighter">1951<span class="text-black">+</span></h3>
+                        <p class="text-black/50 text-[12px] font-bold tracking-tight">زيادة بمقدار <span class="text-[#315f8f]">126</span> هذا الشهر</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Narrow -->
+                <div class="md:col-span-4 h-[280px] bg-[#e4e4e7] rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-xl reveal">
+                    <h3 class="text-4xl font-bold text-black mb-2 tracking-tighter">1800+</h3>
+                    <p class="text-black/40 text-[13px] font-bold uppercase tracking-widest leading-tight">عملية بيع <br/> يومية ناجحة</p>
+                </div>
+
+                <!-- Card 5: Edge - React Inspired Background -->
+                <div class="md:col-span-5 h-[350px] bg-[#0f1419] rounded-2xl p-8 flex flex-col justify-end text-white relative overflow-hidden shadow-2xl reveal">
+                    <!-- Dot Matrix Grid (from React) -->
+                    <div class="absolute inset-0 opacity-[0.05] pointer-events-none" 
+                         style="background-image: radial-gradient(#f6f7f8 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+                    <!-- Top Wave (from React) -->
+                    <div class="absolute top-0 right-0 w-full opacity-10 rotate-180">
+                        <svg viewBox="0 0 200 100" class="w-full h-32">
+                            <path d="M0,80 C50,0 150,100 200,20" fill="none" stroke="#f6f7f8" stroke-width="4" stroke-linecap="round" />
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="mb-8 mt-6 text-white/90">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                        </div>
+                        <p class="text-xl md:text-2xl font-medium leading-[1.2] tracking-tight">
+                            حقق أقصى <br/> 
+                            كفاءة لعملياتك <br/> 
+                            وضاعف إنتاجيتك
+                        </p>
+                    </div>
+
+                    <!-- Bottom Wave (from React) -->
+                    <div class="absolute bottom-0 left-0 w-full opacity-20">
+                        <svg viewBox="0 0 200 100" class="w-full h-24">
+                            <path d="M0,80 C50,100 150,0 200,80" fill="none" stroke="#f6f7f8" stroke-width="8" stroke-linecap="round" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </section>
@@ -127,86 +200,366 @@
         <section id="services" class="bg-black py-20 md:py-32 px-5 md:px-10">
             <div class="max-w-[1200px] mx-auto">
                 <div class="text-center mb-16 reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">اهم مميزات Zenith ERP AI</h2>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">أهم مزايا Zenith ERP AI</h2>
                     <p class="text-white/40 text-lg max-w-[720px] mx-auto font-medium">نظام مالي متكامل بذكاء اصطناعي مدمج في التقارير والتحليل والتنبؤ لدعم التشغيل والتحصيل والنمو.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <article class="service-card reveal"><h3>الادارة المالية الشاملة</h3><p>لوحة تنفيذية موحدة لمؤشرات الاداء، الربحية، والمصروفات في الوقت الفعلي.</p></article>
-                    <article class="service-card reveal"><h3>المبيعات والاقساط</h3><p>دعم سيناريوهات الدفع النقدي والاجل والجزئي مع جدولة اقساط دقيقة وتنبيهات تحصيل.</p></article>
-                    <article class="service-card reveal"><h3>حوكمة المخزون</h3><p>تتبع محاسبي وتشغيلي لحركة الاصناف مع مستويات حد ادنى وتنبيهات نقص مؤتمتة.</p></article>
-                    <article class="service-card reveal"><h3>ادارة العملاء والذمم</h3><p>ملفات عملاء موحدة، كشوف حساب تفصيلية، ومتابعة مديونيات واستحقاقات بشكل احترافي.</p></article>
-                    <article class="service-card reveal"><h3>قنوات الدفع والتواصل</h3><p>ارسال الفواتير والتنبيهات عبر واتساب وقنوات رقمية مع تتبع حالة التسليم والتحصيل.</p></article>
-                    <article class="service-card reveal"><h3>محرك AI للتقارير</h3><p>توليد تقارير مالية تلقائية مع ملخصات تنفيذية وتوصيات مباشرة قابلة للتنفيذ.</p></article>
+                    <!-- Service 1 -->
+                    <article class="service-card reveal group bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/[0.08] transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-8 left-8 text-white/20 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="17" x2="7" y2="7"></line><polyline points="7 17 7 7 17 7"></polyline></svg>
+                        </div>
+                        <div class="mb-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">الادارة المالية الشاملة</h3>
+                        <p class="text-white/40 leading-relaxed font-medium">لوحة تنفيذية موحدة لمؤشرات الاداء، الربحية، والمصروفات في الوقت الفعلي.</p>
+                    </article>
+
+                    <!-- Service 2 -->
+                    <article class="service-card reveal group bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/[0.08] transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-8 left-8 text-white/20 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="17" x2="7" y2="7"></line><polyline points="7 17 7 7 17 7"></polyline></svg>
+                        </div>
+                        <div class="mb-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">المبيعات والاقساط</h3>
+                        <p class="text-white/40 leading-relaxed font-medium">دعم سيناريوهات الدفع النقدي والاجل والجزئي مع جدولة اقساط دقيقة وتنبيهات تحصيل.</p>
+                    </article>
+
+                    <!-- Service 3 -->
+                    <article class="service-card reveal group bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/[0.08] transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-8 left-8 text-white/20 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="17" x2="7" y2="7"></line><polyline points="7 17 7 7 17 7"></polyline></svg>
+                        </div>
+                        <div class="mb-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">حوكمة المخزون</h3>
+                        <p class="text-white/40 leading-relaxed font-medium">تتبع محاسبي وتشغيلي لحركة الاصناف مع مستويات حد ادنى وتنبيهات نقص مؤتمتة.</p>
+                    </article>
+
+                    <!-- Service 4 -->
+                    <article class="service-card reveal group bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/[0.08] transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-8 left-8 text-white/20 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="17" x2="7" y2="7"></line><polyline points="7 17 7 7 17 7"></polyline></svg>
+                        </div>
+                        <div class="mb-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">ادارة العملاء والذمم</h3>
+                        <p class="text-white/40 leading-relaxed font-medium">ملفات عملاء موحدة، كشوف حساب تفصيلية، ومتابعة مديونيات واستحقاقات بشكل احترافي.</p>
+                    </article>
+
+                    <!-- Service 5 -->
+                    <article class="service-card reveal group bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/[0.08] transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-8 left-8 text-white/20 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="17" x2="7" y2="7"></line><polyline points="7 17 7 7 17 7"></polyline></svg>
+                        </div>
+                        <div class="mb-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">قنوات الدفع والتواصل</h3>
+                        <p class="text-white/40 leading-relaxed font-medium">ارسال الفواتير والتنبيهات عبر واتساب وقنوات رقمية مع تتبع حالة التسليم والتحصيل.</p>
+                    </article>
+
+                    <!-- Service 6 -->
+                    <article class="service-card reveal group bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/[0.08] transition-all cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-8 left-8 text-white/20 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="17" x2="7" y2="7"></line><polyline points="7 17 7 7 17 7"></polyline></svg>
+                        </div>
+                        <div class="mb-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">محرك AI للتقارير</h3>
+                        <p class="text-white/40 leading-relaxed font-medium">توليد تقارير مالية تلقائية مع ملخصات تنفيذية وتوصيات مباشرة قابلة للتنفيذ.</p>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="benefits" class="bg-white py-20 md:py-32 px-5 md:px-10">
+        <section id="benefits" class="bg-[#f6f7f8] py-20 md:py-32 px-5 md:px-10">
             <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-stretch">
+                <!-- Left Column: Image with Decorative Frame -->
                 <div class="relative p-6 md:p-12 h-full reveal">
                     <div class="absolute inset-4 border border-black/10 rounded-[24px]"></div>
-                    <img src="~/img/engineer.png" alt="لوحة تحكم مالية" class="relative z-10 w-full h-full min-h-[420px] object-cover rounded-2xl shadow-2xl">
+                    <!-- Corner accents -->
+                    <div class="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-black/20 rounded-tl-xl"></div>
+                    <div class="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-black/20 rounded-br-xl"></div>
+                    
+                    <img src="~/img/entrepreneur.webp" alt="رائد أعمال ناجح" class="relative z-10 w-full h-full min-h-[420px] object-cover rounded-2xl shadow-2xl transition-transform duration-700 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl pointer-events-none"></div>
                 </div>
+
+                <!-- Right Column: Content -->
                 <div class="reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-[1.1] tracking-tight">القيمة الاساسية من Zenith ERP</h2>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-[1.1] tracking-tight">الخدمات الأساسية من Zenith ERP</h2>
                     <p class="text-black/60 text-lg mb-10 font-medium max-w-[560px]">مصمم لفرق التشغيل والماليات التي تحتاج دقة اعلى وسرعة تنفيذ، مع AI يشرح الارقام ويكشف فرص التحسين تلقائيا.</p>
                     <div class="space-y-8">
-                        <div><h3 class="text-xl font-bold mb-2">تحكم تشغيلي ومالي في واجهة واحدة</h3><p class="text-black/60">تشغيل يومي منظم بدون تضارب بين فرق المبيعات والمحاسبة.</p></div>
-                        <div><h3 class="text-xl font-bold mb-2">قرارات مبنية على مؤشرات مالية</h3><p class="text-black/60">تحليل لحظي للايرادات والمصروفات والهوامش الربحية يدعم النمو بثقة.</p></div>
-                        <div><h3 class="text-xl font-bold mb-2">مساعد AI داخل كل قسم</h3><p class="text-black/60">يدعم التقارير، التحصيل، ادارة المصروفات، والمتابعة التشغيلية برسائل وتوصيات ذكية.</p></div>
+                        <!-- Benefit 1 -->
+                        <div class="flex gap-5 items-start group">
+                            <div class="mt-1 bg-[#315f8f]/10 p-2.5 rounded-full text-[#315f8f] group-hover:scale-110 transition-transform shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">تحكم تشغيلي ومالي في واجهة واحدة</h3>
+                                <p class="text-black/60 leading-relaxed font-medium">تشغيل يومي منظم بدون تضارب بين فرق المبيعات والمحاسبة.</p>
+                            </div>
+                        </div>
+
+                        <!-- Benefit 2 -->
+                        <div class="flex gap-5 items-start group">
+                            <div class="mt-1 bg-[#315f8f]/10 p-2.5 rounded-full text-[#315f8f] group-hover:scale-110 transition-transform shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">قرارات مبنية على مؤشرات مالية</h3>
+                                <p class="text-black/60 leading-relaxed font-medium">تحليل لحظي للايرادات والمصروفات والهوامش الربحية يدعم النمو بثقة.</p>
+                            </div>
+                        </div>
+
+                        <!-- Benefit 3 -->
+                        <div class="flex gap-5 items-start group">
+                            <div class="mt-1 bg-[#315f8f]/10 p-2.5 rounded-full text-[#315f8f] group-hover:scale-110 transition-transform shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">مساعد AI داخل كل قسم</h3>
+                                <p class="text-black/60 leading-relaxed font-medium">يدعم التقارير، التحصيل، ادارة المصروفات، والمتابعة التشغيلية برسائل وتوصيات ذكية.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="pricing" class="bg-[#0a0a0a] py-24 md:py-40 px-5 md:px-10">
-            <div class="max-w-[1200px] mx-auto">
-                <div class="text-center mb-16 reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">خطط اسعار مرنة حسب حجم نشاطك</h2>
+        <section id="pricing" class="bg-[#0a0a0a] py-24 md:py-48 px-5 md:px-10 relative overflow-hidden">
+            <!-- Background Glow -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#1a1a1a_0%,transparent_70%)] opacity-50"></div>
+
+            <div class="max-w-[1200px] mx-auto relative z-10">
+                <!-- Header -->
+                <div class="text-center mb-20 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">خطط اسعار مرنة حسب حجم نشاطك</h2>
                     <p class="text-white/40 text-lg font-medium">ابدأ بالخطة المناسبة اليوم، وفعّل مزايا AI المتقدمة مع التوسع.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="price-card reveal">
-                        <h3>Starter</h3>
-                        <p>للشركات الصغيرة التي تبدأ التحول الرقمي المالي.</p>
-                        <p class="price">$29 <span>/ شهريا</span></p>
-                        <p>مبيعات، مخزون، حسابات اساسية وتقارير يومية.</p>
+
+                <!-- Top Grid: Starter & Growth -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <!-- Starter Plan -->
+                    <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-8 md:p-12 flex flex-col hover:bg-white/[0.05] transition-all group reveal">
+                        <h3 class="text-2xl font-bold text-white mb-4">Starter</h3>
+                        <p class="text-white/40 mb-10 font-medium leading-relaxed max-w-[300px]">للشركات الصغيرة التي تبدأ التحول الرقمي المالي.</p>
+                        
+                        <div class="flex items-baseline gap-2 mb-10">
+                            <span class="text-5xl font-bold text-white">$29</span>
+                            <span class="text-white/20 font-bold">/ شهرياً</span>
+                        </div>
+
+                        <a asp-controller="Auth" asp-action="Register" class="w-full py-4 rounded-full border border-white/10 text-white text-center font-bold mb-12 hover:bg-white hover:text-black transition-all">ابدأ الآن</a>
+
+                        <div class="space-y-5">
+                            <p class="text-white/50 uppercase tracking-[0.1em] font-bold text-sm mb-6">المميزات</p>
+                            <div class="flex gap-3 items-center">
+                                <svg class="w-5 h-5 text-white/20 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <span class="text-white/60 font-medium text-sm">مبيعات ومخزون غير محدود</span>
+                            </div>
+                            <div class="flex gap-3 items-center">
+                                <svg class="w-5 h-5 text-white/20 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <span class="text-white/60 font-medium text-sm">حسابات أساسية وتقارير يومية</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="price-card reveal">
-                        <h3>Growth AI</h3>
-                        <p>الاكثر استخداما للنشاطات التي تحتاج نمو وتحليل ادق.</p>
-                        <p class="price">$79 <span>/ شهريا</span></p>
-                        <p>كل مزايا Starter + مساعد AI للتقارير والتوقعات والتنبيهات.</p>
+
+                    <!-- Growth AI Plan -->
+                    <div class="bg-white/[0.03] border border-white/10 rounded-2xl p-8 md:p-12 flex flex-col hover:bg-white/[0.05] transition-all group reveal">
+                        <h3 class="text-2xl font-bold text-white mb-4">Growth AI</h3>
+                        <p class="text-white/40 mb-10 font-medium leading-relaxed max-w-[300px]">الاكثر استخداما للنشاطات التي تحتاج نمو وتحليل ادق.</p>
+                        
+                        <div class="flex items-baseline gap-2 mb-10">
+                            <span class="text-5xl font-bold text-white">$79</span>
+                            <span class="text-white/20 font-bold">/ شهرياً</span>
+                        </div>
+
+                        <a asp-controller="Auth" asp-action="Register" class="w-full py-4 rounded-full border border-white/10 text-white text-center font-bold mb-12 hover:bg-white hover:text-black transition-all">ابدأ الآن</a>
+
+                        <div class="space-y-5">
+                            <p class="text-white/50 uppercase tracking-[0.1em] font-bold text-sm mb-6">المميزات</p>
+                            <div class="flex gap-3 items-center">
+                                <svg class="w-5 h-5 text-white/20 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <span class="text-white/60 font-medium text-sm">كل مزايا Starter</span>
+                            </div>
+                            <div class="flex gap-3 items-center">
+                                <svg class="w-5 h-5 text-white/20 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <span class="text-white/60 font-medium text-sm">مساعد AI للتقارير والتنبؤات</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="price-card reveal">
-                        <h3>Enterprise FinTech</h3>
-                        <p>للفروع المتعددة وفرق الماليات ذات الاحتياج المتقدم.</p>
-                        <p class="price">$149 <span>/ شهريا</span></p>
-                        <p>كل مزايا Growth AI + صلاحيات متقدمة وتكاملات وتقارير تنفيذية.</p>
+                </div>
+
+                <!-- Bottom Card: Enterprise FinTech (3D Grid Background) -->
+                <div class="relative bg-[#315f8f] border border-white/10 rounded-2xl p-12 md:p-20 overflow-hidden flex flex-col items-center text-center group min-h-[500px] justify-center reveal">
+                    <!-- Ultra-Subtle 3D Rotated Grid Background - Reduced Opacity -->
+                    <div class="absolute inset-0 w-full h-full pointer-events-none" style="perspective: 1000px;">
+                        <div class="absolute inset-0 w-[200%] h-[200%] -left-[50%] -top-[50%] opacity-[0.1]"
+                             style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px);
+                                    background-size: 180px 180px;
+                                    transform: rotateX(60deg) translateY(-20%);
+                                    transform-origin: center center;">
+                        </div>
+                    </div>
+                    
+                    <!-- Subtle Dark Overlay to deepen the blue -->
+                    <div class="absolute inset-0 bg-black/10"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">Enterprise FinTech</h3>
+                        <p class="text-white/90 text-lg md:text-xl font-bold max-w-[700px] mb-10 leading-relaxed mx-auto">
+                            للفروع المتعددة وفرق الماليات ذات الاحتياج المتقدم. <br class="hidden md:block" /> 
+                            كل مزايا Growth AI + صلاحيات متقدمة وتكاملات وتقارير تنفيذية.
+                        </p>
+                        
+                        <div class="flex items-baseline justify-center gap-2 mb-10">
+                            <span class="text-7xl font-bold text-white">$149</span>
+                            <span class="text-white/40 font-bold">/ شهرياً</span>
+                        </div>
+
+                        <a asp-controller="Auth" asp-action="Register" class="bg-white text-[#315f8f] px-14 py-4 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-2xl shadow-black/20 inline-block">تواصل معنا الآن</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="integrations" class="bg-white py-20 md:py-32 px-5 md:px-10">
-            <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-8 leading-[1.1] tracking-tight">نتائج مدعومة بتحليل مالي ذكي</h2>
-                    <p class="text-black/60 text-lg mb-10 font-medium">مع AI المدمج في Zenith ERP ستحصل على توقعات اوضح، تحصيل اسرع، وتحسين مستمر في هوامش الربح وتجربة العميل.</p>
-                    <a asp-controller="Auth" asp-action="Register" class="inline-flex bg-[#e4e4e7] text-black px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">ابدأ الآن</a>
+        <section id="success-stories" class="py-20 md:py-32 px-5 md:px-10 bg-white">
+            <div class="max-w-[1200px] mx-auto bg-[#0f1419] rounded-[2.5rem] p-12 md:p-20 relative overflow-hidden reveal shadow-2xl">
+                <!-- Decorative Hexagons (SVG) - Adjusted Visibility -->
+                <div class="absolute -top-10 -right-10 opacity-[0.1] pointer-events-none">
+                    <svg width="400" height="400" viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="0.8">
+                        <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" />
+                        <path d="M50 15 L80 30 L80 70 L50 85 L20 70 L20 30 Z" />
+                    </svg>
                 </div>
-                <div class="h-[380px] md:h-[500px] bg-[#f4f4f5] rounded-2xl flex items-center justify-center reveal pulse-border">
-                    <div class="text-center">
-                        <p class="font-bold mt-4 text-black/60">منصة تشغيل مالي متكاملة</p>
+                <div class="absolute -bottom-20 left-1/2 -translate-x-1/2 opacity-[0.1] pointer-events-none">
+                    <svg width="300" height="300" viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="0.8">
+                        <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" />
+                    </svg>
+                </div>
+
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-12">قصص نجاح مع Zenith ERP!</h2>
+                    
+                    <div id="stories-slider" class="relative grid min-h-[250px]">
+                        <!-- Story 1 -->
+                        <div class="story-item col-start-1 row-start-1 opacity-100 transition-all duration-500 pointer-events-auto scale-100">
+                            <blockquote class="text-2xl md:text-3xl lg:text-4xl text-white/90 leading-relaxed mb-12 max-w-[950px] font-medium italic">
+                                "حوّل Zenith ERP طريقة إدارتنا للعمليات المالية والتحصيل بالكامل. تحسنت سرعة الاستجابة لدينا بنسبة 50٪، وعملاؤنا يحبون التجربة السلسة والاحترافية التي نقدمها الآن!"
+                            </blockquote>
+                            <div class="flex items-center gap-5">
+                                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 shadow-sm">
+                                    <img src="~/img/man_1.webp" alt="أحمد المنصوري" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xl text-white">أحمد المنصوري</h4>
+                                    <p class="text-base text-white/60 font-medium">مدير العمليات التشغيلية</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story 2 -->
+                        <div class="story-item col-start-1 row-start-1 opacity-0 transition-all duration-500 pointer-events-none scale-95">
+                            <blockquote class="text-2xl md:text-3xl lg:text-4xl text-white/90 leading-relaxed mb-12 max-w-[950px] font-medium italic">
+                                "القدرة على متابعة الأقساط والتحصيلات في لحظتها جعلت فريق المبيعات لدينا أكثر كفاءة بنسبة 40٪. لم نعد نفقد أي مديونية بفضل التنبيهات الذكية التي تصلنا فورياً."
+                            </blockquote>
+                            <div class="flex items-center gap-5">
+                                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 shadow-sm">
+                                    <img src="~/img/woman_hijab.webp" alt="سارة جلال" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xl text-white">سارة جلال</h4>
+                                    <p class="text-base text-white/60 font-medium">مديرة المبيعات</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story 3 -->
+                        <div class="story-item col-start-1 row-start-1 opacity-0 transition-all duration-500 pointer-events-none scale-95">
+                            <blockquote class="text-2xl md:text-3xl lg:text-4xl text-white/90 leading-relaxed mb-12 max-w-[950px] font-medium italic">
+                                "حوكمة المخزون وتنبيهات النقص أنقذت خطوط الإنتاج لدينا من التوقف المفاجئ عدة مرات. الربط اللحظي بين المخازن والمالية في Zenith دقيق للغاية وسهل الاستخدام."
+                            </blockquote>
+                            <div class="flex items-center gap-5">
+                                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 shadow-sm">
+                                    <img src="~/img/man_2.webp" alt="محمد إبراهيم" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xl text-white">محمد إبراهيم</h4>
+                                    <p class="text-base text-white/60 font-medium">صاحب مجموعة إنتاجية</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story 4 -->
+                        <div class="story-item col-start-1 row-start-1 opacity-0 transition-all duration-500 pointer-events-none scale-95">
+                            <blockquote class="text-2xl md:text-3xl lg:text-4xl text-white/90 leading-relaxed mb-12 max-w-[950px] font-medium italic">
+                                "بصفتي رائدة أعمال، كنت أعاني من تشتت البيانات المالية. الآن أرى كل شيء بوضوح من لوحة تحكم واحدة، مما منحني الثقة لاتخاذ قرارات توسع جريئة."
+                            </blockquote>
+                            <div class="flex items-center gap-5">
+                                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 shadow-sm">
+                                    <img src="~/img/woman_niqab.webp" alt="ليلى عبدالله" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xl text-white">ليلى يوسف</h4>
+                                    <p class="text-base text-white/60 font-medium">كبير المحاسبين</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                </div>
+
+                <!-- Slider Controls - Both Blue as requested -->
+                <div class="absolute bottom-6 left-6 md:bottom-10 md:left-14 flex gap-4 z-30">
+                    <button onclick="prevStory()" class="w-12 h-12 rounded-lg bg-[#315f8f] flex items-center justify-center hover:scale-105 transition-all shadow-lg shadow-[#315f8f]/20 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                    <button onclick="nextStory()" class="w-12 h-12 rounded-lg bg-[#315f8f] flex items-center justify-center hover:scale-105 transition-all shadow-lg shadow-[#315f8f]/20 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <section class="bg-black py-24 md:py-32 px-5 md:px-10 text-center">
-            <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 reveal">Zenith ERP AI هو الحل الشامل لاي مشروع</h2>
-            <p class="text-white/40 text-lg md:text-xl font-medium max-w-[760px] mx-auto mb-10 reveal">اذا كنت تبحث عن منصة FinTech بذكاء اصطناعي مدمج في كل التفاصيل، Zenith ERP يمنحك تحكما كاملا من اول عملية بيع حتى التقارير الختامية.</p>
-            <a asp-controller="Auth" asp-action="Register" class="inline-flex bg-[#e4e4e7] text-black px-12 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform reveal">ابدأ الآن</a>
+        <script>
+            let currentStoryIdx = 0;
+            const storyItems = document.querySelectorAll('.story-item');
+
+            function updateSlider() {
+                storyItems.forEach((item, index) => {
+                    if (index === currentStoryIdx) {
+                        item.classList.replace('opacity-0', 'opacity-100');
+                        item.classList.replace('pointer-events-none', 'pointer-events-auto');
+                    } else {
+                        item.classList.replace('opacity-100', 'opacity-0');
+                        item.classList.replace('pointer-events-auto', 'pointer-events-none');
+                    }
+                });
+            }
+
+            function nextStory() {
+                currentStoryIdx = (currentStoryIdx + 1) % storyItems.length;
+                updateSlider();
+            }
+
+            function prevStory() {
+                currentStoryIdx = (currentStoryIdx - 1 + storyItems.length) % storyItems.length;
+                updateSlider();
+            }
+        </script>
+
+        <section class="bg-white py-24 md:py-32 px-5 md:px-10 text-center">
+            <h2 class="text-4xl md:text-6xl font-bold text-black mb-8 reveal">Zenith ERP AI هو الحل الشامل لاي مشروع</h2>
+            <p class="text-black/60 text-lg md:text-xl font-medium max-w-[760px] mx-auto mb-10 reveal">اذا كنت تبحث عن منصة FinTech بذكاء اصطناعي مدمج في كل التفاصيل، Zenith ERP يمنحك تحكما كاملا من اول عملية بيع حتى التقارير الختامية.</p>
+            <a asp-controller="Auth" asp-action="Register" class="inline-flex bg-[#0f1419] text-[#f6f7f8] px-12 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform reveal">ابدأ الآن</a>
         </section>
     </main>
 
@@ -215,7 +568,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-10">
                 <div>
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="~/logo.png" alt="Zenith Logo" class="w-10 h-10 object-contain">
+                        <img src="~/logo.webp" alt="Zenith Logo" class="w-10 h-10 object-contain">
                         <p class="text-white font-extrabold tracking-wide">ZENITH ERP</p>
                     </div>
                     <p class="text-white/45 text-sm leading-7">حل متكامل لادارة المبيعات، الاقساط، المخزون، العملاء والحسابات في منصة واحدة سريعة وسهلة.</p>
@@ -241,7 +594,6 @@
                 <div>
                     <h3 class="text-white font-bold mb-4">النشرة البريدية</h3>
                     <p class="text-white/40 text-sm mb-4">ابدأ الآن مع منصة مالية ذكية تساعدك على النمو.</p>
-                    <a asp-controller="Auth" asp-action="Register" class="inline-flex bg-white text-black text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity">إنشاء حساب</a>
                 </div>
             </div>
             <div class="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">

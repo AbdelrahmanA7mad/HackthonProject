@@ -6,326 +6,256 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zenith ERP | تجربة تشغيل مستقبلية</title>
-    <meta name="description" content="تصميم حديث جدًا لإدارة المتجر والمبيعات والمخزون والعملاء من لوحة واحدة واضحة." />
-
+    <title>ZENITH ERP | نظام متكامل لادارة البيزنس</title>
     <script src="~/lib/tailwindcss/tailwind.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/cairo-font.css" />
     <script src="~/js/tailwind-theme.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="~/css/cairo-font.css" rel="stylesheet">
-
-    <style>
-        :root{
-            --ink:#0a1024;
-            --ink-soft:#2d3753;
-            --line:#d8e1f3;
-            --glass:rgba(255,255,255,.64);
-        }
-        *{box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{
-            margin:0;
-            font-family:"Cairo",sans-serif;
-            color:var(--ink);
-            background:
-                radial-gradient(1200px 700px at 15% -15%, #dbeafe 0%, transparent 65%),
-                radial-gradient(980px 620px at 95% 5%, #e2e8f0 0%, transparent 60%),
-                linear-gradient(170deg,#f8fafc 0%,#f1f5f9 52%,#f8fafc 100%);
-            overflow-x:hidden;
-        }
-
-        .nav-shell{
-            background:var(--glass);
-            backdrop-filter:blur(12px);
-            border:1px solid rgba(148,163,184,.28);
-        }
-
-        .hero{
-            min-height:calc(100vh - 5rem);
-            position:relative;
-            display:flex;
-            align-items:center;
-            overflow:hidden;
-            isolation:isolate;
-        }
-        .hero-grid{
-            position:absolute;inset:0;z-index:-3;pointer-events:none;
-            background-image:
-                linear-gradient(rgba(15,23,42,.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(15,23,42,.07) 1px, transparent 1px);
-            background-size:42px 42px;
-            mask-image:radial-gradient(ellipse 70% 60% at 50% 42%, #000 48%, transparent 100%);
-            animation:gridDrift 22s linear infinite, gridTint 10s ease-in-out infinite alternate;
-        }
-        .hero-noise{
-            position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.17;
-            background-image:radial-gradient(rgba(15,23,42,.3) .5px, transparent .5px);
-            background-size:3px 3px;
-        }
-        .blob{
-            position:absolute;z-index:-1;pointer-events:none;border-radius:999px;filter:blur(70px);
-            animation:floaty 14s ease-in-out infinite;
-        }
-        .b1{width:560px;height:560px;top:-170px;right:-160px;background:radial-gradient(circle,#cbd5e1 0%,#94a3b8 58%,transparent 74%)}
-        .b2{width:520px;height:520px;bottom:-220px;left:-130px;background:radial-gradient(circle,#e2e8f0 0%,#cbd5e1 56%,transparent 75%);animation-delay:2.5s}
-        .b3{width:360px;height:360px;top:42%;left:48%;background:radial-gradient(circle,#cbd5e1 0%,transparent 70%);animation-delay:1.2s}
-
-        .headline{letter-spacing:-.03em;text-wrap:balance}
-        .gradient-word{
-            background:linear-gradient(135deg,#0f172a 0%,#1e293b 55%,#334155 100%);
-            -webkit-background-clip:text;background-clip:text;color:transparent;
-        }
-
-        .btn-main{
-            background:linear-gradient(135deg,#0f172a 0%,#1e293b 56%,#334155 100%);
-            color:#fff;
-            box-shadow:0 18px 36px rgba(15,23,42,.24);
-            transition:.28s ease;
-        }
-        .btn-main:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 22px 42px rgba(15,23,42,.32)}
-
-        .orbit-shell{
-            position:relative;
-            border-radius:28px;
-            background:rgba(255,255,255,.62);
-            border:1px solid rgba(148,163,184,.35);
-            backdrop-filter:blur(10px);
-            box-shadow:0 20px 44px rgba(15,23,42,.11);
-        }
-        .ring{
-            position:absolute;inset:-34px;pointer-events:none;z-index:-1;
-            background:conic-gradient(from 120deg, rgba(148,163,184,.18), rgba(100,116,139,.12), rgba(203,213,225,.18), rgba(148,163,184,.18));
-            filter:blur(26px);
-            border-radius:999px;
-        }
-
-        .chip{
-            border:1px solid var(--line);
-            background:rgba(255,255,255,.78);
-            transition:.22s ease;
-        }
-        .chip:hover{transform:translateY(-2px);border-color:#b8c7e8}
-
-        .feature-card{
-            position:relative;overflow:hidden;
-            border:1px solid #d8e1f3;background:rgba(255,255,255,.86);
-            border-radius:26px;transition:.28s ease;
-        }
-        .feature-card::before{
-            content:"";position:absolute;inset:-30% -20% auto auto;width:170px;height:170px;border-radius:999px;
-            background:radial-gradient(circle,rgba(148,163,184,.24) 0%,transparent 70%);
-            pointer-events:none;
-        }
-        .feature-card:hover{transform:translateY(-6px);border-color:#bcd0f2;box-shadow:0 18px 34px rgba(15,23,42,.1)}
-
-        .section-title{letter-spacing:-.02em;text-wrap:balance}
-        .fade-up{opacity:0;transform:translateY(14px);transition:.55s ease}
-        .fade-up.show{opacity:1;transform:translateY(0)}
-
-        @@keyframes floaty{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(14px,-18px,0)}}
-        @@keyframes gridDrift{
-            0%{background-position:0 0,0 0}
-            100%{background-position:42px 42px,42px 42px}
-        }
-        @@keyframes gridTint{
-            0%{
-                opacity:.75;
-                filter:hue-rotate(0deg) saturate(100%);
-            }
-            50%{
-                opacity:.95;
-                filter:hue-rotate(-8deg) saturate(115%);
-            }
-            100%{
-                opacity:.8;
-                filter:hue-rotate(6deg) saturate(95%);
-            }
-        }
-    </style>
+    <link href="~/css/landing.css" rel="stylesheet" />
 </head>
-<body>
-    <nav class="sticky top-0 z-50 border-b border-slate-200/70 nav-shell">
-        <div class="max-w-6xl mx-auto px-5 md:px-8 h-20 flex items-center justify-between">
-            <a href="/" class="flex items-center">
-                <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP" class="w-28 h-12 object-contain" />
-            </a>
-            <div class="hidden md:flex items-center gap-8 text-[15px] font-bold text-slate-700">
-                <a href="#features" class="hover:text-slate-950 transition">المزايا</a>
-                <a href="#flow" class="hover:text-slate-950 transition">تجربة التشغيل</a>
-                <a href="#cta" class="hover:text-slate-950 transition">ابدأ الآن</a>
+<body class="bg-[#fafafa] text-black antialiased">
+    <div id="loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700">
+        <div class="loader-stage">
+            <div class="loader-icon-wrap">
+                <div class="loader-core"></div>
+                <img src="~/logo.png" alt="Cropped Circle Image" class="loader-icon">
             </div>
-            <div class="flex items-center gap-3">
-                <a asp-controller="Auth" asp-action="Login" class="hidden sm:inline-flex px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold hover:bg-white/80 transition">
-                    تسجيل الدخول
-                </a>
-                <a asp-controller="Auth" asp-action="Register" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-main font-bold">
-                    إنشاء حساب
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                </a>
+            <div class="loader-wordmark-wrap">
+                <div class="loader-wordmark">ZENITH</div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-24px)] md:w-[calc(100%-80px)] max-w-[1200px]">
+        <div class="bg-white/85 backdrop-blur-xl border border-black/5 px-4 md:px-8 py-3 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.05)] flex items-center justify-between">
+            <a href="#home" class="flex items-center gap-2.5 group">
+                <img src="~/logo.png" alt="Zenith Logo" class="w-9 h-9 object-contain transition-transform group-hover:scale-110">
+                <span class="font-bold text-lg tracking-tight">ZENITH</span>
+            </a>
+            <button id="menuBtn" aria-label="فتح القائمة" class="md:hidden px-3 py-2 rounded-full border border-black/10 inline-flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M4 7h16M4 12h16M4 17h16"></path>
+                </svg>
+            </button>
+            <div id="menu" class="hidden md:flex items-center gap-6 lg:gap-10">
+                <a href="#home" class="nav-link">الرئيسية</a>
+                <a href="#services" class="nav-link">الخدمات</a>
+                <a href="#benefits" class="nav-link">المزايا</a>
+                <a href="#pricing" class="nav-link">الاسعار</a>
+                <a href="#integrations" class="nav-link">التكاملات</a>
+            </div>
+            <a asp-controller="Auth" asp-action="Register" class="hidden md:flex bg-black text-white px-7 py-2.5 rounded-full font-bold text-[13px] items-center gap-2 hover:scale-105 transition-all">
+                ابدأ الآن <span>↗</span>
+            </a>
+        </div>
+        <div id="mobileMenu" class="hidden mt-3 bg-white rounded-2xl p-4 border border-black/5 shadow-lg md:hidden">
+            <div class="flex flex-col gap-3">
+                <a href="#home" class="nav-link">الرئيسية</a>
+                <a href="#services" class="nav-link">الخدمات</a>
+                <a href="#benefits" class="nav-link">المزايا</a>
+                <a href="#pricing" class="nav-link">الاسعار</a>
+                <a href="#integrations" class="nav-link">التكاملات</a>
+                <a asp-controller="Auth" asp-action="Login" class="nav-link">تسجيل الدخول</a>
+                <a asp-controller="Auth" asp-action="Register" class="nav-link">إنشاء حساب</a>
             </div>
         </div>
     </nav>
 
     <main>
-        <section class="hero">
-            <div class="hero-grid"></div>
-            <div class="hero-noise"></div>
-            <div class="blob b1"></div>
-            <div class="blob b2"></div>
-            <div class="blob b3"></div>
-
-            <div class="max-w-6xl mx-auto px-5 md:px-8 w-full py-12">
-                <div class="text-center fade-up">
-                    <p class="inline-flex px-4 py-1.5 rounded-full text-sm font-bold bg-white/70 border border-slate-200 text-slate-700">
-                        تصميم مختلف. تجربة أسرع. نتائج أوضح.
-                    </p>
-                    <h1 class="headline mt-5 text-3xl md:text-5xl font-black leading-tight">
-                        شغّل مشروعك
-                        <span class="gradient-word">بذكاء بصري</span>
-                        من أول نظرة
-                    </h1>
-                    <p class="mt-4 text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                        Zenith ERP يربط المبيعات والمخزون والعملاء والتقارير في تجربة حديثة
-                        تعطيك وضوح كامل واتخاذ قرار أسرع كل يوم.
-                    </p>
-                    <div class="mt-8 flex flex-wrap justify-center gap-3">
-                        <a asp-controller="Auth" asp-action="Register" class="btn-main inline-flex items-center gap-2 px-6 py-3 rounded-xl text-base font-bold">
-                            جرّب مجانًا الآن
-                            <i data-lucide="sparkles" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#features" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 bg-white/70 text-slate-800 text-base font-bold hover:bg-white transition">
-                            استكشف التجربة
-                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                        </a>
+        <section id="home" class="relative pt-36 pb-20 md:pb-32 px-5 md:px-10 max-w-[1440px] mx-auto min-h-screen overflow-hidden">
+            <div class="absolute top-60 left-20 w-[600px] h-[600px] bg-[#e4e4e7]/20 blur-[150px] rounded-full -z-10"></div>
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="flex flex-col items-center text-center mb-12 relative z-10 reveal">
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 bg-white/60 text-sm font-bold mb-5 micro-pill">Zenith ERP AI - منصة مالية ذكية لادارة العمليات والمدفوعات</span>
+                <h1 class="text-4xl md:text-[65px] font-bold leading-[1.1] tracking-tight max-w-[900px]">
+                    نظام واحد لادارة كل العمليات المالية لمشروعك .
+                </h1>
+                <p class="text-black/60 text-base md:text-lg font-medium max-w-[700px] leading-relaxed mt-6">
+                    يجمع Zenith ERP بين التشغيل التجاري والانضباط المالي مع AI مدمج يحلل بياناتك تلقائيا، يبني تقارير ذكية، ويقترح قرارات اسرع لزيادة الربحية وتقليل المخاطر.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <a asp-controller="Auth" asp-action="Register" class="bg-black text-white px-9 py-3 rounded-full font-bold text-base hover:scale-105 transition-all">إنشاء حساب</a>
+                    <a asp-controller="Auth" asp-action="Login" class="bg-white text-black border-2 border-black/5 px-9 py-3 rounded-full font-bold text-base">تسجيل الدخول</a>
+                </div>
+            </div>
+            <div class="max-w-[1000px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+                <article class="metric-card reveal">
+                    <p class="metric-number" data-target="99.9">0</p>
+                    <p class="metric-label">استقرار النظام %</p>
+                </article>
+                <article class="metric-card reveal">
+                    <p class="metric-number" data-target="1800">0</p>
+                    <p class="metric-label">معاملة بيع يوميا</p>
+                </article>
+                <article class="metric-card reveal">
+                    <p class="metric-number" data-target="120">0</p>
+                    <p class="metric-label">تقرير ذكي تلقائي</p>
+                </article>
+                <article class="metric-card reveal">
+                    <p class="metric-number" data-target="24">0</p>
+                    <p class="metric-label">تنبيهات ومتابعة لحظية</p>
+                </article>
+            </div>
+            <div class="data-strip reveal">
+                <div class="ticker-card">
+                    <p class="ticker-label">تحليل AI لحظي</p>
+                    <p class="ticker-value">+<span class="live-value" data-live-min="12" data-live-max="38">12</span>%</p>
+                    <p class="ticker-note">توقعات نمو الارباح اليوم</p>
+                </div>
+                <div class="bars-card" aria-label="مؤشر اداء مالي متحرك">
+                    <div class="bars-grid">
+                        <span class="bar bar-1"></span>
+                        <span class="bar bar-2"></span>
+                        <span class="bar bar-3"></span>
+                        <span class="bar bar-4"></span>
+                        <span class="bar bar-5"></span>
+                        <span class="bar bar-6"></span>
                     </div>
                 </div>
+                <div class="ticker-card money-glow">
+                    <p class="ticker-label">تدفق نقدي</p>
+                    <p class="ticker-value">$<span class="live-value" data-live-min="420" data-live-max="980">420</span>K</p>
+                    <p class="ticker-note">صافي المبيعات الشهري</p>
+                </div>
+            </div>
+        </section>
 
-                <div class="mt-8 max-w-3xl mx-auto orbit-shell p-3 md:p-4 fade-up">
-                    <div class="ring"></div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div class="chip rounded-xl px-4 py-3">
-                            <p class="text-xs text-slate-500">مبيعات اليوم</p>
-                            <p class="text-2xl font-black text-slate-900">+38 طلب</p>
-                        </div>
-                        <div class="chip rounded-xl px-4 py-3">
-                            <p class="text-xs text-slate-500">تنبيهات المخزون</p>
-                            <p class="text-2xl font-black text-slate-900">07 عناصر</p>
-                        </div>
-                        <div class="chip rounded-xl px-4 py-3">
-                            <p class="text-xs text-slate-500">عملاء نشطين</p>
-                            <p class="text-2xl font-black text-slate-900">342 عميل</p>
-                        </div>
+        <section id="services" class="bg-black py-20 md:py-32 px-5 md:px-10">
+            <div class="max-w-[1200px] mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">اهم مميزات Zenith ERP AI</h2>
+                    <p class="text-white/40 text-lg max-w-[720px] mx-auto font-medium">نظام مالي متكامل بذكاء اصطناعي مدمج في التقارير والتحليل والتنبؤ لدعم التشغيل والتحصيل والنمو.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <article class="service-card reveal"><h3>الادارة المالية الشاملة</h3><p>لوحة تنفيذية موحدة لمؤشرات الاداء، الربحية، والمصروفات في الوقت الفعلي.</p></article>
+                    <article class="service-card reveal"><h3>المبيعات والاقساط</h3><p>دعم سيناريوهات الدفع النقدي والاجل والجزئي مع جدولة اقساط دقيقة وتنبيهات تحصيل.</p></article>
+                    <article class="service-card reveal"><h3>حوكمة المخزون</h3><p>تتبع محاسبي وتشغيلي لحركة الاصناف مع مستويات حد ادنى وتنبيهات نقص مؤتمتة.</p></article>
+                    <article class="service-card reveal"><h3>ادارة العملاء والذمم</h3><p>ملفات عملاء موحدة، كشوف حساب تفصيلية، ومتابعة مديونيات واستحقاقات بشكل احترافي.</p></article>
+                    <article class="service-card reveal"><h3>قنوات الدفع والتواصل</h3><p>ارسال الفواتير والتنبيهات عبر واتساب وقنوات رقمية مع تتبع حالة التسليم والتحصيل.</p></article>
+                    <article class="service-card reveal"><h3>محرك AI للتقارير</h3><p>توليد تقارير مالية تلقائية مع ملخصات تنفيذية وتوصيات مباشرة قابلة للتنفيذ.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="bg-white py-20 md:py-32 px-5 md:px-10">
+            <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-stretch">
+                <div class="relative p-6 md:p-12 h-full reveal">
+                    <div class="absolute inset-4 border border-black/10 rounded-[24px]"></div>
+                    <img src="~/img/engineer.png" alt="لوحة تحكم مالية" class="relative z-10 w-full h-full min-h-[420px] object-cover rounded-2xl shadow-2xl">
+                </div>
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-[1.1] tracking-tight">القيمة الاساسية من Zenith ERP</h2>
+                    <p class="text-black/60 text-lg mb-10 font-medium max-w-[560px]">مصمم لفرق التشغيل والماليات التي تحتاج دقة اعلى وسرعة تنفيذ، مع AI يشرح الارقام ويكشف فرص التحسين تلقائيا.</p>
+                    <div class="space-y-8">
+                        <div><h3 class="text-xl font-bold mb-2">تحكم تشغيلي ومالي في واجهة واحدة</h3><p class="text-black/60">تشغيل يومي منظم بدون تضارب بين فرق المبيعات والمحاسبة.</p></div>
+                        <div><h3 class="text-xl font-bold mb-2">قرارات مبنية على مؤشرات مالية</h3><p class="text-black/60">تحليل لحظي للايرادات والمصروفات والهوامش الربحية يدعم النمو بثقة.</p></div>
+                        <div><h3 class="text-xl font-bold mb-2">مساعد AI داخل كل قسم</h3><p class="text-black/60">يدعم التقارير، التحصيل، ادارة المصروفات، والمتابعة التشغيلية برسائل وتوصيات ذكية.</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="features" class="py-20">
-            <div class="max-w-6xl mx-auto px-5 md:px-8">
-                <div class="text-center mb-12 fade-up">
-                    <h2 class="section-title text-3xl md:text-5xl font-black">مزايا بروح تصميم غير تقليدية</h2>
-                    <p class="mt-4 text-slate-600 text-lg">واجهة مبنية لتخدم سرعة التشغيل مش مجرد شكل.</p>
+        <section id="pricing" class="bg-[#0a0a0a] py-24 md:py-40 px-5 md:px-10">
+            <div class="max-w-[1200px] mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">خطط اسعار مرنة حسب حجم نشاطك</h2>
+                    <p class="text-white/40 text-lg font-medium">ابدأ بالخطة المناسبة اليوم، وفعّل مزايا AI المتقدمة مع التوسع.</p>
                 </div>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <article class="feature-card p-7 fade-up">
-                        <i data-lucide="shopping-cart" class="w-7 h-7"></i>
-                        <h3 class="mt-4 text-xl font-extrabold">إدارة المبيعات</h3>
-                        <p class="mt-2 text-slate-600">فواتير سريعة، خصومات مرنة، وتجربة بيع عملية.</p>
-                    </article>
-                    <article class="feature-card p-7 fade-up">
-                        <i data-lucide="boxes" class="w-7 h-7"></i>
-                        <h3 class="mt-4 text-xl font-extrabold">مخزون لحظي</h3>
-                        <p class="mt-2 text-slate-600">تنبيهات قبل النفاد وتتبع واضح للحركة اليومية.</p>
-                    </article>
-                    <article class="feature-card p-7 fade-up">
-                        <i data-lucide="users-round" class="w-7 h-7"></i>
-                        <h3 class="mt-4 text-xl font-extrabold">رحلة عميل أفضل</h3>
-                        <p class="mt-2 text-slate-600">بيانات موحدة لكل عميل تساعدك تبيع أكثر.</p>
-                    </article>
-                    <article class="feature-card p-7 fade-up">
-                        <i data-lucide="message-circle-more" class="w-7 h-7"></i>
-                        <h3 class="mt-4 text-xl font-extrabold">تكامل واتساب</h3>
-                        <p class="mt-2 text-slate-600">إرسال فواتير ورسائل مباشرة من داخل النظام.</p>
-                    </article>
-                    <article class="feature-card p-7 fade-up">
-                        <i data-lucide="bar-chart-3" class="w-7 h-7"></i>
-                        <h3 class="mt-4 text-xl font-extrabold">تقارير تفاعلية</h3>
-                        <p class="mt-2 text-slate-600">لقطات أداء واضحة تسهّل القرار اليومي.</p>
-                    </article>
-                    <article class="feature-card p-7 fade-up">
-                        <i data-lucide="brain-circuit" class="w-7 h-7"></i>
-                        <h3 class="mt-4 text-xl font-extrabold">مساعد ذكي</h3>
-                        <p class="mt-2 text-slate-600">فهم أسرع للأرقام المهمة في لحظتها.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="flow" class="py-10 pb-20">
-            <div class="max-w-6xl mx-auto px-5 md:px-8">
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <div class="p-8 md:p-10 rounded-[28px] text-white relative overflow-hidden fade-up"
-                         style="background:linear-gradient(145deg,#0f172a 0%,#1e293b 58%,#334155 100%)">
-                        <div class="absolute -top-16 -left-14 w-52 h-52 rounded-full bg-white/10 blur-2xl"></div>
-                        <p class="text-slate-200 font-bold">تجربة التشغيل</p>
-                        <h2 class="section-title mt-3 text-3xl md:text-4xl font-black leading-tight">من الصفر للتشغيل خلال دقائق</h2>
-                        <p class="mt-4 text-slate-100/90 leading-relaxed">مسار واضح وبسيط يخلّي الفريق يبدأ بسرعة وبدون تعقيد.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="price-card reveal">
+                        <h3>Starter</h3>
+                        <p>للشركات الصغيرة التي تبدأ التحول الرقمي المالي.</p>
+                        <p class="price">$29 <span>/ شهريا</span></p>
+                        <p>مبيعات، مخزون، حسابات اساسية وتقارير يومية.</p>
                     </div>
-                    <div class="space-y-4">
-                        <div class="feature-card p-6 fade-up">
-                            <p class="text-sm text-slate-500 font-bold">01</p>
-                            <h3 class="text-xl font-extrabold">أنشئ حسابك</h3>
-                            <p class="text-slate-600 mt-1">خطوة سريعة لبدء إعداد متجرك.</p>
-                        </div>
-                        <div class="feature-card p-6 fade-up">
-                            <p class="text-sm text-slate-500 font-bold">02</p>
-                            <h3 class="text-xl font-extrabold">أضف البيانات الأساسية</h3>
-                            <p class="text-slate-600 mt-1">المنتجات، العملاء، وسياسات التشغيل.</p>
-                        </div>
-                        <div class="feature-card p-6 fade-up">
-                            <p class="text-sm text-slate-500 font-bold">03</p>
-                            <h3 class="text-xl font-extrabold">ابدأ البيع وتابع الأداء</h3>
-                            <p class="text-slate-600 mt-1">من لوحة واحدة بمؤشرات واضحة.</p>
-                        </div>
+                    <div class="price-card reveal">
+                        <h3>Growth AI</h3>
+                        <p>الاكثر استخداما للنشاطات التي تحتاج نمو وتحليل ادق.</p>
+                        <p class="price">$79 <span>/ شهريا</span></p>
+                        <p>كل مزايا Starter + مساعد AI للتقارير والتوقعات والتنبيهات.</p>
+                    </div>
+                    <div class="price-card reveal">
+                        <h3>Enterprise FinTech</h3>
+                        <p>للفروع المتعددة وفرق الماليات ذات الاحتياج المتقدم.</p>
+                        <p class="price">$149 <span>/ شهريا</span></p>
+                        <p>كل مزايا Growth AI + صلاحيات متقدمة وتكاملات وتقارير تنفيذية.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="cta" class="pb-20">
-            <div class="max-w-4xl mx-auto px-5 md:px-8">
-                <div class="orbit-shell rounded-[34px] p-8 md:p-12 text-center fade-up">
-                    <h2 class="section-title text-3xl md:text-5xl font-black">جاهز تشوف تصميم يوصل شغلك لمستوى تاني؟</h2>
-                    <p class="mt-4 text-slate-600 text-lg">ابدأ مجانًا وخلّي إدارتك أسرع، أوضح، وأجمل.</p>
-                    <div class="mt-8 flex flex-wrap justify-center gap-3">
-                        <a asp-controller="Auth" asp-action="Register" class="btn-main inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold">
-                            ابدأ الآن
-                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                        </a>
-                        <a asp-controller="Auth" asp-action="Login" class="inline-flex items-center px-8 py-4 rounded-xl border border-slate-300 text-slate-700 font-bold hover:bg-white transition">
-                            تسجيل الدخول
-                        </a>
+        <section id="integrations" class="bg-white py-20 md:py-32 px-5 md:px-10">
+            <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 leading-[1.1] tracking-tight">نتائج مدعومة بتحليل مالي ذكي</h2>
+                    <p class="text-black/60 text-lg mb-10 font-medium">مع AI المدمج في Zenith ERP ستحصل على توقعات اوضح، تحصيل اسرع، وتحسين مستمر في هوامش الربح وتجربة العميل.</p>
+                    <a asp-controller="Auth" asp-action="Register" class="inline-flex bg-[#e4e4e7] text-black px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">ابدأ الآن</a>
+                </div>
+                <div class="h-[380px] md:h-[500px] bg-[#f4f4f5] rounded-2xl flex items-center justify-center reveal pulse-border">
+                    <div class="text-center">
+                        <p class="font-bold mt-4 text-black/60">منصة تشغيل مالي متكاملة</p>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section class="bg-black py-24 md:py-32 px-5 md:px-10 text-center">
+            <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 reveal">Zenith ERP AI هو الحل الشامل لاي مشروع</h2>
+            <p class="text-white/40 text-lg md:text-xl font-medium max-w-[760px] mx-auto mb-10 reveal">اذا كنت تبحث عن منصة FinTech بذكاء اصطناعي مدمج في كل التفاصيل، Zenith ERP يمنحك تحكما كاملا من اول عملية بيع حتى التقارير الختامية.</p>
+            <a asp-controller="Auth" asp-action="Register" class="inline-flex bg-[#e4e4e7] text-black px-12 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform reveal">ابدأ الآن</a>
         </section>
     </main>
 
-    <footer class="border-t border-slate-200/80 bg-white/65 backdrop-blur">
-        <div class="max-w-6xl mx-auto px-5 md:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-3">
-            <p class="text-slate-700 font-bold" id="footer-year"></p>
-            <p class="text-slate-500 text-sm">Zenith ERP - تصميم حديث لتشغيل أذكى</p>
+    <footer class="bg-[#0a0a0a] pt-16 pb-10 px-5 md:px-10 border-t border-white/5">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-10">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="~/logo.png" alt="Zenith Logo" class="w-10 h-10 object-contain">
+                        <p class="text-white font-extrabold tracking-wide">ZENITH ERP</p>
+                    </div>
+                    <p class="text-white/45 text-sm leading-7">حل متكامل لادارة المبيعات، الاقساط، المخزون، العملاء والحسابات في منصة واحدة سريعة وسهلة.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">روابط سريعة</h3>
+                    <div class="flex flex-col gap-3">
+                        <a href="#home" class="text-white/40 hover:text-white transition-colors text-sm">الرئيسية</a>
+                        <a href="#services" class="text-white/40 hover:text-white transition-colors text-sm">المميزات</a>
+                        <a href="#benefits" class="text-white/40 hover:text-white transition-colors text-sm">القيمة الاساسية</a>
+                        <a href="#integrations" class="text-white/40 hover:text-white transition-colors text-sm">النتائج</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">وسائل التواصل</h3>
+                    <div class="flex flex-col gap-3">
+                        <a href="tel:+201000000000" class="text-white/40 hover:text-white transition-colors text-sm">+20 100 000 0000</a>
+                        <a href="mailto:info@zenitherp.com" class="text-white/40 hover:text-white transition-colors text-sm">info@zenitherp.com</a>
+                        <a href="#" class="text-white/40 hover:text-white transition-colors text-sm">واتساب الدعم</a>
+                        <a href="#" class="text-white/40 hover:text-white transition-colors text-sm">حجز ديمو مجاني</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">النشرة البريدية</h3>
+                    <p class="text-white/40 text-sm mb-4">ابدأ الآن مع منصة مالية ذكية تساعدك على النمو.</p>
+                    <a asp-controller="Auth" asp-action="Register" class="inline-flex bg-white text-black text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity">إنشاء حساب</a>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-white/25 text-sm font-medium">© 2026 ZENITH ERP. جميع الحقوق محفوظة.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-white/25 hover:text-white transition-colors text-sm font-medium">سياسة الخصوصية</a>
+                    <a href="#" class="text-white/25 hover:text-white transition-colors text-sm font-medium">شروط الاستخدام</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script>
-        document.getElementById("footer-year").textContent = `© ${new Date().getFullYear()} Zenith ERP. جميع الحقوق محفوظة.`;
-        lucide.createIcons();
-
-        const observer = new IntersectionObserver((entries)=>{
-            entries.forEach((e)=>{ if(e.isIntersecting){ e.target.classList.add("show"); observer.unobserve(e.target);} });
-        }, { threshold:.2 });
-        document.querySelectorAll(".fade-up").forEach((el)=>observer.observe(el));
-    </script>
+    @* <script src="./script.js"></script> *@
+    <script src="~/js/landing.js"></script>
 </body>
 </html>
+

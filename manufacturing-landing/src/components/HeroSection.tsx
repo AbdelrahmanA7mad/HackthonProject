@@ -37,25 +37,25 @@ export default function HeroSection() {
   return (
     <section id="home" className="relative pt-32 pb-32 px-10 max-w-[1440px] mx-auto min-h-screen">
       {/* Decorative Background Elements */}
-      <div className="absolute top-60 left-20 w-[600px] h-[600px] bg-[#dcfce7]/20 blur-[150px] rounded-full -z-10" />
+      <div className="absolute top-60 left-20 w-[600px] h-[600px] bg-[#e4e4e7]/20 blur-[150px] rounded-full -z-10" />
       
       {/* Floating Icons - Left Arc */}
-      <motion.div animate={floatingAnimation} className="absolute left-[10%] top-[34%] bg-[#0a2a2a] p-2 rounded-full shadow-xl hidden lg:block z-20 -translate-y-[15px]">
-        <Settings className="w-4 h-4 text-[#dcfce7]" />
+      <motion.div animate={floatingAnimation} className="absolute left-[10%] top-[34%] bg-[#000000] p-2 rounded-full shadow-xl hidden lg:block z-20 -translate-y-[15px]">
+        <Settings className="w-4 h-4 text-[#e4e4e7]" />
       </motion.div>
       <motion.div animate={{ y: [0, 8, 0], transition: { duration: 5, repeat: Infinity, ease: "easeInOut" } } as any} className="absolute left-[6%] top-[37%] bg-white border border-gray-100 p-2 rounded-full shadow-lg hidden lg:block z-20 -translate-y-[15px]">
-        <MousePointer2 className="w-4 h-4 text-[#0a2a2a]" />
+        <MousePointer2 className="w-4 h-4 text-[#000000]" />
       </motion.div>
-      <motion.div animate={floatingAnimation} transition={{ delay: 1 }} className="absolute left-[10%] top-[40%] bg-[#dcfce7] p-2 rounded-full shadow-md hidden lg:block z-20 -translate-y-[15px]">
-        <div className="w-2.5 h-2.5 bg-[#0a2a2a] rounded-sm" />
+      <motion.div animate={floatingAnimation} transition={{ delay: 1 }} className="absolute left-[10%] top-[40%] bg-[#e4e4e7] p-2 rounded-full shadow-md hidden lg:block z-20 -translate-y-[15px]">
+        <div className="w-2.5 h-2.5 bg-[#000000] rounded-sm" />
       </motion.div>
 
       {/* Floating Icons - Right Arc */}
       <motion.div animate={floatingAnimation} className="absolute right-[10%] top-[38%] bg-white border border-gray-100 p-2.5 rounded-full shadow-xl hidden lg:block z-20 -translate-y-[15px]">
-        <Waves className="w-5 h-5 text-[#0a2a2a]/40" />
+        <Waves className="w-5 h-5 text-[#000000]/40" />
       </motion.div>
-      <motion.div animate={{ y: [0, 12, 0], transition: { duration: 4.5, repeat: Infinity, ease: "easeInOut" } } as any} className="absolute right-[6%] top-[35%] bg-[#dcfce7] p-2 rounded-full shadow-lg hidden lg:block z-20 -translate-y-[15px]">
-        <BarChart3 className="w-4 h-4 text-[#0a2a2a]" />
+      <motion.div animate={{ y: [0, 12, 0], transition: { duration: 4.5, repeat: Infinity, ease: "easeInOut" } } as any} className="absolute right-[6%] top-[35%] bg-[#e4e4e7] p-2 rounded-full shadow-lg hidden lg:block z-20 -translate-y-[15px]">
+        <BarChart3 className="w-4 h-4 text-[#000000]" />
       </motion.div>
 
       {/* Content Header */}
@@ -66,10 +66,10 @@ export default function HeroSection() {
               initial={{ y: 80, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] as any, delay: 2.2 }}
-              className="text-4xl md:text-[65px] font-bold text-[#0a2a2a] leading-[1.1] tracking-tight max-w-[900px] flex flex-col items-center"
+              className="text-4xl md:text-[65px] font-bold text-[#000000] leading-[1.1] tracking-tight max-w-[900px] flex flex-col items-center"
             >
               <span className="block">The Future of Manufacturing</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#0a2a2a] to-[#1a4a4a]">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#000000] to-[#1a4a4a]">
                 with Latest Technology
               </span>
             </motion.h1>
@@ -78,7 +78,7 @@ export default function HeroSection() {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as any, delay: 2.5 }}
-              className="text-[#0a2a2a]/60 text-base md:text-lg font-medium max-w-[700px] leading-relaxed"
+              className="text-[#000000]/60 text-base md:text-lg font-medium max-w-[700px] leading-relaxed"
             >
               Elevate your manufacturing through smart automation and real-time analytics.
             </motion.p>
@@ -90,13 +90,13 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 3.2 }}
             className="flex flex-wrap justify-center gap-4.5"
           >
-            <button className="bg-[#0a2a2a] text-white px-9 py-3 rounded-full font-bold text-base flex items-center gap-2.5 hover:scale-105 transition-all shadow-xl shadow-[#0a2a2a]/10">
+            <button className="bg-[#000000] text-white px-9 py-3 rounded-full font-bold text-base flex items-center gap-2.5 hover:scale-105 transition-all shadow-xl shadow-[#000000]/10">
               Get Started
               <div className="bg-white/20 p-1.5 rounded-full">
                 <ArrowUpRight className="w-3.5 h-3.5 text-white" />
               </div>
             </button>
-            <button className="bg-white text-[#0a2a2a] border-2 border-[#0a2a2a]/5 px-9 py-3 rounded-full font-bold text-base hover:bg-gray-50 transition-all">
+            <button className="bg-white text-[#000000] border-2 border-[#000000]/5 px-9 py-3 rounded-full font-bold text-base hover:bg-gray-50 transition-all">
               Try Demo
             </button>
           </motion.div>
@@ -112,9 +112,9 @@ export default function HeroSection() {
             {[1, 2, 3, 4, 5].map((s) => (
               <Star key={s} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
             ))}
-            <span className="ml-1.5 font-bold text-sm text-[#0a2a2a]">5.0</span>
+            <span className="ml-1.5 font-bold text-sm text-[#000000]">5.0</span>
           </div>
-          <p className="text-[#0a2a2a]/30 font-bold text-[10px] uppercase tracking-[0.25em]">from 80+ reviews</p>
+          <p className="text-[#000000]/30 font-bold text-[10px] uppercase tracking-[0.25em]">from 80+ reviews</p>
         </motion.div>
       </div>
 
@@ -135,32 +135,32 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Card 2: Narrow (280px) */}
-        <motion.div variants={itemVariants} className="md:col-span-4 h-[280px] bg-[#0a2a2a] rounded-xl p-8 flex flex-col justify-center items-center text-center text-white shadow-xl">
+        <motion.div variants={itemVariants} className="md:col-span-4 h-[280px] bg-[#000000] rounded-xl p-8 flex flex-col justify-center items-center text-center text-white shadow-xl">
            <h3 className="text-4xl font-bold mb-2 tracking-tighter">100+</h3>
            <p className="text-white/40 text-[12px] font-bold uppercase tracking-widest leading-tight">Our Esteemed <br/> Clients</p>
         </motion.div>
 
         {/* Card 3: Middle (210px) */}
-        <motion.div variants={itemVariants} className="md:col-span-6 h-[210px] bg-white border border-[#0a2a2a]/10 rounded-xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+        <motion.div variants={itemVariants} className="md:col-span-6 h-[210px] bg-white border border-[#000000]/10 rounded-xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.03)] flex flex-col justify-between">
            <div className="flex items-center justify-between">
-              <div className="bg-[#dcfce7] p-2 rounded-2xl shadow-sm">
-                <LayoutDashboard className="w-5 h-5 text-[#0a2a2a]" />
+              <div className="bg-[#e4e4e7] p-2 rounded-2xl shadow-sm">
+                <LayoutDashboard className="w-5 h-5 text-[#000000]" />
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 bg-[#0a2a2a] rounded-full" />
-                  <span className="text-[9px] font-bold text-[#0a2a2a] uppercase tracking-wider">8% Inc</span>
+                  <div className="w-1.5 h-1.5 bg-[#000000] rounded-full" />
+                  <span className="text-[9px] font-bold text-[#000000] uppercase tracking-wider">8% Inc</span>
                 </div>
               </div>
            </div>
            <div>
-              <p className="text-[#0a2a2a]/40 font-bold text-[9px] mb-0.5 uppercase tracking-widest">Total Projects</p>
-              <h3 className="text-3xl font-bold text-[#0a2a2a] mb-1.5 tracking-tighter">1951+</h3>
+              <p className="text-[#000000]/40 font-bold text-[9px] mb-0.5 uppercase tracking-widest">Total Projects</p>
+              <h3 className="text-3xl font-bold text-[#000000] mb-1.5 tracking-tighter">1951+</h3>
               <div className="flex gap-1 h-8 items-end">
                 {[30, 60, 45, 80, 55, 90, 40, 70, 50, 85].map((h, i) => (
                   <div 
                     key={i} 
-                    className="flex-1 bg-gray-50 rounded-t-sm transition-all hover:bg-[#dcfce7]" 
+                    className="flex-1 bg-gray-50 rounded-t-sm transition-all hover:bg-[#e4e4e7]" 
                     style={{ height: `${h}%` }} 
                   />
                 ))}
@@ -169,27 +169,27 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Card 4: Narrow (280px) */}
-        <motion.div variants={itemVariants} className="md:col-span-4 h-[280px] bg-[#dcfce7] rounded-xl p-8 flex flex-col justify-center items-center text-center shadow-xl">
-           <h3 className="text-4xl font-bold text-[#0a2a2a] mb-2 tracking-tighter">6+</h3>
-           <p className="text-[#0a2a2a]/40 text-[13px] font-bold uppercase tracking-widest leading-tight">Years of <br/> Service</p>
+        <motion.div variants={itemVariants} className="md:col-span-4 h-[280px] bg-[#e4e4e7] rounded-xl p-8 flex flex-col justify-center items-center text-center shadow-xl">
+           <h3 className="text-4xl font-bold text-[#000000] mb-2 tracking-tighter">6+</h3>
+           <p className="text-[#000000]/40 text-[13px] font-bold uppercase tracking-widest leading-tight">Years of <br/> Service</p>
         </motion.div>
 
         {/* Card 5: Edge (350px) - RESTORED DECORATIONS */}
-        <motion.div variants={itemVariants} className="md:col-span-5 h-[350px] bg-[#0a2a2a] rounded-2xl p-8 flex flex-col justify-end text-white relative overflow-hidden shadow-2xl">
+        <motion.div variants={itemVariants} className="md:col-span-5 h-[350px] bg-[#000000] rounded-2xl p-8 flex flex-col justify-end text-white relative overflow-hidden shadow-2xl">
            {/* Dot Matrix Grid */}
            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-                style={{ backgroundImage: 'radial-gradient(#dcfce7 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                style={{ backgroundImage: 'radial-gradient(#e4e4e7 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
            
            {/* Top Wave Restored */}
            <div className="absolute top-0 right-0 w-full opacity-10 rotate-180">
               <svg viewBox="0 0 200 100" className="w-full h-32">
-                <path d="M0,80 C50,0 150,100 200,20" fill="none" stroke="#dcfce7" strokeWidth="4" strokeLinecap="round" />
+                <path d="M0,80 C50,0 150,100 200,20" fill="none" stroke="#e4e4e7" strokeWidth="4" strokeLinecap="round" />
               </svg>
            </div>
 
            <div className="relative z-10">
-              <div className="bg-[#dcfce7] w-9 h-9 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-[#dcfce7]/10">
-                <Zap className="w-4 h-4 text-[#0a2a2a]" />
+              <div className="bg-[#e4e4e7] w-9 h-9 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-[#e4e4e7]/10">
+                <Zap className="w-4 h-4 text-[#000000]" />
               </div>
               
               <p className="text-lg font-medium leading-[1.3] tracking-tight">
@@ -202,7 +202,7 @@ export default function HeroSection() {
            {/* Bottom Wave Restored */}
            <div className="absolute bottom-0 left-0 w-full opacity-20">
               <svg viewBox="0 0 200 100" className="w-full h-24">
-                <path d="M0,80 C50,100 150,0 200,80" fill="none" stroke="#dcfce7" strokeWidth="8" strokeLinecap="round" />
+                <path d="M0,80 C50,100 150,0 200,80" fill="none" stroke="#e4e4e7" strokeWidth="8" strokeLinecap="round" />
               </svg>
            </div>
         </motion.div>

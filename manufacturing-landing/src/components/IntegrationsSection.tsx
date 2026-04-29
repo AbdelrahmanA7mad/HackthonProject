@@ -13,14 +13,14 @@ import {
 } from 'lucide-react';
 
 const integrationIcons = [
-  { Icon: Box, color: "#0a2a2a", top: "10%", left: "50%" },
-  { Icon: Cpu, color: "#0a2a2a", top: "30%", left: "85%" },
-  { Icon: Cloud, color: "#0a2a2a", top: "70%", left: "80%" },
-  { Icon: Database, color: "#0a2a2a", top: "85%", left: "45%" },
-  { Icon: Terminal, color: "#0a2a2a", top: "70%", left: "15%" },
-  { Icon: Activity, color: "#0a2a2a", top: "30%", left: "10%" },
-  { Icon: Layers, color: "#0a2a2a", top: "45%", left: "55%" },
-  { Icon: Zap, color: "#0a2a2a", top: "55%", left: "35%" },
+  { Icon: Box, color: "#000000", top: "10%", left: "50%" },
+  { Icon: Cpu, color: "#000000", top: "30%", left: "85%" },
+  { Icon: Cloud, color: "#000000", top: "70%", left: "80%" },
+  { Icon: Database, color: "#000000", top: "85%", left: "45%" },
+  { Icon: Terminal, color: "#000000", top: "70%", left: "15%" },
+  { Icon: Activity, color: "#000000", top: "30%", left: "10%" },
+  { Icon: Layers, color: "#000000", top: "45%", left: "55%" },
+  { Icon: Zap, color: "#000000", top: "55%", left: "35%" },
 ];
 
 export default function IntegrationsSection() {
@@ -34,7 +34,7 @@ export default function IntegrationsSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-[#0a2a2a] mb-8 leading-[1.1] tracking-tight"
+            className="text-4xl md:text-5xl font-bold text-[#000000] mb-8 leading-[1.1] tracking-tight"
           >
             Empowering Top Companies <br /> with Seamless Integrations
           </motion.h2>
@@ -44,7 +44,7 @@ export default function IntegrationsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-[#0a2a2a]/60 text-lg mb-12 font-medium max-w-[550px] leading-relaxed"
+            className="text-[#000000]/60 text-lg mb-12 font-medium max-w-[550px] leading-relaxed"
           >
             Experience seamless connections with our innovative solutions, designed 
             to effortlessly integrate with your existing systems, enhance productivity, 
@@ -57,7 +57,7 @@ export default function IntegrationsSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <button className="bg-[#dcfce7] text-[#0a2a2a] px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl shadow-[#dcfce7]/10">
+            <button className="bg-[#e4e4e7] text-[#000000] px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl shadow-[#e4e4e7]/10">
               Work With Us
             </button>
           </motion.div>
@@ -69,12 +69,12 @@ export default function IntegrationsSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative h-[500px] bg-[#f0fdf4] rounded-2xl flex items-center justify-center overflow-hidden order-1 lg:order-2"
+          className="relative h-[500px] bg-[#f4f4f5] rounded-2xl flex items-center justify-center overflow-hidden order-1 lg:order-2"
         >
           {/* Concentric Rings */}
-          <div className="absolute w-[380px] h-[380px] border border-[#0a2a2a]/5 rounded-full" />
-          <div className="absolute w-[240px] h-[240px] border border-[#0a2a2a]/5 rounded-full" />
-          <div className="absolute w-[100px] h-[100px] border border-[#0a2a2a]/5 rounded-full" />
+          <div className="absolute w-[380px] h-[380px] border border-[#000000]/5 rounded-full" />
+          <div className="absolute w-[240px] h-[240px] border border-[#000000]/5 rounded-full" />
+          <div className="absolute w-[100px] h-[100px] border border-[#000000]/5 rounded-full" />
 
           {/* Floating Icons */}
           {integrationIcons.map((item, index) => (
@@ -102,8 +102,8 @@ export default function IntegrationsSection() {
           ))}
 
           {/* Center Icon */}
-          <div className="relative bg-[#0a2a2a] p-5 rounded-xl shadow-2xl z-10">
-            <Globe className="w-10 h-10 text-[#dcfce7]" />
+          <div className="relative bg-[#000000] p-5 rounded-xl shadow-2xl z-10">
+            <Globe className="w-10 h-10 text-[#e4e4e7]" />
           </div>
 
           {/* Subtle Radial Glow */}

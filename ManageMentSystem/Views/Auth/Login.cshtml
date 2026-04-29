@@ -1,143 +1,190 @@
 @model ManageMentSystem.ViewModels.LoginViewModel
 @{
-    ViewData["Title"] = "تسجيل الدخول";
-    Layout = "_Layout";
+    Layout = null;
 }
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل الدخول | Zenith ERP</title>
+    <script src="~/lib/tailwindcss/tailwind.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="~/js/tailwind-theme.js"></script>
+    <link rel="stylesheet" href="~/css/cairo-font.css" />
+    <link href="~/css/landing.css" rel="stylesheet" />
+    <style>
+        .auth-page {
+            --start-x: 0px;
+            opacity: 0;
+            transform: translateX(var(--start-x));
+            transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+            will-change: transform, opacity;
+        }
 
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans" dir="rtl" style="font-family: 'Cairo', sans-serif;">
+        .auth-page.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
-    <!-- Subtle grid background -->
-    <div class="absolute inset-0 pointer-events-none select-none opacity-[0.03]" aria-hidden="true" style="background-image: linear-gradient(rgba(0,0,0,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.1) 1px, transparent 1px); background-size: 64px 64px;"></div>
+        .auth-page.is-leaving-left {
+            opacity: 0;
+            transform: translateX(-64px);
+        }
 
-    <!-- Login Card -->
-    <div class="relative z-10 w-full max-w-md">
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 sm:p-10 space-y-8 animate__animated animate__fadeIn">
+        .auth-page.is-leaving-right {
+            opacity: 0;
+            transform: translateX(64px);
+        }
+    </style>
+</head>
+<body class="bg-[#fafafa] text-black antialiased" style="font-family: 'Cairo', sans-serif;">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
-            <!-- Logo & Heading -->
-            <div class="text-center space-y-4">
-                <div class="mx-auto w-14 h-14 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center">
-                    <img src="~/images/zenith_new_logo.webp" alt="Zenith ERP" class="w-8 h-8 object-contain opacity-90" />
-                </div>
-                <div>
-                    <h2 class="text-2xl font-extrabold text-primary tracking-tight">
-                        مرحباً بعودتك
-                    </h2>
-                    <p class="mt-2 text-sm text-gray-500">
-                        أدخل بياناتك للوصول إلى لوحة التحكم
-                    </p>
-                </div>
-            </div>
+    <main id="authPage" class="auth-page relative min-h-screen px-5 py-10 md:px-10 flex items-center justify-center">
+        <div class="w-full max-w-5xl bg-white/95 backdrop-blur-xl border border-black/5 rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div class="grid lg:grid-cols-2">
+                <aside class="hidden lg:flex bg-black text-white p-10 flex-col justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="~/logo.png" alt="Zenith Logo" class="w-10 h-10 object-contain">
+                        <p class="font-bold text-xl">ZENITH</p>
+                    </div>
+                    <div>
+                        <h2 class="text-4xl font-bold leading-tight mb-4">أهلا بعودتك</h2>
+                        <p class="text-white/70 leading-7">سجل دخولك الآن وكمل إدارة المبيعات والحسابات من مكان واحد بتجربة سريعة وحديثة.</p>
+                    </div>
+                </aside>
 
-            <form class="space-y-5" action="@Url.Action("Login", "Auth")" method="post">
+                <section class="p-8 md:p-10">
+                    <div class="text-center mb-8">
+                        <img src="~/logo.png" alt="Zenith Logo" class="w-14 h-14 object-contain mx-auto mb-4">
+                        <h1 class="text-3xl font-bold tracking-tight">تسجيل الدخول</h1>
+                        <p class="text-black/60 mt-2">ادخل بيانات حسابك للمتابعة</p>
+                    </div>
+
+                    <form class="space-y-5" asp-controller="Auth" asp-action="Login" method="post">
                 @Html.AntiForgeryToken()
 
-                <!-- Error Messages -->
                 @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
                 {
-                    <div class="bg-accentRed/10 border border-accentRed/20 p-4 rounded-xl">
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="alert-circle" class="text-accentRed w-5 h-5 mt-0.5 flex-shrink-0"></i>
-                            <div>
-                                <h3 class="text-sm font-bold text-accentRed">خطأ في الدخول</h3>
-                                <div class="mt-1 text-sm text-accentRed">
-                                    @foreach (var error in ViewData.ModelState[string.Empty].Errors)
-                                    {
-                                        <p>@error.ErrorMessage</p>
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                    <div class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                        {
+                            <p>@error.ErrorMessage</p>
+                        }
                     </div>
                 }
 
-                <!-- Email -->
-                <div class="space-y-2">
-                    <label asp-for="Email" class="block text-sm font-bold text-gray-700">البريد الإلكتروني / اسم المستخدم</label>
+                <div>
+                    <label asp-for="Email" class="mb-2 block text-sm font-bold text-black/80"></label>
+                    <input asp-for="Email" class="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-black/30" placeholder="name@example.com" />
+                    <span asp-validation-for="Email" class="text-red-600 text-xs font-bold mt-1 block"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Password" class="mb-2 block text-sm font-bold text-black/80"></label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
-                            <i data-lucide="mail" class="text-gray-400 w-4.5 h-4.5"></i>
-                        </div>
-                        <input asp-for="Email"
-                               class="w-full bg-bgBase border border-borderSubtle rounded-xl pl-4 pr-11 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
-                               placeholder="name@example.com" />
+                        <input asp-for="Password" type="password" id="passwordInput" class="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-black/30" placeholder="••••••••" />
+                        <button type="button" id="togglePassword" class="absolute left-3 top-1/2 -translate-y-1/2 text-black/50 text-xs font-bold">إظهار</button>
                     </div>
-                    <span asp-validation-for="Email" class="text-accentRed text-xs font-bold block"></span>
+                    <span asp-validation-for="Password" class="text-red-600 text-xs font-bold mt-1 block"></span>
                 </div>
 
-                <!-- Password -->
-                <div class="space-y-2">
-                    <label asp-for="Password" class="block text-sm font-bold text-gray-700">كلمة المرور</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
-                            <i data-lucide="lock" class="text-gray-400 w-4.5 h-4.5"></i>
-                        </div>
-                        <input asp-for="Password" type="password" id="passwordInput"
-                               class="w-full bg-bgBase border border-borderSubtle rounded-xl pl-11 pr-11 py-3 text-sm text-primary placeholder-textMuted outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
-                               placeholder="••••••••" />
-                        <button type="button" id="togglePassword" class="absolute inset-y-0 left-0 pl-3.5 flex items-center cursor-pointer text-gray-400 hover:text-primary transition-colors outline-none z-20">
-                            <i data-lucide="eye" class="w-4.5 h-4.5"></i>
-                        </button>
-                    </div>
-                    <span asp-validation-for="Password" class="text-accentRed text-xs font-bold block"></span>
+                <div class="flex items-center justify-between text-sm">
+                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                        <input asp-for="RememberMe" class="h-4 w-4 rounded border-black/20">
+                        <span class="text-black/70">تذكرني</span>
+                    </label>
+                    <a asp-controller="Home" asp-action="Landing" class="text-black/60 hover:text-black transition-colors">رجوع للرئيسية</a>
                 </div>
 
-                <!-- Remember Me -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <input asp-for="RememberMe" class="h-4 w-4 rounded border-borderSubtle text-primary focus:ring-primary cursor-pointer" />
-                        <label asp-for="RememberMe" class="text-sm text-gray-600 font-bold cursor-pointer select-none">
-                            تذكرني
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Submit -->
-                <button type="submit" id="btn-submit"
-                        class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-white font-bold text-sm bg-primary border border-transparent hover:bg-primaryHover transition-all duration-200 shadow-lg shadow-black/10 hover:-translate-y-0.5 active:translate-y-0">
+                <button type="submit" id="btn-submit-signin" class="w-full bg-black text-white px-8 py-3 rounded-full font-bold hover:scale-[1.02] transition-all">
                     تسجيل الدخول
                 </button>
 
-                <!-- Register Link -->
-                <p class="text-center text-sm text-gray-500">
-                    ليس لديك حساب؟
-                    <a asp-action="Register" asp-controller="Auth" class="font-bold text-primary hover:text-primaryHover underline underline-offset-4 decoration-borderSubtle hover:decoration-textMuted transition-colors">
-                        إنشاء حساب جديد
-                    </a>
-                </p>
-            </form>
+                        <p class="text-center text-sm text-black/60">
+                            ليس لديك حساب؟
+                            <a asp-controller="Auth" asp-action="Register" data-direction="left" class="font-bold text-black auth-switch-link">إنشاء حساب</a>
+                        </p>
+                    </form>
+                </section>
+            </div>
         </div>
-    </div>
-</div>
+    </main>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script>
-        document.getElementById('togglePassword').addEventListener('click', function (e) {
-            const passwordInput = document.getElementById('passwordInput');
-            const icon = this.querySelector('i');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                this.innerHTML = '<i data-lucide="eye-off" class="w-4.5 h-4.5"></i>';
-            } else {
-                passwordInput.type = 'password';
-                this.innerHTML = '<i data-lucide="eye" class="w-4.5 h-4.5"></i>';
-            }
-            lucide.createIcons();
-        });
+        function bindAuthInteractions() {
+            const authPage = document.getElementById('authPage');
+            if (!authPage) return;
 
-        $('form').on('submit', function() {
-            if ($(this).valid()) {
-                const btn = $('#btn-submit');
-                const originalText = btn.text();
-                btn.prop('disabled', true);
-                btn.html('<i data-lucide="loader-2" class="animate-spin ml-2 inline-block w-4 h-4"></i> جاري الدخول...');
-                lucide.createIcons();
-                
-                setTimeout(() => {
-                    btn.prop('disabled', false);
-                    btn.text(originalText);
-                }, 10000);
+            const togglePassword = document.getElementById('togglePassword');
+            if (togglePassword) {
+                togglePassword.addEventListener('click', function () {
+                    const passwordInput = document.getElementById('passwordInput');
+                    if (!passwordInput) return;
+                    const isPassword = passwordInput.type === 'password';
+                    passwordInput.type = isPassword ? 'text' : 'password';
+                    this.textContent = isPassword ? 'إخفاء' : 'إظهار';
+                });
             }
-        });
+
+            const form = authPage.querySelector('form');
+            if (form) {
+                $(form).off('submit.authSubmit').on('submit.authSubmit', function () {
+                    if ($(this).valid()) {
+                        const btn = $('#btn-submit-signin');
+                        btn.prop('disabled', true);
+                        btn.text('جاري تسجيل الدخول...');
+                    }
+                });
+                if ($.validator && $.validator.unobtrusive) {
+                    $.validator.unobtrusive.parse($(form));
+                }
+            }
+
+            requestAnimationFrame(() => authPage.classList.add('is-visible'));
+
+            authPage.querySelectorAll('.auth-switch-link').forEach((link) => {
+                link.addEventListener('click', async function (e) {
+                    const target = this.getAttribute('href');
+                    if (!target || target.startsWith('#')) return;
+                    const direction = this.dataset.direction === 'right' ? 'right' : 'left';
+                    e.preventDefault();
+
+                    authPage.classList.remove('is-visible');
+                    authPage.classList.add(direction === 'left' ? 'is-leaving-left' : 'is-leaving-right');
+
+                    try {
+                        const response = await fetch(target, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const nextDoc = parser.parseFromString(html, 'text/html');
+                        const nextPage = nextDoc.getElementById('authPage');
+
+                        if (!nextPage) {
+                            window.location.href = target;
+                            return;
+                        }
+
+                        nextPage.style.setProperty('--start-x', direction === 'left' ? '64px' : '-64px');
+                        authPage.replaceWith(nextPage);
+                        document.title = nextDoc.title;
+                        history.pushState({}, '', target);
+                        bindAuthInteractions();
+                    } catch {
+                        window.location.href = target;
+                    }
+                });
+            });
+        }
+
+        window.addEventListener('popstate', () => window.location.reload());
+        bindAuthInteractions();
     </script>
-}
+</body>
+</html>

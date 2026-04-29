@@ -28,15 +28,15 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#050f0f] pt-24 pb-12 px-10 border-t border-white/5">
+    <footer className="bg-[#0a0a0a] pt-24 pb-12 px-10 border-t border-white/5">
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
           
           {/* Logo & About */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#0a2a2a] rounded-full flex items-center justify-center">
-                <div className="w-2.5 h-2.5 bg-[#dcfce7] rounded-full"></div>
+              <div className="w-8 h-8 bg-[#000000] rounded-full flex items-center justify-center">
+                <div className="w-2.5 h-2.5 bg-[#e4e4e7] rounded-full"></div>
               </div>
               <span className="font-bold text-xl tracking-tight text-white">Prodmast</span>
             </div>

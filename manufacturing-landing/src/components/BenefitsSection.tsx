@@ -24,11 +24,11 @@ export default function BenefitsSection() {
         {/* Left Column: Image with Decorative Frame */}
         <div className="relative p-8 lg:p-12 group/frame h-full">
           {/* Background Decorative Elements - Technical Style (No solid bg) */}
-          <div className="absolute inset-4 border border-[#0a2a2a]/10 rounded-[24px] pointer-events-none" />
+          <div className="absolute inset-4 border border-[#000000]/10 rounded-[24px] pointer-events-none" />
           
           {/* Corner accents */}
-          <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-[#0a2a2a]/20 rounded-tl-xl" />
-          <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#0a2a2a]/20 rounded-br-xl" />
+          <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-[#000000]/20 rounded-tl-xl" />
+          <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#000000]/20 rounded-br-xl" />
 
           <motion.div 
             initial={{ opacity: 0, x: -40 }}
@@ -43,7 +43,7 @@ export default function BenefitsSection() {
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             {/* Overlay for depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a2a2a]/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/20 to-transparent" />
           </motion.div>
         </div>
 
@@ -53,7 +53,7 @@ export default function BenefitsSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-[#0a2a2a] mb-6 leading-[1.1] tracking-tight"
+            className="text-4xl md:text-5xl font-bold text-[#000000] mb-6 leading-[1.1] tracking-tight"
           >
             Key Benefits of Our System <br /> for Your Business Efficiency
           </motion.h2>
@@ -63,7 +63,7 @@ export default function BenefitsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-[#0a2a2a]/60 text-lg mb-12 font-medium max-w-[500px]"
+            className="text-[#000000]/60 text-lg mb-12 font-medium max-w-[500px]"
           >
             Our systems boost productivity, cut costs, and drive business growth.
           </motion.p>
@@ -78,12 +78,12 @@ export default function BenefitsSection() {
                 transition={{ delay: 0.2 + index * 0.1 }}
                 className="flex gap-5 items-start group"
               >
-                <div className="mt-1 bg-[#dcfce7] p-1.5 rounded-full text-[#0a2a2a] group-hover:scale-110 transition-transform">
-                  <CheckCircle2 className="w-5 h-5 fill-[#0a2a2a] text-white" />
+                <div className="mt-1 bg-[#e4e4e7] p-1.5 rounded-full text-[#000000] group-hover:scale-110 transition-transform">
+                  <CheckCircle2 className="w-5 h-5 fill-[#000000] text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#0a2a2a] mb-2">{benefit.title}</h3>
-                  <p className="text-[#0a2a2a]/60 leading-relaxed font-medium max-w-[450px]">
+                  <h3 className="text-xl font-bold text-[#000000] mb-2">{benefit.title}</h3>
+                  <p className="text-[#000000]/60 leading-relaxed font-medium max-w-[450px]">
                     {benefit.description}
                   </p>
                 </div>

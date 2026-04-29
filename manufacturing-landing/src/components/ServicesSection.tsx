@@ -60,7 +60,7 @@ const itemVariants = {
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="bg-[#0a2a2a] py-32 px-10">
+    <section id="services" className="bg-[#000000] py-32 px-10">
       <div className="max-w-[1200px] mx-auto">
         {/* Header */}
         <div className="text-center mb-20">

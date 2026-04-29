@@ -29,9 +29,9 @@ const plans = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="bg-[#050f0f] py-48 px-10 relative overflow-hidden">
+    <section id="pricing" className="bg-[#0a0a0a] py-48 px-10 relative overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#0a2a2a_0%,transparent_70%)] opacity-50" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#000000_0%,transparent_70%)] opacity-50" />
 
       <div className="max-w-[1200px] mx-auto relative z-10">
         {/* Header */}
@@ -76,7 +76,7 @@ export default function PricingSection() {
                 <span className="text-white/20 font-bold">/ month</span>
               </div>
 
-              <button className="w-full py-4 rounded-full border border-white/10 text-white font-bold mb-12 hover:bg-white hover:text-[#0a2a2a] transition-all">
+              <button className="w-full py-4 rounded-full border border-white/10 text-white font-bold mb-12 hover:bg-white hover:text-[#000000] transition-all">
                 Get Started
               </button>
 
@@ -99,14 +99,14 @@ export default function PricingSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="relative bg-[#0a2a2a] rounded-2xl p-16 overflow-hidden flex flex-col items-center text-center group min-h-[450px] justify-center"
+          className="relative bg-[#000000] rounded-2xl p-16 overflow-hidden flex flex-col items-center text-center group min-h-[450px] justify-center"
         >
           {/* Ultra-Subtle 3D Rotated Grid Background */}
           <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ perspective: '1200px' }}>
             <div 
               className="absolute inset-0 w-[300%] h-[300%] -left-[100%] -top-[100%] opacity-[0.05]"
               style={{ 
-                backgroundImage: `linear-gradient(to right, #dcfce7 1px, transparent 1px), linear-gradient(to bottom, #dcfce7 1px, transparent 1px)`,
+                backgroundImage: `linear-gradient(to right, #e4e4e7 1px, transparent 1px), linear-gradient(to bottom, #e4e4e7 1px, transparent 1px)`,
                 backgroundSize: '240px 240px',
                 transform: 'rotateX(30deg) translateY(-10%)',
                 transformOrigin: 'center center',
@@ -121,7 +121,7 @@ export default function PricingSection() {
               advanced tools for custom tailoring to your needs.
             </p>
             
-            <button className="bg-[#dcfce7] text-[#0a2a2a] px-12 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl shadow-[#dcfce7]/10">
+            <button className="bg-[#e4e4e7] text-[#000000] px-12 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl shadow-[#e4e4e7]/10">
               Get Started
             </button>
           </div>

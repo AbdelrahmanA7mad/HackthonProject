@@ -8,109 +8,181 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>تسجيل الدخول | Zenith ERP</title>
-    <script src="~/lib/tailwindcss/tailwind.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="~/js/tailwind-theme.js"></script>
     <link rel="stylesheet" href="~/css/cairo-font.css" />
-    <link href="~/css/landing.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/zenith-ui.css" />
     <style>
+        body { font-family: 'Cairo', sans-serif; background-color: var(--zen-paper); color: var(--zen-ink); }
         .auth-page {
             --start-x: 0px;
             opacity: 0;
             transform: translateX(var(--start-x));
-            transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+            transition: transform .6s cubic-bezier(.22,1,.36,1), opacity .4s ease;
             will-change: transform, opacity;
         }
+        .auth-page.is-visible { opacity: 1; transform: translateX(0); }
+        .auth-page.is-leaving-left { opacity: 0; transform: translateX(-40px); }
+        .auth-page.is-leaving-right { opacity: 0; transform: translateX(40px); }
 
-        .auth-page.is-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .auth-page.is-leaving-left {
-            opacity: 0;
-            transform: translateX(-64px);
-        }
-
-        .auth-page.is-leaving-right {
-            opacity: 0;
-            transform: translateX(64px);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="bg-[#fafafa] text-black antialiased" style="font-family: 'Cairo', sans-serif;">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+<body class="bg-[#fdfdfd] text-slate-900 antialiased overflow-x-hidden">
 
-    <main id="authPage" class="auth-page relative min-h-screen px-5 py-10 md:px-10 flex items-center justify-center">
-        <div class="w-full max-w-5xl bg-white/95 backdrop-blur-xl border border-black/5 rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.08)] overflow-hidden">
-            <div class="grid lg:grid-cols-2">
-                <aside class="hidden lg:flex bg-black text-white p-10 flex-col justify-between">
-                    <div class="flex items-center gap-3">
-                        <img src="~/logo.png" alt="Zenith Logo" class="w-10 h-10 object-contain">
-                        <p class="font-bold text-xl">ZENITH</p>
+    <main id="authPage" class="auth-page min-h-screen flex items-stretch">
+        <!-- Form Section -->
+        <div class="w-full lg:w-[45%] flex flex-col justify-center px-8 md:px-16 lg:px-24 py-12 bg-[var(--zen-paper)] relative z-10">
+            <div class="max-w-md w-full mx-auto">
+                <!-- Header -->
+                <div class="mb-10 text-right">
+                    <div class="flex items-center gap-3 mb-8">
+                        <img src="~/logo.png" alt="Zenith" class="w-10 h-10 object-contain">
+                        <span class="text-xl font-black tracking-tighter text-[var(--zen-ink)] uppercase">Zenith</span>
                     </div>
-                    <div>
-                        <h2 class="text-4xl font-bold leading-tight mb-4">أهلا بعودتك</h2>
-                        <p class="text-white/70 leading-7">سجل دخولك الآن وكمل إدارة المبيعات والحسابات من مكان واحد بتجربة سريعة وحديثة.</p>
-                    </div>
-                </aside>
-
-                <section class="p-8 md:p-10">
-                    <div class="text-center mb-8">
-                        <img src="~/logo.png" alt="Zenith Logo" class="w-14 h-14 object-contain mx-auto mb-4">
-                        <h1 class="text-3xl font-bold tracking-tight">تسجيل الدخول</h1>
-                        <p class="text-black/60 mt-2">ادخل بيانات حسابك للمتابعة</p>
-                    </div>
-
-                    <form class="space-y-5" asp-controller="Auth" asp-action="Login" method="post">
-                @Html.AntiForgeryToken()
-
-                @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
-                {
-                    <div class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                        @foreach (var error in ViewData.ModelState[string.Empty].Errors)
-                        {
-                            <p>@error.ErrorMessage</p>
-                        }
-                    </div>
-                }
-
-                <div>
-                    <label asp-for="Email" class="mb-2 block text-sm font-bold text-black/80"></label>
-                    <input asp-for="Email" class="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-black/30" placeholder="name@example.com" />
-                    <span asp-validation-for="Email" class="text-red-600 text-xs font-bold mt-1 block"></span>
+                    <h1 class="text-4xl font-extrabold text-[var(--zen-ink)] mb-3 tracking-tight">تسجيل الدخول</h1>
+                    <p class="text-[var(--zen-ink-soft)] font-medium opacity-70">أهلاً بك مجدداً، أدخل بياناتك للمتابعة.</p>
                 </div>
 
-                <div>
-                    <label asp-for="Password" class="mb-2 block text-sm font-bold text-black/80"></label>
-                    <div class="relative">
-                        <input asp-for="Password" type="password" id="passwordInput" class="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-black/30" placeholder="••••••••" />
-                        <button type="button" id="togglePassword" class="absolute left-3 top-1/2 -translate-y-1/2 text-black/50 text-xs font-bold">إظهار</button>
+                <form asp-controller="Auth" asp-action="Login" method="post" class="space-y-6">
+                    @Html.AntiForgeryToken()
+
+                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
+                    {
+                        <div class="p-4 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm font-bold flex items-center gap-3">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                                {
+                                    <p>@error.ErrorMessage</p>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <div class="space-y-2">
+                        <label asp-for="Email" class="text-sm font-bold text-[var(--zen-ink-soft)] mr-1">البريد الإلكتروني</label>
+                        <div class="relative">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--zen-ink-soft)] opacity-40">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </span>
+                            <input asp-for="Email" class="w-full bg-[var(--zen-muted)] border border-[var(--zen-border)] rounded-2xl py-3.5 pr-12 pl-4 text-[var(--zen-ink)] outline-none focus:ring-2 focus:ring-[var(--zen-primary-light)] focus:border-[var(--zen-primary)] transition-all font-medium" placeholder="name@company.com" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-[var(--zen-danger)] text-xs font-bold mr-1 block"></span>
                     </div>
-                    <span asp-validation-for="Password" class="text-red-600 text-xs font-bold mt-1 block"></span>
+
+                    <div class="space-y-2">
+                        <label asp-for="Password" class="text-sm font-bold text-[var(--zen-ink-soft)] mr-1">كلمة المرور</label>
+                        <div class="relative">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--zen-ink-soft)] opacity-40">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            </span>
+                            <input asp-for="Password" type="password" id="passwordInput" class="w-full bg-[var(--zen-muted)] border border-[var(--zen-border)] rounded-2xl py-3.5 pr-12 pl-12 text-[var(--zen-ink)] outline-none focus:ring-2 focus:ring-[var(--zen-primary-light)] focus:border-[var(--zen-primary)] transition-all font-medium placeholder:tracking-widest" placeholder="••••••••" />
+                            <button type="button" class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--zen-ink-soft)] opacity-40 hover:opacity-100 hover:text-[var(--zen-ink)] transition-all toggle-password" data-target="passwordInput">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path class="eye-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path class="eye-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    <path class="eye-closed hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-red-500 text-xs font-bold mr-1 block"></span>
+                    </div>
+
+                    <div class="flex items-center justify-between py-2">
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <div class="relative flex items-center justify-center">
+                                <input asp-for="RememberMe" class="peer appearance-none w-5 h-5 border-2 border-[var(--zen-border)] rounded-md checked:bg-[var(--zen-primary)] checked:border-[var(--zen-primary)] transition-all">
+                                <svg class="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="text-sm font-bold text-[var(--zen-ink-soft)] opacity-80 group-hover:opacity-100 group-hover:text-[var(--zen-ink)] transition-all">تذكرني</span>
+                        </label>
+                        <a href="#" class="text-sm font-bold text-[var(--zen-ink-soft)] opacity-60 hover:opacity-100 hover:text-[var(--zen-ink)] transition-all">نسيت كلمة المرور؟</a>
+                    </div>
+
+                    <button type="submit" id="btn-submit-signin" class="w-full bg-[var(--zen-primary)] text-white py-4 rounded-2xl font-black text-lg hover:bg-[var(--zen-primary-hover)] hover:scale-[1.01] active:scale-[0.98] transition-all shadow-xl shadow-[var(--zen-primary)]/10">
+                        تسجيل الدخول
+                    </button>
+
+                    <div class="relative py-4">
+                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-[var(--zen-muted)]"></div></div>
+                        <div class="relative flex justify-center text-xs"><span class="bg-[var(--zen-paper)] px-4 text-[var(--zen-ink-soft)] opacity-50 font-bold uppercase tracking-wider">أو المتابعة عبر</span></div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <button type="button" class="flex justify-center items-center py-3 border border-[var(--zen-muted)] rounded-xl hover:bg-[var(--zen-muted)] transition-all"><img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google"></button>
+                        <button type="button" class="flex justify-center items-center py-3 border border-[var(--zen-muted)] rounded-xl hover:bg-[var(--zen-muted)] transition-all"><img src="https://www.svgrepo.com/show/512317/github-142.svg" class="w-5 h-5" alt="Github"></button>
+                        <button type="button" class="flex justify-center items-center py-3 border border-[var(--zen-muted)] rounded-xl hover:bg-[var(--zen-muted)] transition-all"><img src="https://www.svgrepo.com/show/475647/facebook-color.svg" class="w-5 h-5" alt="Facebook"></button>
+                    </div>
+
+                    <p class="text-center text-[var(--zen-ink-soft)] font-bold text-sm pt-4">
+                        ليس لديك حساب؟
+                        <a asp-controller="Auth" asp-action="Register" data-direction="left" class="text-[var(--zen-ink)] underline underline-offset-4 hover:text-[var(--zen-primary-hover)] transition-colors auth-switch-link">أنشئ حساباً الآن</a>
+                    </p>
+                </form>
+
+                <div class="mt-20 text-center">
+                    <p class="text-xs text-slate-400 font-medium">© 2026 Zenith ERP System. جميع الحقوق محفوظة.</p>
                 </div>
-
-                <div class="flex items-center justify-between text-sm">
-                    <label class="inline-flex items-center gap-2 cursor-pointer">
-                        <input asp-for="RememberMe" class="h-4 w-4 rounded border-black/20">
-                        <span class="text-black/70">تذكرني</span>
-                    </label>
-                    <a asp-controller="Home" asp-action="Landing" class="text-black/60 hover:text-black transition-colors">رجوع للرئيسية</a>
-                </div>
-
-                <button type="submit" id="btn-submit-signin" class="w-full bg-black text-white px-8 py-3 rounded-full font-bold hover:scale-[1.02] transition-all">
-                    تسجيل الدخول
-                </button>
-
-                        <p class="text-center text-sm text-black/60">
-                            ليس لديك حساب؟
-                            <a asp-controller="Auth" asp-action="Register" data-direction="left" class="font-bold text-black auth-switch-link">إنشاء حساب</a>
-                        </p>
-                    </form>
-                </section>
             </div>
+        </div>
+
+        <!-- Branding Section -->
+        <div class="hidden lg:flex lg:w-[55%] relative overflow-hidden bg-[var(--zen-primary)] items-center justify-center p-12">
+            <!-- Background Image -->
+            <img src="~/images/auth-bg.png" alt="Visual" class="absolute inset-0 w-full h-full object-cover opacity-60 scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-[var(--zen-ink)] via-[var(--zen-ink)]/40 to-transparent"></div>
+
+            <div class="relative z-10 max-w-xl text-right">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-bold mb-8">
+                    <span class="flex h-2 w-2 rounded-full bg-[var(--zen-success)] animate-pulse"></span>
+                    انضم لأكثر من 5,000 شركة ناجحة
+                </div>
+                
+                <h2 class="text-6xl font-black text-white mb-6 leading-tight tracking-tighter">
+                    أدر أعمالك <br/> 
+                    <span class="text-[var(--zen-border)]">بذكاء وفعالية.</span>
+                </h2>
+                
+                <p class="text-xl text-[var(--zen-muted)] font-medium leading-relaxed mb-12">
+                    نظام زينيث يوفر لك كل ما تحتاجه لإدارة المبيعات، المخازن، والتقارير المالية في منصة واحدة سهلة الاستخدام.
+                </p>
+
+                <!-- Testimonial Card -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flex -space-x-3 space-x-reverse">
+                            <img class="w-10 h-10 rounded-full border-2 border-black" src="https://i.pravatar.cc/150?u=1" alt="">
+                            <img class="w-10 h-10 rounded-full border-2 border-black" src="https://i.pravatar.cc/150?u=2" alt="">
+                            <img class="w-10 h-10 rounded-full border-2 border-black" src="https://i.pravatar.cc/150?u=3" alt="">
+                        </div>
+                        <div class="text-white">
+                            <div class="flex text-amber-400 text-xs">
+                                ★★★★★
+                            </div>
+                            <p class="text-xs font-bold">تقييم ممتاز من العملاء</p>
+                        </div>
+                    </div>
+                    <p class="text-white/80 font-bold italic leading-relaxed text-lg">
+                        "زينيث غير طريقتنا في إدارة المتجر تماماً، سهولة في الاستخدام ودقة لا متناهية في التقارير."
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+                        <span class="text-white text-sm font-black italic">Zenith ERP</span>
+                        <div class="flex gap-2">
+                             <div class="w-2 h-2 rounded-full bg-white"></div>
+                             <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                             <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decorative Elements -->
+            <div class="absolute top-20 right-20 w-64 h-64 bg-slate-500/20 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-20 left-20 w-96 h-96 bg-black rounded-full blur-[120px]"></div>
         </div>
     </main>
 
@@ -122,16 +194,28 @@
             const authPage = document.getElementById('authPage');
             if (!authPage) return;
 
-            const togglePassword = document.getElementById('togglePassword');
-            if (togglePassword) {
-                togglePassword.addEventListener('click', function () {
-                    const passwordInput = document.getElementById('passwordInput');
-                    if (!passwordInput) return;
-                    const isPassword = passwordInput.type === 'password';
-                    passwordInput.type = isPassword ? 'text' : 'password';
-                    this.textContent = isPassword ? 'إخفاء' : 'إظهار';
+            const toggleButtons = authPage.querySelectorAll('.toggle-password');
+            toggleButtons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const targetId = this.dataset.target;
+                    const input = document.getElementById(targetId);
+                    if (!input) return;
+                    
+                    const isPassword = input.type === 'password';
+                    input.type = isPassword ? 'text' : 'password';
+                    
+                    const eyeOpen = this.querySelectorAll('.eye-open');
+                    const eyeClosed = this.querySelector('.eye-closed');
+                    
+                    if (isPassword) {
+                        eyeOpen.forEach(p => p.classList.add('hidden'));
+                        eyeClosed.classList.remove('hidden');
+                    } else {
+                        eyeOpen.forEach(p => p.classList.remove('hidden'));
+                        eyeClosed.classList.add('hidden');
+                    }
                 });
-            }
+            });
 
             const form = authPage.querySelector('form');
             if (form) {
@@ -139,7 +223,7 @@
                     if ($(this).valid()) {
                         const btn = $('#btn-submit-signin');
                         btn.prop('disabled', true);
-                        btn.text('جاري تسجيل الدخول...');
+                        btn.html('<span class="flex items-center justify-center gap-2"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري تسجيل الدخول...</span>');
                     }
                 });
                 if ($.validator && $.validator.unobtrusive) {
@@ -171,7 +255,7 @@
                             return;
                         }
 
-                        nextPage.style.setProperty('--start-x', direction === 'left' ? '64px' : '-64px');
+                        nextPage.style.setProperty('--start-x', direction === 'left' ? '40px' : '-40px');
                         authPage.replaceWith(nextPage);
                         document.title = nextDoc.title;
                         history.pushState({}, '', target);

@@ -1,13 +1,13 @@
 // ===== دوال البحث عن العملاء للأقساط =====
 
 // البحث عن العملاء في الأقساط
-$('#installmentCustomerSearch').on('input', function () {
+$(document).on('input', '#installmentCustomerSearch', function () {
     const searchTerm = $(this).val().toLowerCase().trim();
     const resultsDiv = $('#installmentCustomerSearchResults');
     const select = $('#modalCustomerSelect');
 
     if (searchTerm.length === 0) {
-        resultsDiv.hide();
+        resultsDiv.addClass('hidden').hide();
         return;
     }
 
@@ -38,15 +38,22 @@ $('#installmentCustomerSearch').on('input', function () {
             // عرض الاسم ورقم الهاتف إذا كان متوفر
             const displayText = phone ? `${text} (${phone})` : text;
 
-            resultsHtml += `<div class="installment-customer-result p-2 border-bottom ${itemClass}" data-value="${value}" style="cursor: pointer;">${displayText}</div>`;
+            if (value !== '0' && value !== 0) {
+                resultsHtml += `<div class="installment-customer-result p-2 border-bottom ${itemClass}" data-value="${value}" style="cursor: pointer;">${displayText}</div>`;
+            }
         });
 
-        resultsDiv.html(resultsHtml).show();
+        // دائماً إظهار خيار إضافة عميل جديد في نهاية البحث
+        const isNumber = /^\d+$/.test(searchTerm);
+        const newCustomerText = isNumber ? `➕ عميل جديد (${searchTerm})` : '➕ عميل جديد';
+        resultsHtml += `<div class="installment-customer-result p-2 border-bottom text-primary fw-bold" data-value="0" style="cursor: pointer;">${newCustomerText}</div>`;
+
+        resultsDiv.html(resultsHtml).removeClass('hidden').show();
     } else {
         // إظهار خيار "عميل جديد" عندما لا توجد نتائج
         const isNumber = /^\d+$/.test(searchTerm);
         const newCustomerText = isNumber ? `➕ عميل جديد (${searchTerm})` : '➕ عميل جديد';
-        resultsDiv.html(`<div class="installment-customer-result p-2 border-bottom text-primary fw-bold" data-value="0" style="cursor: pointer;">${newCustomerText}</div>`).show();
+        resultsDiv.html(`<div class="installment-customer-result p-2 border-bottom text-primary fw-bold" data-value="0" style="cursor: pointer;">${newCustomerText}</div>`).removeClass('hidden').show();
     }
 });
 
@@ -73,14 +80,14 @@ $(document).on('click', '.installment-customer-result', function () {
 
     $('#modalCustomerSelect').val(value);
     $('#installmentCustomerSearch').val(text); // الآن سيتم وضع الاسم النظيف فقط
-    $('#installmentCustomerSearchResults').hide();
+    $('#installmentCustomerSearchResults').addClass('hidden').hide();
 
     // --- بقية الكود كما هو تماماً ---
 
     // إذا كان العميل الجديد وتم البحث برقم، ضع الرقم في حقل الهاتف
     if ((value === '0' || value === 0) && originalSearchTerm && /^\d+$/.test(originalSearchTerm)) {
         // إظهار حقول العميل الجديد أولاً
-        $('#modalNewCustomerFields').show();
+        $('#modalNewCustomerFields').removeClass('hidden').show();
 
         // إضافة required للحقول
         $('#modalNewCustomerName').prop('required', true);
@@ -100,15 +107,15 @@ $(document).on('click', '.installment-customer-result', function () {
                 }
             }, 50);
         }
-    } else if (value === '0') {
+    } else if (value === '0' || value === 0) {
         // إذا كان عميل جديد ولكن ليس برقم، أظهر الحقول فقط
-        $('#modalNewCustomerFields').show();
+        $('#modalNewCustomerFields').removeClass('hidden').show();
         $('#modalNewCustomerName').prop('required', true);
         $('#modalNewCustomerPhone').prop('required', true);
         $('#modalNewCustomerAddress').prop('required', true);
     } else {
         // هام: إذا تم اختيار عميل موجود، قم بإخفاء حقول العميل الجديد
-        $('#modalNewCustomerFields').hide();
+        $('#modalNewCustomerFields').addClass('hidden').hide();
         $('#modalNewCustomerName').prop('required', false);
         $('#modalNewCustomerPhone').prop('required', false);
         $('#modalNewCustomerAddress').prop('required', false);
@@ -121,12 +128,12 @@ $(document).on('click', '.installment-customer-result', function () {
 // إخفاء نتائج البحث عن العملاء عند النقر خارجها
 $(document).on('click', function (e) {
     if (!$(e.target).closest('#installmentCustomerSearch, #installmentCustomerSearchResults').length) {
-        $('#installmentCustomerSearchResults').hide();
+        $('#installmentCustomerSearchResults').addClass('hidden').hide();
     }
 });
 
 // معالجة التركيز على البحث عن العملاء
-$('#installmentCustomerSearch').on('focus', function () {
+$(document).on('focus', '#installmentCustomerSearch', function () {
     if ($(this).val().trim().length > 0) {
         $(this).trigger('input');
     }

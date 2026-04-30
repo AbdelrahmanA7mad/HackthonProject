@@ -28,7 +28,7 @@ function addProductToSale(productId, productName, price, purchasePrice, availabl
     }
 
     updateTotalAmount();
-    $('#productSearchResults').hide();
+    $('#productSearchResults').addClass('hidden').hide();
     $('#productSearch').val('');
 
     // Show success message for NewSale page
@@ -204,7 +204,7 @@ function addEditProductToSale(productId, productName, price, purchasePrice, avai
     }
 
     updateEditTotalAmount();
-    $('#editProductSearchResults').hide();
+    $('#editProductSearchResults').addClass('hidden').hide();
     $('#editProductSearch').val('');
 }
 

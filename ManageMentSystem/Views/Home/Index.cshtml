@@ -101,8 +101,13 @@
                     </svg>
                 </div>
             </div>
-            <div class="text-2xl font-black text-gray-900 mb-3">@((Model.MonthlyRevenue - Model.MonthlyExpenses).ToString("C"))</div>
-            <div class="text-xs text-gray-400 font-medium">إيرادات بعد خصم المصاريف</div>
+            <div class="text-2xl font-black text-gray-900 mb-3">@Model.MonthlyProfit.ToString("C")</div>
+            <div class="flex items-center gap-2 text-xs font-bold">
+                <span class="px-2 py-0.5 rounded-full @(Model.IsProfitTrendUp ? "bg-emerald-50 text-accentGreen" : "bg-red-50 text-accentRed")">
+                    @(Model.IsProfitTrendUp ? "▲" : "▼") @Model.ProfitTrend%
+                </span>
+                <span class="text-gray-400">أرباح المبيعات والأقساط</span>
+            </div>
         </div>
 
     </div>
@@ -307,9 +312,9 @@ const accentRed = window.accentRed || theme.accentRed || window.getComputedStyle
             const bgSubtle = window.bgSubtle || theme.bgSubtle || '#f8f9fa';
             const textMuted = window.textMuted || theme.textMuted || '#6b7280';
 
-            const rev  = @Model.MonthlyRevenue;
-            const exp  = @Model.MonthlyExpenses;
-            const prof = Math.max(0, rev - exp);
+            const rev  = @Model.MonthlyRevenue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            const exp  = @Model.MonthlyExpenses.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            const prof = @Model.MonthlyProfit.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
             // ── Bar: Revenue vs Expenses ──
             const barCtx = document.getElementById('revExpChart')?.getContext('2d');
@@ -344,10 +349,10 @@ const accentRed = window.accentRed || theme.accentRed || window.getComputedStyle
                 new Chart(donutCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['إيرادات صافية', 'مصاريف'],
+                        labels: ['الإيرادات', 'المصاريف'],
                         datasets: [{
-                            data: [prof, exp],
-                            backgroundColor: [accent, accentRed],
+                            data: [rev, exp],
+                            backgroundColor: [accentGreen, accentRed],
                             borderWidth: 0,
                             hoverOffset: 6
                         }]
@@ -365,8 +370,8 @@ const accentRed = window.accentRed || theme.accentRed || window.getComputedStyle
                 const legend = document.getElementById('donutLegend');
                 if (legend) {
                     const items = [
-                        { color: accent, label: 'إيرادات صافية', val: prof },
-                        { color: accentRed, label: 'مصاريف',     val: exp  },
+                        { color: accentGreen, label: 'الإيرادات', val: rev },
+                        { color: accentRed, label: 'المصاريف',     val: exp  },
                     ];
                     legend.innerHTML = items.map(i => `
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">

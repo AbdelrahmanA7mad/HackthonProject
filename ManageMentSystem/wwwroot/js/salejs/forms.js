@@ -84,7 +84,7 @@ $('#addSaleForm').on('submit', function (e) {
                 updateTotalAmount();
                 $('#barcodeScanner').val('');
                 $('#productSearch').val('');
-                $('#productSearchResults').hide();
+                $('#productSearchResults').addClass('hidden').hide();
 
                 // Show success message
                 showSaleSavedSuccess(

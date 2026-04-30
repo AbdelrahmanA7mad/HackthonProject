@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>إنشاء حساب | Zenith ERP</title>
+    <title>إنشاء حساب | نماء</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="~/css/cairo-font.css" />
     <link rel="stylesheet" href="~/css/zenith-ui.css" />
@@ -33,56 +33,15 @@
 </head>
 <body class="bg-[#fdfdfd] text-slate-900 antialiased overflow-x-hidden">
 
-    <main id="authPage" class="auth-page min-h-screen flex items-stretch">
-        <!-- branding Section (Shown on right in RTL) -->
-        <div class="hidden lg:flex lg:w-[45%] relative overflow-hidden bg-[var(--zen-primary)] items-center justify-center p-12">
-            <!-- Background Image -->
-            <img src="~/images/auth-bg.png" alt="Visual" class="absolute inset-0 w-full h-full object-cover opacity-60 scale-105">
-            <div class="absolute inset-0 bg-gradient-to-t from-[var(--zen-ink)] via-[var(--zen-ink)]/40 to-transparent"></div>
-
-            <div class="relative z-10 max-w-md text-right">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-bold mb-8">
-                    <span class="flex h-2 w-2 rounded-full bg-[var(--zen-success)] animate-pulse"></span>
-                    ابدأ رحلتك اليوم
-                </div>
-                
-                <h2 class="text-5xl font-black text-white mb-6 leading-tight tracking-tighter">
-                    انضم لمستقبل <br/> 
-                    <span class="text-[var(--zen-border)]">إدارة الأعمال.</span>
-                </h2>
-                
-                <p class="text-lg text-[var(--zen-muted)] font-medium leading-relaxed mb-8">
-                    خطوات بسيطة تفصلك عن امتلاك أقوى أدوات الإدارة في السوق المصري والعربي.
-                </p>
-
-                <!-- Info Card -->
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-emerald-400">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span class="text-white font-bold">تجربة مجانية لمدة 14 يوم</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-emerald-400">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span class="text-white font-bold">دعم فني متواصل 24/7</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <main id="authPage" class="auth-page h-screen flex items-stretch overflow-hidden">
         <!-- Form Section -->
-        <div class="w-full lg:w-[55%] flex flex-col justify-center px-8 md:px-16 lg:px-20 py-12 bg-[var(--zen-paper)] relative z-10">
+        <div class="w-full lg:w-[55%] flex flex-col justify-center px-8 md:px-16 lg:px-20 py-12 bg-[var(--zen-paper)] relative z-10 overflow-y-auto">
             <div class="max-w-2xl w-full mx-auto">
                 <!-- Header -->
                 <div class="mb-8 text-right">
                     <div class="flex items-center gap-3 mb-6">
-                        <img src="~/logo.png" alt="Zenith" class="w-8 h-8 object-contain">
-                        <span class="text-lg font-black tracking-tighter text-[var(--zen-ink)] uppercase">Zenith</span>
+                        <img src="~/images/blogo.webp" alt="نماء" class="w-8 h-8 object-contain">
+                        <span class="text-2xl font-black tracking-tighter text-[var(--zen-ink)] uppercase">نماء</span>
                     </div>
                     <h1 class="text-3xl font-extrabold text-[var(--zen-ink)] mb-2 tracking-tight">إنشاء حساب جديد</h1>
                     <p class="text-[var(--zen-ink-soft)] font-medium text-sm opacity-70">ابدأ بإدخال بياناتك الأساسية لتجهيز متجرك.</p>
@@ -215,7 +174,7 @@
 
                     <div class="pt-4">
                         <button type="submit" id="btn-submit-reg" class="w-full bg-[var(--zen-primary)] text-white py-4 rounded-xl font-black text-lg hover:bg-[var(--zen-primary-hover)] hover:scale-[1.01] active:scale-[0.98] transition-all shadow-xl shadow-[var(--zen-primary)]/10">
-                            بدء استخدام زينيث مجاناً
+                            بدء استخدام نماء مجاناً
                         </button>
                     </div>
 
@@ -225,8 +184,46 @@
                     </p>
                 </form>
 
-                <div class="mt-12 text-center">
-                    <p class="text-[10px] text-slate-400 font-medium">بالنقر على "بدء الاستخدام"، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.</p>
+            </div>
+        </div>
+
+        <!-- branding Section -->
+        <div class="hidden lg:flex lg:w-[45%] relative overflow-hidden bg-[var(--zen-primary)] items-end justify-center p-12">
+            <!-- Background Image -->
+            <img src="~/images/auth-bg.webp" alt="Visual" class="absolute inset-0 w-full h-full object-cover opacity-60 scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-[var(--zen-ink)] via-[var(--zen-ink)]/40 to-transparent"></div>
+
+            <div class="relative z-10 max-w-xl text-right">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-bold mb-8">
+                    <span class="flex h-2 w-2 rounded-full bg-[var(--zen-success)] animate-pulse"></span>
+                    ابدأ رحلتك اليوم
+                </div>
+                
+                <h2 class="text-6xl font-black text-white mb-6 leading-tight tracking-tighter">
+                    انضم لمستقبل <br/> 
+                    <span class="text-[var(--zen-border)]">إدارة الأعمال.</span>
+                </h2>
+                
+                <p class="text-xl text-[var(--zen-muted)] font-medium leading-relaxed mb-12">
+                    خطوات بسيطة تفصلك عن امتلاك أقوى أدوات الإدارة في السوق المصري والعربي.
+                </p>
+
+                <!-- Info Card -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-emerald-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="text-white font-bold">تجربة مجانية لمدة 14 يوم</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-emerald-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="text-white font-bold">دعم فني متواصل 24/7</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

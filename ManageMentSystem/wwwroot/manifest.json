@@ -1,7 +1,7 @@
 {
-  "name": "Qota System",
-  "short_name": "Qota",
-  "description": "نظام كوتة لإدارة المبيعات والأقساط",
+  "name": "نماء",
+  "short_name": "نماء",
+  "description": "نظام نماء لإدارة المبيعات والأقساط",
   "start_url": "/Home",
   "display": "standalone",
   "background_color": "#1e1b4b",

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qota-v1';
+const CACHE_NAME = 'namaa-v1';
 
 // نحتاج فقط لتسجيل الـ Service Worker لتمكين ميزة التثبيت (Installable)
 self.addEventListener('install', (event) => {

@@ -63,8 +63,6 @@ body {
 .loader-wordmark {
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
-    letter-spacing: .2em;
-    margin-right: -0.2em;
     color: #000;
 }
 
@@ -105,9 +103,9 @@ body {
         margin-left: 0;
     }
     100% {
-        width: 320px; /* Adjust based on word size */
+        width: 180px; /* Adjusted for "نَمَاء" */
         opacity: 1;
-        margin-left: 1.5rem;
+        margin-left: 1rem;
     }
 }
 

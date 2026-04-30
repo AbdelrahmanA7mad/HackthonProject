@@ -37,14 +37,21 @@
         <!-- Form Section -->
         <div class="w-full lg:w-[55%] flex flex-col justify-center px-8 md:px-16 lg:px-24 py-12 bg-[var(--zen-paper)] relative z-10 overflow-y-auto">
             <div class="max-w-md w-full mx-auto">
-                <!-- Header -->
-                <div class="mb-10 text-right">
-                    <div class="flex items-center gap-3 mb-8">
-                        <img src="~/images/blogo.webp" alt="نماء" class="w-10 h-10 object-contain">
-                        <span class="text-3xl font-black tracking-tighter text-[var(--zen-ink)] uppercase">نماء</span>
+                <div class="mb-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <a href="/" class="flex items-center gap-3 group">
+                            <img src="~/images/blogo.webp" alt="نماء" class="w-10 h-10 object-contain transition-transform group-hover:scale-110">
+                            <span class="text-3xl font-black tracking-tighter text-[var(--zen-ink)] uppercase group-hover:text-[var(--zen-primary)] transition-all">نماء</span>
+                        </a>
+                        <a href="/" class="flex items-center gap-2 text-sm font-bold text-[var(--zen-ink-soft)] hover:text-[var(--zen-primary)] transition-all group">
+                            العودة للرئيسية
+                            <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </a>
                     </div>
-                    <h1 class="text-4xl font-extrabold text-[var(--zen-ink)] mb-3 tracking-tight">تسجيل الدخول</h1>
-                    <p class="text-[var(--zen-ink-soft)] font-medium opacity-70">أهلاً بك مجدداً، أدخل بياناتك للمتابعة.</p>
+                    <div class="text-right">
+                        <h1 class="text-4xl font-extrabold text-[var(--zen-ink)] mb-3 tracking-tight">تسجيل الدخول</h1>
+                        <p class="text-[var(--zen-ink-soft)] font-medium opacity-70">أهلاً بك مجدداً، أدخل بياناتك للمتابعة.</p>
+                    </div>
                 </div>
 
                 <form asp-controller="Auth" asp-action="Login" method="post" class="space-y-6">

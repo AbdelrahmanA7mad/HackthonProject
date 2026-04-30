@@ -32,54 +32,7 @@
         </form>
     </div>
 
-    <!-- نماء AI Insights Widget -->
-    <div class="mb-8 bg-primary rounded-2xl p-6 shadow-xl border border-white/10 relative overflow-hidden group">
-        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <i data-lucide="brain-circuit" class="w-32 h-32 text-white"></i>
-        </div>
-        
-        <div class="relative z-10">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/10">
-                    <i data-lucide="sparkles" class="text-white w-6 h-6"></i>
-                </div>
-                <div>
-                    <h3 class="text-white font-bold text-lg">تحليلات الذكاء الاصطناعي للديون</h3>
-                    <p class="text-gray-400 text-xs font-medium">رؤى ذكية حول الالتزامات والتحصيلات المتوقعة</p>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
-                    <div class="flex items-center gap-2 mb-2 text-emerald-400 font-bold text-sm">
-                        <i data-lucide="shield-check" class="w-4 h-4"></i>
-                        استقرار مالي
-                    </div>
-                    <p class="text-white/80 text-xs leading-relaxed font-medium">
-                        نسبة التحصيل الحالية جيدة. استمرار وتيرة التحصيل هذه سيؤدي إلى تصفية 80% من الديون النشطة خلال الربع الحالي.
-                    </p>
-                </div>
-                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
-                    <div class="flex items-center gap-2 mb-2 text-amber-400 font-bold text-sm">
-                        <i data-lucide="alert-circle" class="w-4 h-4"></i>
-                        تنبيه الاستحقاق
-                    </div>
-                    <p class="text-white/80 text-xs leading-relaxed font-medium">
-                        هناك @Model.ActiveDebts ديون نشطة تقترب من تاريخ الاستحقاق. ننصح ببدء التواصل مع الأطراف المعنية لتجنب التأخير.
-                    </p>
-                </div>
-                <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl">
-                    <div class="flex items-center gap-2 mb-2 text-blue-400 font-bold text-sm">
-                        <i data-lucide="trending-up" class="w-4 h-4"></i>
-                        توقعات السيولة
-                    </div>
-                    <p class="text-white/80 text-xs leading-relaxed font-medium">
-                        تصفية الديون المتبقية ستوفر سيولة نقدية قدرها @Model.OutstandingAmount.ToString("C") يمكن استثمارها في تعزيز المخزون.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">

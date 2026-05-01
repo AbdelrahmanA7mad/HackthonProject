@@ -1,0 +1,716 @@
+Folder PATH listing
+Volume serial number is 7239-7E0A
+C:.
++---.config
++---.dotnet
++---.vs
+|   +---ManageMentSystem
+|   |   \---v18
+|   \---ManageMentSystem.slnx
+|       +---FileContentIndex
+|       \---v18
++---bin
+|   +---Debug
+|   |   \---net8.0
+|   |       +---af
+|   |       +---ar
+|   |       +---az
+|   |       +---bg
+|   |       +---bn-BD
+|   |       +---cs
+|   |       +---da
+|   |       +---de
+|   |       +---el
+|   |       +---es
+|   |       +---fa
+|   |       +---fi-FI
+|   |       +---fr
+|   |       +---fr-BE
+|   |       +---he
+|   |       +---hr
+|   |       +---hu
+|   |       +---hy
+|   |       +---id
+|   |       +---is
+|   |       +---it
+|   |       +---ja
+|   |       +---ko
+|   |       +---ko-KR
+|   |       +---ku
+|   |       +---lv
+|   |       +---ms-MY
+|   |       +---mt
+|   |       +---nb
+|   |       +---nb-NO
+|   |       +---nl
+|   |       +---pl
+|   |       +---pt
+|   |       +---pt-BR
+|   |       +---ro
+|   |       +---ru
+|   |       +---runtimes
+|   |       |   +---browser
+|   |       |   |   \---lib
+|   |       |   |       \---net8.0
+|   |       |   +---unix
+|   |       |   |   \---lib
+|   |       |   |       \---net6.0
+|   |       |   +---win
+|   |       |   |   \---lib
+|   |       |   |       +---net6.0
+|   |       |   |       +---net7.0
+|   |       |   |       \---net8.0
+|   |       |   +---win-arm
+|   |       |   |   \---native
+|   |       |   +---win-arm64
+|   |       |   |   \---native
+|   |       |   +---win-x64
+|   |       |   |   \---native
+|   |       |   \---win-x86
+|   |       |       \---native
+|   |       +---sk
+|   |       +---sl
+|   |       +---sr
+|   |       +---sr-Latn
+|   |       +---sv
+|   |       +---th-TH
+|   |       +---tr
+|   |       +---uk
+|   |       +---uz-Cyrl-UZ
+|   |       +---uz-Latn-UZ
+|   |       +---vi
+|   |       +---zh-CN
+|   |       +---zh-Hans
+|   |       \---zh-Hant
+|   \---Release
+|       \---net8.0
+|           +---af
+|           +---ar
+|           +---az
+|           +---bg
+|           +---bn-BD
+|           +---cs
+|           +---da
+|           +---de
+|           +---el
+|           +---es
+|           +---fa
+|           +---fi-FI
+|           +---fr
+|           +---fr-BE
+|           +---he
+|           +---hr
+|           +---hu
+|           +---hy
+|           +---id
+|           +---is
+|           +---it
+|           +---ja
+|           +---ko
+|           +---ko-KR
+|           +---ku
+|           +---lv
+|           +---ms-MY
+|           +---mt
+|           +---nb
+|           +---nb-NO
+|           +---nl
+|           +---pl
+|           +---pt
+|           +---pt-BR
+|           +---ro
+|           +---ru
+|           +---runtimes
+|           |   +---browser
+|           |   |   \---lib
+|           |   |       \---net8.0
+|           |   +---unix
+|           |   |   \---lib
+|           |   |       \---net6.0
+|           |   +---win
+|           |   |   \---lib
+|           |   |       +---net6.0
+|           |   |       +---net7.0
+|           |   |       \---net8.0
+|           |   +---win-arm
+|           |   |   \---native
+|           |   +---win-arm64
+|           |   |   \---native
+|           |   +---win-x64
+|           |   |   \---native
+|           |   \---win-x86
+|           |       \---native
+|           +---sk
+|           +---sl
+|           +---sr
+|           +---sr-Latn
+|           +---sv
+|           +---th-TH
+|           +---tr
+|           +---uk
+|           +---uz-Cyrl-UZ
+|           +---uz-Latn-UZ
+|           +---vi
+|           +---win-x64
+|           |   +---af
+|           |   +---ar
+|           |   +---az
+|           |   +---bg
+|           |   +---bn-BD
+|           |   +---cs
+|           |   +---da
+|           |   +---de
+|           |   +---el
+|           |   +---es
+|           |   +---fa
+|           |   +---fi-FI
+|           |   +---fr
+|           |   +---fr-BE
+|           |   +---he
+|           |   +---hr
+|           |   +---hu
+|           |   +---hy
+|           |   +---id
+|           |   +---is
+|           |   +---it
+|           |   +---ja
+|           |   +---ko
+|           |   +---ko-KR
+|           |   +---ku
+|           |   +---lv
+|           |   +---ms-MY
+|           |   +---mt
+|           |   +---nb
+|           |   +---nb-NO
+|           |   +---nl
+|           |   +---pl
+|           |   +---pt
+|           |   +---pt-BR
+|           |   +---ro
+|           |   +---ru
+|           |   +---sk
+|           |   +---sl
+|           |   +---sr
+|           |   +---sr-Latn
+|           |   +---sv
+|           |   +---th-TH
+|           |   +---tr
+|           |   +---uk
+|           |   +---uz-Cyrl-UZ
+|           |   +---uz-Latn-UZ
+|           |   +---vi
+|           |   +---zh-CN
+|           |   +---zh-Hans
+|           |   \---zh-Hant
+|           +---win-x86
+|           |   +---af
+|           |   +---ar
+|           |   +---az
+|           |   +---bg
+|           |   +---bn-BD
+|           |   +---cs
+|           |   +---da
+|           |   +---de
+|           |   +---el
+|           |   +---es
+|           |   +---fa
+|           |   +---fi-FI
+|           |   +---fr
+|           |   +---fr-BE
+|           |   +---he
+|           |   +---hr
+|           |   +---hu
+|           |   +---hy
+|           |   +---id
+|           |   +---is
+|           |   +---it
+|           |   +---ja
+|           |   +---ko
+|           |   +---ko-KR
+|           |   +---ku
+|           |   +---lv
+|           |   +---ms-MY
+|           |   +---mt
+|           |   +---nb
+|           |   +---nb-NO
+|           |   +---nl
+|           |   +---pl
+|           |   +---pt
+|           |   +---pt-BR
+|           |   +---ro
+|           |   +---ru
+|           |   +---sk
+|           |   +---sl
+|           |   +---sr
+|           |   +---sr-Latn
+|           |   +---sv
+|           |   +---th-TH
+|           |   +---tr
+|           |   +---uk
+|           |   +---uz-Cyrl-UZ
+|           |   +---uz-Latn-UZ
+|           |   +---vi
+|           |   +---zh-CN
+|           |   +---zh-Hans
+|           |   \---zh-Hant
+|           +---zh-CN
+|           +---zh-Hans
+|           \---zh-Hant
++---Controllers
++---Data
++---Docs
++---Filters
++---Helpers
++---Migrations
++---Models
++---obj
+|   +---Debug
+|   |   \---net8.0
+|   |       +---ref
+|   |       +---refint
+|   |       +---scopedcss
+|   |       |   +---bundle
+|   |       |   +---projectbundle
+|   |       |   \---Views
+|   |       |       \---Shared
+|   |       \---staticwebassets
+|   +---publish
+|   |   +---win-x64
+|   |   \---win-x86
+|   \---Release
+|       \---net8.0
+|           +---PubTmp
+|           |   \---Out
+|           |       +---af
+|           |       +---ar
+|           |       +---az
+|           |       +---bg
+|           |       +---bn-BD
+|           |       +---cs
+|           |       +---da
+|           |       +---de
+|           |       +---el
+|           |       +---es
+|           |       +---fa
+|           |       +---fi-FI
+|           |       +---fr
+|           |       +---fr-BE
+|           |       +---he
+|           |       +---hr
+|           |       +---hu
+|           |       +---hy
+|           |       +---id
+|           |       +---is
+|           |       +---it
+|           |       +---ja
+|           |       +---ko
+|           |       +---ko-KR
+|           |       +---ku
+|           |       +---lv
+|           |       +---ms-MY
+|           |       +---mt
+|           |       +---nb
+|           |       +---nb-NO
+|           |       +---nl
+|           |       +---pl
+|           |       +---pt
+|           |       +---pt-BR
+|           |       +---ro
+|           |       +---ru
+|           |       +---runtimes
+|           |       |   +---browser
+|           |       |   |   \---lib
+|           |       |   |       \---net8.0
+|           |       |   +---unix
+|           |       |   |   \---lib
+|           |       |   |       \---net6.0
+|           |       |   +---win
+|           |       |   |   \---lib
+|           |       |   |       +---net6.0
+|           |       |   |       +---net7.0
+|           |       |   |       \---net8.0
+|           |       |   +---win-arm
+|           |       |   |   \---native
+|           |       |   +---win-arm64
+|           |       |   |   \---native
+|           |       |   +---win-x64
+|           |       |   |   \---native
+|           |       |   \---win-x86
+|           |       |       \---native
+|           |       +---sk
+|           |       +---sl
+|           |       +---sr
+|           |       +---sr-Latn
+|           |       +---sv
+|           |       +---th-TH
+|           |       +---tr
+|           |       +---uk
+|           |       +---uz-Cyrl-UZ
+|           |       +---uz-Latn-UZ
+|           |       +---vi
+|           |       +---wwwroot
+|           |       |   +---css
+|           |       |   +---fonts
+|           |       |   |   \---cairo
+|           |       |   +---Identity
+|           |       |   |   +---css
+|           |       |   |   +---js
+|           |       |   |   \---lib
+|           |       |   |       +---bootstrap
+|           |       |   |       |   \---dist
+|           |       |   |       |       +---css
+|           |       |   |       |       \---js
+|           |       |   |       +---jquery
+|           |       |   |       |   \---dist
+|           |       |   |       +---jquery-validation
+|           |       |   |       |   \---dist
+|           |       |   |       \---jquery-validation-unobtrusive
+|           |       |   +---images
+|           |       |   +---js
+|           |       |   |   +---installmentsjs
+|           |       |   |   +---productjs
+|           |       |   |   \---salejs
+|           |       |   +---lib
+|           |       |   |   +---animate.css
+|           |       |   |   +---bootstrap
+|           |       |   |   |   \---dist
+|           |       |   |   |       +---css
+|           |       |   |   |       \---js
+|           |       |   |   +---chartjs
+|           |       |   |   +---datatables
+|           |       |   |   |   \---i18n
+|           |       |   |   +---datatables-bs5
+|           |       |   |   |   +---css
+|           |       |   |   |   \---js
+|           |       |   |   +---datatables-buttons
+|           |       |   |   |   \---js
+|           |       |   |   +---datatables-buttons-bs5
+|           |       |   |   |   +---css
+|           |       |   |   |   \---js
+|           |       |   |   +---datatables-plugins
+|           |       |   |   |   \---i18n
+|           |       |   |   +---fontawesome
+|           |       |   |   |   +---css
+|           |       |   |   |   \---webfonts
+|           |       |   |   +---jquery
+|           |       |   |   |   \---dist
+|           |       |   |   +---jquery-validation
+|           |       |   |   |   \---dist
+|           |       |   |   +---jquery-validation-unobtrusive
+|           |       |   |   +---jsbarcode
+|           |       |   |   +---jszip
+|           |       |   |   +---pdfmake
+|           |       |   |   +---select2
+|           |       |   |   |   +---css
+|           |       |   |   |   \---js
+|           |       |   |   +---select2-bootstrap-5-theme
+|           |       |   |   |   \---dist
+|           |       |   |   +---sweetalert2
+|           |       |   |   +---tailwindcss
+|           |       |   |   \---xlsx
+|           |       |   \---temp
+|           |       +---zh-CN
+|           |       +---zh-Hans
+|           |       \---zh-Hant
+|           +---ref
+|           +---refint
+|           +---scopedcss
+|           |   +---bundle
+|           |   +---projectbundle
+|           |   \---Views
+|           |       \---Shared
+|           +---staticwebassets
+|           +---win-x64
+|           |   +---PubTmp
+|           |   |   \---Out
+|           |   |       \---wwwroot
+|           |   |           +---css
+|           |   |           +---fonts
+|           |   |           |   \---cairo
+|           |   |           +---Identity
+|           |   |           |   +---css
+|           |   |           |   +---js
+|           |   |           |   \---lib
+|           |   |           |       +---bootstrap
+|           |   |           |       |   \---dist
+|           |   |           |       |       +---css
+|           |   |           |       |       \---js
+|           |   |           |       +---jquery
+|           |   |           |       |   \---dist
+|           |   |           |       +---jquery-validation
+|           |   |           |       |   \---dist
+|           |   |           |       \---jquery-validation-unobtrusive
+|           |   |           +---images
+|           |   |           +---js
+|           |   |           |   +---installmentsjs
+|           |   |           |   +---productjs
+|           |   |           |   \---salejs
+|           |   |           +---lib
+|           |   |           |   +---animate.css
+|           |   |           |   +---bootstrap
+|           |   |           |   |   \---dist
+|           |   |           |   |       +---css
+|           |   |           |   |       \---js
+|           |   |           |   +---chartjs
+|           |   |           |   +---datatables
+|           |   |           |   |   \---i18n
+|           |   |           |   +---datatables-bs5
+|           |   |           |   |   +---css
+|           |   |           |   |   \---js
+|           |   |           |   +---datatables-buttons
+|           |   |           |   |   \---js
+|           |   |           |   +---datatables-buttons-bs5
+|           |   |           |   |   +---css
+|           |   |           |   |   \---js
+|           |   |           |   +---datatables-plugins
+|           |   |           |   |   \---i18n
+|           |   |           |   +---fontawesome
+|           |   |           |   |   +---css
+|           |   |           |   |   \---webfonts
+|           |   |           |   +---jquery
+|           |   |           |   |   \---dist
+|           |   |           |   +---jquery-validation
+|           |   |           |   |   \---dist
+|           |   |           |   +---jquery-validation-unobtrusive
+|           |   |           |   +---jsbarcode
+|           |   |           |   +---jszip
+|           |   |           |   +---pdfmake
+|           |   |           |   +---select2
+|           |   |           |   |   +---css
+|           |   |           |   |   \---js
+|           |   |           |   +---select2-bootstrap-5-theme
+|           |   |           |   |   \---dist
+|           |   |           |   +---sweetalert2
+|           |   |           |   +---tailwindcss
+|           |   |           |   \---xlsx
+|           |   |           \---temp
+|           |   +---ref
+|           |   +---refint
+|           |   +---scopedcss
+|           |   |   +---bundle
+|           |   |   +---projectbundle
+|           |   |   \---Views
+|           |   |       \---Shared
+|           |   \---staticwebassets
+|           \---win-x86
+|               +---PubTmp
+|               |   \---Out
+|               |       +---af
+|               |       +---ar
+|               |       +---az
+|               |       +---bg
+|               |       +---bn-BD
+|               |       +---cs
+|               |       +---da
+|               |       +---de
+|               |       +---el
+|               |       +---es
+|               |       +---fa
+|               |       +---fi-FI
+|               |       +---fr
+|               |       +---fr-BE
+|               |       +---he
+|               |       +---hr
+|               |       +---hu
+|               |       +---hy
+|               |       +---id
+|               |       +---is
+|               |       +---it
+|               |       +---ja
+|               |       +---ko
+|               |       +---ko-KR
+|               |       +---ku
+|               |       +---lv
+|               |       +---ms-MY
+|               |       +---mt
+|               |       +---nb
+|               |       +---nb-NO
+|               |       +---nl
+|               |       +---pl
+|               |       +---pt
+|               |       +---pt-BR
+|               |       +---ro
+|               |       +---ru
+|               |       +---sk
+|               |       +---sl
+|               |       +---sr
+|               |       +---sr-Latn
+|               |       +---sv
+|               |       +---th-TH
+|               |       +---tr
+|               |       +---uk
+|               |       +---uz-Cyrl-UZ
+|               |       +---uz-Latn-UZ
+|               |       +---vi
+|               |       +---wwwroot
+|               |       |   +---css
+|               |       |   +---fonts
+|               |       |   |   \---cairo
+|               |       |   +---Identity
+|               |       |   |   +---css
+|               |       |   |   +---js
+|               |       |   |   \---lib
+|               |       |   |       +---bootstrap
+|               |       |   |       |   \---dist
+|               |       |   |       |       +---css
+|               |       |   |       |       \---js
+|               |       |   |       +---jquery
+|               |       |   |       |   \---dist
+|               |       |   |       +---jquery-validation
+|               |       |   |       |   \---dist
+|               |       |   |       \---jquery-validation-unobtrusive
+|               |       |   +---images
+|               |       |   +---js
+|               |       |   |   +---installmentsjs
+|               |       |   |   +---productjs
+|               |       |   |   \---salejs
+|               |       |   +---lib
+|               |       |   |   +---animate.css
+|               |       |   |   +---bootstrap
+|               |       |   |   |   \---dist
+|               |       |   |   |       +---css
+|               |       |   |   |       \---js
+|               |       |   |   +---chartjs
+|               |       |   |   +---datatables
+|               |       |   |   |   \---i18n
+|               |       |   |   +---datatables-bs5
+|               |       |   |   |   +---css
+|               |       |   |   |   \---js
+|               |       |   |   +---datatables-buttons
+|               |       |   |   |   \---js
+|               |       |   |   +---datatables-buttons-bs5
+|               |       |   |   |   +---css
+|               |       |   |   |   \---js
+|               |       |   |   +---datatables-plugins
+|               |       |   |   |   \---i18n
+|               |       |   |   +---fontawesome
+|               |       |   |   |   +---css
+|               |       |   |   |   \---webfonts
+|               |       |   |   +---jquery
+|               |       |   |   |   \---dist
+|               |       |   |   +---jquery-validation
+|               |       |   |   |   \---dist
+|               |       |   |   +---jquery-validation-unobtrusive
+|               |       |   |   +---jsbarcode
+|               |       |   |   +---jszip
+|               |       |   |   +---pdfmake
+|               |       |   |   +---select2
+|               |       |   |   |   +---css
+|               |       |   |   |   \---js
+|               |       |   |   +---select2-bootstrap-5-theme
+|               |       |   |   |   \---dist
+|               |       |   |   +---sweetalert2
+|               |       |   |   +---tailwindcss
+|               |       |   |   \---xlsx
+|               |       |   \---temp
+|               |       +---zh-CN
+|               |       +---zh-Hans
+|               |       \---zh-Hant
+|               +---ref
+|               +---refint
+|               +---scopedcss
+|               |   +---bundle
+|               |   +---projectbundle
+|               |   \---Views
+|               |       \---Shared
+|               \---staticwebassets
++---Properties
+|   \---PublishProfiles
++---Services
+|   +---AiServices
+|   |   +---Context
+|   |   +---Contracts
+|   |   +---Conversations
+|   |   +---Core
+|   |   +---Prompting
+|   |   +---Telemetry
+|   |   \---Tools
+|   +---AuthServices
+|   +---CategoryServices
+|   +---CustomerAccountServices
+|   +---CustomerServices
+|   +---ExcelExportServices
+|   +---GeneralDebtServices
+|   +---HomeServices
+|   +---InstallmentServices
+|   +---PaymentOptionServices
+|   +---ProductServices
+|   +---SalesServices
+|   +---StatisticsServices
+|   +---StoreAccountServices
+|   +---SystemSettings
+|   +---UserInvoice
+|   +---UserServices
+|   \---WhatsAppServices
++---ViewComponents
++---ViewModels
++---Views
+|   +---Ai
+|   +---Auth
+|   +---Categories
+|   +---Customers
+|   +---GeneralDebts
+|   +---Home
+|   +---InstallmentPayments
+|   +---Installments
+|   +---PaymentMethods
+|   +---Products
+|   +---Reports
+|   +---Sales
+|   +---Shared
+|   |   \---Components
+|   |       +---Categories
+|   |       +---LowStockAlert
+|   |       \---SubscriptionStatus
+|   +---StoreAccount
+|   +---SystemSettings
+|   +---UserInvoice
+|   \---WhatsApp
+\---wwwroot
+    +---css
+    +---fonts
+    |   \---cairo
+    +---images
+    +---js
+    |   +---installmentsjs
+    |   +---productjs
+    |   \---salejs
+    +---lib
+    |   +---animate.css
+    |   +---bootstrap
+    |   |   \---dist
+    |   |       +---css
+    |   |       \---js
+    |   +---chartjs
+    |   +---datatables
+    |   |   \---i18n
+    |   +---datatables-bs5
+    |   |   +---css
+    |   |   \---js
+    |   +---datatables-buttons
+    |   |   \---js
+    |   +---datatables-buttons-bs5
+    |   |   +---css
+    |   |   \---js
+    |   +---datatables-plugins
+    |   |   \---i18n
+    |   +---fontawesome
+    |   |   +---css
+    |   |   \---webfonts
+    |   +---jquery
+    |   |   \---dist
+    |   +---jquery-validation
+    |   |   \---dist
+    |   +---jquery-validation-unobtrusive
+    |   +---jsbarcode
+    |   +---jszip
+    |   +---pdfmake
+    |   +---select2
+    |   |   +---css
+    |   |   \---js
+    |   +---select2-bootstrap-5-theme
+    |   |   \---dist
+    |   +---sweetalert2
+    |   +---tailwindcss
+    |   \---xlsx
+    \---temp

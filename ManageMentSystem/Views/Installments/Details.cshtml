@@ -361,19 +361,24 @@
                 <div class="p-4 border-b border-gray-200">
                     <h2 class="font-bold text-sm text-primary">إجراءات سريعة</h2>
                 </div>
+
                 <div class="p-4 space-y-3">
+
                     @if (Model.Installment.Status != "مكتمل")
                     {
                         <a href="@Url.Action("Create", "InstallmentPayments", new { installmentId = Model.Installment.Id })"
-                           class="block w-full py-3 bg-accentGreen text-white text-center rounded-xl font-bold hover:bg-emerald-800 shadow-lg shadow-emerald-200 hover:-translate-y-0.5 transition-all">
-                            <i data-lucide="hand-coins" class="ml-2 w-5 h-5"></i> تسجيل دفعة جديدة
+                               class="group flex items-center justify-between w-full px-4 py-3 rounded-xl bg-emerald-500 text-white font-bold shadow-sm hover:bg-emerald-600 transition-all">
+
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="hand-coins" class="w-5 h-5"></i>
+                                <span>تسجيل دفعة جديدة</span>
+                            </div>
+
+                            <i data-lucide="arrow-left"
+                               class="w-4 h-4 opacity-70 group-hover:translate-x-1 transition"></i>
                         </a>
                     }
 
-                    <button type="button" onclick="deleteInstallment(@Model.Installment.Id)"
-                            class="block w-full py-3 bg-red-50 border border-red-200 text-accentRed text-center rounded-xl font-bold hover:bg-red-100 hover:-translate-y-0.5 transition-all">
-                        <i data-lucide="trash-2" class="ml-2 w-5 h-5"></i> حذف التقسيط بالكامل
-                    </button>
                 </div>
             </div>
 

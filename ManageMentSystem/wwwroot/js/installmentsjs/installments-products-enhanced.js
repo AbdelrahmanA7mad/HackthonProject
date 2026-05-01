@@ -14,11 +14,11 @@ function loadAllProducts() {
 }
 
 // البحث عن المنتجات (مع دعم الباركود)
-$('#productSearch').on('input', function () {
+$(document).on('input', '#productSearch', function () {
     const searchTerm = $(this).val().toLowerCase().trim();
 
     if (searchTerm.length === 0) {
-        $('#productSearchResults').hide();
+        $('#productSearchResults').addClass('hidden').hide();
         return;
     }
 
@@ -68,13 +68,13 @@ $('#productSearch').on('input', function () {
         lucide.createIcons();
     }
 
-    $('#productSearchResults').show();
+    $('#productSearchResults').removeClass('hidden').show();
 });
 
 // Wrapper function to add product and immediately hide dropdown
 function addProductToInstallmentAndHide(productId, productName, price, availableStock, barcode) {
     // إخفاء القائمة فوراً
-    $('#productSearchResults').hide();
+    $('#productSearchResults').addClass('hidden').hide();
     $('#productSearch').val('');
 
     // إضافة المنتج
@@ -82,7 +82,7 @@ function addProductToInstallmentAndHide(productId, productName, price, available
 }
 
 // Handle Enter key for product search (barcode support)
-$('#productSearch').on('keydown', function (e) {
+$(document).on('keydown', '#productSearch', function (e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
         const searchTerm = $(this).val().trim();
@@ -355,6 +355,6 @@ function playWarningSound() {
 // إخفاء نتائج البحث عند النقر خارجها
 $(document).on('click', function (e) {
     if (!$(e.target).closest('#productSearch, #productSearchResults').length) {
-        $('#productSearchResults').hide();
+        $('#productSearchResults').addClass('hidden').hide();
     }
 });

@@ -1,13 +1,13 @@
 // Customer Management Functions for Sales
 
 // Customer search functionality
-$('#customerSearch').on('input', function () {
+$(document).on('input', '#customerSearch', function () {
     const searchTerm = $(this).val().toLowerCase().trim();
     const resultsDiv = $('#customerSearchResults');
     const select = $('#modalCustomerSelect');
 
     if (searchTerm.length === 0) {
-        resultsDiv.hide();
+        resultsDiv.addClass('hidden').hide();
         return;
     }
 
@@ -40,15 +40,22 @@ $('#customerSearch').on('input', function () {
             // عرض الاسم ورقم الهاتف إذا كان متوفر
             const displayText = phone ? `${text} (${phone})` : text;
 
-            resultsHtml += `<div class="customer-result p-2 border-bottom ${itemClass}" data-value="${value}" style="cursor: pointer;">${displayText}</div>`;
+            if (value !== '0' && value !== 0) {
+                resultsHtml += `<div class="customer-result p-2 border-bottom ${itemClass}" data-value="${value}" style="cursor: pointer;">${displayText}</div>`;
+            }
         });
 
-        resultsDiv.html(resultsHtml).show();
+        // دائماً إظهار خيار إضافة عميل جديد في نهاية البحث
+        const isNumber = /^\d+$/.test(searchTerm);
+        const newCustomerText = isNumber ? `➕ عميل جديد (${searchTerm})` : '➕ عميل جديد';
+        resultsHtml += `<div class="customer-result p-2 border-bottom text-primary fw-bold" data-value="0" style="cursor: pointer;">${newCustomerText}</div>`;
+
+        resultsDiv.html(resultsHtml).removeClass('hidden').show();
     } else {
         // إظهار خيار "عميل جديد" عندما لا توجد نتائج
         const isNumber = /^\d+$/.test(searchTerm);
         const newCustomerText = isNumber ? `➕ عميل جديد (${searchTerm})` : '➕ عميل جديد';
-        resultsDiv.html(`<div class="customer-result p-2 border-bottom text-primary fw-bold" data-value="0" style="cursor: pointer;">${newCustomerText}</div>`).show();
+        resultsDiv.html(`<div class="customer-result p-2 border-bottom text-primary fw-bold" data-value="0" style="cursor: pointer;">${newCustomerText}</div>`).removeClass('hidden').show();
     }
 });
 
@@ -63,12 +70,12 @@ $(document).on('click', '.customer-result', function () {
 
     $('#modalCustomerSelect').val(value);
     $('#customerSearch').val(text);
-    $('#customerSearchResults').hide();
+    $('#customerSearchResults').addClass('hidden').hide();
 
     // إذا كان العميل الجديد وتم البحث برقم، ضع الرقم في حقل الهاتف
     if ((value === '0' || value === 0) && originalSearchTerm && /^\d+$/.test(originalSearchTerm)) {
         // إظهار حقول العميل الجديد أولاً
-        $('#modalNewCustomerFields').show();
+        $('#modalNewCustomerFields').removeClass('hidden').show();
 
         // إضافة required للحقول
         $('#modalNewCustomerName').prop('required', true);
@@ -116,9 +123,9 @@ $(document).on('click', '.customer-result', function () {
                 }
             }, 200);
         }
-    } else if (value === '0') {
+    } else if (value === '0' || value === 0) {
         // إذا كان عميل جديد ولكن ليس برقم، أظهر الحقول فقط
-        $('#modalNewCustomerFields').show();
+        $('#modalNewCustomerFields').removeClass('hidden').show();
         $('#modalNewCustomerName').prop('required', true);
         $('#modalNewCustomerPhone').prop('required', true);
         $('#modalNewCustomerAddress').prop('required', true);
@@ -129,12 +136,12 @@ $(document).on('click', '.customer-result', function () {
 });
 
 // Handle customer select change
-$('#modalCustomerSelect').on('change', function () {
+$(document).on('change', '#modalCustomerSelect', function () {
     const selectedValue = $(this).val();
 
     if (selectedValue === '0') {
         // إظهار حقول العميل الجديد
-        $('#modalNewCustomerFields').show();
+        $('#modalNewCustomerFields').removeClass('hidden').show();
         $('#modalNewCustomerName').prop('required', true);
         $('#modalNewCustomerPhone').prop('required', true);
         $('#modalNewCustomerAddress').prop('required', true);
@@ -146,7 +153,7 @@ $('#modalCustomerSelect').on('change', function () {
         }
     } else if (selectedValue !== '') {
         // إخفاء حقول العميل الجديد
-        $('#modalNewCustomerFields').hide();
+        $('#modalNewCustomerFields').addClass('hidden').hide();
         $('#modalNewCustomerName').prop('required', false);
         $('#modalNewCustomerPhone').prop('required', false);
         $('#modalNewCustomerAddress').prop('required', false);
@@ -156,32 +163,34 @@ $('#modalCustomerSelect').on('change', function () {
 // Hide results when clicking outside
 $(document).on('click', function (e) {
     if (!$(e.target).closest('#customerSearch, #customerSearchResults').length) {
-        $('#customerSearchResults').hide();
+        $('#customerSearchResults').addClass('hidden').hide();
     }
 });
 
 // Handle customer search focus
-$('#customerSearch').on('focus', function () {
+$(document).on('focus', '#customerSearch', function () {
     if ($(this).val().trim().length > 0) {
         $(this).trigger('input');
     }
 });
 
 // Initialize phone validation for sales page
-initializePhoneValidation('#modalNewCustomerPhone', '#addSaleModal', '#modalCustomerSelect', '#modalNewCustomerFields');
+if (typeof initializePhoneValidation === 'function') {
+    initializePhoneValidation('#modalNewCustomerPhone', '#addSaleModal', '#modalCustomerSelect', '#modalNewCustomerFields');
+}
 
 // Reset form when modal is opened
 $('#addSaleModal').on('show.bs.modal', function () {
     $('#customerSearch').val('');
     $('#modalCustomerSelect').val('');
-    $('#modalNewCustomerFields').hide();
+    $('#modalNewCustomerFields').addClass('hidden').hide();
     $('#modalNewCustomerName').val('').prop('required', false);
     $('#modalNewCustomerPhone').val('').prop('required', false);
     $('#modalNewCustomerAddress').val('').prop('required', false);
-    $('#customerSearchResults').hide();
+    $('#customerSearchResults').addClass('hidden').hide();
     $('#barcodeScanner').val('');
     $('#productSearch').val('');
-    $('#productSearchResults').hide();
+    $('#productSearchResults').addClass('hidden').hide();
     selectedProducts = [];
     $('#selectedProductsTable tbody').empty();
     updateTotalAmount();

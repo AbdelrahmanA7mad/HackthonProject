@@ -249,7 +249,7 @@
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            <form asp-action="Create" method="post" class="p-6">
+            <form asp-action="Create" method="post" class="p-6" id="createDebtForm">
                 @Html.AntiForgeryToken()
                 @{
                     ViewData["IsEdit"] = false;
@@ -448,6 +448,34 @@ const accentRed = window.accentRed || theme.accentRed || window.getComputedStyle
         function closeEditDebtModal() {
             document.getElementById('editDebtModal').classList.add('hidden');
         }
+
+        // منع الإرسال المتعدد للنماذج
+        document.getElementById('createDebtForm')?.addEventListener('submit', function (e) {
+            // التحقق من صحة النموذج إذا كانت مكتبة التحقق موجودة
+            if (typeof $(this).valid === 'function' && !$(this).valid()) {
+                return;
+            }
+            
+            const btn = this.querySelector('button[type="submit"]');
+            if (btn && !btn.disabled) {
+                btn.disabled = true;
+                btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin inline-block w-4 h-4 ml-2"></i> جاري الحفظ...';
+                lucide.createIcons();
+            }
+        });
+
+        document.getElementById('editDebtForm')?.addEventListener('submit', function (e) {
+            if (typeof $(this).valid === 'function' && !$(this).valid()) {
+                return;
+            }
+            
+            const btn = this.querySelector('button[type="submit"]');
+            if (btn && !btn.disabled) {
+                btn.disabled = true;
+                btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin inline-block w-4 h-4 ml-2"></i> جاري التحديث...';
+                lucide.createIcons();
+            }
+        });
     </script>
 }
 

@@ -1,12 +1,12 @@
 // Product Search Functions for Sales
 
 // Real-time search with debouncing
-$('#productSearch').on('input', function () {
+$(document).on('input', '#productSearch', function () {
     clearTimeout(searchTimeout);
     const searchTerm = $(this).val().trim();
 
     if (searchTerm.length === 0) {
-        $('#productSearchResults').hide();
+        $('#productSearchResults').addClass('hidden').hide();
         return;
     }
 
@@ -92,16 +92,16 @@ function displaySearchResults(products) {
         }
     }
 
-    $('#productSearchResults').show();
+    $('#productSearchResults').removeClass('hidden').show();
 }
 
 // Edit product search functionality
-$('#editProductSearch').on('input', function () {
+$(document).on('input', '#editProductSearch', function () {
     clearTimeout(searchTimeout);
     const searchTerm = $(this).val().trim();
 
     if (searchTerm.length === 0) {
-        $('#editProductSearchResults').hide();
+        $('#editProductSearchResults').addClass('hidden').hide();
         return;
     }
 
@@ -173,15 +173,15 @@ function displayEditSearchResults(products) {
         }
     }
 
-    $('#editProductSearchResults').show();
+    $('#editProductSearchResults').removeClass('hidden').show();
 }
 
 // Hide search results when clicking outside
 $(document).on('click', function (e) {
     if (!$(e.target).closest('#productSearch, #productSearchResults').length) {
-        $('#productSearchResults').hide();
+        $('#productSearchResults').addClass('hidden').hide();
     }
     if (!$(e.target).closest('#editProductSearch, #editProductSearchResults').length) {
-        $('#editProductSearchResults').hide();
+        $('#editProductSearchResults').addClass('hidden').hide();
     }
 });

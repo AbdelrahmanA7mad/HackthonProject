@@ -1,4 +1,4 @@
-﻿using ManageMentSystem.Models;
+using ManageMentSystem.Models;
 using System.Collections.Generic;
 
 namespace ManageMentSystem.ViewModels
@@ -33,5 +33,10 @@ namespace ManageMentSystem.ViewModels
 
         public int ActiveCustomersCount { get; set; } // نشط هذا الشهر
         public decimal StockTotalValue { get; set; }  // قيمة المخزون
+
+        // 3. الأرباح (Profit)
+        public decimal MonthlyProfit { get; set; }
+        public double ProfitTrend { get; set; }
+        public bool IsProfitTrendUp { get; set; }
     }
 } 
